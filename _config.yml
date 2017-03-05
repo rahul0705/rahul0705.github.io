@@ -1,3 +1,22 @@
 title: Rahul Mohandas
+
 description: rm -rf /; echo "I hope that wasn't a problem"
+show_downloads: false
+footer-links:
+  email: rahul@rahulmohandas.com
+  facebook: rahul0705
+  github: rahul0705
+  linkedin:
+  twitter: rahul0705
+  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
+  youtube: user/rahul0705
+
+include:
+  - _pages
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
 theme: jekyll-theme-hacker
