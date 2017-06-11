@@ -1,4 +1,5 @@
 - path: _pages/main/index.md
+- path: _pages/main/resume.md
 - path: _pages/projects/algorithm_detection_in_assembly.md
 - path: _pages/projects/learning_racetrack.md
 - path: _pages/projects/tcp_keepalive.md
