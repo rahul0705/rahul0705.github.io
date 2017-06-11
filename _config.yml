@@ -20,3 +20,4 @@ exclude:
   - README.md
   - CNAME
 theme: jekyll-theme-architect
+google_analytics: UA-36311468-1
