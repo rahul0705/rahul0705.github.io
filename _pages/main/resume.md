@@ -1,7 +1,7 @@
 ---
 layout: resume
 title: Resume
-permalink: resume
+permalink: resume.html
 ---
 
 # Work Experience
