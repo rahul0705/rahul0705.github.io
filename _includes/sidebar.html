@@ -1,0 +1,22 @@
+<aside id="sidebar">
+  <nav>
+    <ul>
+      {% for nav_element in site.data.sidebar %} {% for page in site.pages %} {% if nav_element.path == page.path %}
+      <li>
+        <h3>
+          <a href="{{ page.url | prepend: site.baseurl }}">
+            {{ page.title }}
+          </a>
+        </h3>
+      </li>
+      {% endif %} {% endfor %} {% endfor %}
+      <!--<li>
+        <h3>
+          <a href="{{ "/blog" | prepend: site.baseurl }}">
+            Blog
+          </a>
+        </h3>
+      </li>-->
+    </ul>
+  </nav>
+</aside>
