@@ -8,10 +8,10 @@ permalink: resume.html
 
 ## Harris Corporation - Software Engineer
 ### July 2013 - Present
-Developed solutions for a high availability processing system. Implemented components of a real time system
+Worked on direct readout terminals for satellite systems. Developed control and monitoring components. Created automated scripts for deployments.
 
 #### Skill Developed:
-Software testing, Grid engine, Glassfish, High Performace Computing, High Availability, Real Time
+Software testing, Real Time Processing, Ansible, Python, C, Yaml, Java
 
 ---
 
