@@ -5,7 +5,7 @@ permalink: projects/algorithm_detection.html
 section: projects
 ---
 
-During my senior year at [Purdue University](http://www.purdue.edu/) I had to opportunity to work on a research project in which we as a team had to detect algorithms in assembly using IDA Pro as a tool. We decided to work in a set of plugins that would help a user in identifying known algorithms within a binary. As we looked at this project we decided to come up with three different plugins. One plugin would be a proof of concept to detect Bubble Sort in a binary, the other two would be a generic approach.
+During my senior year at [Purdue University](http://www.purdue.edu/) I had the opportunity to work on a research project in which we as a team had to detect algorithms in assembly using IDA Pro as a tool. We decided to work in a set of plugins that would help a user in identifying known algorithms within a binary. As we looked at this project we decided to come up with three different plugins. One plugin would be a proof of concept to detect Bubble Sort in a binary, the other two would be a generic approach.
 
 The first one was a signature approach in which each algorithm would be represented by a vector that would be unique to that algorithm, based of the assembly instructions, the count of back edges, and the amount of branches in a function. These would hopefully prove to be a unique identifier to an algorithm. There were some issues with false positives with this approach but with some more fine tuning this can prove to be quite accurate.
 
