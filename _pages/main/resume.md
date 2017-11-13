@@ -20,7 +20,7 @@ Software testing, Grid engine, Glassfish, High performance computing, High avail
 Test the implementations of TCP keepalive through distributed systems and node failures to create fault tolerant code. Compare the implementation between different operating systems & analyze the results
 
 #### Skill Developed:
-TCP/IP, Distributed systems, OS programming, Network testing, Software testing
+TCP/IP, Distributed systems, OS programming, Network testing, Software testing, C
 
 ---
 
@@ -29,7 +29,7 @@ TCP/IP, Distributed systems, OS programming, Network testing, Software testing
 Developed a process and created tools required to migrate clinical studies between several Electronic Data Capture Systems. Coordinated with vendors to develop solutions for migrating data through EDC systems. Created a presentation for the Chief Information Officer outlining the solution
 
 #### Skill Developed:
-Work instructions, Design documentation, Code reviews, Presentation proficiency, Cost savings analysis
+Work instructions, Design documentation, Code reviews, Presentation proficiency, Cost savings analysis, Perl
 
 ---
 
