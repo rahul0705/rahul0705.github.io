@@ -8,10 +8,10 @@ permalink: resume.html
 
 ## Harris Corporation - Software Engineer
 ### July 2013 - Present
-Designed and developed solutions for direct receive systems for environmental satellites. Implemented components of the direct receive systems. Implemented scripts and tools to help with automated deployment.
+Designed and developed solutions for direct receive systems for environmental satellites. Implemented management and monitoring components of the direct receive systems. Implemented scripts to help with automated deployment. Responsible for a number of enhancements to increase functionality in the processing the weather product images. Identified and solved issues in the product that would cause an interruption in the building of weather products images. 
 
 #### Skill Developed:
-Software testing, High availability, Real time processing, Ansible, Python, C, Java, NetCDF, UDP multicast
+Software testing, High availability, Real time processing, Ansible, Python, C, Java, NetCDF, UDP multicast, root cause analysis
 
 ---
 
