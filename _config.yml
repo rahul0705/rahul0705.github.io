@@ -19,5 +19,5 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
-theme: jekyll-theme-architect
+remot_theme: jarrekk/Jalpc
 google_analytics: UA-36311468-1
