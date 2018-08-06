@@ -15,9 +15,6 @@ search: true
 search_full_content: true
 search_provider: "lunr"
 
-# SEO Related
-google_site_verification: "googlee6bc804d0cdb407f"
-
 # Social Sharing
 twitter:
   username: "rahul0705"
