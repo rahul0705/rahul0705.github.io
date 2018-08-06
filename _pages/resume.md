@@ -136,7 +136,7 @@ Embedded systems, Artificial intelligence
 # Contact
 
 ## Phone
-[(305) 929-3561](tel:+1-305-926-9294)
+[(305) 926-9294](tel:+1-305-926-9294)
 
 ## Email
 [rahul@rahulmohandas.com](mailto:rahul@rahulmohandas.com)

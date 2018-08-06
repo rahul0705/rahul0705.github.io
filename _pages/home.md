@@ -17,7 +17,7 @@ feature_row:
     btn_class: btn--primary
   - image_path: /assets/images/pages/home/ansible.jpg
     alt: Ansible
-    title: Galaxy
+    title: Ansible Galaxy
     excerpt: Take a look at some of the roles I've released in Ansible Galaxy.
     url: https://galaxy.ansible.com/rahul0705
     btn_class: btn--primary
