@@ -1,23 +1,155 @@
-title: Rahul Mohandas
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "default"
 
-description: rm -rf /; echo "I hope that wasn't a problem"
-show_downloads: false
-footer-links:
-  email: rahul@rahulmohandas.com
-  facebook: rahul0705
-  github: rahul0705
-  linkedin:
-  twitter: rahul0705
-  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
-  youtube: user/rahul0705
+# Site Settings
+locale: "en-US"
+title: "Rahul Mohandas"
+title_separator: "-"
+name: "Rahul Mohandas"
+description: "Software Engineer, rm'ing one drive at a time"
+url: "http://www.rahulmohandas.com"
+repository: "rahul0705/rahul0705.github.io"
+teaser: # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+words_per_minute: 200
+search: true
+search_full_content: true
+search_provider: "lunr"
 
+# SEO Related
+google_site_verification: "googlee6bc804d0cdb407f"
+
+# Social Sharing
+twitter:
+  username: "rahul0705"
+facebook:
+  username: "rahul0705"
+og_image: # Open Graph/Twitter default site image
+
+social:
+  links:
+    - "https://www.twitter.com/rahul0705"
+
+# Analytics
+analytics:
+  provider: "google"
+  google:
+    tracking_id: "UA-36311468-1"
+    anonymize_ip: false
+
+
+# Site Author
+author:
+  name: "Rahul Mohandas"
+  avatar: "https://www.gravatar.com/avatar/2a8cb790557fb5ae51f2b169eec3ae5f?s=2048"
+  bio: "rm -rf /; echo \"Oops... or not?\""
+  location: "Melbourne, FL"
+  email: "rahul0705@gmail.com"
+  uri: "http://www.rahulmohandas.com"
+  home: /
+  facebook: "rahul0705"
+  github: "rahul0705"
+  linkedin: "rahul0705"
+  stackoverflow: "2687253/rahul0705"
+  steam: "rahul0705"
+  twitter: "rahul0705"
+  youtube: "https://www.youtube.com/user/rahul0705"
+
+
+# Reading Files
 include:
   - _pages
 exclude:
   - Gemfile
-  - Gemfile.lock
-  - LICENSE
-  - README.md
-  - CNAME
-theme: jekyll-theme-architect
-google_analytics: UA-36311468-1
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
+
+# Outputting
+permalink: /:categories/:title/
+paginate: 5
+paginate_path: /page:num/
+timezone: "America/New_York"
+
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+
+
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# HTML Compression
+# - http://jch.penibelst.de/
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+
+# Defaults
+defaults:
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      share: true
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      share: true
+      related: true
+
