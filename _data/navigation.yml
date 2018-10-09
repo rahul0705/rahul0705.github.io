@@ -3,5 +3,7 @@ main:
     url: /resume
   - title: "Projects"
     url: /projects
+  - title: "Documents"
+    url: /software-development
   - title: "Posts"
     url: /posts

@@ -99,6 +99,7 @@ timezone: "America/New_York"
 
 # Plugins (previously gems:)
 plugins:
+  - jekyll-include-cache
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
