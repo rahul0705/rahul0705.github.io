@@ -80,7 +80,7 @@ def func(items):
     print item
 ```
 
-### Are the returns simple
+### Are the returns simple?
 
 Check if return statements can be simplified
 
