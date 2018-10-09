@@ -109,7 +109,7 @@ The best code is no code. Removing code should be one of your activities as a de
 
 Code linters can help greatly with this.
 
-### Is the code "SHY"?
+### Is the code shy?
 
 Shy code is code that does not interact with too many things. Everything should have the smallest scope possible and only increase the scope if really need to.
 
