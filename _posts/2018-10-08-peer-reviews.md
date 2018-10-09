@@ -96,7 +96,7 @@ vs
 
 ```
 def item_exists(x, items):
-  return True if x in items else False
+  return x in items
 ```
 
 ### Is there unused code?
