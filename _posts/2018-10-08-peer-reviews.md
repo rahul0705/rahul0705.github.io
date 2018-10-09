@@ -33,7 +33,7 @@ def thing2(arg2):
   # do things with work_on
 
 def thing3(arg3):
-  if arg1 == 'a':
+  if arg3 == 'a':
     work_on = 'correct'
   else
     work_on = 'incorrect'
@@ -102,6 +102,7 @@ def item_exists(x, items):
 ### Is there unused code?
 
 The best code is no code. Removing code should be one of your activities as a developer. Keep an eye out for:
+* commented out code
 * empty methods
 * unused variables
 * outdated comments
@@ -125,8 +126,8 @@ Almost every company or team should have a style and coding guide. Make sure all
 
 ### Does the code have unit tests?
 
-If there is new code, are the accompanied by unit tests? If modifying existing code, have the unit tests been updated?
+If there is new code, are they accompanied by unit tests? If modifying existing code, have the unit tests been updated?
 
 ### Does the code have integration tests?
 
-Testing code in isolation will not check how the entire baseline function. Do the integration tests need to be updated?
+Testing code in isolation will not check how the entire baseline functions. Do the integration tests need to be updated?
