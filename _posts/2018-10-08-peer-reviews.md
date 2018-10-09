@@ -13,7 +13,7 @@ A basic guide for reviewing code and having your code reviewed. This is a living
 
 # What to look for in a review
 ## Style
-### Is the code D.R.Y.?
+### Does the code follow the  D.R.Y. (Don't Repeat Yourself) principle?
 
 Is there repeated code that can be factored out to a helper function?
 
