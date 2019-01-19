@@ -1,24 +1,25 @@
 ---
 title: Code Reviews
 categories:
-  - Software Development
+- Software Development
 tags:
-  - software
-  - development
-  - code
-  - review
----
+- software
+- development
+- code
+- review
 
+---
 A basic guide for reviewing code and having your code reviewed. This is a living document, expect it to change and evolve overtime, check back for updates.
 
 # What to look for in a review
+
 ## Style
+
 ### Does the code follow the  D.R.Y. (Don't Repeat Yourself) principle?
 
 Is there repeated code that can be factored out to a helper function? As you develop it's worth seeing if **relevant** code can be extracted to eliminate redundant code. This should simplify where our logic exists. This should reduce the amount of places that bugs can creep into and simplifies the amount of locations a patch would need to be applied to.
 
-It's worth mentioning that factoring code into a common location may not be as straight forward as presented below. Limitations in the technologies chosen determine our level of 'D.R.Y.ness'. What is important to keep in mind is that we are attempting to minimize redundant logic as best we can.
-
+It's worth mentioning that factoring code into a common location may not be as straightforward as presented below. Limitations in the technologies chosen determine our level of 'D.R.Y.ness'. What is important to keep in mind is that we are attempting to minimize redundant logic as best we can.
 
 ```python
 def thing1(arg1):
@@ -64,7 +65,7 @@ def thing3(arg3):
 
 ### Does the code exit early?
 
-Are there loops or functions that can exit early?
+Are there loops or functions that can exit early? It's generally better to exit loops or functions earlier rather than later. This can sometime be a performance gain, but more than anything it greatly improves readability. 
 
 ```python
 def func(items):
@@ -85,7 +86,7 @@ def func(items):
 
 ### Are the returns simple?
 
-Check if return statements can be simplified
+Check if return statements can be simplified. Sometime it's best to let the language do the work for you. Instead of checking for a `boolean` and then explicitly returning `True` or `False` it's much more reliable and readable to just return the conditional check.
 
 ```python
 def item_exists(x, items):
@@ -105,6 +106,7 @@ def item_exists(x, items):
 ### Is there unused code?
 
 The best code is no code. Removing code should be one of your activities as a developer. Keep an eye out for:
+
 * commented out code
 * empty methods
 * unused variables
@@ -112,6 +114,8 @@ The best code is no code. Removing code should be one of your activities as a de
 * leftover imports
 
 Code linters can help greatly with this.
+
+It's important to distinguish 'empty methods' and 'stub methods'. Stub functions are great early on in the project, they allow the developer to lay the foundation for future tasks, just make sure these 'stud methods' serve a real purpose.
 
 ### Is the code shy?
 
