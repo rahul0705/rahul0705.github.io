@@ -15,9 +15,12 @@ A basic guide for reviewing code and having your code reviewed. This is a living
 ## Style
 ### Does the code follow the  D.R.Y. (Don't Repeat Yourself) principle?
 
-Is there repeated code that can be factored out to a helper function?
+Is there repeated code that can be factored out to a helper function? As you develop it's worth seeing if **relevant** code can be extracted to eliminate redundant code. This should simplify where our logic exists. This should reduce the amount of places that bugs can creep into and simplifies the amount of locations a patch would need to be applied to.
 
-```
+It's worth mentioning that factoring code into a common location may not be as straight forward as presented below. Limitations in the technologies chosen determine our level of 'D.R.Y.ness'. What is important to keep in mind is that we are attempting to minimize redundant logic as best we can.
+
+
+```python
 def thing1(arg1):
   if arg1 == 'a':
     work_on = 'correct'
@@ -42,7 +45,7 @@ def thing3(arg3):
 
 vs
 
-```
+```python
 def check_arg(arg):
   if arg == 'a':
     return 'correct'
@@ -63,7 +66,7 @@ def thing3(arg3):
 
 Are there loops or functions that can exit early?
 
-```
+```python
 def func(items):
   if items:
     for item in items:
@@ -72,7 +75,7 @@ def func(items):
 
 vs
 
-```
+```python
 def func(items):
   if not items:
     return
@@ -84,7 +87,7 @@ def func(items):
 
 Check if return statements can be simplified
 
-```
+```python
 def item_exists(x, items):
   if x in items:
     return True
@@ -94,7 +97,7 @@ def item_exists(x, items):
 
 vs
 
-```
+```python
 def item_exists(x, items):
   return x in items
 ```
