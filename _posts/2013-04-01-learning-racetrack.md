@@ -37,7 +37,7 @@ Students are presented question on an Android device which if answered correctly
 
 ### Week 1
 
-![Original Racetrack]({% link /assets/images/posts/2013-04-01-learning-racetrack/original_track.jpg %})
+![Original Racetrack](/assets/2013/original_track.jpg)
 
 #### Problems/Tasks:
 Over the years the project began to become unreliable. Some of the issues that we found was that the cars were flying off the tracks when they were racing, the keypads were not working consistently, some of the cars were unresponsive, wires were unorganized and not connected well, and the cars were either going too fast or too slow.
@@ -169,7 +169,7 @@ Found several resources explaining in detail about the Raspberry Pi's GPIO ports
 #### Reflections:
 There was some very interesting quirks with the Raspberry Pi that must be noted. The GPIO ports can only send 3.3V with 2 mA to 16 mA. The GPIO ports are also not 5V tolerant and there is no over-voltage protection. Included is a picture of the port and what there functions are.
 
-![Raspberry Pi GPIO]({% link /assets/images/posts/2013-04-01-learning-racetrack/gpio.png %})
+![Raspberry Pi GPIO](/assets/2013/gpio.png)
 
 ### Week 11
 
@@ -253,6 +253,6 @@ The base has the track secured to it. The Android tablets have been labeled so w
 #### Reflections:
 We have found a way to hide all the cables that connect the track to the Raspberry Pi. We drilled a small hole in the base and ran all the cables through there and we then placed the track on top of that whole so these sensitive wires are not exposed.
 
-![Completed Racetrack]({% link /assets/images/posts/2013-04-01-learning-racetrack/completed_track.jpg %})
+![Completed Racetrack](/assets/2013/completed_track.jpg)
 
 All source code can be found on [github](https://github.com/jaye773/epics_binary_track)
