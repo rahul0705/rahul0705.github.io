@@ -35,7 +35,7 @@ Pioneered a [process improvement initiative](https://www.goes-r.gov/conferences/
 
 [Java](https://www.java.com/en/ "Programming Language"), [Clearcase](https://www.ibm.com/us-en/marketplace/rational-clearcase "Software Configuration Management"), [Oracle Coherence](https://www.oracle.com/middleware/coherence/ "In-memory Data Grid")
 
-#### From January 2013 - April 2016
+#### From January 2014 - April 2016
 
 Designed and developed solutions for direct receive systems for environmental satellites on the WxConnect Project. Implemented the management and monitoring components. Developed RESTful interfaces which enterprise monitoring solutions could use to query state of the system. Pioneered Initial implementation of data recovery from GOES satellites to netCDF files. Implemented data recovery from Himawari satellites.
 
