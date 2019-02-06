@@ -1,148 +1,230 @@
 ---
 layout: splash
 title: Resume
-permalink: /resume.html
+permalink: "/resume.html"
 social_link: false
----
 
+---
 # Work Experience
 
 ## Harris Corporation - Software Engineer
+
 ### July 2013 - Present
-Designed and developed solutions for direct receive systems for environmental satellites. Implemented management and monitoring components of the direct receive systems. Implemented scripts to help with automated deployment. Responsible for a number of enhancements to increase functionality in the processing the weather product images. Identified and solved issues in the product that would cause an interruption in the building of weather products images.
 
-#### Skill Developed:
-Software testing, High availability, Real time processing, Ansible, Python, C, Java, NetCDF, UDP multicast, root cause analysis
+#### From July 2018 - Present
 
----
+Small team leader and [scrum master](https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master "Software Development Process") for a system that would analyze radio frequency (RF) data. Collection of data was preformed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services "Clouse Service Provider") cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps "Software Development Methodology"). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration "Software Development Methodology") within our project.
+
+##### Skills Developed:
+
+[Python](https://www.python.org/ "Programming Language"), [Ansible](https://www.ansible.com/ "Automation Tool"), [JavaScript](https://www.javascript.com/ "Programming Language"), [Node](https://nodejs.org/en/ "JavaScript Runtime"), [React](https://reactjs.org/ "JavaScript Library"), [AWS](https://aws.amazon.com/ "Cloud Service Provider"), [Git](https://git-scm.com/ "Software Configuration Management"), [Groovy](http://groovy-lang.org/ "Programming Language"), [Agile Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development) "Software Development Methodology"), [MagicDraw](https://www.nomagic.com/products/magicdraw "Software Modeling Tool")
+
+#### September 2016 - July 2018
+
+Responsible for a number of enhancements to the WxConnect Project to increase functionality in the processing of weather products. Overhauled automated deployment system to decrease deployment times and allow the customer to preform upgrades within their timeline. Preformed root cause analysis to determine the origination of corrupted weather products.
+
+##### Skills Developed:
+
+[Python](https://www.python.org/ "Programming Language"), [Ansible](https://www.ansible.com/ "Automation Tool"), [Git](https://git-scm.com/ "Software Configuration Management")
+
+#### From April 2016 - September 2016
+
+Pioneered a [process improvement initiative](https://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf "Memory / CPU Footprint") for the [GOES-R](https://www.goes-r.gov/ "Environmental Satellite") program to support additional processing without modifying the current infrastructure. The initiative involved analyzing the memory and CPU footprint of the [Oracle Coherence data grid](https://en.wikipedia.org/wiki/Oracle_Coherence "In-memory Data Grid") and implement a data segmentation method that would reduce its usage.
+
+##### Skills Developed:
+
+[Java](https://www.java.com/en/ "Programming Language"), [Clearcase](https://www.ibm.com/us-en/marketplace/rational-clearcase "Software Configuration Management"), [Oracle Coherence](https://www.oracle.com/middleware/coherence/ "In-memory Data Grid")
+
+#### From January 2013 - April 2016
+
+Designed and developed solutions for direct receive systems for environmental satellites on the WxConnect Project. Implemented the management and monitoring components. Developed RESTful interfaces which enterprise monitoring solutions could use to query state of the system. Pioneered Initial implementation of data recovery from GOES satellites to netCDF files. Implemented data recovery from Himawari satellites.
+
+##### Skills Developed:
+
+[Python](https://www.python.org/ "Programming Language"), [C](http://www.open-std.org/jtc1/sc22/wg14/ "Programming Language"), [RabbitMQ](https://www.rabbitmq.com/ "Messaging Queue"), [netCDF](https://www.unidata.ucar.edu/software/netcdf/ "Data Format"), [Flask](http://flask.pocoo.org/ "Python Framework"), [Git](https://git-scm.com/ "Software Configuration Management")
+
+#### From July 2013 - December 2013
+
+Developed a prototype of an integration of Harris' Advanced Radar Processing system with Harris' Service Architecture.
+
+##### Skills Developed:
+
+[Java](https://www.java.com/en/ "Programming Language")
+
+***
 
 ## Professor Charles Killian - Research Assistant
+
 ### September 2012 - December 2012
+
 Test the implementations of TCP keepalive through distributed systems and node failures to create fault tolerant code. Compare the implementation between different operating systems & analyze the results
 
-#### Skill Developed:
+#### Skills Developed:
+
 TCP/IP, Distributed systems, OS programming, Network testing, Software testing, C
 
----
+***
 
 ## Boston Scientific - Intern/Project Manager/Developer/Business Analyst
+
 ### May 2012 - August 2012
+
 Developed a process and created tools required to migrate clinical studies between several Electronic Data Capture Systems. Coordinated with vendors to develop solutions for migrating data through EDC systems. Created a presentation for the Chief Information Officer outlining the solution
 
-#### Skill Developed:
+#### Skills Developed:
+
 Work instructions, Design documentation, Code reviews, Presentation proficiency, Cost savings analysis, Perl
 
----
+***
 
 ## Beads Enterprises LLC (USA) - Assistant
+
 ### May 2011 - August 2011
+
 Assisted in the opening of a new Pandora store includes hiring, advertisements, and inventory control. Aided in creating and streamline operational processes (i.e. scheduling, depositing, customer experience, etc.)
 
-#### Skill Developed:
+#### Skills Developed:
+
 Leadership, Organization, Recruiting, Training, Attentive
 
----
+***
 
 ## Purdue University department of Earth, Atmospheric, and Planetary Sciences - ITA
+
 ### Spring 2010 - Spring 2012
+
 Resolved computer issues for faculty and staff. Managed a windows domain that included 100 workstations
 
-#### Skill Developed:
+#### Skills Developed:
+
 Ticket systems, Windows administration, Network administration, Software maintenance, Team coordination, Customer relations
 
----
+***
 
 # Education
 
 ## Purdue University
+
 Bachelor's Degree in Computer Science, May 2013
 
 ## Palmer Trinity School
+
 High School Degree, May 2009
 
----
+***
 
 # Skills
 
 ## Languages
+
 Fluent in Spanish
 
 ## Programming
+
 Java, C, C++, Perl, Python, Bash, Assembly
 
 ## Operating Systems
+
 Windows OS, Mac OS X, GNU/Linux
 
 ## Specializations
-Embedded Systems, Networking, Security
+
+Automation, DevOps, Cloud, Embedded Systems, Networking, Security
 
 ## Relevant Courses
+
 Data structures and algorithms, Computer architecture, Systems programming, Analysis of algorithms, Operating systems, Compilers, Computer networks, Cryptography, Information systems, Computer security, Relational database systems, Programmatic reverse engineering of binary code
 
----
+***
 
 # Awards & Honors
 
+## Harris Engineering Award for Technology Innovation 2018
+
+The Harris Engineering Awards are awarded to only a handful of Harris' 15,000+ engineers every year, recognizing significant achievements in engineering
+
+> Rahul served as the software development engineer on the Weather Connect (WxConnect) product line where he was responsible for a number of enhancements to the software baseline to increase functionality available to the variety of customers receiving GOES-R data through this product. He was integral to identifying and solving issues for the National Weather Service units that experienced interruption to the building of the weather product images. His program engagement, attention to quality, and technical acumen enabled the team to compare data among sites to eliminate non-contributors to the root cause, ultimately resulting in a successful root cause analysis that received direct visibility by the customer.
+
+#### Topics Covered:
+
+Root Cause Analysis, Customer Engagment
+
+#### Link: [https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering](https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering "https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering")
+
 ## Presentation to National Security Agency
-Developed a plugin for IDA Pro that could detect algorithms within binaries to aid in the analysis of executables
+
+Developed a plugin for IDA Pro that could detect algorithms within binaries to aid in the analysis of executable files
 
 ### Topics Covered:
+
 Python, IDA Pro, Algorithm detection, x86 Assembly, Reverse engineering, Disassembly, GCC compiler, Visual Studio compiler
 
-#### Link: [www.rahulmohandas.com/algorithm-detection-in-assembly/](www.rahulmohandas.com/algorithm-detection-in-assembly/)
+#### Link: [https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/](https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/ "https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/")
 
----
+***
 
 ## Google ACM Coding Competition
+
 Placed second by creating an application called Arroz, to manage food for college students
 
 ### Topics Covered:
-Version control, Project management, Google API, Javadocs, Object oriented programming
+
+Version control, Project management, Google API, Java docs, Object oriented programming
 
 #### Link: [sites.google.com/site/pudevelopers](sites.google.com/site/pudevelopers)
 
----
+***
 
 ## Development with the Raspberry Pi
+
 Developed a home automation system and media center using a Raspberry Pi
 
 ### Topics Covered:
+
 Embedded systems, ARM architecture, Home automation, Video encoding, Apache
 
 #### Link: [raspberrypi.org](sites.google.com/site/pudevelopers)
 
----
+***
 
 ## President of ACM Special Interest Group Security
+
 Teaching security concepts to other students with an interest in security
 
 ### Topics Covered:
+
 Peer-to-peer protocols, Android OS development, Cipher analysis, Disassembly, Decompiling, Reverse engineering
 
 #### Link: [acm.cs.purdue.edu](acm.cs.purdue.edu)
 
----
+***
 
 ## ACM Special Interest Group Robotics
+
 Placed thirty-fourth in Vex Robotics World Championships by constructing and coding two robots
 
 ### Topics Covered:
+
 Embedded systems, Artificial intelligence
 
 #### Link: [vexrobotics.com](vexrobotics.com)
 
----
+***
 
 # Contact
 
 ## Phone
+
 [(305) 926-9294](tel:+1-305-926-9294)
 
 ## Email
+
 [rahul@rahulmohandas.com](mailto:rahul@rahulmohandas.com)
 
 ## LinkedIn
+
 [linkedin.com/in/rahul0705](linkedin.com/in/rahul0705)
 
 ## Github
+
 [github.com/rahul0705](github.com/rahul0705)
