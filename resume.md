@@ -13,7 +13,7 @@ social_link: false
 
 #### From July 2018 - Present
 
-Small team leader and [scrum master](https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master "Software Development Process") for a system that would analyze radio frequency (RF) data. Collection of data was preformed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services "Clouse Service Provider") cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps "Software Development Methodology"). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration "Software Development Methodology") within our project.
+Small team leader and [scrum master](https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master "Software Development Process") for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services "Clouse Service Provider") cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps "Software Development Methodology"). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration "Software Development Methodology") within our project.
 
 ##### Skills Developed:
 
@@ -21,7 +21,7 @@ Small team leader and [scrum master](https://en.wikipedia.org/wiki/Scrum_(softwa
 
 #### September 2016 - July 2018
 
-Responsible for a number of enhancements to the WxConnect Project to increase functionality in the processing of weather products. Overhauled automated deployment system to decrease deployment times and allow the customer to preform upgrades within their timeline. Preformed root cause analysis to determine the origination of corrupted weather products.
+Responsible for several enhancements to the WxConnect Project to increase functionality in the processing of weather products. Overhauled automated deployment system to decrease deployment times and allow the customer to perform upgrades within their timeline. Performed root cause analysis to determine the origination of corrupted weather products.
 
 ##### Skills Developed:
 
@@ -121,7 +121,7 @@ Fluent in Spanish
 
 ## Programming
 
-Java, C, C++, Perl, Python, Bash, Assembly
+Ansible, Groovy, Node, JavaScript, Java, C, C++, Perl, Python, Bash, Assembly
 
 ## Operating Systems
 
