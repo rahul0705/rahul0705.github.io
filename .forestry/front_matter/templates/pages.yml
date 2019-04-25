@@ -34,12 +34,6 @@ fields:
       path: 
   label: Layout
   description: Layout of this page
-- name: excerpt
-  type: text
-  config:
-    required: false
-  description: Excerpt for this page
-  label: Excerpt
 - name: permalink
   type: text
   config:
