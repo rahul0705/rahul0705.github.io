@@ -1,7 +1,6 @@
 ---
 layout: splash
 title: Resume
-permalink: "/resume.html"
 social_link: false
 
 ---
