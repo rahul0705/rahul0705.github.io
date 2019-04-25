@@ -47,5 +47,5 @@ fields:
   label: Permalink
   description: The permalink for this page
 pages:
-- posts-by-category.md
+- category-archive.md
 - resume.md
