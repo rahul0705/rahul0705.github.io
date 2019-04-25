@@ -46,3 +46,5 @@ fields:
     required: false
   label: Permalink
   description: The permalink for this page
+pages:
+- resume.md
