@@ -1,4 +1,48 @@
 ---
 label: Pages
 hide_body: false
-fields: []
+fields:
+- name: title
+  type: text
+  config:
+    required: true
+  label: Title
+  description: Title of the page
+- name: layout
+  type: select
+  default: single
+  config:
+    required: true
+    options:
+    - archive
+    - archive-taxonomy
+    - search
+    - single
+    - splash
+    - home
+    - posts
+    - categories
+    - category
+    - tags
+    - tag
+    - collection
+    - compress
+    source:
+      type: simple
+      section: 
+      file: 
+      path: 
+  label: Layout
+  description: Layout of this page
+- name: execrpt
+  type: text
+  config:
+    required: false
+  label: Excerpt
+  description: Excerpt for this page
+- name: permalink
+  type: text
+  config:
+    required: false
+  label: Permalink
+  description: The permalink for this page
