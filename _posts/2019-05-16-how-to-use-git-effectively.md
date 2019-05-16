@@ -14,11 +14,11 @@ This is a high level overview on the [branching model by Vincent Driessen which 
 
 ## Master
 
-The point of `master` is to be production ready. This is the branch new team member will build to get familiar with the baseline. This **should** be the branch that is not broken.
+The point of `master` is to be production ready. This is the branch new team member will build to get familiar with the baseline. Ideally this branch is **never** broken.
 
 ## Develop
 
-The point of `develop` is to be the main branch where all development will happen. Feature branches will be branching off this as well as release branches. This is sometimes called the `integration` branch.
+The point of `develop` is to be the main branch where all development will happen. Feature and [Release ](#Release)branches will be branching off `develop`. This is sometimes called the `integration` branch.
 
 > This a good place to run your nightly build within your Continious Integration environment.
 
