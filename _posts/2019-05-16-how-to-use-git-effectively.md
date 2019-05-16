@@ -18,7 +18,7 @@ The point of `master` is to be production ready. This is the branch new team mem
 
 ## Develop
 
-The point of `develop` is to be the main branch where all development will happen. Feature and [Release ](#Release)branches will be branching off `develop`. This is sometimes called the `integration` branch.
+The point of `develop` is to be the branch where all development will originate from. Feature and Release branches will be branching off `develop`. This is sometimes called the `integration` branch.
 
 > This a good place to run your nightly build within your Continious Integration environment.
 
