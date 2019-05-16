@@ -1,6 +1,10 @@
 ---
 title: How to use Git effectively
-categories: []
-tags: []
+categories:
+- Software Development
+tags:
+- software
+- development
+- git
 
 ---
