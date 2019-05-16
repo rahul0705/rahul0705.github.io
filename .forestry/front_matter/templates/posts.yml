@@ -16,3 +16,5 @@ fields:
   name: tags
   label: Tags
   description: Tags related to this post
+pages:
+- _posts/how-to-use-git-effectively.md
