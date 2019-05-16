@@ -17,4 +17,4 @@ fields:
   label: Tags
   description: Tags related to this post
 pages:
-- _posts/how-to-use-git-effectively.md
+- _posts/2019-05-16-how-to-use-git-effectively.md
