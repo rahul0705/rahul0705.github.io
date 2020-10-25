@@ -42,7 +42,7 @@ fields:
   description: The permalink for this page
 pages:
 - 404.md
-- software-development.md
-- resume.md
-- tag-archive.md
 - category-archive.md
+- resume.md
+- software-development.md
+- tag-archive.md
