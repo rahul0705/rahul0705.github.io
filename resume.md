@@ -2,8 +2,8 @@
 layout: splash
 title: Resume
 social_link: false
-
 ---
+
 # Work Experience
 
 ## Harris Corporation - Software Engineer
@@ -12,11 +12,11 @@ social_link: false
 
 #### From July 2018 - Present
 
-Small team leader and [scrum master](https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master "Software Development Process") for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services "Clouse Service Provider") cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps "Software Development Methodology"). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration "Software Development Methodology") within our project.
+Small team leader and [scrum master](<https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master> 'Software Development Process') for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services 'Cloud Service Provider') cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps 'Software Development Methodology'). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration 'Software Development Methodology') within our project.
 
 ##### Skills Developed:
 
-[Python](https://www.python.org/ "Programming Language"), [Ansible](https://www.ansible.com/ "Automation Tool"), [JavaScript](https://www.javascript.com/ "Programming Language"), [Node](https://nodejs.org/en/ "JavaScript Runtime"), [React](https://reactjs.org/ "JavaScript Library"), [AWS](https://aws.amazon.com/ "Cloud Service Provider"), [Git](https://git-scm.com/ "Software Configuration Management"), [Groovy](http://groovy-lang.org/ "Programming Language"), [Agile Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development) "Software Development Methodology"), [MagicDraw](https://www.nomagic.com/products/magicdraw "Software Modeling Tool")
+[Python](https://www.python.org/ 'Programming Language'), [Ansible](https://www.ansible.com/ 'Automation Tool'), [JavaScript](https://www.javascript.com/ 'Programming Language'), [Node](https://nodejs.org/en/ 'JavaScript Runtime'), [React](https://reactjs.org/ 'JavaScript Library'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Git](https://git-scm.com/ 'Software Configuration Management'), [Groovy](http://groovy-lang.org/ 'Programming Language'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology'), [MagicDraw](https://www.nomagic.com/products/magicdraw 'Software Modeling Tool')
 
 #### September 2016 - July 2018
 
@@ -24,15 +24,15 @@ Responsible for several enhancements to the WxConnect Project to increase functi
 
 ##### Skills Developed:
 
-[Python](https://www.python.org/ "Programming Language"), [Ansible](https://www.ansible.com/ "Automation Tool"), [Git](https://git-scm.com/ "Software Configuration Management")
+[Python](https://www.python.org/ 'Programming Language'), [Ansible](https://www.ansible.com/ 'Automation Tool'), [Git](https://git-scm.com/ 'Software Configuration Management')
 
 #### From April 2016 - September 2016
 
-Pioneered a [process improvement initiative](https://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf "Memory / CPU Footprint") for the [GOES-R](https://www.goes-r.gov/ "Environmental Satellite") program to support additional processing without modifying the current infrastructure. The initiative involved analyzing the memory and CPU footprint of the [Oracle Coherence data grid](https://en.wikipedia.org/wiki/Oracle_Coherence "In-memory Data Grid") and implement a data segmentation method that would reduce its usage.
+Pioneered a [process improvement initiative](https://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf 'Memory / CPU Footprint') for the [GOES-R](https://www.goes-r.gov/ 'Environmental Satellite') program to support additional processing without modifying the current infrastructure. The initiative involved analyzing the memory and CPU footprint of the [Oracle Coherence data grid](https://en.wikipedia.org/wiki/Oracle_Coherence 'In-memory Data Grid') and implement a data segmentation method that would reduce its usage.
 
 ##### Skills Developed:
 
-[Java](https://www.java.com/en/ "Programming Language"), [Clearcase](https://www.ibm.com/us-en/marketplace/rational-clearcase "Software Configuration Management"), [Oracle Coherence](https://www.oracle.com/middleware/coherence/ "In-memory Data Grid")
+[Java](https://www.java.com/en/ 'Programming Language'), [Clearcase](https://www.ibm.com/us-en/marketplace/rational-clearcase 'Software Configuration Management'), [Oracle Coherence](https://www.oracle.com/middleware/coherence/ 'In-memory Data Grid')
 
 #### From January 2014 - April 2016
 
@@ -40,7 +40,7 @@ Designed and developed solutions for direct receive systems for environmental sa
 
 ##### Skills Developed:
 
-[Python](https://www.python.org/ "Programming Language"), [C](http://www.open-std.org/jtc1/sc22/wg14/ "Programming Language"), [RabbitMQ](https://www.rabbitmq.com/ "Messaging Queue"), [netCDF](https://www.unidata.ucar.edu/software/netcdf/ "Data Format"), [Flask](http://flask.pocoo.org/ "Python Framework"), [Git](https://git-scm.com/ "Software Configuration Management")
+[Python](https://www.python.org/ 'Programming Language'), [C](http://www.open-std.org/jtc1/sc22/wg14/ 'Programming Language'), [RabbitMQ](https://www.rabbitmq.com/ 'Messaging Queue'), [netCDF](https://www.unidata.ucar.edu/software/netcdf/ 'Data Format'), [Flask](http://flask.pocoo.org/ 'Python Framework'), [Git](https://git-scm.com/ 'Software Configuration Management')
 
 #### From July 2013 - December 2013
 
@@ -48,9 +48,9 @@ Developed a prototype of an integration of Harris' Advanced Radar Processing sys
 
 ##### Skills Developed:
 
-[Java](https://www.java.com/en/ "Programming Language")
+[Java](https://www.java.com/en/ 'Programming Language')
 
-***
+---
 
 ## Professor Charles Killian - Research Assistant
 
@@ -62,7 +62,7 @@ Test the implementations of TCP keepalive through distributed systems and node f
 
 TCP/IP, Distributed systems, OS programming, Network testing, Software testing, C
 
-***
+---
 
 ## Boston Scientific - Intern/Project Manager/Developer/Business Analyst
 
@@ -74,7 +74,7 @@ Developed a process and created tools required to migrate clinical studies betwe
 
 Work instructions, Design documentation, Code reviews, Presentation proficiency, Cost savings analysis, Perl
 
-***
+---
 
 ## Beads Enterprises LLC (USA) - Assistant
 
@@ -86,7 +86,7 @@ Assisted in the opening of a new Pandora store includes hiring, advertisements, 
 
 Leadership, Organization, Recruiting, Training, Attentive
 
-***
+---
 
 ## Purdue University department of Earth, Atmospheric, and Planetary Sciences - ITA
 
@@ -98,7 +98,7 @@ Resolved computer issues for faculty and staff. Managed a windows domain that in
 
 Ticket systems, Windows administration, Network administration, Software maintenance, Team coordination, Customer relations
 
-***
+---
 
 # Education
 
@@ -110,7 +110,7 @@ Bachelor's Degree in Computer Science, May 2013
 
 High School Degree, May 2009
 
-***
+---
 
 # Skills
 
@@ -134,7 +134,7 @@ Automation, DevOps, Cloud, Embedded Systems, Networking, Security
 
 Data structures and algorithms, Computer architecture, Systems programming, Analysis of algorithms, Operating systems, Compilers, Computer networks, Cryptography, Information systems, Computer security, Relational database systems, Programmatic reverse engineering of binary code
 
-***
+---
 
 # Awards & Honors
 
@@ -146,9 +146,9 @@ The Harris Engineering Awards are awarded to only a handful of Harris' 15,000+ e
 
 #### Topics Covered:
 
-Root Cause Analysis, Customer Engagment
+Root Cause Analysis, Customer Engagement
 
-#### Link: [https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering](https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering "https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering")
+#### Link: [https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering](https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering 'https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering')
 
 ## Presentation to National Security Agency
 
@@ -158,9 +158,9 @@ Developed a plugin for IDA Pro that could detect algorithms within binaries to a
 
 Python, IDA Pro, Algorithm detection, x86 Assembly, Reverse engineering, Disassembly, GCC compiler, Visual Studio compiler
 
-#### Link: [https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/](https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/ "https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/")
+#### Link: [https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/](https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/ 'https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/')
 
-***
+---
 
 ## Google ACM Coding Competition
 
@@ -172,7 +172,7 @@ Version control, Project management, Google API, Java docs, Object oriented prog
 
 #### Link: [sites.google.com/site/pudevelopers](sites.google.com/site/pudevelopers)
 
-***
+---
 
 ## Development with the Raspberry Pi
 
@@ -184,7 +184,7 @@ Embedded systems, ARM architecture, Home automation, Video encoding, Apache
 
 #### Link: [raspberrypi.org](sites.google.com/site/pudevelopers)
 
-***
+---
 
 ## President of ACM Special Interest Group Security
 
@@ -196,7 +196,7 @@ Peer-to-peer protocols, Android OS development, Cipher analysis, Disassembly, De
 
 #### Link: [acm.cs.purdue.edu](acm.cs.purdue.edu)
 
-***
+---
 
 ## ACM Special Interest Group Robotics
 
@@ -208,7 +208,7 @@ Embedded systems, Artificial intelligence
 
 #### Link: [vexrobotics.com](vexrobotics.com)
 
-***
+---
 
 # Contact
 

@@ -1,14 +1,14 @@
 ---
 title: How to use Git effectively
 categories:
-- Software Development
+  - Software Development
 tags:
-- software
-- development
-- git
-
+  - software
+  - development
+  - git
 ---
-This is a high level overview on the [branching model by Vincent Driessen which has been called GitFlow](https://nvie.com/posts/a-successful-git-branching-model/ "A successful git branching model").
+
+This is a high level overview on the [branching model by Vincent Driessen which has been called GitFlow](https://nvie.com/posts/a-successful-git-branching-model/ 'A successful git branching model').
 
 # Branches
 

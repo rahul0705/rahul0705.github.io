@@ -1,5 +1,5 @@
 ---
-title: "Algorithm Detection in Assembly"
+title: 'Algorithm Detection in Assembly'
 categories:
   - Projects
 tags:
