@@ -10,7 +10,16 @@ social_link: false
 
 ### July 2013 - Present
 
-#### [RFIMS](https://www.nesdis.noaa.gov/OSGS/create.html) - Lead Software Engineer<br/>From July 2018 - Present
+#### [RFIMS](https://www.nesdis.noaa.gov/OSGS/create.html) - Chief Software Engineer<br/>From July 2019 - Present
+
+Chief Software Engineer for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services 'Cloud Service Provider') cloud based system. Primary responsibilities included providing architectural guidance and oversight around the technology direction and implementation of the project, management of software budget and schedule in conformance with [EVMS](https://en.wikipedia.org/wiki/Earned_value_management 'Project Management Technique'), coordinating team efforts to successfully meet customer expectation and requirements, the planning and implementation of software development tasks to both internal teams and external customers, working with the software team to resolve blocking issues, handle technical challenges, and coordinate efforts between internal teams.
+
+##### Skills Developed:
+
+[EVMS](https://en.wikipedia.org/wiki/Earned_value_management 'Project Management Technique'), [Ansible](https://www.ansible.com/ 'Automation Tool'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology')
+
+
+#### [RFIMS](https://www.nesdis.noaa.gov/OSGS/create.html) - Lead Software Engineer<br/>From July 2018 - July 2019
 
 Small team leader and [scrum master](<https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master> 'Software Development Process') for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services 'Cloud Service Provider') cloud based system. Primary responsibilities included creating large portions of the cloud architecture for classifying data. Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps 'Software Development Methodology'). Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration 'Software Development Methodology') within our project.
 
