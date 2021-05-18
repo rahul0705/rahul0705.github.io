@@ -74,7 +74,7 @@ TCP/IP, Distributed systems, OS programming, Network testing, Software testing, 
 
 ---
 
-## Boston Scientific - Intern/Project Manager/Developer/Business Analyst
+## [Boston Scientific](https://en.wikipedia.org/wiki/Boston_Scientific) - Intern/Project Manager/Developer/Business Analyst
 
 ### May 2012 - August 2012
 
@@ -98,7 +98,7 @@ Leadership, Organization, Recruiting, Training, Attentive
 
 ---
 
-## Purdue University department of Earth, Atmospheric, and Planetary Sciences - ITA
+## [Purdue University](https://www.purdue.edu/) department of [Earth, Atmospheric, and Planetary Sciences](https://www.eaps.purdue.edu/) - ITA
 
 ### Spring 2010 - Spring 2012
 
@@ -112,11 +112,11 @@ Ticket systems, Windows administration, Network administration, Software mainten
 
 # Education
 
-## Purdue University
+## [Purdue University](https://www.purdue.edu/)
 
-Bachelor's Degree in Computer Science, May 2013
+Bachelor's Degree in [Computer Science](https://www.cs.purdue.edu/), May 2013
 
-## Palmer Trinity School
+## [Palmer Trinity School](https://www.palmertrinity.org/)
 
 High School Degree, May 2009
 
