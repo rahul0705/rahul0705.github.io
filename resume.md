@@ -6,6 +6,22 @@ social_link: false
 
 # Work Experience
 
+## [Amazon Web Services](https://en.wikipedia.org/wiki/Amazon_Web_Services) - Software Development Engineer
+
+### August 2021 - Present
+
+#### [Marketing Technology](https://aws.amazon.com/advertising-marketing/) - Software Development Engineer<br/>From August 2013 - Present
+
+Developed and extended a self-service tool that enables marketing at the scale of AWS. Allowing end-users to measure the impact of various marketing initiatives to iterate their campaigns faster and allow the development of more precise and relevant communication, thus providing a better AWS customer experience.
+
+##### Responsibilities:
+
+* Planning and implementation of software development features to external customers
+
+##### Skills Developed:
+
+[Java](https://www.oracle.com/java/ 'Programming Language'), [Typescript](https://www.typescriptlang.org/ 'Programming Language'), [React](https://reactjs.org/ 'Javascript Library'), [CDK](https://aws.amazon.com/cdk/ 'Infrastructure as Code Tool'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology')
+
 ## [L3Harris Technologies](https://en.wikipedia.org/wiki/L3Harris_Technologies) - Software Engineer
 
 ### July 2013 - Present
