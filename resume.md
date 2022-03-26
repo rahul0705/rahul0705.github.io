@@ -20,7 +20,7 @@ Developed and extended a self-service tool that enables marketing at the scale o
 
 ##### Skills Developed
 
-[Java](https://www.oracle.com/java/ 'Programming Language'), [Typescript](https://www.typescriptlang.org/ 'Programming Language'), [React](https://reactjs.org/ 'Javascript Library'), [CDK](https://aws.amazon.com/cdk/ 'Infrastructure as Code Tool'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology')
+[Java](https://www.java.com/en/ 'Programming Language'), [Typescript](https://www.typescriptlang.org/ 'Programming Language'), [React](https://reactjs.org/ 'Javascript Library'), [CDK](https://aws.amazon.com/cdk/ 'Infrastructure as Code Tool'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology')
 
 ## [L3Harris Technologies](https://en.wikipedia.org/wiki/L3Harris_Technologies) - Software Engineer
 
