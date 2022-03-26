@@ -16,7 +16,7 @@ Developed and extended a self-service tool that enables marketing at the scale o
 
 ##### Responsibilities:
 
-* Planning and implementation of software development features to external customers
+- Planning and implementation of software development features to external customers
 
 ##### Skills Developed:
 
@@ -26,17 +26,17 @@ Developed and extended a self-service tool that enables marketing at the scale o
 
 ### July 2013 - Present
 
-#### [RFIMS](https://www.nesdis.noaa.gov/OSGS/create.html) - Chief Software Engineer<br/>From June 2019 - Present
+#### [RFIMS](https://www.nesdis.noaa.gov/about/our-offices/office-of-satellite-ground-services) - Chief Software Engineer<br/>From June 2019 - Present
 
 Chief Software Engineer for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services 'Cloud Service Provider') cloud based system.
 
 ##### Responsibilities:
 
-* Providing architectural guidance and oversight around the technology direction and implementation of the project
-* Management of software budget and schedule in conformance with [EVMS](https://en.wikipedia.org/wiki/Earned_value_management 'Project Management Technique')
-* Coordinating team efforts to successfully meet customer expectation and requirements
-* Planning and implementation of software development tasks to both internal teams and external customers
-* Working with the software team to resolve blocking issues, handle technical challenges, and coordinate efforts between internal teams
+- Providing architectural guidance and oversight around the technology direction and implementation of the project
+- Management of software budget and schedule in conformance with [EVMS](https://en.wikipedia.org/wiki/Earned_value_management 'Project Management Technique')
+- Coordinating team efforts to successfully meet customer expectation and requirements
+- Planning and implementation of software development tasks to both internal teams and external customers
+- Working with the software team to resolve blocking issues, handle technical challenges, and coordinate efforts between internal teams
 
 ##### Skills Developed:
 
@@ -44,21 +44,21 @@ Chief Software Engineer for a system that would analyze radio frequency (RF) dat
 
 > June 29, 2019 - [Harris Corporation](https://en.wikipedia.org/wiki/Harris_Corporation) merged with [L3 Technologies](https://en.wikipedia.org/wiki/L3_Technologies) becoming [L3Harris Technologies](https://en.wikipedia.org/wiki/L3Harris_Technologies)
 
-#### [RFIMS](https://www.nesdis.noaa.gov/OSGS/create.html) - Lead Software Engineer<br/>From July 2018 - June 2019
+#### [RFIMS](https://www.nesdis.noaa.gov/about/our-offices/office-of-satellite-ground-services) - Lead Software Engineer<br/>From July 2018 - June 2019
 
 Small team leader and [scrum master](<https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_master> 'Software Development Process') for a system that would analyze radio frequency (RF) data. Collection of data was performed on a purpose-built embedded system; classification of data was performed in an [Amazon Web Services (AWS)](https://en.wikipedia.org/wiki/Amazon_Web_Services 'Cloud Service Provider') cloud based system.
 
 ##### Responsibilities:
 
-* Creating large portions of the cloud architecture for classifying data
-* Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps 'Software Development Methodology')
-* Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration 'Software Development Methodology') within our project
+- Creating large portions of the cloud architecture for classifying data
+- Implemented automation within the cloud infrastructure to facilitate [DevOps](https://en.wikipedia.org/wiki/DevOps 'Software Development Methodology')
+- Pioneered [Continuous Integration (CI)](https://en.wikipedia.org/wiki/Continuous_integration 'Software Development Methodology') within our project
 
 ##### Skills Developed:
 
 [Python](https://www.python.org/ 'Programming Language'), [Ansible](https://www.ansible.com/ 'Automation Tool'), [JavaScript](https://www.javascript.com/ 'Programming Language'), [Node](https://nodejs.org/en/ 'JavaScript Runtime'), [React](https://reactjs.org/ 'JavaScript Library'), [AWS](https://aws.amazon.com/ 'Cloud Service Provider'), [Git](https://git-scm.com/ 'Software Configuration Management'), [Groovy](http://groovy-lang.org/ 'Programming Language'), [Agile Scrum](<https://en.wikipedia.org/wiki/Scrum_(software_development)> 'Software Development Methodology'), [MagicDraw](https://www.nomagic.com/products/magicdraw 'Software Modeling Tool')
 
-#### [WxConnect](https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems) - Software Engineer<br/>September 2016 - July 2018
+#### [WxConnect](https://web.archive.org/web/20210527183204/https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems 'https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems') - Software Engineer<br/>September 2016 - July 2018
 
 Responsible for several enhancements to the WxConnect Project to increase functionality in the processing of weather products. Overhauled automated deployment system to decrease deployment times and allow the customer to perform upgrades within their timeline. Performed root cause analysis to determine the origination of corrupted weather products.
 
@@ -68,13 +68,13 @@ Responsible for several enhancements to the WxConnect Project to increase functi
 
 #### [GOES](https://www.goes.noaa.gov/) - Software Engineer<br/>From April 2016 - September 2016
 
-Pioneered a [process improvement initiative](https://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf 'Memory / CPU Footprint') for the [GOES-R](https://www.goes-r.gov/ 'Environmental Satellite') program to support additional processing without modifying the current infrastructure. The initiative involved analyzing the memory and CPU footprint of the [Oracle Coherence data grid](https://en.wikipedia.org/wiki/Oracle_Coherence 'In-memory Data Grid') and implement a data segmentation method that would reduce its usage.
+Pioneered a [process improvement initiative for Memory / CPU footprint](https://web.archive.org/web/20170628140010/http://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf 'https://www.goes-r.gov/conferences/AMS%202017/Presentations%20and%20Posters%20for%20Web/Jan.%2023/Poster%20Session%201/AMS2017_Poster_Zaccheo_v5.pdf') for the [GOES-R](https://www.goes-r.gov/ 'Environmental Satellite') program to support additional processing without modifying the current infrastructure. The initiative involved analyzing the memory and CPU footprint of the [Oracle Coherence data grid](https://en.wikipedia.org/wiki/Oracle_Coherence 'In-memory Data Grid') and implement a data segmentation method that would reduce its usage.
 
 ##### Skills Developed:
 
 [Java](https://www.java.com/en/ 'Programming Language'), [Clearcase](https://www.ibm.com/us-en/marketplace/rational-clearcase 'Software Configuration Management'), [Oracle Coherence](https://www.oracle.com/middleware/coherence/ 'In-memory Data Grid')
 
-#### [WxConnect](https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems) - Software Engineer<br/>From January 2014 - April 2016
+#### [WxConnect](https://web.archive.org/web/20210527183204/https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems 'https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems') - Software Engineer<br/>From January 2014 - April 2016
 
 Designed and developed solutions for direct receive systems for environmental satellites on the WxConnect Project. Implemented the management and monitoring components. Developed RESTful interfaces which enterprise monitoring solutions could use to query state of the system. Pioneered Initial implementation of data recovery from GOES satellites to netCDF files. Implemented data recovery from Himawari satellites.
 
@@ -188,7 +188,7 @@ The Harris Engineering Awards are awarded to only a handful of Harris' 15,000+ e
 
 Root Cause Analysis, Customer Engagement
 
-#### Link: [https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering](https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering 'https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering')
+#### Link: [https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering](https://web.archive.org/web/20200919102224/https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering 'https://www.harris.com/press-releases/2018/02/harris-corporation-eweek-celebration-inspires-wonder-in-engineering')
 
 ## Presentation to National Security Agency
 
@@ -198,7 +198,7 @@ Developed a plugin for IDA Pro that could detect algorithms within binaries to a
 
 Python, IDA Pro, Algorithm detection, x86 Assembly, Reverse engineering, Disassembly, GCC compiler, Visual Studio compiler
 
-#### Link: [https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/](https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/ 'https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/')
+#### Link: [https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/]({% post_url 2013-05-01-algorithm-detection-in-assembly %} 'https://www.rahulmohandas.com/projects/algorithm-detection-in-assembly/')
 
 ---
 
@@ -210,7 +210,7 @@ Placed second by creating an application called Arroz, to manage food for colleg
 
 Version control, Project management, Google API, Java docs, Object oriented programming
 
-#### Link: [sites.google.com/site/pudevelopers](sites.google.com/site/pudevelopers)
+#### Link: [sites.google.com/site/pudevelopers](https://sites.google.com/site/pudevelopers)
 
 ---
 
@@ -222,7 +222,7 @@ Developed a home automation system and media center using a Raspberry Pi
 
 Embedded systems, ARM architecture, Home automation, Video encoding, Apache
 
-#### Link: [raspberrypi.org](sites.google.com/site/pudevelopers)
+#### Link: [raspberrypi.org](https://www.raspberrypi.org/)
 
 ---
 
@@ -234,7 +234,7 @@ Teaching security concepts to other students with an interest in security
 
 Peer-to-peer protocols, Android OS development, Cipher analysis, Disassembly, Decompiling, Reverse engineering
 
-#### Link: [acm.cs.purdue.edu](acm.cs.purdue.edu)
+#### Link: [acm.cs.purdue.edu](https://acm.cs.purdue.edu)
 
 ---
 
@@ -246,7 +246,7 @@ Placed thirty-fourth in Vex Robotics World Championships by constructing and cod
 
 Embedded systems, Artificial intelligence
 
-#### Link: [vexrobotics.com](vexrobotics.com)
+#### Link: [vexrobotics.com](https://www.vexrobotics.com)
 
 ---
 
@@ -262,8 +262,8 @@ Embedded systems, Artificial intelligence
 
 ## LinkedIn
 
-[linkedin.com/in/rahul0705](linkedin.com/in/rahul0705)
+[linkedin.com/in/rahul0705](https://www.linkedin.com/in/rahul0705)
 
 ## Github
 
-[github.com/rahul0705](github.com/rahul0705)
+[github.com/rahul0705](https://www.github.com/rahul0705)
