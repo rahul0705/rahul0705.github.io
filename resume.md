@@ -76,7 +76,7 @@ Pioneered a [process improvement initiative of Memory / CPU footprint](https://w
 
 #### [WxConnect](https://web.archive.org/web/20210527183204/https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems 'https://www.l3harris.com/all-capabilities/intelliearth-wxconnecttm-direct-receive-systems') - Software Engineer<br/>From January 2014 - April 2016
 
-Designed and developed solutions for direct receive systems for environmental satellites on the WxConnect Project. Implemented the management and monitoring components. Developed RESTful interfaces which enterprise monitoring solutions could use to query state of the system. Pioneered Initial implementation of data recovery from GOES satellites to netCDF files. Implemented data recovery from Himawari satellites.
+Designed and developed solutions for direct receive systems for environmental satellites on the WxConnect Project. Implemented the management and monitoring components. Developed RESTful interfaces which enterprise monitoring solutions could use to query state of the system. Pioneered Initial implementation of data recovery from GOES satellites to netCDF files. Implemented data recovery from [Himawari satellites](https://en.wikipedia.org/wiki/Himawari_8).
 
 ##### Skills Developed:
 
