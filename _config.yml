@@ -54,13 +54,13 @@ author:
 include:
   - _pages
 exclude:
+  - CNAME
   - Gemfile
   - vendor
-  - .vscode
 keep_files:
   - .git
   - .svn
-encoding: 'utf-8'
+encoding: UTF-8
 markdown_ext: 'markdown,mkdown,mkdn,mkd,md'
 
 # Conversion
@@ -87,9 +87,7 @@ sass:
   style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 # Outputting
-permalink: /:categories/:title/
-paginate: 5
-paginate_path: /page:num/
+permalink: none
 timezone: 'America/New_York'
 
 # Plugins (previously gems:)

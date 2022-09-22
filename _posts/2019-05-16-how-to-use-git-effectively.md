@@ -1,7 +1,7 @@
 ---
 title: How to use Git effectively
 categories:
-  - Software Development
+  - Process
 tags:
   - software
   - development

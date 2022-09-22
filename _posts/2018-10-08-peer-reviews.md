@@ -1,7 +1,7 @@
 ---
 title: Code Reviews
 categories:
-  - Software Development
+  - Process
 tags:
   - software
   - development
