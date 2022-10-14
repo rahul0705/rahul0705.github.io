@@ -50,7 +50,7 @@
             "label": "Serve",
             "type": "process",
             "command": "bundle",
-            "args": ["exec", "jekyll", "serve", "--livereload"],
+            "args": ["exec", "jekyll", "serve", "--livereload", "${input:drafts}"],
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -86,6 +86,24 @@
                     }
                 }
             ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "drafts",
+            "description": "Draft Posts",
+            "type": "pickString",
+            "options": [
+                {
+                    "label": "Include Drafts",
+                    "value": "--draft"
+                },
+                {
+                    "label": "Exclude Drafts",
+                    "value": ""
+                }
+            ],
+            "default": "--draft"
         }
     ]
 }
