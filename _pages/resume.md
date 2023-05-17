@@ -13,11 +13,12 @@ social_link: false
 
 #### [Marketing Technology](https://aws.amazon.com/advertising-marketing/) - Software Development Engineer<br/>From August 2013 - Present
 
-Developed and extended a self-service tool that enables marketing at the scale of AWS. Allowing end-users to measure the impact of various marketing initiatives to iterate their campaigns faster and allow the development of more precise and relevant communication, thus providing a better AWS customer experience.
+Developed and extended a self-service tool that enables marketing at the scale of AWS. Allowing end-users to measure the impact of various marketing initiatives to iterate their campaigns faster and allow the development of more precise and relevant communication, thus providing a better AWS customer experience. Integrated several third party tools to streamline customer interactions.
 
 ##### Responsibilities
 
 - Planning and implementation of software development features to external customers
+- Planning and implementation of integrations with third party tool for external customers
 
 ##### Skills Developed
 
