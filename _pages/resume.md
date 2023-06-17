@@ -11,7 +11,7 @@ social_link: false
 
 ### August 2021 - Present
 
-#### [Marketing Technology](https://aws.amazon.com/advertising-marketing/) - Software Development Engineer<br/>From August 2013 - Present
+#### [Marketing Technology](https://aws.amazon.com/advertising-marketing/) - Software Development Engineer<br/>From August 2021 - Present
 
 Developed and extended a self-service tool that enables marketing at the scale of AWS. Allowing end-users to measure the impact of various marketing initiatives to iterate their campaigns faster and allow the development of more precise and relevant communication, thus providing a better AWS customer experience. Integrated several third party tools to streamline customer interactions.
 
