@@ -37,6 +37,7 @@ Chief Software Engineer for a system that would analyze radio frequency (RF) dat
 - Providing architectural guidance and oversight around the technology direction and implementation of the project
 - Management of software budget and schedule in conformance with [EVMS](https://en.wikipedia.org/wiki/Earned_value_management 'Project Management Technique')
 - Coordinating team efforts to successfully meet customer expectation and requirements
+- Implemented proper controls and audits to allow [ATO](https://csrc.nist.gov/glossary/term/ato 'Authorization to Operate') with a GovCloud environment
 - Planning and implementation of software development tasks to both internal teams and external customers
 - Working with the software team to resolve blocking issues, handle technical challenges, and coordinate efforts between internal teams
 
