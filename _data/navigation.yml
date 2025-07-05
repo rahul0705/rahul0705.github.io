@@ -1,9 +1,0 @@
-main:
-  - title: 'Resume'
-    url: /resume
-  - title: 'Projects'
-    url: /projects
-  - title: 'Documents'
-    url: /process
-  - title: 'Posts'
-    url: /posts
