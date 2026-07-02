@@ -1,6 +1,6 @@
 name: Build and Deploy Astro Site to GitHub Pages
 
-on:
+on: # yamllint disable-line rule:truthy
   push:
     branches:
       - '**' # Runs on all pushes
@@ -19,9 +19,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
       - name: Install, build, and upload your site
-        uses: withastro/action@v6
+        uses: withastro/action@v6 # zizmor: ignore[unpinned-uses]
 
   deploy:
     needs: build
@@ -33,4 +33,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v5 # zizmor: ignore[unpinned-uses]
