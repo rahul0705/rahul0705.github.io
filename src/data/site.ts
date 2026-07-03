@@ -1,3 +1,3 @@
 export const site = {
-    title: 'Rahul Mohandas',
+  title: 'Rahul Mohandas',
 };
