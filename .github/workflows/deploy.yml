@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
       - name: Install, build, and upload your site
         uses: withastro/action@v6 # zizmor: ignore[unpinned-uses]
 
