@@ -12,6 +12,19 @@ on: # yamllint disable-line rule:truthy
 permissions: {}
 
 jobs:
+  lint-actions:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor 🌈
+        uses: zizmorcore/zizmor-action@v0.5.7 # zizmor: ignore[unpinned-uses]
+
   format:
     runs-on: ubuntu-latest
     steps:
@@ -36,3 +49,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+      - uses: streetsidesoftware/cspell-action@v8 # zizmor: ignore[unpinned-uses]
