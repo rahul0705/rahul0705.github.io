@@ -19,5 +19,6 @@ export default defineConfig({
     'RFIMS',
     'vexrobotics',
     'zizmor',
+    'zizmorcore',
   ],
 });
