@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: lts/*
       - run: npm ci
-      - run: npm run fmt
+      - run: npm run format
 
   lint:
     runs-on: ubuntu-latest
