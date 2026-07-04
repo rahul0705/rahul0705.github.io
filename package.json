@@ -10,7 +10,8 @@
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
+    "lint:fix": "oxlint --fix",
+    "spellcheck": "cspell \"**\""
   },
   "dependencies": {
     "@sveltia/cms": "^0.169.1"
@@ -19,6 +20,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@typescript-eslint/parser": "^8.62.1",
     "astro": "^7.0.2",
+    "cspell": "^10.0.1",
     "daisyui": "^5.5.23",
     "oxfmt": "^0.57.0",
     "oxlint": "^1.72.0",

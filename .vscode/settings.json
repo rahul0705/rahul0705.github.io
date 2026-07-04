@@ -1,21 +1,4 @@
 {
-  "cSpell.words": [
-    "Ansible",
-    "Arroz",
-    "Clearcase",
-    "cooldown",
-    "Decompiling",
-    "EVMS",
-    "Himawari",
-    "keepalive",
-    "Killian",
-    "linkedin",
-    "pudevelopers",
-    "Rahul",
-    "raspberrypi",
-    "RFIMS",
-    "vexrobotics"
-  ],
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
   "oxc.fmt.configPath": "oxfmt.config.ts"
