@@ -15,5 +15,8 @@
     "raspberrypi",
     "RFIMS",
     "vexrobotics"
-  ]
+  ],
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "oxc.fmt.configPath": "oxfmt.config.ts"
 }

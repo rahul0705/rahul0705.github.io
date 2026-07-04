@@ -1,0 +1,38 @@
+---
+name: CI
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - '**' # Runs on all pushes
+
+permissions: {}
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
+        with:
+          node-version: lts/*
+      - run: npm ci
+      - run: npm run fmt
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
