@@ -7,6 +7,7 @@ export default defineConfig({
     'Arroz',
     'Clearcase',
     'cooldown',
+    'daisyui',
     'Decompiling',
     'EVMS',
     'Himawari',
