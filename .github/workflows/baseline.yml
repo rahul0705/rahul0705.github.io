@@ -1,5 +1,5 @@
 ---
-name: CI
+name: Baseline Continuous Integration
 
 on: # yamllint disable-line rule:truthy
   pull_request:
@@ -7,24 +7,11 @@ on: # yamllint disable-line rule:truthy
       - main
   push:
     branches:
-      - '**' # Runs on all pushes
+      - '**'
 
 permissions: {}
 
 jobs:
-  lint-actions:
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
-        with:
-          persist-credentials: false
-
-      - name: Run zizmor 🌈
-        uses: zizmorcore/zizmor-action@v0.5.7 # zizmor: ignore[unpinned-uses]
-
   format:
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +24,7 @@ jobs:
       - run: npm ci
       - run: npm run format
 
-  lint:
+  lint-code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
@@ -48,7 +35,20 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
-      - run: npm run lint
+      - run: npm run lint:code
+
+  lint-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npm run lint:css
 
   spellcheck:
     runs-on: ubuntu-latest
@@ -61,4 +61,4 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
-      - uses: streetsidesoftware/cspell-action@v8 # zizmor: ignore[unpinned-uses]
+      - run: npm run spellcheck

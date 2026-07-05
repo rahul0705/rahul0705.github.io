@@ -13,6 +13,7 @@ export default defineConfig({
     'keepalive',
     'Killian',
     'linkedin',
+    'oxlint',
     'pudevelopers',
     'Rahul',
     'raspberrypi',

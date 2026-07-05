@@ -9,8 +9,10 @@
     "astro": "astro",
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
+    "lint:code": "oxlint",
+    "lint:code:fix": "oxlint --fix",
+    "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore",
+    "lint:css:fix": "stylelint --fix \"**/*.css\" --ignore-path .gitignore",
     "spellcheck": "cspell \"**\""
   },
   "dependencies": {
@@ -24,6 +26,8 @@
     "daisyui": "^5.5.23",
     "oxfmt": "^0.57.0",
     "oxlint": "^1.72.0",
+    "stylelint": "^17.14.0",
+    "stylelint-config-standard": "^40.0.0",
     "tailwindcss": "^4.3.1"
   },
   "engines": {
