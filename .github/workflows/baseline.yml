@@ -15,23 +15,35 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/setup-node-project
       - run: npm run format
 
   lint-code:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/setup-node-project
       - run: npm run lint:code
 
   lint-css:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/setup-node-project
       - run: npm run lint:css
 
   spellcheck:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/setup-node-project
       - run: npm run spellcheck
