@@ -9,6 +9,8 @@ tags:
   - projects
   - community service
   - raspberry pi
+
+# cSpell:ignore lwiring usbmount
 ---
 
 Engineering Projects In Community Service or better known as EPICS was created to provide innovative solutions for nonprofit organizations by university students. There are multiple teams within EPICS each of these teams specialize in some type of project.

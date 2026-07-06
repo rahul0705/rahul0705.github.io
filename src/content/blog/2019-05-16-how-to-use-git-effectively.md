@@ -6,6 +6,8 @@ tags:
   - software
   - development
   - git
+
+# cSpell:ignore Driessen
 ---
 
 This is a high level overview on the [branching model by Vincent Driessen which has been called GitFlow](https://nvie.com/posts/a-successful-git-branching-model/ 'A successful git branching model').
@@ -20,13 +22,13 @@ The point of `master` is to be production ready. This is the branch new team mem
 
 The point of `develop` is to be the branch where all development will originate from. Feature and Release branches will be branching off `develop`. This is sometimes called the `integration` branch.
 
-> This a good place to run your nightly build within your Continious Integration environment.
+> This a good place to run your nightly build within your Continuous Integration environment.
 
 ## Feature
 
 The point of a `feature/<issue_number or description>` or `feature-<issue_number or description>` branch is isolate changes of a feature so a developer has a consistent baseline to work with. It is common practice to merge `develop` into your feature branch often to ensure your baseline will work with current changes. The `feature` branch will branch off `develop` and be merged back into `develop` when work is completed.
 
-> This is a good place to run builds on a push bases within your Continious Integration environment.
+> This is a good place to run builds on a push bases within your Continuous Integration environment.
 
 ## Release
 

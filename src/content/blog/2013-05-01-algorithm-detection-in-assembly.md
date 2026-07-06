@@ -7,6 +7,8 @@ tags:
   - assembly
   - algorithm
   - nsa
+
+# cSpell:ignore Dullien Spafford
 ---
 
 During my senior year at [Purdue University](http://www.purdue.edu/) I had the opportunity to work on a research project in which we as a team had to detect algorithms in assembly using IDA Pro as a tool. We decided to work in a set of plugins that would help a user in identifying known algorithms within a binary. As we looked at this project we decided to come up with three different plugins. One plugin would be a proof of concept to detect Bubble Sort in a binary, the other two would be a generic approach.
