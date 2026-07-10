@@ -9,6 +9,7 @@
     "astro": "astro",
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
+    "lint:all": "npm run lint:code && npm run lint:css && npm run lint:markdown",
     "lint:code": "oxlint",
     "lint:code:fix": "oxlint --fix",
     "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore",
@@ -31,7 +32,7 @@
     "stylelint": "^17.14.0",
     "stylelint-config-standard": "^40.0.0",
     "tailwindcss": "^4.3.1",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=22.12.0"
