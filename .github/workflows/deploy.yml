@@ -1,19 +1,20 @@
 ---
-name: Build and Deploy Astro Site to GitHub Pages
+name: Deploy Site to GitHub Pages
 
 on: # yamllint disable-line rule:truthy
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - '**'
-  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Baseline Continuous Integration
+    types:
+      - completed
 
 permissions: {}
 
 jobs:
   build:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,6 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7 # zizmor: ignore[unpinned-uses]
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
       - name: Setup Node.js project
         uses: ./.github/actions/setup-node-project
@@ -33,7 +35,6 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       pages: write
