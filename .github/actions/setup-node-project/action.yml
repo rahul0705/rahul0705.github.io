@@ -5,10 +5,12 @@ description: 'Checkouts code, setups Node.js, and installs dependencies'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
+    - name: Setup Node.js
+      uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
       with:
         node-version: lts/*
         cache: npm
 
-    - run: npm ci
+    - name: Install dependencies
+      run: npm ci
       shell: bash
