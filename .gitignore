@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/vim,linux,macos,windows,visualstudiocode,node,astro
-# Edit at https://www.toptal.com/developers/gitignore?templates=vim,linux,macos,windows,visualstudiocode,node,astro
+# Created by https://www.toptal.com/developers/gitignore/api/vim,node,astro,linux,macos,windows,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=vim,node,astro,linux,macos,windows,visualstudiocode
 
 ### Astro ###
 # Gitignore template for Astro projects
@@ -259,4 +259,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/vim,linux,macos,windows,visualstudiocode,node,astro
+# End of https://www.toptal.com/developers/gitignore/api/vim,node,astro,linux,macos,windows,visualstudiocode
