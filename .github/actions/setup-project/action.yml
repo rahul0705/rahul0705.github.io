@@ -1,11 +1,11 @@
 ---
-name: 'Setup Project'
-description: 'Checkouts code, setups Node.js, and installs dependencies'
+name: 'Setup Project Dependencies'
+description: 'Sets up the project runtime and installs dependencies'
 
 runs:
   using: 'composite'
   steps:
-    - name: Setup Node.js
+    - name: Setup runtime
       uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
       with:
         node-version: lts/*
