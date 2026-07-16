@@ -61,6 +61,11 @@ jobs:
         run: npm run spellcheck
 
   build:
+    needs:
+      - format
+      - lint-code
+      - lint-css
+      - spellcheck
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
