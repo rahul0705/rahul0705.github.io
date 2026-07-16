@@ -5,6 +5,7 @@ export default defineConfig({
   words: [
     'Ansible',
     'Arroz',
+    'catppuccin',
     'Clearcase',
     'cooldown',
     'daisyui',
@@ -14,6 +15,7 @@ export default defineConfig({
     'keepalive',
     'Killian',
     'linkedin',
+    'macchiato',
     'Mohandas',
     'oxlint',
     'pudevelopers',
