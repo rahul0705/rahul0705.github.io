@@ -50,3 +50,5 @@ jobs:
 
       - name: Validate workflows
         uses: raven-actions/actionlint@v2 # zizmor: ignore[unpinned-uses]
+        with:
+          files: ".github/workflows/**/*.yml, .github/workflows/**/*.yaml, .github/actions/**/*.yml, .github/actions/**/*.yaml"
