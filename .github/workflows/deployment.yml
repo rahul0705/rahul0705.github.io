@@ -4,7 +4,7 @@ name: Deploy Project
 on: # yamllint disable-line rule:truthy
   workflow_run:
     workflows:
-      - Baseline Continuous Integration
+      - Project Continuous Integration
     types:
       - completed
 
