@@ -4,6 +4,7 @@ description: 'Sets up the project runtime and installs dependencies'
 
 runs:
   using: 'composite'
+
   steps:
     - name: Setup runtime
       uses: actions/setup-node@v6 # zizmor: ignore[unpinned-uses]
