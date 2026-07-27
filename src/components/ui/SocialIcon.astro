@@ -1,0 +1,13 @@
+---
+import { BriefcaseBusiness, GitFork, Mail } from '@lucide/astro';
+
+interface Props {
+  network: 'GitHub' | 'LinkedIn' | 'Email';
+  class?: string;
+}
+
+const { network, class: className = 'size-4' } = Astro.props;
+const Icon = network === 'GitHub' ? GitFork : network === 'LinkedIn' ? BriefcaseBusiness : Mail;
+---
+
+<Icon class={className} aria-hidden="true" />

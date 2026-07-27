@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: rahul0705/rahul0705.github.io
+  auth_methods: [token]
+media_folder: '/src/assets/{{year}}'
+public_folder: /media
+collections:
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: src/content/blog
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - { name: title, label: Title }
+      - {
+          name: draft,
+          label: Draft,
+          widget: boolean,
+          default: true,
+          after_input: 'Draft posts will not be published on the site.',
+        }
+      - { name: publishedAt, label: Date, widget: datetime, type: 'date', default: '{{now}}' }
+      - { name: body, label: Body, widget: richtext }

@@ -4,6 +4,7 @@
   themes: false;
 }
 
+@plugin '@tailwindcss/typography';
 @plugin '../themes/catppuccinTheme.latte.ts';
 @plugin '../themes/catppuccinTheme.frappe.ts';
 @plugin '../themes/catppuccinTheme.macchiato.ts';
