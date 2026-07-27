@@ -24,7 +24,7 @@
     "test:e2e": "playwright test",
     "test:unit": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "astro sync && tsc --noEmit"
   },
   "dependencies": {
     "@lucide/astro": "^1.27.0",
