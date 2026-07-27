@@ -1,0 +1,21 @@
+---
+import Timeline from './Timeline.astro';
+import type { ResumeEntry } from '../../data/resume';
+
+interface Props {
+  title: string;
+  description?: string;
+  items: ResumeEntry[];
+  type: 'work' | 'education';
+}
+
+const { title, description, items, type } = Astro.props;
+---
+
+<section>
+  <div class="mb-8 max-w-2xl">
+    <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
+    {description && <p class="mt-2 text-base-content/70">{description}</p>}
+  </div>
+  <Timeline items={items} type={type} />
+</section>

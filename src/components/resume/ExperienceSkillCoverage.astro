@@ -1,0 +1,39 @@
+---
+import type { ExperienceSkillCoverage as SkillCoverage } from '../../data/resume';
+import { skillLevel } from '../../lib/resume-coverage';
+
+interface Props {
+  skills: SkillCoverage[];
+  limit?: number;
+}
+
+const { skills, limit = 10 } = Astro.props;
+const featuredSkills = skills.slice(0, limit);
+---
+
+<section>
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-bold tracking-tight">Programming and tooling</h2>
+    <p class="mt-2 text-base-content/70">A high-level view of tools used across recorded roles.</p>
+  </div>
+
+  <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3 lg:grid-cols-5">
+    {featuredSkills.map((skill) => (
+      <div>
+        <h3 class="mb-2 text-sm font-semibold">{skill.name}</h3>
+        <div
+          class="flex gap-1"
+          role="meter"
+          aria-label={`${skill.name}: experience level ${skillLevel(skill.percentage)} of 5`}
+          aria-valuemin="1"
+          aria-valuemax="5"
+          aria-valuenow={skillLevel(skill.percentage)}
+        >
+          {Array.from({ length: 5 }, (_, index) => (
+            <span class:list={['h-1.5 flex-1 rounded-full', index < skillLevel(skill.percentage) ? 'bg-primary' : 'bg-base-300']} aria-hidden="true" />
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

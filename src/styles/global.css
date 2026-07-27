@@ -9,3 +9,69 @@
 @plugin '../themes/catppuccinTheme.frappe.ts';
 @plugin '../themes/catppuccinTheme.macchiato.ts';
 @plugin '../themes/catppuccinTheme.mocha.ts';
+
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+
+  body > header,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+
+  main,
+  .resume-page {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .resume-page {
+    padding-bottom: 0 !important;
+  }
+
+  .print-avoid-break,
+  .resume-page article {
+    break-inside: avoid;
+  }
+
+  .resume-timeline,
+  .resume-timeline > li,
+  .resume-timeline .timeline-start,
+  .resume-timeline .timeline-end {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .resume-timeline > li {
+    padding-bottom: 1rem;
+  }
+
+  .resume-timeline hr,
+  .resume-timeline .no-print-marker {
+    display: none;
+  }
+
+  .resume-page a {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  .resume-page .badge,
+  .resume-page .rounded-box {
+    background: transparent !important;
+    border-color: #999 !important;
+    box-shadow: none !important;
+  }
+}
