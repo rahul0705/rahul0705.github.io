@@ -12,8 +12,12 @@ const categories = new Set(posts.flatMap((post) => post.data.categories)).size;
 const description = 'Writing about software engineering, distributed systems, cloud infrastructure, and developer tooling.';
 ---
 
-<BaseLayout title="Articles">
-  <PageHeader eyebrow="Writing" title="Articles" {description} />
+<BaseLayout title="Articles" {description} canonicalPath="/blog/">
+  <PageHeader
+    eyebrow="Writing"
+    title="Articles"
+    {description}
+  />
   <Container>
     <div class="pb-20">
       <div class="stats stats-vertical mb-10 w-full shadow-sm sm:stats-horizontal">

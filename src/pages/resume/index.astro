@@ -1,20 +1,23 @@
 ---
-import { Mail, Phone } from '@lucide/astro';
-
-import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
-import ExperienceTimeline from '../../components/resume/ExperienceTimeline.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import PrintButton from '../../components/resume/PrintButton.astro';
 import ResumeAwards from '../../components/resume/ResumeAwards.astro';
 import ResumeSkillGroups from '../../components/resume/ResumeSkillGroups.astro';
+import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
 import ResumeTimeline from '../../components/resume/ResumeTimeline.astro';
+import ExperienceTimeline from '../../components/resume/ExperienceTimeline.astro';
 import Container from '../../components/ui/Container.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import SocialIcon from '../../components/ui/SocialIcon.astro';
 import { experienceSkillCoverage, resume } from '../../data/resume';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Mail, Phone } from '@lucide/astro';
 ---
 
-<BaseLayout title="Resume">
+<BaseLayout
+  title="Resume"
+  description="Resume for Rahul Mohandas, a Software Development Engineer with experience in cloud architecture, developer tooling, and distributed systems."
+  canonicalPath="/resume/"
+>
   <PageHeader
     eyebrow={resume.basics.label}
     title={resume.basics.name}

@@ -1,12 +1,13 @@
 ---
 import { site } from '../../data/site';
+import SeoHead from '../../components/ui/SeoHead.astro';
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager – {site.title}</title>
+    <SeoHead title="Content Manager" description={`Content management for ${site.title}.`} canonicalPath="/admin/" noindex />
     <script>
       import { init } from '@sveltia/cms';
       init();

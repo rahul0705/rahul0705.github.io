@@ -1,3 +1,4 @@
+import defaultSocialImage from '../assets/covers/code.jpg';
 import { basics } from './basics';
 import { resume } from './resume';
 
@@ -5,8 +6,10 @@ const linkedIn = basics.profiles.find((profile) => profile.network === 'LinkedIn
 const github = basics.profiles.find((profile) => profile.network === 'GitHub')?.url ?? '';
 
 export const site = {
+  url: basics.url,
   title: basics.name,
   description: 'Software Development Engineer at Amazon Web Services',
+  defaultSocialImage: defaultSocialImage.src,
   github,
   linkedin: linkedIn,
   email: basics.email,
