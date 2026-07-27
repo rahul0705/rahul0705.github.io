@@ -1,0 +1,44 @@
+---
+import Card from '../ui/Card.astro';
+import Section from '../ui/Section.astro';
+import TagList from '../ui/TagList.astro';
+import { site } from '../../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  intro?: string;
+  highlights?: string[];
+  chips?: string[];
+}
+
+const {
+  title = 'About',
+  description = 'Software development across cloud platforms, embedded systems, and developer tooling.',
+  intro = "I'm a Software Development Engineer at Amazon Web Services. My experience includes self-service marketing technology, cloud-based radio-frequency analysis, satellite-data processing, and operational tooling. I have led technical direction, delivery planning, and customer-facing software work across those systems.",
+  highlights = site.highlights ?? [],
+  chips = site.focusAreas ?? [],
+} = Astro.props;
+---
+
+<Section id="about" title={title} description={description}>
+  <div class="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+    <Card padding="lg">
+      <slot name="body">
+        <p class="text-lg leading-8 text-base-content/80">{intro}</p>
+
+        <div class="mt-6"><TagList items={chips} variant="skill" label="Focus areas" /></div>
+      </slot>
+    </Card>
+
+    <slot name="sidebar">
+      <div class="grid gap-4">
+        {highlights.map((item) => (
+          <div class="alert border border-base-300 bg-base-200/50 shadow-sm">
+            <p class="text-sm font-medium">{item}</p>
+          </div>
+        ))}
+      </div>
+    </slot>
+  </div>
+</Section>

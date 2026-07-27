@@ -1,0 +1,56 @@
+---
+import Card from '../ui/Card.astro';
+import Container from '../ui/Container.astro';
+import { socials } from '../../data/socials';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  actions?: Array<{ label: string; href: string; variant?: string; external?: boolean }>;
+}
+
+const {
+  eyebrow = "Let's connect",
+  title = 'Interested in working together or swapping ideas?',
+  description = "I'm always open to thoughtful conversations around product engineering, writing, and building better developer experiences.",
+  actions = [
+    { label: 'GitHub', href: socials.github, variant: 'primary', external: true },
+    { label: 'LinkedIn', href: socials.linkedin, variant: 'outline', external: true },
+    { label: 'Email', href: socials.email, variant: 'ghost' },
+  ],
+} = Astro.props;
+---
+
+<section class="pb-20">
+  <Container>
+    <Card padding="lg">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
+          <h2 class="mt-2 text-3xl font-semibold tracking-tight">{title}</h2>
+          <p class="mt-3 text-base-content/70">{description}</p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          {actions.map((action) => {
+            const buttonClass = action.variant === 'outline' ? 'btn btn-outline' : action.variant === 'ghost' ? 'btn btn-ghost' : 'btn btn-primary';
+
+            return (
+              <a
+                href={action.href}
+                target={action.external ? '_blank' : undefined}
+                rel={action.external ? 'noopener noreferrer' : undefined}
+                class={buttonClass}
+              >
+                {action.label}
+              </a>
+            );
+          })}
+
+          <slot name="actions" />
+        </div>
+      </div>
+    </Card>
+  </Container>
+</section>

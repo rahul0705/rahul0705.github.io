@@ -1,0 +1,22 @@
+---
+import Section from '../ui/Section.astro';
+import TagList from '../ui/TagList.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: string[];
+}
+
+const {
+  title = 'Toolkit',
+  description = 'A few tools and practices I reach for when shaping software and content.',
+  items = ['TypeScript', 'Astro', 'Node.js', 'React', 'Tailwind CSS', 'System design'],
+} = Astro.props;
+---
+
+<Section title={title} description={description}>
+  <slot name="items">
+    <TagList items={items} variant="skill" size="lg" label="Technical toolkit" />
+  </slot>
+</Section>

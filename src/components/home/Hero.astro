@@ -1,0 +1,79 @@
+---
+import { site } from '../../data/site';
+import { socials } from '../../data/socials';
+import Container from '../ui/Container.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  links?: Array<{ label: string; href: string; external?: boolean }>;
+}
+
+const {
+  eyebrow = site.title,
+  title = site.name,
+  description = site.description,
+  primaryHref = '/resume',
+  primaryLabel = 'View Resume',
+  secondaryHref = '/blog',
+  secondaryLabel = 'Read Articles',
+  links = [
+    { label: 'GitHub', href: socials.github, external: true },
+    { label: 'LinkedIn', href: socials.linkedin, external: true },
+    { label: 'Email', href: socials.email },
+  ],
+} = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero-content w-full max-w-none px-0 py-24 md:py-32">
+    <Container>
+      <div class="max-w-3xl">
+      <p class="mb-4 text-sm font-medium uppercase tracking-widest text-primary">
+        {eyebrow}
+      </p>
+
+      <h1 class="text-5xl font-bold tracking-tight md:text-6xl">
+        {title}
+      </h1>
+
+      <p class="mt-6 text-lg leading-relaxed text-base-content/75 md:text-xl">
+        {description}
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <slot name="actions" />
+
+        <a href={primaryHref} class="btn btn-primary">{primaryLabel}</a>
+
+        <a href={secondaryHref} class="btn btn-outline">{secondaryLabel}</a>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        {links.map((link) => {
+          return (
+            <a
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
+              class="btn btn-ghost btn-sm gap-2"
+              aria-label={link.label}
+            >
+              <SocialIcon network={link.label as 'GitHub' | 'LinkedIn' | 'Email'} />
+              <span>{link.label}</span>
+            </a>
+          );
+        })}
+
+        <slot name="links" />
+      </div>
+      </div>
+    </Container>
+  </div>
+</section>
