@@ -1,5 +1,9 @@
 ---
 title: Code Reviews
+featured: true
+description: A living guide to reviewing code with clarity, consistency, and constructive feedback.
+publishedAt: 2018-10-08
+coverImage: ../../assets/covers/review.jpg
 categories:
   - Process
 tags:
@@ -11,7 +15,7 @@ tags:
 
 A basic guide for reviewing code and having your code reviewed. This is a living document, expect it to change and evolve overtime, check back for updates.
 
-# What to look for in a review
+## What to look for in a review
 
 ## Style
 

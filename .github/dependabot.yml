@@ -24,7 +24,7 @@ updates:
       - github-actions
 
     groups:
-      github-actions:
+      npm-dependencies:
         patterns:
           - '*'
 

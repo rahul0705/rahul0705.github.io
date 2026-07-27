@@ -1,5 +1,9 @@
 ---
 title: How to use Git effectively
+featured: true
+description: A practical overview of GitFlow and the roles of master, develop, feature, and release branches.
+publishedAt: 2019-05-16
+coverImage: ../../assets/covers/git.jpg
 categories:
   - Process
 tags:
@@ -12,7 +16,7 @@ tags:
 
 This is a high level overview on the [branching model by Vincent Driessen which has been called GitFlow](https://nvie.com/posts/a-successful-git-branching-model/ 'A successful git branching model').
 
-# Branches
+## Branches
 
 ## Master
 

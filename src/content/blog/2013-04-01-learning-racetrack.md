@@ -1,5 +1,8 @@
 ---
 title: Learning Racetrack
+description: Rebuilding an interactive racetrack to help middle-school students learn through hands-on play.
+publishedAt: 2013-04-01
+coverImage: ../../assets/covers/circuit.jpg
 toc: true
 toc_label: Project Timeline
 toc_sticky: true
@@ -40,7 +43,7 @@ Students are presented question on an Android device which if answered correctly
 
 ### Week 1
 
-![Original Racetrack](/assets/2013/original_track.jpg)
+![Original Racetrack](../../assets/2013/original_track.jpg)
 
 #### Problems/Tasks
 
@@ -142,7 +145,7 @@ Created an android application that test users on their ability to convert binar
 
 #### Decisions
 
-We decided to create a simple Android application. The application ask you user to convert a binary number to a decimal number. Then it would give feedback on whether the user answered convert the number correctly. The application interfaced with the default Android keyboard to ask the user for input. Whenever the use pressed done on the keyboard the typed answer was evaluated and a Toast pop-up with the words “You are right” or “You are wrong” were displayed to the user. We used a Toast pop-up vs a dialog pop-up to give feedback to the user so that no response is needed from the user to continue to the next questions.
+We decided to create a simple Android application. The application ask you user to convert a binary number to a decimal number. Then it would give feedback on whether the user answered convert the number correctly. The application interfaced with the default Android keyboard to ask the user for input. Whenever the use pressed done on the keyboard the typed answer was evaluated and a Toast pop-up with the words "You are right" or "You are wrong" were displayed to the user. We used a Toast pop-up vs a dialog pop-up to give feedback to the user so that no response is needed from the user to continue to the next questions.
 
 #### Reflections
 
@@ -207,7 +210,7 @@ Found several resources explaining in detail about the Raspberry Pi's GPIO ports
 
 There was some very interesting quirks with the Raspberry Pi that must be noted. The GPIO ports can only send 3.3V with 2 mA to 16 mA. The GPIO ports are also not 5V tolerant and there is no over-voltage protection. Included is a picture of the port and what there functions are.
 
-![Raspberry Pi GPIO](/assets/2013/gpio.png)
+![Raspberry Pi GPIO](../../assets/2013/gpio.png)
 
 ### Week 11
 
@@ -217,7 +220,7 @@ Start writing software for teachers to create new questions. Start writing code 
 
 #### Accomplishments
 
-Team has started working on code for teachers. Found [sample code](https://github.com/jaye773/epics_binary_track/blob/master/gpioControls/buttonLED.c) that turns on an LED on button press. Found a tutorial on how to use the GPIO port to send signals and also take input if necessary [here](http://log.liminastudio.com/writing/tutorials/tutorial-how-to-use-your-raspberry-pi-like-an-arduino).
+Team has started working on code for teachers. Found [sample code](https://github.com/jaye773/epics_binary_track/blob/master/gpioControls/buttonLED.c) that turns on an LED on button press. Found a [Raspberry Pi GPIO tutorial](http://log.liminastudio.com/writing/tutorials/tutorial-how-to-use-your-raspberry-pi-like-an-arduino) for sending and receiving signals.
 
 #### Decisions
 
@@ -239,7 +242,7 @@ We had to install WiringPi from source so we would have full functionality of th
 
 #### Reflections
 
-We followed the instructions posted by the creator [here](https://projects.drogon.net/raspberry-pi/wiringpi/download-and-install/). We had a few issues installing it with github until we did a full system update. Once that was installed we found out our code has to be compiled with the wiringPi library:
+We followed the [WiringPi installation instructions](https://projects.drogon.net/raspberry-pi/wiringpi/download-and-install/). We had a few issues installing it with github until we did a full system update. Once that was installed we found out our code has to be compiled with the wiringPi library:
 
 ```bash
 gcc -o moveCars moveCars.c -lwiringPi
@@ -311,6 +314,6 @@ The base has the track secured to it. The Android tablets have been labeled so w
 
 We have found a way to hide all the cables that connect the track to the Raspberry Pi. We drilled a small hole in the base and ran all the cables through there and we then placed the track on top of that whole so these sensitive wires are not exposed.
 
-![Completed Racetrack](/assets/2013/completed_track.jpg)
+![Completed Racetrack](../../assets/2013/completed_track.jpg)
 
 All source code can be found on [github](https://github.com/jaye773/epics_binary_track)
