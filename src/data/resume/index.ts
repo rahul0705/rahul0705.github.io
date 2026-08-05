@@ -6,6 +6,7 @@ import { deriveSkillExperienceCoverage, type SkillExperienceCoverage } from './e
 import { interests } from './interests';
 import { toResumeJson } from './json';
 import { skillCatalog, type SkillCatalogEntry, type SkillId } from './skills';
+import { toResumeMarkdown, toResumeText } from './text';
 
 export { awards } from './awards';
 export { basics } from './basics';
@@ -74,3 +75,8 @@ export const resumeJson = toResumeJson({
   experienceSkillCoverage,
   interests,
 });
+
+const resumeTextInput = { basics, experience, education, skillGroups, recognitions: awards, interests };
+
+export const resumeText = toResumeText(resumeTextInput);
+export const resumeMarkdown = toResumeMarkdown(resumeTextInput);

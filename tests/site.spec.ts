@@ -41,6 +41,16 @@ test('the resume has a compact print presentation', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Skills', exact: true })).toBeVisible();
 });
 
+test('resume text endpoints provide plain text and Markdown', async ({ request }) => {
+  const plainText = await request.get('/resume.txt');
+  const markdown = await request.get('/resume.md');
+
+  expect(plainText.headers()['content-type']).toContain('text/plain');
+  expect(await plainText.text()).toContain('EXPERIENCE');
+  expect(markdown.headers()['content-type']).toContain('text/markdown');
+  expect(await markdown.text()).toContain('## Experience');
+});
+
 test('resume role skills retain their documentation links and descriptions', async ({ page }) => {
   await page.goto('/resume/');
 
