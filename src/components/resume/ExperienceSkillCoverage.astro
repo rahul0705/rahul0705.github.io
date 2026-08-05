@@ -1,6 +1,6 @@
 ---
-import type { ExperienceSkillCoverage as SkillCoverage } from '../../data/resume';
-import { skillLevel } from '../../lib/resume-coverage';
+import type { SkillExperienceCoverage as SkillCoverage } from '../../data/resume';
+import { skillLevel } from '../../data/resume/experience-coverage';
 
 interface Props {
   skills: SkillCoverage[];
@@ -11,7 +11,8 @@ const { skills, limit = 10 } = Astro.props;
 const featuredSkills = skills.slice(0, limit);
 ---
 
-<section>
+{featuredSkills.length > 0 && (
+  <section class="no-print">
   <div class="max-w-2xl">
     <h2 class="text-2xl font-bold tracking-tight">Programming and tooling</h2>
     <p class="mt-2 text-base-content/70">A high-level view of tools used across recorded roles.</p>
@@ -36,4 +37,5 @@ const featuredSkills = skills.slice(0, limit);
       </div>
     ))}
   </div>
-</section>
+  </section>
+)}

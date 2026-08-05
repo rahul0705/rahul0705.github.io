@@ -1,13 +1,15 @@
 ---
 import { BriefcaseBusiness, GitFork, Mail } from '@lucide/astro';
+import { socialNetworks, type SocialNetwork } from '../../lib/social-networks';
 
 interface Props {
-  network: 'GitHub' | 'LinkedIn' | 'Email';
+  network: SocialNetwork;
   class?: string;
 }
 
 const { network, class: className = 'size-4' } = Astro.props;
-const Icon = network === 'GitHub' ? GitFork : network === 'LinkedIn' ? BriefcaseBusiness : Mail;
+const icons = { GitFork, BriefcaseBusiness, Mail };
+const Icon = icons[socialNetworks[network].icon];
 ---
 
 <Icon class={className} aria-hidden="true" />

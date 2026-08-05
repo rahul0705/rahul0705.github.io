@@ -30,6 +30,28 @@ test('mobile navigation is keyboard reachable', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Articles' }).last()).toBeVisible();
 });
 
+test('the resume has a compact print presentation', async ({ page }) => {
+  await page.goto('/resume/');
+  await page.emulateMedia({ media: 'print' });
+
+  await expect(page.locator('.resume-page')).toBeHidden();
+  await expect(page.locator('.resume-print')).toBeVisible();
+  await expect(page.locator('.resume-print-entry')).toHaveCount(19);
+  await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Skills', exact: true })).toBeVisible();
+});
+
+test('resume role skills retain their documentation links and descriptions', async ({ page }) => {
+  await page.goto('/resume/');
+
+  const typeScriptSkill = page.getByRole('link', { name: 'TypeScript: Programming Language' });
+  await expect(typeScriptSkill).toHaveAttribute('href', 'https://www.typescriptlang.org/');
+  expect(await page.locator('li.tooltip[data-tip="Programming Language"]').count()).toBeGreaterThan(0);
+  await expect(page.getByText('Presentation Proficiency', { exact: true })).toBeVisible();
+  await expect(page.getByText('Ticket Systems', { exact: true })).toBeVisible();
+  await expect(page.getByText('Attentive', { exact: true })).toBeVisible();
+});
+
 test('public pages provide accurate sharing metadata', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveTitle('Rahul Mohandas');

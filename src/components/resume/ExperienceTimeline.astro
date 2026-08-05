@@ -1,18 +1,18 @@
 ---
 import { BriefcaseBusiness } from '@lucide/astro';
-import type { ExperienceCompany, ResumeEntry } from '../../data/resume';
-import TagList from '../ui/TagList.astro';
+import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
+import SkillList from './SkillList.astro';
 
 interface TimelineRole {
-  company: ExperienceCompany;
+  company: ExperienceOrganization;
   project: string;
-  role: ResumeEntry;
+  role: ExperienceRole;
 }
 
 interface Props {
   title: string;
   description?: string;
-  companies: ExperienceCompany[];
+  companies: ExperienceOrganization[];
 }
 
 const { title, description, companies } = Astro.props;
@@ -23,52 +23,54 @@ const roles: TimelineRole[] = companies.flatMap((company) =>
 const formatDate = (value?: string) =>
   value && new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`));
 
-const formatPeriod = (role: ResumeEntry) => {
+const formatPeriod = (role: ExperienceRole) => {
   const start = formatDate(role.startDate);
   const end = role.endDate ? formatDate(role.endDate) : role.startDate ? 'Present' : undefined;
   return [start, end].filter(Boolean).join(' - ');
 };
 ---
 
-<section>
-  <div class="mb-8 max-w-2xl">
-    <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
-    {description && <p class="mt-2 text-base-content/70">{description}</p>}
-  </div>
+{roles.length > 0 && (
+  <section>
+    <div class="mb-8 max-w-2xl">
+      <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
+      {description && <p class="mt-2 text-base-content/70">{description}</p>}
+    </div>
 
-  <ul class="resume-timeline timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
-    {roles.map(({ company, project, role }, index) => (
-      <li class="print-avoid-break">
-        {index > 0 && <hr />}
-        <div class="timeline-middle no-print-marker">
-          <span class="flex size-9 items-center justify-center rounded-full border-2 border-base-100 bg-primary text-primary-content shadow-sm">
-            <BriefcaseBusiness class="size-4" aria-hidden="true" />
-          </span>
-        </div>
-        <article class:list={['timeline-box bg-base-100 shadow-sm', index % 2 === 0 ? 'timeline-start' : 'timeline-end']}>
-          <div class="space-y-4">
-            <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-              <div>
-                <h3 class="card-title text-xl">{role.title}</h3>
-                <p class="text-base-content/70">
-                  {company.href ? <a href={company.href} class="link link-hover">{company.name}</a> : company.name}
-                  <span aria-hidden="true"> - </span>
-                  {project}
-                </p>
-              </div>
-              {formatPeriod(role) && <p class="shrink-0 text-sm text-base-content/60">{formatPeriod(role)}</p>}
-            </div>
-            {role.description && <p class="leading-relaxed text-base-content/75">{role.description}</p>}
-            {role.highlights && role.highlights.length > 0 && (
-              <ul class="list-disc space-y-1 ps-5 text-base-content/75">
-                {role.highlights.map((highlight) => <li>{highlight}</li>)}
-              </ul>
-            )}
-            {role.tags && role.tags.length > 0 && <TagList items={role.tags} variant="skill" label={`${role.title} skills`} />}
+    <ul class="resume-timeline timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+      {roles.map(({ company, project, role }, index) => (
+        <li class="print-avoid-break">
+          {index > 0 && <hr />}
+          <div class="timeline-middle no-print-marker">
+            <span class="flex size-9 items-center justify-center rounded-full border-2 border-base-100 bg-primary text-primary-content shadow-sm">
+              <BriefcaseBusiness class="size-4" aria-hidden="true" />
+            </span>
           </div>
-        </article>
-        {index < roles.length - 1 && <hr />}
-      </li>
-    ))}
-  </ul>
-</section>
+          <article class:list={['timeline-box bg-base-100 shadow-sm', index % 2 === 0 ? 'timeline-start' : 'timeline-end']}>
+            <div class="space-y-4">
+              <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+                <div>
+                  <h3 class="card-title text-xl">{role.title}</h3>
+                  <p class="text-base-content/70">
+                    {company.href ? <a href={company.href} class="link link-hover">{company.name}</a> : company.name}
+                    <span aria-hidden="true"> - </span>
+                    {project}
+                  </p>
+                </div>
+                {formatPeriod(role) && <p class="shrink-0 text-sm text-base-content/60">{formatPeriod(role)}</p>}
+              </div>
+              {role.description && <p class="leading-relaxed text-base-content/75">{role.description}</p>}
+              {role.highlights && role.highlights.length > 0 && (
+                <ul class="list-disc space-y-1 ps-5 text-base-content/75">
+                  {role.highlights.map((highlight) => <li>{highlight}</li>)}
+                </ul>
+              )}
+              {role.skills && role.skills.length > 0 && <SkillList skills={role.skills} label={`${role.title} skills`} />}
+            </div>
+          </article>
+          {index < roles.length - 1 && <hr />}
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

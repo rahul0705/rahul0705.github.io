@@ -1,4 +1,21 @@
-export const basics = {
+import type { ProfileNetwork } from '../../lib/social-networks';
+
+export interface ResumeProfile {
+  network: ProfileNetwork;
+  username: string;
+  url: string;
+}
+
+export interface ResumeBasics {
+  name: string;
+  label: string;
+  email: string;
+  phone: string;
+  url: string;
+  profiles: ResumeProfile[];
+}
+
+export const basics: ResumeBasics = {
   name: 'Rahul Mohandas',
   label: 'Software Development Engineer',
   email: 'rahul@rahulmohandas.com',

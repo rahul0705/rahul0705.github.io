@@ -1,19 +1,39 @@
 ---
 interface Props {
-  groups: Array<{ name: string; keywords: string[] }>;
+  groups: Array<{ name: string; keywords?: string[]; href?: string }>;
+  title?: string;
 }
 
-const { groups } = Astro.props;
+const { groups, title = 'Skills' } = Astro.props;
+const isExternalHref = (href: string) => /^https?:\/\//.test(href);
+const populatedGroups = groups.filter((group) => group.name.trim().length > 0);
 ---
 
-<section class="print-avoid-break">
-  <h2 class="text-2xl font-bold tracking-tight">Skills</h2>
+{populatedGroups.length > 0 && (
+  <section class="print-avoid-break">
+  <h2 class="text-2xl font-bold tracking-tight">{title}</h2>
   <div class="mt-6 grid gap-5 md:grid-cols-2">
-    {groups.map((group) => (
+    {populatedGroups.map((group) => (
       <div>
-        <h3 class="font-semibold">{group.name}</h3>
-        <p class="mt-1 leading-relaxed text-base-content/70">{group.keywords.join(', ')}</p>
+        <h3 class="font-semibold">
+          {group.href ? (
+            <a
+              class="link-hover link"
+              href={group.href}
+              target={isExternalHref(group.href) ? '_blank' : undefined}
+              rel={isExternalHref(group.href) ? 'noopener noreferrer' : undefined}
+            >
+              {group.name}
+            </a>
+          ) : (
+            group.name
+          )}
+        </h3>
+        {group.keywords && group.keywords.length > 0 && (
+          <p class="mt-1 leading-relaxed text-base-content/70">{group.keywords.join(', ')}</p>
+        )}
       </div>
     ))}
   </div>
-</section>
+  </section>
+)}

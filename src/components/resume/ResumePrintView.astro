@@ -1,0 +1,130 @@
+---
+import { resume } from '../../data/resume';
+import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
+import { skillCatalog } from '../../data/resume/skills';
+
+interface PrintRole {
+  company: ExperienceOrganization;
+  project: string;
+  role: ExperienceRole;
+}
+
+const roles: PrintRole[] = resume.experience
+  .flatMap((company) =>
+    company.projects.flatMap((project) => project.roles.map((role) => ({ company, project: project.name, role }))),
+  )
+  .sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
+
+const formatDate = (value?: string) =>
+  value && new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`));
+
+const formatPeriod = (entry: { startDate?: string; endDate?: string }) => {
+  const start = formatDate(entry.startDate);
+  const end = entry.endDate ? formatDate(entry.endDate) : entry.startDate ? 'Present' : undefined;
+  return [start, end].filter(Boolean).join(' - ');
+};
+
+const contacts: Array<{ label: string; value: string; href: string }> = [
+  ...(resume.basics.email ? [{ label: 'Email', value: resume.basics.email, href: `mailto:${resume.basics.email}` }] : []),
+  ...(resume.basics.phone ? [{ label: 'Phone', value: resume.basics.phone, href: `tel:${resume.basics.phone}` }] : []),
+  ...resume.basics.profiles
+    .filter((profile) => profile.network && profile.url)
+    .map((profile) => ({ label: profile.network, value: profile.url, href: profile.url })),
+];
+---
+
+<article class="resume-print print-only" aria-labelledby="print-resume-title">
+  <header class="resume-print-header">
+    <h1 id="print-resume-title">{resume.basics.name}</h1>
+    {resume.basics.label && <p class="resume-print-label">{resume.basics.label}</p>}
+    {contacts.length > 0 && (
+      <ul class="resume-print-contact" aria-label="Contact information">
+        {contacts.map((contact) => (
+          <li>
+            <strong>{contact.label}:</strong> <a href={contact.href}>{contact.value}</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </header>
+
+  {roles.length > 0 && (
+    <section aria-labelledby="print-experience-heading">
+    <h2 id="print-experience-heading">Experience</h2>
+    {roles.map(({ company, project, role }) => (
+      <article class="resume-print-entry print-avoid-break">
+        <h3>{role.title}</h3>
+        <p class="resume-print-meta">
+          <strong>{company.name}</strong> - {project}{formatPeriod(role) && ` | ${formatPeriod(role)}`}
+        </p>
+        {role.description && <p>{role.description}</p>}
+        {role.highlights && role.highlights.length > 0 && (
+          <ul>
+            {role.highlights.map((highlight) => <li>{highlight}</li>)}
+          </ul>
+        )}
+        {role.skills && role.skills.length > 0 && (
+          <p class="resume-print-keywords"><strong>Skills:</strong> {role.skills.map((skill) => skillCatalog[skill].name).join(', ')}</p>
+        )}
+      </article>
+    ))}
+    </section>
+  )}
+
+  {resume.education.length > 0 && (
+    <section aria-labelledby="print-education-heading">
+    <h2 id="print-education-heading">Education</h2>
+    {resume.education.map((entry) => (
+      <article class="resume-print-entry print-avoid-break">
+        <h3>{entry.title}</h3>
+        <p class="resume-print-meta">
+          {entry.subtitle}{formatPeriod(entry) && ` | ${formatPeriod(entry)}`}
+        </p>
+      </article>
+    ))}
+    </section>
+  )}
+
+  {resume.skills.length > 0 && (
+    <section aria-labelledby="print-skills-heading" class="print-avoid-break">
+    <h2 id="print-skills-heading">Skills</h2>
+    <dl class="resume-print-skills">
+      {resume.skills.map((group) => (
+        <div>
+          <dt>{group.name}</dt>
+          <dd>{group.keywords.join(', ')}</dd>
+        </div>
+      ))}
+    </dl>
+    </section>
+  )}
+
+  {resume.interests.length > 0 && (
+    <section aria-labelledby="print-interests-heading" class="print-avoid-break">
+      <h2 id="print-interests-heading">Interests</h2>
+      <dl class="resume-print-skills">
+        {resume.interests.map((interest) => (
+          <div>
+            <dt>{interest.name}</dt>
+            {interest.keywords && interest.keywords.length > 0 && <dd>{interest.keywords.join(', ')}</dd>}
+          </div>
+        ))}
+      </dl>
+    </section>
+  )}
+
+  {resume.awards.length > 0 && (
+    <section aria-labelledby="print-awards-heading">
+    <h2 id="print-awards-heading">Awards and Activities</h2>
+    {resume.awards.map((award) => (
+      <article class="resume-print-entry print-avoid-break">
+        <h3>{award.title}{award.date && ` | ${award.date}`}</h3>
+        <p>{award.description}</p>
+        {award.highlights && award.highlights.length > 0 && (
+          <p class="resume-print-keywords"><strong>Topics:</strong> {award.highlights.join(', ')}</p>
+        )}
+      </article>
+    ))}
+    </section>
+  )}
+</article>

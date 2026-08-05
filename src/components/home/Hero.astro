@@ -1,6 +1,7 @@
 ---
 import { site } from '../../data/site';
 import { socials } from '../../data/socials';
+import type { SocialNetwork } from '../../lib/social-networks';
 import Container from '../ui/Container.astro';
 import SocialIcon from '../ui/SocialIcon.astro';
 
@@ -12,7 +13,7 @@ interface Props {
   primaryLabel?: string;
   secondaryHref?: string;
   secondaryLabel?: string;
-  links?: Array<{ label: string; href: string; external?: boolean }>;
+  links?: Array<{ label: SocialNetwork; href: string; external?: boolean }>;
 }
 
 const {
@@ -65,7 +66,7 @@ const {
               class="btn btn-ghost btn-sm gap-2"
               aria-label={link.label}
             >
-              <SocialIcon network={link.label as 'GitHub' | 'LinkedIn' | 'Email'} />
+              <SocialIcon network={link.label} />
               <span>{link.label}</span>
             </a>
           );

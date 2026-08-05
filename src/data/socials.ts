@@ -1,4 +1,4 @@
-import { basics } from './basics';
+import { basics } from './resume/basics';
 
 const linkedIn = basics.profiles.find((profile) => profile.network === 'LinkedIn')?.url ?? '';
 const github = basics.profiles.find((profile) => profile.network === 'GitHub')?.url ?? '';

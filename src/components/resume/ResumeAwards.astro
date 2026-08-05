@@ -12,7 +12,8 @@ interface Props {
 const { awards } = Astro.props;
 ---
 
-<section>
+{awards.length > 0 && (
+  <section>
   <div class="mb-8 max-w-2xl">
     <h2 class="text-2xl font-bold tracking-tight">Awards and Activities</h2>
   </div>
@@ -34,4 +35,5 @@ const { awards } = Astro.props;
       </article>
     ))}
   </div>
-</section>
+  </section>
+)}

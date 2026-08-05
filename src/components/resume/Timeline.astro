@@ -1,6 +1,7 @@
 ---
 import { BriefcaseBusiness, GraduationCap } from '@lucide/astro';
-import TagList from '../ui/TagList.astro';
+import type { SkillId } from '../../data/resume/skills';
+import SkillList from './SkillList.astro';
 
 interface TimelineItem {
   title: string;
@@ -10,7 +11,7 @@ interface TimelineItem {
   endDate?: string;
   description?: string;
   highlights?: string[];
-  tags?: string[];
+  skills?: SkillId[];
 }
 
 interface Props {
@@ -57,8 +58,8 @@ const formatPeriod = (item: TimelineItem) => {
               {item.highlights.map((highlight) => <li>{highlight}</li>)}
             </ul>
           )}
-          {item.tags && item.tags.length > 0 && (
-            <TagList items={item.tags} variant="skill" label={`${item.title} skills`} />
+          {item.skills && item.skills.length > 0 && (
+            <SkillList skills={item.skills} label={`${item.title} skills`} />
           )}
         </div>
       </article>

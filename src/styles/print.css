@@ -1,0 +1,112 @@
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 10pt;
+  }
+
+  body > header,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .resume-print {
+    max-width: none;
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  .resume-print-header {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .resume-print h1 {
+    margin: 0;
+    font-size: 22pt;
+    line-height: 1.1;
+  }
+
+  .resume-print h2 {
+    margin: 1rem 0 0.5rem;
+    border-bottom: 1px solid #000;
+    font-size: 13pt;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .resume-print h3 {
+    margin: 0;
+    font-size: 11pt;
+    line-height: 1.25;
+  }
+
+  .resume-print p,
+  .resume-print ul,
+  .resume-print dl {
+    margin: 0.25rem 0;
+  }
+
+  .resume-print ul {
+    padding-left: 1.25rem;
+  }
+
+  .resume-print-label,
+  .resume-print-meta {
+    font-weight: 600;
+  }
+
+  .resume-print-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem 0.75rem;
+    list-style: none;
+    padding: 0 !important;
+  }
+
+  .resume-print-entry {
+    margin: 0 0 0.7rem;
+  }
+
+  .resume-print-keywords,
+  .resume-print-skills dd {
+    font-size: 9pt;
+  }
+
+  .resume-print-skills > div {
+    margin: 0.35rem 0;
+  }
+
+  .resume-print-skills dt {
+    display: inline;
+    font-weight: 700;
+  }
+
+  .resume-print-skills dt::after {
+    content: ': ';
+  }
+
+  .resume-print-skills dd {
+    display: inline;
+    margin: 0;
+  }
+
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+}
