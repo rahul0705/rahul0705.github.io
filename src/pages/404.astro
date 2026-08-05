@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/ui/Container.astro';
 ---
 
 <BaseLayout title="Page not found" description="The page you requested could not be found." canonicalPath="/404/" noindex>
-  <Container>
-    <section class="flex min-h-[60vh] items-center justify-center py-20 text-center" aria-labelledby="not-found-heading">
+  <section class="hero min-h-[60vh]" aria-labelledby="not-found-heading">
+    <div class="hero-content text-center">
       <div class="max-w-xl">
         <p class="font-mono text-sm font-medium tracking-[0.2em] text-primary">404</p>
         <h1 id="not-found-heading" class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Page not found</h1>
@@ -17,6 +16,6 @@ import Container from '../components/ui/Container.astro';
           <a href="/blog/" class="btn btn-outline">Browse articles</a>
         </div>
       </div>
-    </section>
-  </Container>
+    </div>
+  </section>
 </BaseLayout>
