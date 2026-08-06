@@ -45,8 +45,38 @@ const formatPeriod = (entry: { startDate?: string; endDate?: string }) => {
   return [start, end].filter(Boolean).join(' - ');
 };
 
+const formatYearPeriod = (entry: { startDate?: string; endDate?: string }) => {
+  const start = entry.startDate?.split('-')[0];
+  const end = entry.endDate?.split('-')[0] ?? (entry.startDate ? 'Present' : undefined);
+
+  return [start, end].filter(Boolean).join('–');
+};
+
 const section = (title: string, content: string[]) =>
   content.length > 0 ? [title, ...content].join('\n\n') : undefined;
+
+const markdownLineLength = 120;
+
+const wrapMarkdown = (value: string, firstPrefix = '', continuationPrefix = '') => {
+  const words = value.split(/\s+/);
+  const lines: string[] = [];
+  let line = firstPrefix;
+
+  words.forEach((word) => {
+    const separator = line === firstPrefix || line === continuationPrefix ? '' : ' ';
+
+    if (`${line}${separator}${word}`.length > markdownLineLength && line !== firstPrefix) {
+      lines.push(line);
+      line = `${continuationPrefix}${word}`;
+    } else {
+      line = `${line}${separator}${word}`;
+    }
+  });
+
+  if (line) lines.push(line);
+
+  return lines.join('\n');
+};
 
 const roleText = (organization: ExperienceOrganization, project: string, role: ExperienceRole) =>
   [
@@ -64,12 +94,12 @@ const roleText = (organization: ExperienceOrganization, project: string, role: E
 
 const roleMarkdown = (organization: ExperienceOrganization, project: string, role: ExperienceRole) =>
   [
-    `### ${role.title} - ${organization.name} / ${project}${formatPeriod(role) ? ` (${formatPeriod(role)})` : ''}`,
-    `**${organization.name}** | ${project}${formatPeriod(role) ? ` | ${formatPeriod(role)}` : ''}`,
-    role.description,
-    role.highlights?.map((highlight) => `- ${highlight}`).join('\n'),
+    `### ${role.title} — ${project}${formatYearPeriod(role) ? ` (${formatYearPeriod(role)})` : ''}`,
+    `Organization: **${organization.name}**`,
+    role.description ? wrapMarkdown(role.description) : undefined,
+    role.highlights?.map((highlight) => wrapMarkdown(highlight, '- ', '  ')).join('\n'),
     role.skills && role.skills.length > 0
-      ? `**Skills:** ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`
+      ? wrapMarkdown(`**Skills:** ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`)
       : undefined,
   ]
     .filter(Boolean)
@@ -155,13 +185,15 @@ export const toResumeMarkdown = ({
       .filter(Boolean)
       .join('\n\n'),
   );
-  const skillContent = skillGroups.map((group) => `- **${group.name}:** ${group.keywords.join(', ')}`);
+  const skillContent = skillGroups.map((group) =>
+    wrapMarkdown(`**${group.name}:** ${group.keywords.join(', ')}`, '- ', '  '),
+  );
   const awardContent = recognitions.map((recognition) =>
     [
       `### ${recognition.href ? `[${recognition.title}](${recognition.href})` : recognition.title}`,
       recognition.date,
-      recognition.description,
-      recognition.highlights?.map((highlight) => `- ${highlight}`).join('\n'),
+      wrapMarkdown(recognition.description),
+      recognition.highlights?.map((highlight) => wrapMarkdown(highlight, '- ', '  ')).join('\n'),
     ]
       .filter(Boolean)
       .join('\n\n'),
@@ -175,7 +207,7 @@ export const toResumeMarkdown = ({
   return [
     `# ${basics.name}`,
     basics.label,
-    contact.join(' | '),
+    wrapMarkdown(contact.join(' | ')),
     section('## Experience', experienceContent),
     section('## Education', educationContent),
     section('## Skills', skillContent),
