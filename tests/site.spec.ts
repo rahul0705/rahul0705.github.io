@@ -19,8 +19,9 @@ test('primary navigation reaches core pages', async ({ page }) => {
   await expect(page).toHaveURL(/\/blog\/?$/);
   await page.locator('header').getByRole('link', { name: 'Resume', exact: true }).click();
   await expect(page).toHaveURL(/\/resume\/?$/);
-  await expect(page.getByRole('link', { name: 'View resume.json' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Print resume' })).toBeVisible();
+  await page.getByRole('button', { name: 'Export Resume' }).click();
+  await expect(page.getByRole('link', { name: 'Download JSON' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Print Resume' })).toBeVisible();
 });
 
 test('mobile navigation opens on tap and follows its links', async ({ page }) => {
@@ -59,6 +60,33 @@ test('mobile navigation closes when tapping outside it', async ({ page }) => {
 
   await page.locator('main').click({ position: { x: 10, y: 100 } });
   await expect(articles).toBeHidden();
+});
+
+test('resume actions remain usable within the mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/resume/');
+  await page.getByRole('button', { name: 'Export Resume' }).click();
+
+  const menu = page.locator('#resume-actions-menu');
+  await expect(menu.locator(':scope > li')).toHaveCount(4);
+  await expect(menu.locator(':scope > li > :is(a, button)')).toHaveCount(4);
+  await expect(page.getByRole('button', { name: 'Print Resume' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Download JSON' })).toHaveAttribute(
+    'download',
+    'rahul-mohandas-resume.json',
+  );
+  await expect(page.getByRole('link', { name: 'Download TXT' })).toHaveAttribute(
+    'download',
+    'rahul-mohandas-resume.txt',
+  );
+  await expect(page.getByRole('link', { name: 'Download Markdown' })).toHaveAttribute(
+    'download',
+    'rahul-mohandas-resume.md',
+  );
+  const box = await menu.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(390);
 });
 
 test('unknown routes show the custom not-found page', async ({ page }) => {

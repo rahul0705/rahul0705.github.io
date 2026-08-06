@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PrintButton from '../../components/resume/PrintButton.astro';
 import ResumeAwards from '../../components/resume/ResumeAwards.astro';
+import ResumeActions from '../../components/resume/ResumeActions.astro';
 import ResumeSkillGroups from '../../components/resume/ResumeSkillGroups.astro';
 import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
 import ResumeTimeline from '../../components/resume/ResumeTimeline.astro';
@@ -22,17 +22,14 @@ const hasContactDetails = Boolean(resume.basics.email || resume.basics.phone || 
   description="Resume for Rahul Mohandas, a Software Development Engineer with experience in cloud architecture, developer tooling, and distributed systems."
   canonicalPath="/resume/"
 >
+  <ResumeActions />
+
   <div class="no-print">
     <PageHeader
       eyebrow={resume.basics.label}
       title={resume.basics.name}
       description="Experience, education, and technical work."
-    >
-      <Fragment slot="actions">
-        <PrintButton />
-        <a href="/resume.json" class="btn btn-outline no-print">View resume.json</a>
-      </Fragment>
-    </PageHeader>
+    />
   </div>
 
   <Container>
