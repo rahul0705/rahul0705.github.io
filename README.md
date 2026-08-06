@@ -1,47 +1,135 @@
-# Astro Starter Kit: Minimal
+# rahulmohandas.com
+
+Source for [rahulmohandas.com](https://www.rahulmohandas.com), a personal site containing selected writing,
+professional experience, and machine-readable resume exports.
+
+The site is statically generated with Astro and deployed to GitHub Pages. Tailwind CSS and DaisyUI provide the
+visual system, while Sveltia CMS supports browser-based editing of articles and experience entries.
+
+## Requirements
+
+- Node.js 22.12 or newer
+- npm
+- Chromium for the Playwright browser tests
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm ci
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+The development server is available at <http://localhost:4321>.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+To test the production output locally:
 
-## 🚀 Project Structure
+```sh
+npm run build
+npm run preview
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+## Common commands
+
+| Command                 | Purpose                                            |
+| ----------------------- | -------------------------------------------------- |
+| `npm run dev`           | Start the Astro development server                 |
+| `npm run build`         | Generate the static site in `dist/`                |
+| `npm run preview`       | Serve the generated production build               |
+| `npm run typecheck`     | Check TypeScript types                             |
+| `npm run astro:check`   | Run Astro diagnostics                              |
+| `npm run format`        | Check formatting                                   |
+| `npm run format:fix`    | Apply formatting                                   |
+| `npm run lint:all`      | Lint code, CSS, and Markdown                       |
+| `npm run test:unit`     | Run Vitest unit tests                              |
+| `npm run test:e2e`      | Run Playwright interaction and accessibility tests |
+| `npm run test:coverage` | Generate unit-test coverage                        |
+| `npm run quality`       | Run the complete local quality pipeline            |
+| `npm run audit:unused`  | Report unused files, exports, and dependencies     |
+
+Install the Playwright browser before running browser tests for the first time:
+
+```sh
+npx playwright install chromium
+```
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+|-- components/       Reusable Astro components
+|-- config/           Shared content models and CMS configuration
+|-- content/blog/     Markdown articles
+|-- content/experience/
+|                     Individual JSON experience records
+|-- data/             Site, home-page, social, and resume data
+|-- layouts/          Shared page layouts
+|-- pages/            Astro routes and resume export endpoints
+|-- styles/           Global and print styles
+|-- themes/           Catppuccin DaisyUI themes
+public/               Static assets and site metadata
+tests/                Playwright browser tests
+test-support/         Vitest setup utilities
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Editing content
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Articles
 
-Any static assets, like images, can be placed in the `public/` directory.
+Articles live in `src/content/blog/` as Markdown files. Their front matter fields are defined in
+`src/config/content-model.ts` and validated by `src/content.config.ts`.
 
-## 🧞 Commands
+Set `draft: true` to keep an article out of production listings and generated routes. Article cover images are stored
+under `src/assets/<year>/`.
 
-All commands are run from the root of the project, from a terminal:
+### Experience and resume
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Individual experience records live in `src/content/experience/` as JSON. The site combines them with the structured
+data in `src/data/resume/` to render the resume and generate its alternate formats.
 
-## 👀 Want to learn more?
+The public resume routes are:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `/resume/` — HTML resume with print support
+- `/resume.json` — JSON Resume-compatible data
+- `/resume.txt` — plain-text resume
+- `/resume.md` — Markdown resume
+
+When changing resume generation, run:
+
+```sh
+npm run verify:resume:markdown
+```
+
+## Content manager
+
+Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScript rather than loaded from a
+`config.yml` file:
+
+- `src/config/content-model.ts` defines the shared content schema.
+- `src/config/sveltia-adapter.ts` converts the schema into Sveltia collections.
+- `src/config/sveltia-config.ts` configures the repository, media paths, and CMS branding.
+
+On localhost, choose **Work with Local Repository** and grant access to this repository. On the deployed site, use a
+GitHub personal access token with access to the repository.
+
+## Architecture
+
+| Area          | Implementation                                           |
+| ------------- | -------------------------------------------------------- |
+| Framework     | Astro static-site generation                             |
+| Styling       | Tailwind CSS 4, DaisyUI 5, and Catppuccin themes         |
+| Content       | Astro content collections and structured TypeScript data |
+| CMS           | Sveltia CMS initialized with an in-code configuration    |
+| Unit tests    | Vitest                                                   |
+| Browser tests | Playwright and axe-core                                  |
+| Deployment    | GitHub Actions and GitHub Pages                          |
+
+The content model is shared between Astro validation and Sveltia CMS adapters to reduce schema drift. Resume exports
+are generated from the same structured data used by the HTML page.
+
+## Deployment
+
+The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
+production build. A push to `main` deploys the generated `dist/` artifact to GitHub Pages after required checks pass.
+
+The canonical site URL and sitemap configuration are defined in `astro.config.ts`. The custom domain is recorded in
+`CNAME`.
