@@ -36,5 +36,5 @@ const publishedAt = getPublishedAt(post);
     <div class="mt-4"><TagList items={post.data.tags.slice(0, 3)} label="Article tags" /></div>
   </div>
 
-  <BlogCover image={post.data.coverImage} title={post.data.title} class="hidden aspect-[4/3] rounded-box md:block" />
+  <BlogCover image={post.data.coverImage} title={post.data.title} class="hidden aspect-4/3 rounded-box md:block" />
 </a>

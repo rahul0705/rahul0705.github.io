@@ -21,7 +21,7 @@ const publishedAt = getPublishedAt(entry);
     <header class="mb-12">
       <ContentMeta date={publishedAt} label={entry.data.categories[0]} />
       <div class="mt-6">
-        <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-[2/1] rounded-box" />
+        <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-2/1 rounded-box" />
       </div>
       <h1 class="mt-8 text-5xl font-bold tracking-tight">
         {entry.data.title}

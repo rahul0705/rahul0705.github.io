@@ -80,7 +80,7 @@ test('the resume has a compact print presentation', async ({ page }) => {
   const printEntryCount = resume.work.length + resume.education.length + resume.awards.length;
   await page.emulateMedia({ media: 'print' });
 
-  await expect(page.locator('.resume-page')).toBeHidden();
+  await expect(page.locator('[data-resume-page]')).toBeHidden();
   await expect(page.locator('.resume-print')).toBeVisible();
   await expect(page.locator('.resume-print-entry')).toHaveCount(printEntryCount);
   await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeVisible();

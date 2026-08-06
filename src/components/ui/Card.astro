@@ -5,7 +5,7 @@ interface Props {
   padding?: 'sm' | 'md' | 'lg';
 }
 
-const { href, hover = true, padding = 'md' } = Astro.props;
+const { href, hover = Boolean(Astro.props.href), padding = 'md' } = Astro.props;
 
 const paddingClasses = {
   sm: 'p-4',

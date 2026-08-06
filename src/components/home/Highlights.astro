@@ -7,12 +7,16 @@ interface Props {
 }
 
 const { items, columns = 3 } = Astro.props;
-const statsDirection = columns > 1 ? 'md:stats-horizontal' : '';
+const statsGridClasses = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+  4: 'md:grid-cols-4',
+};
 ---
 
 <section class="pb-6">
   <Container>
-    <div class={`stats stats-vertical w-full shadow-sm ${statsDirection}`}>
+    <div class={`stats stats-vertical grid w-full shadow-sm ${statsGridClasses[columns]}`}>
       {items.map((item) => (
         <div class="stat">
           <p class="stat-value text-2xl">{item.value}</p>
