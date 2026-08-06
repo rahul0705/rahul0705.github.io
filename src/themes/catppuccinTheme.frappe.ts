@@ -1,3 +1,5 @@
 import { createCatppuccinPlugin } from '@catppuccin/daisyui';
 
-export default createCatppuccinPlugin('frappe');
+import { getCatppuccinDaisyOptions } from './site-theme';
+
+export default createCatppuccinPlugin('frappe', {}, getCatppuccinDaisyOptions('frappe'));

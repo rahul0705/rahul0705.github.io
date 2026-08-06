@@ -4,6 +4,7 @@ import '../styles/global.css';
 import Footer from '../components/navigation/Footer.astro';
 import Navbar from '../components/navigation/Navbar.astro';
 import SeoHead from '../components/ui/SeoHead.astro';
+import { siteTheme } from '../themes/site-theme';
 
 interface Props {
   title?: string;
@@ -18,7 +19,7 @@ interface Props {
 const { title, description, canonicalPath = Astro.url.pathname, image, type, publishedAt, noindex } = Astro.props;
 ---
 
-<html lang="en" data-theme="mocha">
+<html lang="en" data-theme={siteTheme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

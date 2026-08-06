@@ -1,6 +1,7 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
 import { skillCatalog } from '../../data/resume/skills';
+import { siteTheme } from '../../themes/site-theme';
 
 type PreviewTemplate = (props: CustomPreviewTemplateProps) => unknown;
 type PreviewElement = ReturnType<PreviewTemplate>;
@@ -127,7 +128,7 @@ const renderOrganizationLink = (h: CreateElement, url: string) =>
     : null;
 
 export const renderExperiencePreview = ({ document, entry, window }: CustomPreviewTemplateProps) => {
-  document.documentElement.dataset.theme = 'mocha';
+  document.documentElement.dataset.theme = siteTheme;
 
   const h = getCreateElement(window.parent);
   const data = getExperiencePreviewData(entry);

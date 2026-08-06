@@ -1,3 +1,5 @@
 import { createCatppuccinPlugin } from '@catppuccin/daisyui';
 
-export default createCatppuccinPlugin('macchiato');
+import { getCatppuccinDaisyOptions } from './site-theme';
+
+export default createCatppuccinPlugin('macchiato', {}, getCatppuccinDaisyOptions('macchiato'));

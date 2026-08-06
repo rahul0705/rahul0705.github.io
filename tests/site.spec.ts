@@ -1,7 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+import { siteTheme, siteThemeColor } from '../src/themes/site-theme';
+
 const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/'];
+
+test('public pages apply the configured theme and its browser color', async ({ page }) => {
+  await page.goto('/');
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', siteTheme);
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', siteThemeColor);
+});
 
 for (const route of routes) {
   test(`${route} has no automatically detectable WCAG A or AA violations`, async ({ page }) => {

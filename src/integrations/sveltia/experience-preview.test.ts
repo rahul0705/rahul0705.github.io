@@ -1,6 +1,7 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 import { describe, expect, it } from 'vitest';
 
+import { siteTheme } from '../../themes/site-theme';
 import { getExperiencePreviewData, renderExperiencePreview } from './experience-preview';
 
 const data = {
@@ -56,7 +57,7 @@ describe('Sveltia experience preview', () => {
     const preview = renderExperiencePreview(props);
     const rendered = JSON.stringify(preview);
 
-    expect(document.documentElement.dataset).toEqual({ theme: 'mocha' });
+    expect(document.documentElement.dataset).toEqual({ theme: siteTheme });
     expect(preview).toMatchObject({
       type: 'article',
       props: { className: expect.stringContaining('bg-base-200') },
