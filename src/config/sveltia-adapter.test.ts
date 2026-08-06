@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { createCmsCollection } from './cms-adapter';
 import { blogContentModel, type ContentCollectionModel } from './content-model';
+import { createSveltiaCollection } from './sveltia-adapter';
 
-describe('CMS content adapter', () => {
-  const collection = createCmsCollection(blogContentModel);
+describe('Sveltia CMS adapter', () => {
+  const collection = createSveltiaCollection(blogContentModel);
 
   it('derives collection metadata and field order from the content model', () => {
     expect(collection).toMatchObject({
@@ -23,7 +23,7 @@ describe('CMS content adapter', () => {
     expect(collection.fields).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: 'title', required: true }),
-        expect.objectContaining({ name: 'draft', widget: 'boolean', default: false, required: false }),
+        expect.objectContaining({ name: 'draft', widget: 'boolean', default: true, required: false }),
         expect.objectContaining({ name: 'description', widget: 'text', required: false }),
         expect.objectContaining({ name: 'featured', widget: 'boolean', default: false }),
         expect.objectContaining({ name: 'categories', widget: 'list', default: [] }),
@@ -52,7 +52,7 @@ describe('CMS content adapter', () => {
       },
     } as const satisfies ContentCollectionModel;
 
-    expect(createCmsCollection(model).fields).toEqual([
+    expect(createSveltiaCollection(model).fields).toEqual([
       expect.objectContaining({ name: 'attachment', widget: 'file' }),
     ]);
   });

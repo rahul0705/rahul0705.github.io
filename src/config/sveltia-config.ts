@@ -1,9 +1,9 @@
 import type { CmsConfig } from '@sveltia/cms';
 
-import { createCmsCollection } from './cms-adapter';
 import { contentModels } from './content-model';
+import { createSveltiaCollection } from './sveltia-adapter';
 
-export const cmsConfig = {
+export const sveltiaConfig = {
   load_config_file: false,
   backend: {
     name: 'github',
@@ -12,5 +12,5 @@ export const cmsConfig = {
   },
   media_folder: 'public/assets/{{year}}',
   public_folder: '/assets/{{year}}',
-  collections: contentModels.map(createCmsCollection),
+  collections: contentModels.map(createSveltiaCollection),
 } satisfies CmsConfig;

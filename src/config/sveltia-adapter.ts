@@ -4,7 +4,7 @@ import type { ContentCollectionModel, ContentField } from './content-model';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
-const createCmsField = (field: ContentField): Field => {
+const createSveltiaField = (field: ContentField): Field => {
   const common = {
     name: field.name,
     label: field.cms.label,
@@ -24,7 +24,11 @@ const createCmsField = (field: ContentField): Field => {
     case 'text':
       return { ...common, widget: 'text' };
     case 'boolean':
-      return { ...common, widget: 'boolean', default: field.default as boolean | undefined };
+      return {
+        ...common,
+        widget: 'boolean',
+        default: typeof field.cms.default === 'boolean' ? field.cms.default : (field.default as boolean | undefined),
+      };
     case 'date':
       return { ...common, widget: 'datetime', type: 'date', default: field.cms.default };
     case 'string-list':
@@ -38,11 +42,11 @@ const createCmsField = (field: ContentField): Field => {
   }
 };
 
-export const createCmsCollection = (model: ContentCollectionModel): EntryCollection => ({
+export const createSveltiaCollection = (model: ContentCollectionModel): EntryCollection => ({
   name: model.name,
   label: model.label,
   label_singular: model.labelSingular,
   folder: model.folder,
   slug: model.slug,
-  fields: Object.values(model.fields).map(createCmsField),
+  fields: Object.values(model.fields).map(createSveltiaField),
 });

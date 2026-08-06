@@ -1,17 +1,17 @@
 import { describe, expect, it } from 'vitest';
 
-import { cmsConfig } from './cms';
 import { blogContentModel, contentModels } from './content-model';
+import { sveltiaConfig } from './sveltia-config';
 
-describe('CMS content configuration', () => {
+describe('Sveltia CMS configuration', () => {
   it('registers every shared content model', () => {
-    expect(cmsConfig.collections.map((collection) => collection.name)).toEqual(
+    expect(sveltiaConfig.collections.map((collection) => collection.name)).toEqual(
       contentModels.map((model) => model.name),
     );
   });
 
   it('derives the Blog Posts collection from the shared model', () => {
-    const [blog] = cmsConfig.collections;
+    const [blog] = sveltiaConfig.collections;
 
     expect(blog).toMatchObject({
       name: blogContentModel.name,
@@ -28,9 +28,9 @@ describe('CMS content configuration', () => {
   });
 
   it('keeps CMS transport settings separate from the shared content fields', () => {
-    const [blog] = cmsConfig.collections;
+    const [blog] = sveltiaConfig.collections;
 
-    expect(cmsConfig).toMatchObject({
+    expect(sveltiaConfig).toMatchObject({
       load_config_file: false,
       media_folder: 'public/assets/{{year}}',
       public_folder: '/assets/{{year}}',
@@ -45,6 +45,7 @@ describe('CMS content configuration', () => {
           public_folder: '../../assets/{{year}}',
         }),
         expect.objectContaining({ name: 'description', widget: 'text' }),
+        expect.objectContaining({ name: 'draft', default: true }),
         expect.objectContaining({ name: 'title', required: true }),
       ]),
     );
