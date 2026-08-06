@@ -18,7 +18,7 @@
     "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore",
     "lint:css:fix": "stylelint --fix \"**/*.css\" --ignore-path .gitignore",
     "lint:markdown": "markdownlint \"**/*.md\" --ignore-path .gitignore",
-    "lint:markdown:fix": "markdownlint -fix \"**/*.md\" --ignore-path .gitignore",
+    "lint:markdown:fix": "markdownlint --fix \"**/*.md\" --ignore-path .gitignore",
     "lint:resume:markdown": "markdownlint dist/resume.md",
     "lighthouse:ci": "lhci autorun",
     "quality": "npm run format && npm run lint:all && npm run typecheck && npm run astro:check && npm run test:unit && npm run build && npm run lint:resume:markdown && npm run test:e2e && npm run lighthouse:ci",
