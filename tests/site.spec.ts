@@ -1,7 +1,17 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+import { resume } from '../src/data/resume';
+
 const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/'];
+const printEntryCount =
+  resume.experience.reduce(
+    (count, organization) =>
+      count + organization.projects.reduce((projectCount, project) => projectCount + project.roles.length, 0),
+    0,
+  ) +
+  resume.education.length +
+  resume.awards.length;
 
 for (const route of routes) {
   test(`${route} has no automatically detectable WCAG A or AA violations`, async ({ page }) => {
@@ -44,7 +54,7 @@ test('the resume has a compact print presentation', async ({ page }) => {
 
   await expect(page.locator('.resume-page')).toBeHidden();
   await expect(page.locator('.resume-print')).toBeVisible();
-  await expect(page.locator('.resume-print-entry')).toHaveCount(19);
+  await expect(page.locator('.resume-print-entry')).toHaveCount(printEntryCount);
   await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Skills', exact: true })).toBeVisible();
 });
@@ -63,11 +73,12 @@ test('resume role skills retain their documentation links and descriptions', asy
   await page.goto('/resume/');
 
   const typeScriptSkill = page.getByRole('link', { name: 'TypeScript: Programming Language' });
+  const evmsSkill = page.getByRole('link', { name: 'EVMS: Project Management Technique' });
   await expect(typeScriptSkill).toHaveAttribute('href', 'https://www.typescriptlang.org/');
+  await expect(evmsSkill).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Earned_value_management');
   expect(await page.locator('li.tooltip[data-tip="Programming Language"]').count()).toBeGreaterThan(0);
   await expect(page.getByText('Presentation Proficiency', { exact: true })).toBeVisible();
-  await expect(page.getByText('Ticket Systems', { exact: true })).toBeVisible();
-  await expect(page.getByText('Attentive', { exact: true })).toBeVisible();
+  await expect(page.getByText('TCP/IP', { exact: true })).toBeVisible();
 });
 
 test('public pages provide accurate sharing metadata', async ({ page }) => {
