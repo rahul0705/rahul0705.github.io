@@ -5,6 +5,10 @@ import { createSveltiaCollection } from './sveltia-adapter';
 
 export const sveltiaConfig = {
   load_config_file: false,
+  app_title: 'Rahul Mohandas Content Manager',
+  logo: {
+    src: '/favicon.svg',
+  },
   backend: {
     name: 'github',
     repo: 'rahul0705/rahul0705.github.io',

@@ -51,6 +51,15 @@ describe('Sveltia CMS configuration', () => {
     );
   });
 
+  it('uses the site branding in the CMS', () => {
+    expect(sveltiaConfig).toMatchObject({
+      app_title: 'Rahul Mohandas Content Manager',
+      logo: {
+        src: '/favicon.svg',
+      },
+    });
+  });
+
   it('exposes experience entries as individual JSON files', () => {
     const experience = sveltiaConfig.collections.find((collection) => collection.name === experienceContentModel.name)!;
 
