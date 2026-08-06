@@ -2,7 +2,6 @@
 title: Code Reviews
 featured: true
 description: A living guide to reviewing code with clarity, consistency, and constructive feedback.
-publishedAt: 2018-10-08
 coverImage: ../../assets/covers/review.jpg
 categories:
   - Process

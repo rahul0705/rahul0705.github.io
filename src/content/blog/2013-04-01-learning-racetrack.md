@@ -1,11 +1,7 @@
 ---
 title: Learning Racetrack
 description: Rebuilding an interactive racetrack to help middle-school students learn through hands-on play.
-publishedAt: 2013-04-01
 coverImage: ../../assets/covers/circuit.jpg
-toc: true
-toc_label: Project Timeline
-toc_sticky: true
 categories:
   - Projects
 tags:

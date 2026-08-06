@@ -2,7 +2,6 @@
 title: 'Algorithm Detection in Assembly'
 featured: true
 description: Research into recognizing known algorithms within binaries using IDA Pro plugins and program analysis.
-publishedAt: 2013-05-01
 coverImage: ../../assets/covers/code.jpg
 categories:
   - Projects
