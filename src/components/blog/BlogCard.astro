@@ -2,6 +2,7 @@
 import BlogCover from './BlogCover.astro';
 import ContentMeta from '../ui/ContentMeta.astro';
 import TagList from '../ui/TagList.astro';
+import { getPublishedAt } from '../../lib/blog';
 
 interface Props {
   post: any;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const { post, featured = false } = Astro.props;
+const publishedAt = getPublishedAt(post);
 ---
 
 <a
@@ -28,7 +30,7 @@ const { post, featured = false } = Astro.props;
       {post.data.description && <p class="mt-2 text-base-content/70">{post.data.description}</p>}
     </div>
 
-    <ContentMeta date={post.data.publishedAt} label={post.data.categories[0]} />
+    <ContentMeta date={publishedAt} label={post.data.categories[0]} />
     <TagList items={post.data.tags} label="Article tags" />
   </article>
 </a>

@@ -3,8 +3,10 @@ import BaseLayout from './BaseLayout.astro';
 import ContentMeta from '../components/ui/ContentMeta.astro';
 import TagList from '../components/ui/TagList.astro';
 import BlogCover from '../components/blog/BlogCover.astro';
+import { getPublishedAt } from '../lib/blog';
 
 const { entry } = Astro.props;
+const publishedAt = getPublishedAt(entry);
 ---
 
 <BaseLayout
@@ -13,11 +15,11 @@ const { entry } = Astro.props;
   canonicalPath={`/blog/${entry.id}/`}
   image={entry.data.coverImage?.src}
   type="article"
-  publishedAt={entry.data.publishedAt}
+  publishedAt={publishedAt}
 >
   <article class="mx-auto max-w-3xl px-6 py-20">
     <header class="mb-12">
-      <ContentMeta date={entry.data.publishedAt} label={entry.data.categories[0]} />
+      <ContentMeta date={publishedAt} label={entry.data.categories[0]} />
       <div class="mt-6">
         <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-[2/1] rounded-box" />
       </div>

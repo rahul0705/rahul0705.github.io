@@ -3,6 +3,7 @@ import { ArrowUpRight, BookOpen } from '@lucide/astro';
 import BlogCover from '../blog/BlogCover.astro';
 import ContentMeta from '../ui/ContentMeta.astro';
 import TagList from '../ui/TagList.astro';
+import { getPublishedAt } from '../../lib/blog';
 
 interface Props {
   post: any;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const { post, index } = Astro.props;
+const publishedAt = getPublishedAt(post);
 ---
 
 <a
@@ -21,7 +23,7 @@ const { post, index } = Astro.props;
   <div>
     <div class="mb-3 flex items-center gap-2 text-sm text-base-content/60">
       <BookOpen class="size-4" aria-hidden="true" />
-      <ContentMeta date={post.data.publishedAt} label={post.data.categories[0] ?? 'Article'} />
+      <ContentMeta date={publishedAt} label={post.data.categories[0] ?? 'Article'} />
     </div>
     <div class="flex items-start justify-between gap-5">
       <h3 class="text-2xl font-semibold tracking-tight group-hover:text-primary">{post.data.title}</h3>
