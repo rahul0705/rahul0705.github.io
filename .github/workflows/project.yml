@@ -214,6 +214,26 @@ jobs:
       - name: Spellcheck
         run: npm run spellcheck
 
+  audit-unused:
+    runs-on: ubuntu-latest
+
+    continue-on-error: true
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+
+      - name: Audit unused code and dependencies
+        run: npm run audit:unused
+
   build:
     needs:
       - format

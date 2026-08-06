@@ -1,6 +1,6 @@
 import type { ProfileNetwork } from '../../lib/social-networks';
 
-export interface ResumeProfile {
+interface ResumeProfile {
   network: ProfileNetwork;
   username: string;
   url: string;

@@ -8,26 +8,12 @@ import { toResumeJson } from './json';
 import { skillCatalog, type SkillCatalogEntry, type SkillId } from './skills';
 import { toResumeMarkdown, toResumeText } from './text';
 
-export { awards } from './awards';
-export { basics } from './basics';
-export { education } from './education';
-export { experience } from './experience';
-export { interests } from './interests';
-export { skillCatalog } from './skills';
-export type { Recognition } from './awards';
-export type { ResumeProfile } from './basics';
-export type { ProfileNetwork, SocialNetwork } from '../../lib/social-networks';
-export type { EducationEntry } from './education';
-export type { ExperienceOrganization, ExperienceProject, ExperienceRole } from './experience';
-export type { SkillExperienceCoverage } from './experience-coverage';
-export type { ResumeInterest } from './interests';
-
 export interface SkillGroup {
   name: string;
   keywords: string[];
 }
 
-export const skillGroups: SkillGroup[] = [
+const skillGroups: SkillGroup[] = [
   { name: 'Languages', keywords: ['Spanish (fluent)'] },
   { name: 'Operating Systems', keywords: ['Windows', 'macOS', 'GNU/Linux'] },
   {

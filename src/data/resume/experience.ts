@@ -10,7 +10,7 @@ export interface ExperienceRole {
   skills?: SkillId[];
 }
 
-export interface ExperienceProject {
+interface ExperienceProject {
   name: string;
   roles: ExperienceRole[];
 }
@@ -21,127 +21,135 @@ export interface ExperienceOrganization {
   projects: ExperienceProject[];
 }
 
-const marketingTechnology: ExperienceProject = {
-  name: 'Marketing Technology',
-  roles: [
-    {
-      title: 'Software Development Engineer',
-      startDate: '2021-08',
-      description:
-        'Developed and extended a self-service tool that enables marketing at AWS scale. The platform helps end users measure campaign impact, iterate faster, and create more precise customer communication.',
-      highlights: [
-        'Planned and implemented software features for external customers.',
-        'Planned and implemented third-party tool integrations for external customers.',
-      ],
-      skills: ['java', 'typescript', 'react', 'cypress', 'cdk', 'aws', 'agileScrum'],
-    },
-  ],
-};
-
-export const amazonWebServices: ExperienceOrganization = {
+const amazonWebServices: ExperienceOrganization = {
   name: 'Amazon Web Services',
   href: 'https://en.wikipedia.org/wiki/Amazon_Web_Services',
-  projects: [marketingTechnology],
-};
-
-const rfims: ExperienceProject = {
-  name: 'RFIMS',
-  roles: [
+  projects: [
     {
-      title: 'Chief Software Engineer',
-      startDate: '2019-06',
-      description:
-        'Led software for a system that analyzes radio-frequency data, with collection on purpose-built embedded systems and classification in an AWS cloud environment.',
-      highlights: [
-        'Provided architectural guidance and oversight for the technical direction and implementation of the project.',
-        'Managed software budget and schedule in conformance with EVMS.',
-        'Coordinated team efforts to meet customer expectations and requirements.',
-        'Implemented controls and audits supporting ATO in a GovCloud environment.',
-        'Planned and implemented software tasks for internal teams and external customers.',
+      name: 'Marketing Technology',
+      roles: [
+        {
+          title: 'Software Development Engineer',
+          startDate: '2021-08',
+          description:
+            'Developed and extended a self-service tool that enables marketing at AWS scale. The platform helps end users measure campaign impact, iterate faster, and create more precise customer communication.',
+          highlights: [
+            'Planned and implemented software features for external customers.',
+            'Planned and implemented third-party tool integrations for external customers.',
+          ],
+          skills: ['java', 'typescript', 'react', 'cypress', 'cdk', 'aws', 'agileScrum'],
+        },
       ],
-      skills: ['evms', 'ansible', 'aws', 'agileScrum'],
-    },
-    {
-      title: 'Lead Software Engineer',
-      startDate: '2018-07',
-      endDate: '2019-06',
-      description:
-        'Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.',
-      highlights: [
-        'Created large portions of the cloud architecture for classifying data.',
-        'Implemented cloud-infrastructure automation to support DevOps practices.',
-        'Pioneered continuous integration within the project.',
-      ],
-      skills: ['python', 'ansible', 'javascript', 'nodejs', 'react', 'aws', 'git', 'groovy', 'agileScrum', 'magicDraw'],
     },
   ],
 };
 
-const wxConnect: ExperienceProject = {
-  name: 'WxConnect',
-  roles: [
-    {
-      title: 'Software Engineer',
-      startDate: '2016-09',
-      endDate: '2018-07',
-      description:
-        'Delivered enhancements for weather-product processing and overhauled automated deployment, reducing deployment time and allowing customer-led upgrades.',
-      highlights: ['Performed root-cause analysis for corrupted weather products.'],
-      skills: ['python', 'ansible', 'git'],
-    },
-    {
-      title: 'Software Engineer',
-      startDate: '2014-01',
-      endDate: '2016-04',
-      description:
-        'Designed and developed direct-receive solutions for environmental satellites, including management, monitoring, REST interfaces, and data-recovery capabilities.',
-      highlights: [
-        'Implemented initial data recovery from GOES satellites to netCDF files.',
-        'Implemented data recovery from Himawari satellites.',
-      ],
-      skills: ['python', 'c', 'rabbitmq', 'netcdf', 'flask', 'git'],
-    },
-  ],
-};
-
-const goes: ExperienceProject = {
-  name: 'GOES',
-  roles: [
-    {
-      title: 'Software Engineer',
-      startDate: '2016-04',
-      endDate: '2016-09',
-      description:
-        'Pioneered a memory and CPU footprint improvement initiative for the GOES-R program, enabling additional processing without modifying existing infrastructure.',
-      highlights: [
-        'Analyzed Oracle Coherence data-grid usage and implemented a segmentation approach to reduce its footprint.',
-      ],
-      skills: ['java', 'clearCase', 'oracleCoherence'],
-    },
-  ],
-};
-
-const internalResearchAndDevelopment: ExperienceProject = {
-  name: 'Internal Research and Development',
-  roles: [
-    {
-      title: 'Software Engineer',
-      startDate: '2013-07',
-      endDate: '2013-12',
-      description:
-        "Developed a prototype integrating Harris' Advanced Radar Processing system with Harris' Service Architecture.",
-      skills: ['java'],
-    },
-  ],
-};
-
-export const l3HarrisTechnologies: ExperienceOrganization = {
+const l3HarrisTechnologies: ExperienceOrganization = {
   name: 'L3Harris Technologies',
   href: 'https://en.wikipedia.org/wiki/L3Harris_Technologies',
-  projects: [rfims, wxConnect, goes, internalResearchAndDevelopment],
+  projects: [
+    {
+      name: 'RFIMS',
+      roles: [
+        {
+          title: 'Chief Software Engineer',
+          startDate: '2019-06',
+          description:
+            'Led software for a system that analyzes radio-frequency data, with collection on purpose-built embedded systems and classification in an AWS cloud environment.',
+          highlights: [
+            'Provided architectural guidance and oversight for the technical direction and implementation of the project.',
+            'Managed software budget and schedule in conformance with EVMS.',
+            'Coordinated team efforts to meet customer expectations and requirements.',
+            'Implemented controls and audits supporting ATO in a GovCloud environment.',
+            'Planned and implemented software tasks for internal teams and external customers.',
+          ],
+          skills: ['evms', 'ansible', 'aws', 'agileScrum'],
+        },
+        {
+          title: 'Lead Software Engineer',
+          startDate: '2018-07',
+          endDate: '2019-06',
+          description:
+            'Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.',
+          highlights: [
+            'Created large portions of the cloud architecture for classifying data.',
+            'Implemented cloud-infrastructure automation to support DevOps practices.',
+            'Pioneered continuous integration within the project.',
+          ],
+          skills: [
+            'python',
+            'ansible',
+            'javascript',
+            'nodejs',
+            'react',
+            'aws',
+            'git',
+            'groovy',
+            'agileScrum',
+            'magicDraw',
+          ],
+        },
+      ],
+    },
+    {
+      name: 'WxConnect',
+      roles: [
+        {
+          title: 'Software Engineer',
+          startDate: '2016-09',
+          endDate: '2018-07',
+          description:
+            'Delivered enhancements for weather-product processing and overhauled automated deployment, reducing deployment time and allowing customer-led upgrades.',
+          highlights: ['Performed root-cause analysis for corrupted weather products.'],
+          skills: ['python', 'ansible', 'git'],
+        },
+        {
+          title: 'Software Engineer',
+          startDate: '2014-01',
+          endDate: '2016-04',
+          description:
+            'Designed and developed direct-receive solutions for environmental satellites, including management, monitoring, REST interfaces, and data-recovery capabilities.',
+          highlights: [
+            'Implemented initial data recovery from GOES satellites to netCDF files.',
+            'Implemented data recovery from Himawari satellites.',
+          ],
+          skills: ['python', 'c', 'rabbitmq', 'netcdf', 'flask', 'git'],
+        },
+      ],
+    },
+    {
+      name: 'GOES',
+      roles: [
+        {
+          title: 'Software Engineer',
+          startDate: '2016-04',
+          endDate: '2016-09',
+          description:
+            'Pioneered a memory and CPU footprint improvement initiative for the GOES-R program, enabling additional processing without modifying existing infrastructure.',
+          highlights: [
+            'Analyzed Oracle Coherence data-grid usage and implemented a segmentation approach to reduce its footprint.',
+          ],
+          skills: ['java', 'clearCase', 'oracleCoherence'],
+        },
+      ],
+    },
+    {
+      name: 'Internal Research and Development',
+      roles: [
+        {
+          title: 'Software Engineer',
+          startDate: '2013-07',
+          endDate: '2013-12',
+          description:
+            "Developed a prototype integrating Harris' Advanced Radar Processing system with Harris' Service Architecture.",
+          skills: ['java'],
+        },
+      ],
+    },
+  ],
 };
 
-export const professorCharlesKillian: ExperienceOrganization = {
+const professorCharlesKillian: ExperienceOrganization = {
   name: 'Professor Charles Killian',
   projects: [
     {
@@ -160,7 +168,7 @@ export const professorCharlesKillian: ExperienceOrganization = {
   ],
 };
 
-export const bostonScientific: ExperienceOrganization = {
+const bostonScientific: ExperienceOrganization = {
   name: 'Boston Scientific',
   href: 'https://en.wikipedia.org/wiki/Boston_Scientific',
   projects: [
@@ -187,7 +195,7 @@ export const bostonScientific: ExperienceOrganization = {
   ],
 };
 
-export const beadsEnterprises: ExperienceOrganization = {
+const beadsEnterprises: ExperienceOrganization = {
   name: 'Beads Enterprises LLC (USA)',
   projects: [
     {
@@ -206,7 +214,7 @@ export const beadsEnterprises: ExperienceOrganization = {
   ],
 };
 
-export const purdueEaps: ExperienceOrganization = {
+const purdueEaps: ExperienceOrganization = {
   name: 'Purdue University Department of Earth, Atmospheric, and Planetary Sciences',
   href: 'https://www.eaps.purdue.edu/',
   projects: [

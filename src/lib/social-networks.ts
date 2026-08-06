@@ -1,4 +1,4 @@
-export const socialIcons = {
+const socialIcons = {
   GitFork: 'GitFork',
   BriefcaseBusiness: 'BriefcaseBusiness',
   Mail: 'Mail',
