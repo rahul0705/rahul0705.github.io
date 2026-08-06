@@ -34,6 +34,9 @@ describe('Sveltia CMS configuration', () => {
       load_config_file: false,
       media_folder: 'public/assets/{{year}}',
       public_folder: '/assets/{{year}}',
+      output: {
+        omit_empty_optional_fields: true,
+      },
     });
     expect(blog.fields).toEqual(
       expect.arrayContaining([

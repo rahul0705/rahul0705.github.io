@@ -6,6 +6,7 @@
   "startDate": "2013-07-01",
   "endDate": "2013-12-01",
   "description": "Developed a prototype integrating Harris' Advanced Radar Processing system with Harris' Service Architecture.",
-  "highlights": [],
-  "skills": ["java"]
+  "skills": [
+    "java"
+  ]
 }

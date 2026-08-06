@@ -12,5 +12,10 @@
     "Implemented controls and audits supporting ATO in a GovCloud environment.",
     "Planned and implemented software tasks for internal teams and external customers."
   ],
-  "skills": ["evms", "ansible", "aws", "agileScrum"]
+  "skills": [
+    "evms",
+    "ansible",
+    "aws",
+    "agileScrum"
+  ]
 }

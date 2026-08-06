@@ -10,5 +10,12 @@
     "Implemented initial data recovery from GOES satellites to netCDF files.",
     "Implemented data recovery from Himawari satellites."
   ],
-  "skills": ["python", "c", "rabbitmq", "netcdf", "flask", "git"]
+  "skills": [
+    "python",
+    "c",
+    "rabbitmq",
+    "netcdf",
+    "flask",
+    "git"
+  ]
 }

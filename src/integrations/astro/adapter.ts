@@ -5,6 +5,8 @@ import type { ContentCollectionModel, ContentField } from '../../config/content-
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
+const dateSchema = z.preprocess((value) => (typeof value === 'string' ? new Date(value) : value), z.date());
+
 type OptionalUnlessRequired<Field, Output> = Field extends { required: true } ? Output : Output | undefined;
 
 type OptionalUnlessRequiredOrDefault<Field, Output, Default> = Field extends { required: true } | { default: Default }
@@ -48,7 +50,9 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
           : z.boolean().optional()
         : z.boolean().default(field.default as boolean);
     case 'date':
-      return isRequired(field) ? z.coerce.date() : z.coerce.date().optional();
+      return isRequired(field)
+        ? dateSchema
+        : z.preprocess((value) => (value === null || value === '' ? undefined : value), dateSchema.optional());
     case 'string-list':
       return field.default === undefined
         ? isRequired(field)

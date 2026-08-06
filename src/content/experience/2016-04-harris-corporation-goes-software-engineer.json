@@ -9,5 +9,9 @@
   "highlights": [
     "Analyzed Oracle Coherence data-grid usage and implemented a segmentation approach to reduce its footprint."
   ],
-  "skills": ["java", "clearCase", "oracleCoherence"]
+  "skills": [
+    "java",
+    "clearCase",
+    "oracleCoherence"
+  ]
 }

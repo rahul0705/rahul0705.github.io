@@ -11,5 +11,16 @@
     "Implemented cloud-infrastructure automation to support DevOps practices.",
     "Pioneered continuous integration within the project."
   ],
-  "skills": ["python", "ansible", "javascript", "nodejs", "react", "aws", "git", "groovy", "agileScrum", "magicDraw"]
+  "skills": [
+    "python",
+    "ansible",
+    "javascript",
+    "nodejs",
+    "react",
+    "aws",
+    "git",
+    "groovy",
+    "agileScrum",
+    "magicDraw"
+  ]
 }
