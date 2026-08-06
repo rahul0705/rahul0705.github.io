@@ -20,6 +20,14 @@ export const monthIndex = (date: string) => {
 export const flattenExperienceRoles = (experience: ExperienceOrganization[]): ExperienceRole[] =>
   experience.flatMap((organization) => organization.projects.flatMap((project) => project.roles));
 
+export const yearsOfExperience = (experience: ExperienceOrganization[], currentDate = new Date()) => {
+  const roles = flattenExperienceRoles(experience).filter((role) => role.startDate);
+  if (roles.length === 0) return 0;
+  const firstMonth = Math.min(...roles.map((role) => monthIndex(role.startDate!)));
+  const currentMonth = currentDate.getUTCFullYear() * 12 + currentDate.getUTCMonth();
+  return Math.floor((currentMonth - firstMonth + 1) / 12);
+};
+
 export const orderRolesNewestFirst = (roles: ExperienceRole[]) =>
   [...roles].sort((a, b) => (b.startDate ?? '').localeCompare(a.startDate ?? ''));
 

@@ -8,6 +8,7 @@ import {
   orderRolesNewestFirst,
   skillLevel,
   uniqueMonths,
+  yearsOfExperience,
 } from './experience-coverage';
 import type { SkillId } from './skills';
 
@@ -48,6 +49,9 @@ describe('experience coverage', () => {
         { start: monthIndex('2020-06'), end: monthIndex('2020-06') },
       ]),
     ).toBe(6);
+  });
+  it('derives experience years from the earliest role', () => {
+    expect(yearsOfExperience(experience, new Date('2024-06-15T00:00:00Z'))).toBe(2);
   });
   it('derives ongoing-role coverage', () => {
     expect(

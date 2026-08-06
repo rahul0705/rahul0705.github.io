@@ -1,13 +1,12 @@
 ---
 import Container from '../ui/Container.astro';
-import { site } from '../../data/site';
 
 interface Props {
-  items?: Array<{ label: string; value: string }>;
+  items: Array<{ label: string; value: string }>;
   columns?: 2 | 3 | 4;
 }
 
-const { items = site.stats ?? [], columns = 3 } = Astro.props;
+const { items, columns = 3 } = Astro.props;
 const statsDirection = columns > 1 ? 'md:stats-horizontal' : '';
 ---
 

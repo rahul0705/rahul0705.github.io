@@ -195,6 +195,7 @@ const bostonScientific: ExperienceOrganization = {
   ],
 };
 
+/*
 const beadsEnterprises: ExperienceOrganization = {
   name: 'Beads Enterprises LLC (USA)',
   projects: [
@@ -239,12 +240,13 @@ const purdueEaps: ExperienceOrganization = {
     },
   ],
 };
+*/
 
 export const experience: ExperienceOrganization[] = [
   amazonWebServices,
   l3HarrisTechnologies,
   professorCharlesKillian,
   bostonScientific,
-  beadsEnterprises,
-  purdueEaps,
+  // beadsEnterprises,
+  // purdueEaps,
 ];
