@@ -57,11 +57,12 @@ npx playwright install chromium
 ```text
 src/
 |-- components/       Reusable Astro components
-|-- config/           Shared content models and CMS configuration
+|-- config/           Integration-independent site configuration
 |-- content/blog/     Markdown articles
 |-- content/experience/
 |                     Individual JSON experience records
 |-- data/             Site, home-page, social, and resume data
+|-- integrations/     Astro and Sveltia integration boundaries
 |-- layouts/          Shared page layouts
 |-- pages/            Astro routes and resume export endpoints
 |-- styles/           Global and print styles
@@ -104,9 +105,10 @@ npm run verify:resume:markdown
 Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScript rather than loaded from a
 `config.yml` file:
 
-- `src/config/content-model.ts` defines the shared content schema.
-- `src/config/sveltia-adapter.ts` converts the schema into Sveltia collections.
-- `src/config/sveltia-config.ts` configures the repository, media paths, and CMS branding.
+- The shared content model defines the fields available to both Astro and the CMS.
+- The Sveltia integration under `src/integrations/sveltia/` adapts that model into CMS collections and owns the CMS
+  configuration, branding, and content previews.
+- The Astro integration under `src/integrations/astro/` adapts the same model into Astro collection schemas.
 
 On localhost, choose **Work with Local Repository** and grant access to this repository. On the deployed site, use a
 GitHub personal access token with access to the repository.
@@ -123,8 +125,16 @@ GitHub personal access token with access to the repository.
 | Browser tests | Playwright and axe-core                                  |
 | Deployment    | GitHub Actions and GitHub Pages                          |
 
-The content model is shared between Astro validation and Sveltia CMS adapters to reduce schema drift. Resume exports
-are generated from the same structured data used by the HTML page.
+The integration-independent content model is the source for both Astro validation and Sveltia CMS configuration,
+reducing schema drift without coupling either integration to the other:
+
+```text
+Shared content model
+|-- Astro validation adapter
+`-- Sveltia CMS adapter and previews
+```
+
+Resume exports are generated from the same structured data used by the HTML page.
 
 ## Deployment
 
