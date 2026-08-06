@@ -31,6 +31,7 @@ const amazonWebServices: ExperienceOrganization = {
         {
           title: 'Software Development Engineer',
           startDate: '2021-08',
+          endDate: '2024-04',
           description:
             'Developed and extended a self-service tool that enables marketing at AWS scale. The platform helps end users measure campaign impact, iterate faster, and create more precise customer communication.',
           highlights: [
