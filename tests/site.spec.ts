@@ -90,7 +90,17 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   );
 });
 
-test('the content manager is not indexed', async ({ page }) => {
+test('the content manager is not indexed, uses its bundled configuration, and supports local editing', async ({
+  page,
+}) => {
+  let requestedConfigFile = false;
+  page.on('request', (request) => {
+    requestedConfigFile ||= new URL(request.url()).pathname === '/admin/config.yml';
+  });
+
   await page.goto('/admin/');
   await expect(page.locator('meta[name="robots"]').first()).toHaveAttribute('content', 'noindex, nofollow');
+  await expect(page.getByRole('button', { name: 'Work with Local Repository' })).toBeVisible();
+  await page.waitForTimeout(100);
+  expect(requestedConfigFile).toBe(false);
 });

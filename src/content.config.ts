@@ -1,25 +1,22 @@
 import { glob } from 'astro/loaders';
-import { z } from 'astro/zod';
 import { defineCollection } from 'astro:content';
 
-const blog = defineCollection({
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      draft: z.boolean().default(false),
-      description: z.string().optional(),
-      publishedAt: z.coerce.date().optional(),
-      featured: z.boolean().default(false),
-      categories: z.array(z.string()).default([]),
-      tags: z.array(z.string()).default([]),
-      coverImage: image().optional(),
-    }),
-  loader: glob({
-    base: './src/content/blog',
-    pattern: '**/*.{md,mdx}',
-  }),
-});
+import { createAstroSchema } from './config/astro-adapter';
+import { contentModels, type ContentCollectionModel } from './config/content-model';
 
-export const collections = {
-  blog,
+const createAstroCollection = <Model extends ContentCollectionModel>(model: Model) =>
+  defineCollection({
+    schema: (context) => createAstroSchema(model, context),
+    loader: glob({
+      base: `./${model.folder}`,
+      pattern: '**/*.{md,mdx}',
+    }),
+  });
+
+type AstroCollections = {
+  [Model in (typeof contentModels)[number] as Model['name']]: ReturnType<typeof createAstroCollection<Model>>;
 };
+
+export const collections = Object.fromEntries(
+  contentModels.map((model) => [model.name, createAstroCollection(model)]),
+) as AstroCollections;
