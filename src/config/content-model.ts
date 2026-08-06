@@ -100,7 +100,7 @@ export const experienceContentModel = {
       name: 'startDate',
       kind: 'date',
       required: true,
-      cms: { label: 'Start date', help: 'Choose the start date. Résumé output displays only its year and month.' },
+      cms: { label: 'Start date', help: 'Choose the start date. Resume output displays only its year and month.' },
     },
     endDate: {
       name: 'endDate',
