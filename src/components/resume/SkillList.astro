@@ -17,7 +17,7 @@ const { skills = [], size = 'md', label } = Astro.props;
     {skills.map((skillId) => {
       const skill: SkillCatalogEntry = skillCatalog[skillId];
       return (
-        <li class="tooltip" data-tip={skill.description}>
+        <li class="tooltip" data-tip={skill.description} tabindex="0">
           {skill.href ? (
             <a href={skill.href} target="_blank" rel="noopener noreferrer" aria-label={`${skill.name}: ${skill.description}`}>
               <Badge variant="skill" size={size}>{skill.name}</Badge>

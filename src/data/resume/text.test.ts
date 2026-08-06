@@ -14,4 +14,12 @@ describe('resume text serializations', () => {
     expect(resumeMarkdown).toContain('## Experience');
     expect(resumeMarkdown).toContain('[LinkedIn](https://www.linkedin.com/in/rahul0705)');
   });
+
+  it('wraps Markdown prose and generates unique experience headings', () => {
+    const lines = resumeMarkdown.split('\n');
+    const experienceHeadings = lines.filter((line) => line.startsWith('### ') && !line.startsWith('### ['));
+
+    expect(lines.filter((line) => !line.startsWith('#')).every((line) => line.length <= 120)).toBe(true);
+    expect(new Set(experienceHeadings).size).toBe(experienceHeadings.length);
+  });
 });

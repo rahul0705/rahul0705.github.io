@@ -1,0 +1,12 @@
+{
+  "title": "Software Engineer",
+  "organization": "Harris Corporation",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
+  "project": "Internal Research and Development",
+  "startDate": "2013-07-01",
+  "endDate": "2013-12-01",
+  "description": "Developed a prototype integrating Harris' Advanced Radar Processing system with Harris' Service Architecture.",
+  "skills": [
+    "java"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Lead Software Engineer",
+  "organization": "Harris Corporation",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
+  "project": "RFIMS",
+  "startDate": "2018-07-01",
+  "endDate": "2019-06-29",
+  "description": "Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.",
+  "highlights": [
+    "Created large portions of the cloud architecture for classifying data.",
+    "Implemented cloud-infrastructure automation to support DevOps practices.",
+    "Pioneered continuous integration within the project."
+  ],
+  "skills": [
+    "python",
+    "ansible",
+    "javascript",
+    "nodejs",
+    "react",
+    "aws",
+    "git",
+    "groovy",
+    "agileScrum",
+    "magicDraw"
+  ]
+}

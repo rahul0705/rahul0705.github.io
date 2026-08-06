@@ -1,0 +1,17 @@
+{
+  "title": "Software Engineer",
+  "organization": "Harris Corporation",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
+  "project": "GOES",
+  "startDate": "2016-04-01",
+  "endDate": "2016-09-01",
+  "description": "Pioneered a memory and CPU footprint improvement initiative for the GOES-R program, enabling additional processing without modifying existing infrastructure.",
+  "highlights": [
+    "Analyzed Oracle Coherence data-grid usage and implemented a segmentation approach to reduce its footprint."
+  ],
+  "skills": [
+    "java",
+    "clearCase",
+    "oracleCoherence"
+  ]
+}

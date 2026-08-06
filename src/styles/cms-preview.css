@@ -1,0 +1,28 @@
+@import './global.css';
+
+:root {
+  color-scheme: dark;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+}
+
+body {
+  box-sizing: border-box;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  color: var(--color-base-content);
+  background: var(--color-base-100);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+@media (width <= 40rem) {
+  body {
+    padding: 2rem 1rem;
+  }
+}

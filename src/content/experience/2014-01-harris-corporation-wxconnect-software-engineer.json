@@ -1,0 +1,21 @@
+{
+  "title": "Software Engineer",
+  "organization": "Harris Corporation",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
+  "project": "WxConnect",
+  "startDate": "2014-01-01",
+  "endDate": "2016-04-01",
+  "description": "Designed and developed direct-receive solutions for environmental satellites, including management, monitoring, REST interfaces, and data-recovery capabilities.",
+  "highlights": [
+    "Implemented initial data recovery from GOES satellites to netCDF files.",
+    "Implemented data recovery from Himawari satellites."
+  ],
+  "skills": [
+    "python",
+    "c",
+    "rabbitmq",
+    "netcdf",
+    "flask",
+    "git"
+  ]
+}

@@ -1,4 +1,5 @@
 ---
+import { Menu } from '@lucide/astro';
 import { socials } from '../../data/socials';
 
 const navItems = [
@@ -18,11 +19,11 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 border-b border-base-300 bg-base-100/80 backdrop-blur">
   <div class="mx-auto max-w-5xl px-6">
     <div class="navbar px-0 min-h-16">
-      <div class="flex-1">
+      <div class="navbar-start flex-1">
         <a href="/" class="text-lg font-semibold tracking-tight"> Rahul Mohandas </a>
       </div>
 
-      <div class="hidden md:flex gap-1">
+      <nav class="navbar-end hidden gap-1 md:flex" aria-label="Primary navigation">
         {
           navItems.map((item) => (
             <a
@@ -42,13 +43,26 @@ const currentPath = Astro.url.pathname;
         >
           GitHub
         </a>
-      </div>
+      </nav>
 
       <!-- Mobile Menu -->
-      <div class="dropdown dropdown-end md:hidden">
-        <button type="button" class="btn btn-ghost btn-square" aria-label="Open navigation menu">Menu</button>
+      <div class="navbar-end md:hidden">
+        <button
+          type="button"
+          class="btn btn-ghost btn-square"
+          aria-label="Open navigation menu"
+          popovertarget="mobile-navigation-menu"
+          style="anchor-name: --mobile-navigation-menu"
+        >
+          <Menu aria-hidden="true" />
+        </button>
 
-        <ul class="menu dropdown-content mt-3 z-[1] w-52 rounded-box bg-base-100 p-2 shadow-lg">
+        <ul
+          id="mobile-navigation-menu"
+          class="dropdown dropdown-end menu mt-3 w-52 rounded-box bg-base-100 p-2 shadow-lg"
+          popover
+          style="position-anchor: --mobile-navigation-menu"
+        >
           {
             navItems.map((item) => (
               <li>

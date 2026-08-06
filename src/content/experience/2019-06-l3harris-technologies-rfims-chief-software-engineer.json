@@ -1,0 +1,21 @@
+{
+  "title": "Chief Software Engineer",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "RFIMS",
+  "startDate": "2019-06-29",
+  "description": "Led software for a system that analyzes radio-frequency data, with collection on purpose-built embedded systems and classification in an AWS cloud environment.",
+  "highlights": [
+    "Provided architectural guidance and oversight for the technical direction and implementation of the project.",
+    "Managed software budget and schedule in conformance with EVMS.",
+    "Coordinated team efforts to meet customer expectations and requirements.",
+    "Implemented controls and audits supporting ATO in a GovCloud environment.",
+    "Planned and implemented software tasks for internal teams and external customers."
+  ],
+  "skills": [
+    "evms",
+    "ansible",
+    "aws",
+    "agileScrum"
+  ]
+}

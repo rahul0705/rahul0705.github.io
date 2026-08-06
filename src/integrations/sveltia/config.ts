@@ -1,10 +1,14 @@
 import type { CmsConfig } from '@sveltia/cms';
 
-import { contentModels } from './content-model';
-import { createSveltiaCollection } from './sveltia-adapter';
+import { contentModels } from '../../config/content-model';
+import { createSveltiaCollection } from './adapter';
 
 export const sveltiaConfig = {
   load_config_file: false,
+  app_title: 'Rahul Mohandas Content Manager',
+  logo: {
+    src: '/favicon.svg',
+  },
   backend: {
     name: 'github',
     repo: 'rahul0705/rahul0705.github.io',
@@ -12,5 +16,8 @@ export const sveltiaConfig = {
   },
   media_folder: 'public/assets/{{year}}',
   public_folder: '/assets/{{year}}',
+  output: {
+    omit_empty_optional_fields: true,
+  },
   collections: contentModels.map(createSveltiaCollection),
 } satisfies CmsConfig;

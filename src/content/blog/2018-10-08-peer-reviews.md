@@ -12,7 +12,8 @@ tags:
   - review
 ---
 
-A basic guide for reviewing code and having your code reviewed. This is a living document, expect it to change and evolve overtime, check back for updates.
+A basic guide for reviewing code and having your code reviewed. This is a living document, expect it to change and
+evolve overtime, check back for updates.
 
 ## What to look for in a review
 
@@ -20,9 +21,13 @@ A basic guide for reviewing code and having your code reviewed. This is a living
 
 ### Does the code follow the D.R.Y. (Don't Repeat Yourself) principle?
 
-Is there repeated code that can be factored out to a helper function? As you develop it's worth seeing if **relevant** code can be extracted to eliminate redundant code. This should simplify where our logic exists. This should reduce the amount of places that bugs can creep into and simplifies the amount of locations a patch would need to be applied to.
+Is there repeated code that can be factored out to a helper function? As you develop it's worth seeing if **relevant**
+code can be extracted to eliminate redundant code. This should simplify where our logic exists. This should reduce the
+amount of places that bugs can creep into and simplifies the amount of locations a patch would need to be applied to.
 
-It's worth mentioning that factoring code into a common location may not be as straightforward as presented below. Limitations in the technologies chosen determine our level of 'D.R.Y.ness'. What is important to keep in mind is that we are attempting to minimize redundant logic as best we can.
+It's worth mentioning that factoring code into a common location may not be as straightforward as presented below.
+Limitations in the technologies chosen determine our level of 'D.R.Y.ness'. What is important to keep in mind is that we
+are attempting to minimize redundant logic as best we can.
 
 ```python
 def thing1(arg1):
@@ -68,7 +73,8 @@ def thing3(arg3):
 
 ### Does the code exit early?
 
-Are there loops or functions that can exit early? It's generally better to exit loops or functions earlier rather than later. This can sometime be a performance gain, but more than anything it greatly improves readability.
+Are there loops or functions that can exit early? It's generally better to exit loops or functions earlier rather than
+later. This can sometime be a performance gain, but more than anything it greatly improves readability.
 
 ```python
 def func(items):
@@ -89,7 +95,9 @@ def func(items):
 
 ### Are the returns simple?
 
-Check if return statements can be simplified. Sometime it's best to let the language do the work for you. Instead of checking for a `boolean` and then explicitly returning `True` or `False` it's much more reliable and readable to just return the conditional check.
+Check if return statements can be simplified. Sometime it's best to let the language do the work for you. Instead of
+checking for a `boolean` and then explicitly returning `True` or `False` it's much more reliable and readable to just
+return the conditional check.
 
 ```python
 def item_exists(x, items):
@@ -118,19 +126,23 @@ The best code is no code. Removing code should be one of your activities as a de
 
 Code linters can help greatly with this.
 
-It's important to distinguish 'empty methods' and 'stub methods'. Stub functions are great early on in the project, they allow the developer to lay the foundation for future tasks, just make sure these 'stud methods' serve a real purpose.
+It's important to distinguish 'empty methods' and 'stub methods'. Stub functions are great early on in the project, they
+allow the developer to lay the foundation for future tasks, just make sure these 'stud methods' serve a real purpose.
 
 ### Is the code shy?
 
-Shy code is code that does not interact with too many things. Everything should have the smallest scope possible and only increase the scope if really need to.
+Shy code is code that does not interact with too many things. Everything should have the smallest scope possible and
+only increase the scope if really need to.
 
 ### Are there hard-coded values?
 
-Whenever you see Hard-coded values, first ask yourself if there is another way you could remove this static value and make it configurable?
+Whenever you see Hard-coded values, first ask yourself if there is another way you could remove this static value and
+make it configurable?
 
 ### Does it follow the style guide and coding conventions?
 
-Almost every company or team should have a style and coding guide. Make sure all code meets these standards. If your team doesn't have one there are plenty to be found [online](https://github.com/google/styleguide)
+Almost every company or team should have a style and coding guide. Make sure all code meets these standards. If your
+team doesn't have one there are plenty to be found [online](https://github.com/google/styleguide)
 
 ## Tests
 

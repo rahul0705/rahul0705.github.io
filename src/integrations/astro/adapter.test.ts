@@ -2,8 +2,8 @@ import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 import { describe, expect, it } from 'vitest';
 
-import { createAstroSchema } from './astro-adapter';
-import { blogContentModel } from './content-model';
+import { blogContentModel, experienceContentModel } from '../../config/content-model';
+import { createAstroSchema } from './adapter';
 
 describe('Astro content adapter', () => {
   const image: SchemaContext['image'] = () =>
@@ -36,5 +36,25 @@ describe('Astro content adapter', () => {
 
   it('requires fields marked as required in the shared content model', () => {
     expect(() => schema.parse({})).toThrow();
+  });
+
+  it('coerces experience calendar dates to Date values', () => {
+    const experienceSchema = createAstroSchema(experienceContentModel, { image });
+    const requiredFields = {
+      title: 'Engineer',
+      organization: 'Example',
+      project: 'Platform',
+      description: 'Built the platform.',
+    };
+
+    expect(experienceSchema.parse({ ...requiredFields, startDate: '2026-08-06' })).toMatchObject({
+      startDate: new Date('2026-08-06T00:00:00.000Z'),
+    });
+    expect(experienceSchema.parse({ ...requiredFields, startDate: '2026-08-06', endDate: null })).toMatchObject({
+      startDate: new Date('2026-08-06T00:00:00.000Z'),
+      endDate: undefined,
+    });
+    expect(() => experienceSchema.parse({ ...requiredFields, startDate: '2026-13-01' })).toThrow();
+    expect(() => experienceSchema.parse({ ...requiredFields, startDate: null })).toThrow();
   });
 });

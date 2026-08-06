@@ -1,6 +1,7 @@
 # Article cover images
 
-These generic article covers are downloaded from Unsplash and are used under the [Unsplash License](https://unsplash.com/license).
+These generic article covers are downloaded from Unsplash and are used under the
+[Unsplash License](https://unsplash.com/license).
 
 - `network.jpg`: <https://images.unsplash.com/photo-1558494949-ef010cbdcc31>
 - `circuit.jpg`: <https://images.unsplash.com/photo-1518770660439-4636190af475>

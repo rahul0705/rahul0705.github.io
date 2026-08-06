@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, type ContentCollectionModel } from './content-model';
-import { createSveltiaCollection } from './sveltia-adapter';
+import { blogContentModel, type ContentCollectionModel } from '../../config/content-model';
+import { createSveltiaCollection } from './adapter';
 
 describe('Sveltia CMS adapter', () => {
   const collection = createSveltiaCollection(blogContentModel);

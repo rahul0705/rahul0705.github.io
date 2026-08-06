@@ -1,31 +1,36 @@
 import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 
-import type { ContentCollectionModel, ContentField } from './content-model';
+import type { ContentCollectionModel, ContentField } from '../../config/content-model';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
-type AstroFieldOutput<Field extends ContentField> = Field['kind'] extends 'string' | 'text'
-  ? Field extends { required: true }
-    ? string
-    : string | undefined
-  : Field['kind'] extends 'boolean'
-    ? Field extends { default: boolean } | { required: true }
-      ? boolean
-      : boolean | undefined
-    : Field['kind'] extends 'date'
-      ? Field extends { required: true }
-        ? Date
-        : Date | undefined
-      : Field['kind'] extends 'string-list'
-        ? Field extends { default: string[] } | { required: true }
-          ? string[]
-          : string[] | undefined
-        : Field['kind'] extends 'file'
-          ? Field extends { required: true }
-            ? string
-            : string | undefined
-          : unknown;
+const dateSchema = z.preprocess((value) => (typeof value === 'string' ? new Date(value) : value), z.date());
+
+type OptionalUnlessRequired<Field, Output> = Field extends { required: true } ? Output : Output | undefined;
+
+type OptionalUnlessRequiredOrDefault<Field, Output, Default> = Field extends { required: true } | { default: Default }
+  ? Output
+  : Output | undefined;
+
+type StringFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
+type BooleanFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, boolean, boolean>;
+type DateFieldOutput<Field> = OptionalUnlessRequired<Field, Date>;
+type StringListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, string[], string[]>;
+type FileFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
+
+type AstroFieldOutputByKind<Field extends ContentField> = {
+  string: StringFieldOutput<Field>;
+  text: StringFieldOutput<Field>;
+  boolean: BooleanFieldOutput<Field>;
+  date: DateFieldOutput<Field>;
+  'string-list': StringListFieldOutput<Field>;
+  image: unknown;
+  file: FileFieldOutput<Field>;
+  body: unknown;
+};
+
+type AstroFieldOutput<Field extends ContentField> = AstroFieldOutputByKind<Field>[Field['kind']];
 
 type AstroSchemaShape<Model extends ContentCollectionModel> = {
   [Key in keyof Model['fields'] as Model['fields'][Key]['kind'] extends 'body'
@@ -45,7 +50,9 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
           : z.boolean().optional()
         : z.boolean().default(field.default as boolean);
     case 'date':
-      return isRequired(field) ? z.coerce.date() : z.coerce.date().optional();
+      return isRequired(field)
+        ? dateSchema
+        : z.preprocess((value) => (value === null || value === '' ? undefined : value), dateSchema.optional());
     case 'string-list':
       return field.default === undefined
         ? isRequired(field)
