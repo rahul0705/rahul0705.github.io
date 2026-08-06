@@ -1,0 +1,11 @@
+{
+  "title": "Software Engineer",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "WxConnect",
+  "startDate": "2016-09-01",
+  "endDate": "2018-07-01",
+  "description": "Delivered enhancements for weather-product processing and overhauled automated deployment, reducing deployment time and allowing customer-led upgrades.",
+  "highlights": ["Performed root-cause analysis for corrupted weather products."],
+  "skills": ["python", "ansible", "git"]
+}

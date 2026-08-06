@@ -1,0 +1,18 @@
+{
+  "title": "Intern / Project Manager / Developer / Business Analyst",
+  "organization": "Boston Scientific",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Boston_Scientific",
+  "project": "Clinical Study Data Migration",
+  "startDate": "2012-05-01",
+  "endDate": "2012-08-01",
+  "description": "Developed a process and tools to migrate clinical studies between Electronic Data Capture systems, coordinated vendor solutions, and presented the approach to the CIO.",
+  "highlights": [],
+  "skills": [
+    "workInstructions",
+    "designDocumentation",
+    "codeReviews",
+    "presentationProficiency",
+    "costSavingsAnalysis",
+    "perl"
+  ]
+}

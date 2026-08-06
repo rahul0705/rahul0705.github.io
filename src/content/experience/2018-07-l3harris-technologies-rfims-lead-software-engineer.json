@@ -1,0 +1,15 @@
+{
+  "title": "Lead Software Engineer",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "RFIMS",
+  "startDate": "2018-07-01",
+  "endDate": "2019-06-01",
+  "description": "Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.",
+  "highlights": [
+    "Created large portions of the cloud architecture for classifying data.",
+    "Implemented cloud-infrastructure automation to support DevOps practices.",
+    "Pioneered continuous integration within the project."
+  ],
+  "skills": ["python", "ansible", "javascript", "nodejs", "react", "aws", "git", "groovy", "agileScrum", "magicDraw"]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Research Assistant",
+  "organization": "Professor Charles Killian",
+  "project": "TCP Keep-Alive Research",
+  "startDate": "2012-09-01",
+  "endDate": "2012-12-01",
+  "description": "Tested TCP keep-alive implementations through distributed-system and node failures to create fault-tolerant code and compare operating-system behavior.",
+  "highlights": [],
+  "skills": ["tcpIp", "distributedSystems", "osProgramming", "networkTesting", "softwareTesting", "c"]
+}

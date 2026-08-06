@@ -1,0 +1,14 @@
+{
+  "title": "Software Development Engineer",
+  "organization": "Amazon Web Services",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Amazon_Web_Services",
+  "project": "Marketing Technology",
+  "startDate": "2021-08-01",
+  "endDate": "2024-04-01",
+  "description": "Developed and extended a self-service tool that enables marketing at AWS scale. The platform helps end users measure campaign impact, iterate faster, and create more precise customer communication.",
+  "highlights": [
+    "Planned and implemented software features for external customers.",
+    "Planned and implemented third-party tool integrations for external customers."
+  ],
+  "skills": ["java", "typescript", "react", "cypress", "cdk", "aws", "agileScrum"]
+}

@@ -1,17 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { resume } from '../src/data/resume';
-
 const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/'];
-const printEntryCount =
-  resume.experience.reduce(
-    (count, organization) =>
-      count + organization.projects.reduce((projectCount, project) => projectCount + project.roles.length, 0),
-    0,
-  ) +
-  resume.education.length +
-  resume.awards.length;
 
 for (const route of routes) {
   test(`${route} has no automatically detectable WCAG A or AA violations`, async ({ page }) => {
@@ -50,6 +40,13 @@ test('unknown routes show the custom not-found page', async ({ page }) => {
 
 test('the resume has a compact print presentation', async ({ page }) => {
   await page.goto('/resume/');
+  const resumeJson = await page.request.get('/resume.json');
+  const resume = (await resumeJson.json()) as {
+    work: unknown[];
+    education: unknown[];
+    awards: unknown[];
+  };
+  const printEntryCount = resume.work.length + resume.education.length + resume.awards.length;
   await page.emulateMedia({ media: 'print' });
 
   await expect(page.locator('.resume-page')).toBeHidden();

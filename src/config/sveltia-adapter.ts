@@ -30,9 +30,17 @@ const createSveltiaField = (field: ContentField): Field => {
         default: typeof field.cms.default === 'boolean' ? field.cms.default : (field.default as boolean | undefined),
       };
     case 'date':
-      return { ...common, widget: 'datetime', type: 'date', default: field.cms.default };
+      return { ...common, widget: 'datetime', type: 'date', format: 'YYYY-MM-DD', default: field.cms.default };
     case 'string-list':
-      return { ...common, widget: 'list', default: field.default as string[] | undefined };
+      return field.cms.options
+        ? {
+            ...common,
+            widget: 'select',
+            multiple: true,
+            options: [...field.cms.options],
+            default: field.default as string[] | undefined,
+          }
+        : { ...common, widget: 'list', default: field.default as string[] | undefined };
     case 'image':
       return { ...common, widget: 'image' };
     case 'file':
@@ -48,5 +56,15 @@ export const createSveltiaCollection = (model: ContentCollectionModel): EntryCol
   label_singular: model.labelSingular,
   folder: model.folder,
   slug: model.slug,
+  ...(model.format ? { format: model.format, extension: model.extensions?.[0] ?? model.format } : {}),
+  ...(model.summary ? { summary: model.summary } : {}),
+  ...(model.sort
+    ? {
+        sortable_fields: {
+          fields: [...model.sort.fields],
+          ...(model.sort.default ? { default: model.sort.default } : {}),
+        },
+      }
+    : {}),
   fields: Object.values(model.fields).map(createSveltiaField),
 });

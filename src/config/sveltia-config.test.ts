@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, contentModels } from './content-model';
+import { blogContentModel, contentModels, experienceContentModel } from './content-model';
 import { sveltiaConfig } from './sveltia-config';
 
 describe('Sveltia CMS configuration', () => {
@@ -11,7 +11,7 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('derives the Blog Posts collection from the shared model', () => {
-    const [blog] = sveltiaConfig.collections;
+    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name)!;
 
     expect(blog).toMatchObject({
       name: blogContentModel.name,
@@ -28,7 +28,7 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('keeps CMS transport settings separate from the shared content fields', () => {
-    const [blog] = sveltiaConfig.collections;
+    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name)!;
 
     expect(sveltiaConfig).toMatchObject({
       load_config_file: false,
@@ -49,5 +49,50 @@ describe('Sveltia CMS configuration', () => {
         expect.objectContaining({ name: 'title', required: true }),
       ]),
     );
+  });
+
+  it('exposes experience entries as individual JSON files', () => {
+    const experience = sveltiaConfig.collections.find((collection) => collection.name === experienceContentModel.name)!;
+
+    expect(experience).toMatchObject({
+      name: 'experience',
+      folder: 'src/content/experience',
+      format: 'json',
+      extension: 'json',
+      slug: "{{startDate | date('YYYY-MM')}}-{{organization}}-{{project}}-{{title}}",
+      summary: "{{startDate | date('YYYY-MM')}} — {{organization}} — {{project}} — {{title}}",
+      sortable_fields: {
+        fields: ['startDate'],
+        default: { field: 'startDate', direction: 'descending' },
+      },
+    });
+    expect(experience.fields.map((field) => field.name)).toEqual([
+      'title',
+      'organization',
+      'organizationUrl',
+      'project',
+      'startDate',
+      'endDate',
+      'description',
+      'highlights',
+      'skills',
+    ]);
+    expect(experience.fields.find((field) => field.name === 'skills')).toMatchObject({
+      widget: 'select',
+      multiple: true,
+      options: expect.arrayContaining([{ label: 'TypeScript', value: 'typescript' }]),
+    });
+    expect(experience.fields.find((field) => field.name === 'startDate')).toMatchObject({
+      widget: 'datetime',
+      type: 'date',
+      format: 'YYYY-MM-DD',
+      required: true,
+    });
+    expect(experience.fields.find((field) => field.name === 'endDate')).toMatchObject({
+      widget: 'datetime',
+      type: 'date',
+      format: 'YYYY-MM-DD',
+      required: false,
+    });
   });
 });
