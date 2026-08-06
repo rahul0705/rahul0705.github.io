@@ -1,7 +1,7 @@
 import type { CmsConfig } from '@sveltia/cms';
 
-import { contentModels } from './content-model';
-import { createSveltiaCollection } from './sveltia-adapter';
+import { contentModels } from '../../config/content-model';
+import { createSveltiaCollection } from './adapter';
 
 export const sveltiaConfig = {
   load_config_file: false,

@@ -2,8 +2,8 @@ import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 import { describe, expect, it } from 'vitest';
 
-import { createAstroSchema } from './astro-adapter';
-import { blogContentModel, experienceContentModel } from './content-model';
+import { blogContentModel, experienceContentModel } from '../../config/content-model';
+import { createAstroSchema } from './adapter';
 
 describe('Astro content adapter', () => {
   const image: SchemaContext['image'] = () =>

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, contentModels, experienceContentModel } from './content-model';
-import { sveltiaConfig } from './sveltia-config';
+import { blogContentModel, contentModels, experienceContentModel } from '../../config/content-model';
+import { sveltiaConfig } from './config';
 
 describe('Sveltia CMS configuration', () => {
   it('registers every shared content model', () => {

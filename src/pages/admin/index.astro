@@ -9,9 +9,13 @@ import SeoHead from '../../components/ui/SeoHead.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SeoHead title="Content Manager" description={`Content management for ${site.title}.`} canonicalPath="/admin/" noindex />
     <script>
-      import { init } from '@sveltia/cms';
-      import { sveltiaConfig } from '../../config/sveltia-config';
+      import { init, registerPreviewStyle } from '@sveltia/cms';
+      import { sveltiaConfig } from '../../integrations/sveltia/config';
+      import { registerSveltiaPreviews } from '../../integrations/sveltia/previews';
+      import previewStyles from '../../styles/cms-preview.css?inline';
 
+      registerPreviewStyle(previewStyles, { raw: true });
+      registerSveltiaPreviews();
       init({ config: sveltiaConfig });
     </script>
   </head>

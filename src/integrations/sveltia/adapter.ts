@@ -1,6 +1,6 @@
 import type { EntryCollection, Field } from '@sveltia/cms';
 
-import type { ContentCollectionModel, ContentField } from './content-model';
+import type { ContentCollectionModel, ContentField } from '../../config/content-model';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 

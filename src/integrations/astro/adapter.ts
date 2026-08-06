@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 
-import type { ContentCollectionModel, ContentField } from './content-model';
+import type { ContentCollectionModel, ContentField } from '../../config/content-model';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
