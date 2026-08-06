@@ -1,0 +1,26 @@
+---
+interface Props {
+  variant?: 'status' | 'skill' | 'tag';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { variant = 'tag', size = 'md' } = Astro.props;
+
+// Badge policy:
+// - status: a single, high-emphasis state such as Current or Featured.
+// - skill: technologies, capabilities, and focus areas.
+// - tag: article taxonomy and other navigational labels.
+const variantClasses = {
+  status: 'badge-primary',
+  skill: 'badge-soft badge-primary',
+  tag: 'badge-outline',
+};
+
+const sizeClasses = {
+  sm: 'badge-sm',
+  md: '',
+  lg: 'badge-lg',
+};
+---
+
+<span class={`badge ${variantClasses[variant]} ${sizeClasses[size]}`}><slot /></span>

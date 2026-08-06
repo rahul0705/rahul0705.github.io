@@ -1,0 +1,24 @@
+---
+import Container from '../ui/Container.astro';
+
+interface Props {
+  items: Array<{ label: string; value: string }>;
+  columns?: 2 | 3 | 4;
+}
+
+const { items, columns = 3 } = Astro.props;
+const statsDirection = columns > 1 ? 'md:stats-horizontal' : '';
+---
+
+<section class="pb-6">
+  <Container>
+    <div class={`stats stats-vertical w-full shadow-sm ${statsDirection}`}>
+      {items.map((item) => (
+        <div class="stat">
+          <p class="stat-value text-2xl">{item.value}</p>
+          <p class="stat-title uppercase tracking-[0.2em]">{item.label}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

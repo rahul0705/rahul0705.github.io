@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-38 -38 1175 769" role="img" aria-labelledby="title">
+  <title id="title">Fira Sans reversed R and M sharing a split stem</title>
+  <g transform="translate(0 693) scale(1 -1)">
+    <path fill="#89b4fa" d="M543 693L543 0L379 0L379 250L298 250L182 0L2 0L151 279Q90 305 59.5 352Q29 399 29 471Q29 693 313 693ZM379 364L379 578L321 578Q200 578 200 467Q200 417 228.5 390.5Q257 364 305 364Z"/>
+    <path fill="#cba6f7" transform="translate(346 0)" d="M753 0L592 0L580 271Q575 368 575 444Q575 502 578 554L471 73L316 73L202 554Q208 467 208 390Q208 332 205 269L193 0L33 0L85 693L292 693L396 223L493 693L701 693Z"/>
+    <rect x="379" y="0" width="82" height="693" fill="#89b4fa"/>
+  </g>
+</svg>

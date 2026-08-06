@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PrintButton from '../../components/resume/PrintButton.astro';
+import ResumeAwards from '../../components/resume/ResumeAwards.astro';
+import ResumeSkillGroups from '../../components/resume/ResumeSkillGroups.astro';
+import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
+import ResumeTimeline from '../../components/resume/ResumeTimeline.astro';
+import ExperienceTimeline from '../../components/resume/ExperienceTimeline.astro';
+import ResumePrintView from '../../components/resume/ResumePrintView.astro';
+import Container from '../../components/ui/Container.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import SocialIcon from '../../components/ui/SocialIcon.astro';
+import { experienceSkillCoverage, resume } from '../../data/resume';
+import { Mail, Phone } from '@lucide/astro';
+
+const profiles = resume.basics.profiles.filter((profile) => profile.network && profile.url);
+const hasContactDetails = Boolean(resume.basics.email || resume.basics.phone || profiles.length > 0);
+---
+
+<BaseLayout
+  title="Resume"
+  description="Resume for Rahul Mohandas, a Software Development Engineer with experience in cloud architecture, developer tooling, and distributed systems."
+  canonicalPath="/resume/"
+>
+  <div class="no-print">
+    <PageHeader
+      eyebrow={resume.basics.label}
+      title={resume.basics.name}
+      description="Experience, education, and technical work."
+    >
+      <Fragment slot="actions">
+        <PrintButton />
+        <a href="/resume.json" class="btn btn-outline no-print">View resume.json</a>
+      </Fragment>
+    </PageHeader>
+  </div>
+
+  <Container>
+    <div class="resume-page no-print pb-20">
+      {hasContactDetails && (
+        <section class="resume-contact card mb-14 border border-base-300 bg-base-100 shadow-sm" aria-labelledby="contact-heading">
+        <div class="card-body gap-5 p-5 sm:p-6">
+          <div>
+            <p class="mb-1 font-mono text-xs uppercase tracking-[0.2em] text-primary">Contact</p>
+            <h2 id="contact-heading" class="text-xl font-semibold tracking-tight">Get in touch</h2>
+          </div>
+
+            <div class="grid gap-2 sm:grid-cols-2">
+              {resume.basics.email && (
+                <a href={`mailto:${resume.basics.email}`} class="group flex items-center gap-3 rounded-box p-3 transition-colors hover:bg-base-200">
+                  <span class="flex size-10 shrink-0 items-center justify-center rounded-box bg-primary/10 text-primary">
+                    <Mail class="size-4" aria-hidden="true" />
+                  </span>
+                  <span>
+                    <span class="block text-xs text-base-content/60">Email</span>
+                    <span class="font-medium group-hover:text-primary">{resume.basics.email}</span>
+                  </span>
+                </a>
+              )}
+              {resume.basics.phone && (
+                <a href={`tel:${resume.basics.phone}`} class="group flex items-center gap-3 rounded-box p-3 transition-colors hover:bg-base-200">
+                  <span class="flex size-10 shrink-0 items-center justify-center rounded-box bg-primary/10 text-primary">
+                    <Phone class="size-4" aria-hidden="true" />
+                  </span>
+                  <span>
+                    <span class="block text-xs text-base-content/60">Phone</span>
+                    <span class="font-medium group-hover:text-primary">{resume.basics.phone}</span>
+                  </span>
+                </a>
+              )}
+              {profiles.map((profile) => (
+                <a href={profile.url} class="group flex items-center gap-3 rounded-box p-3 transition-colors hover:bg-base-200">
+                  <span class="flex size-10 shrink-0 items-center justify-center rounded-box bg-primary/10 text-primary">
+                    <SocialIcon network={profile.network} />
+                  </span>
+                  <span>
+                    <span class="block text-xs text-base-content/60">Profile</span>
+                    <span class="font-medium group-hover:text-primary">{profile.network}</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <div class="grid gap-16">
+        <ExperienceTimeline title="Experience" companies={resume.experience} />
+        <ExperienceSkillCoverage skills={experienceSkillCoverage} />
+        <ResumeSkillGroups groups={resume.skills} />
+        <ResumeSkillGroups title="Interests" groups={resume.interests} />
+        <ResumeTimeline title="Education" items={resume.education} type="education" />
+        <ResumeAwards awards={resume.awards} />
+      </div>
+    </div>
+    <ResumePrintView />
+  </Container>
+</BaseLayout>

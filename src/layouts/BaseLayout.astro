@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+
+import Footer from '../components/navigation/Footer.astro';
+import Navbar from '../components/navigation/Navbar.astro';
+import SeoHead from '../components/ui/SeoHead.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  noindex?: boolean;
+}
+
+const { title, description, canonicalPath = Astro.url.pathname, image, type, publishedAt, noindex } = Astro.props;
+---
+
+<html lang="en" data-theme="mocha">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <SeoHead {title} {description} {canonicalPath} {image} {type} {publishedAt} {noindex} />
+  </head>
+  <body class="bg-base-100 text-base-content min-h-screen">
+    <Navbar />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

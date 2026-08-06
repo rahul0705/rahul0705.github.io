@@ -1,0 +1,55 @@
+---
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+
+    schedule:
+      interval: weekly
+      day: monday
+      time: '05:00'
+      timezone: UTC
+
+    cooldown:
+      default-days: 7
+
+    open-pull-requests-limit: 5
+
+    commit-message:
+      prefix: chore
+
+    labels:
+      - dependencies
+      - github-actions
+
+    groups:
+      npm-dependencies:
+        patterns:
+          - '*'
+
+  - package-ecosystem: npm
+    directory: /
+
+    schedule:
+      interval: weekly
+      day: monday
+      time: '05:30'
+      timezone: UTC
+
+    cooldown:
+      default-days: 7
+
+    open-pull-requests-limit: 5
+
+    commit-message:
+      prefix: chore
+
+    labels:
+      - dependencies
+      - npm
+
+    groups:
+      github-actions:
+        patterns:
+          - '*'

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import AboutSection from '../components/home/AboutSection.astro';
+import ContactCTA from '../components/home/ContactCTA.astro';
+import FeaturedPosts from '../components/home/FeaturedPosts.astro';
+import Hero from '../components/home/Hero.astro';
+import Highlights from '../components/home/Highlights.astro';
+import ToolkitSection from '../components/home/ToolkitSection.astro';
+import { home } from '../data/home';
+import { getSiteStats, site } from '../data/site';
+
+const stats = await getSiteStats();
+---
+
+<BaseLayout>
+  <Hero
+    eyebrow={site.role}
+    title={site.name}
+    description={site.description}
+    primaryHref="/resume"
+    primaryLabel="View Resume"
+    secondaryHref="/blog"
+    secondaryLabel="Read Articles"
+  />
+  <Highlights items={stats} />
+  <AboutSection {...home.about} />
+  <ToolkitSection {...home.toolkit} />
+  <FeaturedPosts title="Selected Writing" description="Notes on software engineering, systems, and technical projects." />
+  <ContactCTA />
+</BaseLayout>

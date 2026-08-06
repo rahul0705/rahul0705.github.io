@@ -1,0 +1,36 @@
+---
+import BlogCover from './BlogCover.astro';
+import ContentMeta from '../ui/ContentMeta.astro';
+import TagList from '../ui/TagList.astro';
+import { getPublishedAt } from '../../lib/blog';
+
+interface Props {
+  post: any;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const publishedAt = getPublishedAt(post);
+---
+
+<a
+  href={`/blog/${post.id}`}
+  class:list={[
+    'card group overflow-hidden border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md',
+    featured && 'md:col-span-2',
+  ]}
+>
+  <BlogCover image={post.data.coverImage} title={post.data.title} class={featured ? 'aspect-[2/1]' : 'aspect-[16/9]'} />
+  <article class="card-body p-6">
+    <div>
+      <h2 class="card-title text-xl">
+        {post.data.title}
+      </h2>
+
+      {post.data.description && <p class="mt-2 text-base-content/70">{post.data.description}</p>}
+    </div>
+
+    <ContentMeta date={publishedAt} label={post.data.categories[0]} />
+    <TagList items={post.data.tags} label="Article tags" />
+  </article>
+</a>

@@ -1,0 +1,24 @@
+---
+import { socials } from '../../data/socials';
+import { site } from '../../data/site';
+---
+
+<footer class="mt-24 border-t border-base-300">
+  <div class="footer footer-horizontal mx-auto max-w-5xl px-6 py-12">
+    <aside class="max-w-md">
+      <h2 class="footer-title">{site.name}</h2>
+      <p class="text-base-content/70">{site.description}</p>
+    </aside>
+
+    <nav class="md:justify-self-end">
+      <h3 class="footer-title">Elsewhere</h3>
+      <a href={socials.github} target="_blank" rel="noopener noreferrer" class="link link-hover">GitHub</a>
+      <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" class="link link-hover">LinkedIn</a>
+      <a href={socials.email} class="link link-hover">Email</a>
+    </nav>
+
+    <aside class="text-sm text-base-content/60 md:col-span-2">
+      <p>(c) {new Date().getFullYear()} {site.name}</p>
+    </aside>
+  </div>
+</footer>

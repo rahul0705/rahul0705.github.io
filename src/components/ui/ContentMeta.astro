@@ -1,0 +1,15 @@
+---
+interface Props {
+  date?: Date;
+  label?: string;
+}
+
+const { date, label } = Astro.props;
+const formattedDate = date && new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' }).format(date);
+---
+
+{(formattedDate || label) && (
+  <p class="text-sm text-base-content/60">
+    {[label, formattedDate].filter(Boolean).join(' - ')}
+  </p>
+)}

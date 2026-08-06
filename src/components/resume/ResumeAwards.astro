@@ -1,0 +1,39 @@
+---
+interface Props {
+  awards: Array<{
+    title: string;
+    date?: string;
+    description: string;
+    highlights?: string[];
+    href?: string;
+  }>;
+}
+
+const { awards } = Astro.props;
+---
+
+{awards.length > 0 && (
+  <section>
+  <div class="mb-8 max-w-2xl">
+    <h2 class="text-2xl font-bold tracking-tight">Awards and Activities</h2>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2">
+    {awards.map((award) => (
+      <article class="card print-avoid-break rounded-box border border-base-300 bg-base-100 shadow-sm">
+        <div class="card-body p-6">
+          <div class="flex gap-4">
+            <h3 class="card-title flex-1 text-lg">
+              {award.href ? <a href={award.href} class="link link-hover">{award.title}</a> : award.title}
+            </h3>
+            {award.date && <p class="text-sm text-base-content/60">{award.date}</p>}
+          </div>
+          <p class="leading-relaxed text-base-content/75">{award.description}</p>
+          {award.highlights && award.highlights.length > 0 && (
+            <p class="text-sm text-base-content/70">{award.highlights.join(' - ')}</p>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+  </section>
+)}

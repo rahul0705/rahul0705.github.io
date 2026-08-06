@@ -1,0 +1,18 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  items?: string[];
+  variant?: 'skill' | 'tag';
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
+}
+
+const { items = [], variant = 'tag', size = 'md', label } = Astro.props;
+---
+
+{items.length > 0 && (
+  <div class="flex flex-wrap gap-2" aria-label={label}>
+    {items.map((item) => <Badge variant={variant} size={size}>{item}</Badge>)}
+  </div>
+)}
