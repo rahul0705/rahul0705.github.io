@@ -23,11 +23,42 @@ test('primary navigation reaches core pages', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Print resume' })).toBeVisible();
 });
 
-test('mobile navigation is keyboard reachable', async ({ page }) => {
+test('mobile navigation opens on tap and follows its links', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await page.getByRole('button', { name: 'Open navigation menu' }).press('Enter');
-  await expect(page.getByRole('link', { name: 'Articles' }).last()).toBeVisible();
+  const toggle = page.getByRole('button', { name: 'Open navigation menu' });
+  const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
+
+  await expect(articles).toBeHidden();
+  await toggle.click();
+  await expect(articles).toBeVisible();
+  await articles.click();
+  await expect(page).toHaveURL(/\/blog\/?$/);
+});
+
+test('mobile navigation supports keyboard toggling and dismissal', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const toggle = page.getByRole('button', { name: 'Open navigation menu' });
+
+  await toggle.focus();
+  await toggle.press('Enter');
+  const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
+  await expect(articles).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(articles).toBeHidden();
+  await expect(toggle).toBeFocused();
+});
+
+test('mobile navigation closes when tapping outside it', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open navigation menu' }).click();
+  const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
+  await expect(articles).toBeVisible();
+
+  await page.locator('main').click({ position: { x: 10, y: 100 } });
+  await expect(articles).toBeHidden();
 });
 
 test('unknown routes show the custom not-found page', async ({ page }) => {

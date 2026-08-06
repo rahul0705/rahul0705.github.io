@@ -1,4 +1,5 @@
 ---
+import { Menu } from '@lucide/astro';
 import { socials } from '../../data/socials';
 
 const navItems = [
@@ -45,10 +46,23 @@ const currentPath = Astro.url.pathname;
       </div>
 
       <!-- Mobile Menu -->
-      <div class="dropdown dropdown-end md:hidden">
-        <button type="button" class="btn btn-ghost btn-square" aria-label="Open navigation menu">Menu</button>
+      <div class="md:hidden">
+        <button
+          type="button"
+          class="btn btn-ghost btn-square"
+          aria-label="Open navigation menu"
+          popovertarget="mobile-navigation-menu"
+          style="anchor-name: --mobile-navigation-menu"
+        >
+          <Menu aria-hidden="true" />
+        </button>
 
-        <ul class="menu dropdown-content mt-3 z-[1] w-52 rounded-box bg-base-100 p-2 shadow-lg">
+        <ul
+          id="mobile-navigation-menu"
+          class="dropdown dropdown-end menu mt-3 w-52 rounded-box bg-base-100 p-2 shadow-lg"
+          popover
+          style="position-anchor: --mobile-navigation-menu"
+        >
           {
             navItems.map((item) => (
               <li>
