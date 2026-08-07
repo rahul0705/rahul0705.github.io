@@ -63,6 +63,17 @@ describe('Sveltia CMS configuration', () => {
     });
   });
 
+  it('uses descriptive commit messages for content and media changes', () => {
+    expect(sveltiaConfig.backend.commit_messages).toEqual({
+      create: 'content({{collection}}): create {{slug}}',
+      update: 'content({{collection}}): update {{slug}}',
+      delete: 'content({{collection}}): delete {{slug}}',
+      uploadMedia: 'assets: upload {{path}}',
+      deleteMedia: 'assets: delete {{path}}',
+      openAuthoring: '{{message}}',
+    });
+  });
+
   it('exposes experience entries as individual JSON files', () => {
     const experience = sveltiaConfig.collections.find((collection) => collection.name === experienceContentModel.name)!;
 
