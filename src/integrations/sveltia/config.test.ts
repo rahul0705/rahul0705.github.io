@@ -68,9 +68,8 @@ describe('Sveltia CMS configuration', () => {
       create: 'content({{collection}}): create {{slug}}',
       update: 'content({{collection}}): update {{slug}}',
       delete: 'content({{collection}}): delete {{slug}}',
-      uploadMedia: 'assets: upload {{path}}',
-      deleteMedia: 'assets: delete {{path}}',
-      openAuthoring: '{{message}}',
+      uploadMedia: 'content(assets): upload {{path}}',
+      deleteMedia: 'content(assets): delete {{path}}',
     });
   });
 
