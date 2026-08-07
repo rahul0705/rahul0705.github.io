@@ -13,6 +13,13 @@ export const sveltiaConfig = {
     name: 'github',
     repo: 'rahul0705/rahul0705.github.io',
     auth_methods: ['token'],
+    commit_messages: {
+      create: 'content({{collection}}): create {{slug}}',
+      update: 'content({{collection}}): update {{slug}}',
+      delete: 'content({{collection}}): delete {{slug}}',
+      uploadMedia: 'content(assets): upload {{path}}',
+      deleteMedia: 'content(assets): delete {{path}}',
+    },
   },
   media_folder: 'public/assets/{{year}}',
   public_folder: '/assets/{{year}}',
