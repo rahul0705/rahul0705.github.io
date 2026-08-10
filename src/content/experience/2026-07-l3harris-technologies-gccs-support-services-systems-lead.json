@@ -10,11 +10,11 @@
       "url": "https://sam.gov/workspace/contract/opp/e0f6e21ce68245d785abfd46d1dcdd84/view"
     },
     {
-      "label": "GGSS contract award",
+      "label": "GGSS contract award (original ceiling: $275.2 million)",
       "url": "https://sam.gov/workspace/contract/opp/1f65113c27b64dce810b6b00c7aaa23c/view"
     },
     {
-      "label": "GGSS contract value increase",
+      "label": "GGSS contract value increase (current base and options: $545.9 million)",
       "url": "https://sam.gov/opp/c95d19258cb44a409683afceae4dfcee/view"
     },
     {
@@ -23,7 +23,7 @@
     }
   ],
   "startDate": "2026-07-20",
-  "description": "Lead the GCCS Support Services Systems organization across observability, infrastructure, shared services, and security, with responsibility for the supporting systems that enable reliable and timely delivery of processed NOAA products under the GGSS contract, valued at up to $275 million.",
+  "description": "Lead the GCCS Support Services Systems organization across observability, infrastructure, shared services, and security under the GGSS contract, whose original $275.2 million ceiling has increased to $545.9 million in base and options. Own the supporting systems that enable reliable and timely delivery of processed NOAA products.",
   "highlights": [
     "Manage more than 12 direct reports and over 30 engineers across the observability, infrastructure, shared-services, and security teams.",
     "Own the supporting-system strategy and delivery required for GCCS data operations to process and distribute products on schedule.",

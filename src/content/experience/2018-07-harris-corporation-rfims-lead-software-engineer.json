@@ -10,11 +10,11 @@
       "url": "https://sam.gov/opp/9f05a7603905412e49b7cbfe2975252d/view"
     },
     {
-      "label": "RFIMS development award",
+      "label": "RFIMS development award (up to $148.4 million)",
       "url": "https://sam.gov/opp/2cecc7ecb2c9de5756cfd9c5cafa5704/view"
     },
     {
-      "label": "RFIMS Operations, Maintenance and Sustainment follow-on contract",
+      "label": "RFIMS Operations, Maintenance and Sustainment follow-on notice (up to $49.0 million)",
       "url": "https://sam.gov/opp/682a025334874494a894c5a3cb10e09f/view"
     },
     {
@@ -24,7 +24,7 @@
   ],
   "startDate": "2018-07-01",
   "endDate": "2019-06-29",
-  "description": "Led an 11-person team and served as scrum master for a radio-frequency data analysis system spanning embedded collection systems and AWS-based classification. Designed the cloud architecture and replaced a throughput-constrained workflow engine with a more scalable implementation.",
+  "description": "Led an 11-person team delivering RFIMS under a development contract valued at up to $148.4 million. Designed the cloud architecture for radio-frequency data analysis across embedded collection systems and AWS, and replaced a throughput-constrained workflow engine with a more scalable implementation.",
   "highlights": [
     "Designed major system components in MagicDraw before implementation and helped coordinate delivery across an 11-person team.",
     "Built the AWS architecture around EC2, Route 53, and RDS to host data-classification and workflow services.",

@@ -10,11 +10,11 @@
       "url": "https://sam.gov/opp/9f05a7603905412e49b7cbfe2975252d/view"
     },
     {
-      "label": "RFIMS development award",
+      "label": "RFIMS development award (up to $148.4 million)",
       "url": "https://sam.gov/opp/2cecc7ecb2c9de5756cfd9c5cafa5704/view"
     },
     {
-      "label": "RFIMS Operations, Maintenance and Sustainment follow-on contract",
+      "label": "RFIMS Operations, Maintenance and Sustainment follow-on notice (up to $49.0 million)",
       "url": "https://sam.gov/opp/682a025334874494a894c5a3cb10e09f/view"
     },
     {
@@ -24,7 +24,7 @@
   ],
   "startDate": "2019-06-29",
   "endDate": "2021-08-01",
-  "description": "Led an eight-person software team delivering a radio-frequency analysis system that collected data on purpose-built embedded systems and classified it in AWS. Owned technical direction, execution planning, and security authorization needed to deploy the system to operational sites.",
+  "description": "Led an eight-person software team delivering RFIMS under a development contract valued at up to $148.4 million. Owned technical direction, execution planning, and security authorization for a system that collected radio-frequency data on purpose-built embedded systems, classified it in AWS, and deployed to operational sites.",
   "highlights": [
     "Directed architecture and implementation across embedded collection systems and the AWS GovCloud classification environment.",
     "Managed the software budget, schedule, and execution plan for an eight-person team using EVMS and Agile Scrum.",
