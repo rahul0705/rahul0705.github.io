@@ -1,0 +1,42 @@
+{
+  "title": "Sr Cloud Software Engineer",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "RFIMS",
+  "projectUrl": "https://engage.l3harris.com/amd",
+  "additionalInformation": [
+    {
+      "label": "RFIMS development solicitation",
+      "url": "https://sam.gov/opp/9f05a7603905412e49b7cbfe2975252d/view"
+    },
+    {
+      "label": "RFIMS development award",
+      "url": "https://sam.gov/opp/2cecc7ecb2c9de5756cfd9c5cafa5704/view"
+    },
+    {
+      "label": "RFIMS Operations, Maintenance and Sustainment follow-on contract",
+      "url": "https://sam.gov/opp/682a025334874494a894c5a3cb10e09f/view"
+    },
+    {
+      "label": "L3Harris spectrum-monitoring overview",
+      "url": "https://downloads.regulations.gov/USCG-2019-0608-0002/attachment_1.pdf"
+    }
+  ],
+  "startDate": "2021-09-07",
+  "endDate": "2024-05-06",
+  "description": "Provided part-time reach-back support for RFIMS while working at AWS, helping sustain security authorization, strengthen the team's cloud-security practices, and keep customer delivery activities on schedule.",
+  "highlights": [
+    "Evaluated each deployed system against applicable NIST controls and supported the evidence and remediation work required to maintain Authorization to Operate.",
+    "Trained internal team members on AWS and cloud tooling that streamlined investigation and resolution of security findings.",
+    "Created internal technical and operational documentation that formed a reusable knowledge repository and accelerated onboarding for future team members.",
+    "Supported customer meetings, communicated technical and security progress, and helped keep site-delivery schedules on track."
+  ],
+  "skills": [
+    "aws",
+    "python",
+    "git",
+    "nistRiskManagementFramework",
+    "workInstructions",
+    "presentationProficiency"
+  ]
+}
