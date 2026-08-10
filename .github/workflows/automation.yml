@@ -76,7 +76,10 @@ jobs:
 
       - name: Check for reporting code
         id: reporter
-        run: test -f .github/scripts/pr-check-report.ts && echo 'available=true' >> "$GITHUB_OUTPUT" || true
+        run: |
+          if test -f .github/scripts/pr-check-report.ts; then
+            echo 'available=true' >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Update pull request check report
         if: steps.reporter.outputs.available == 'true'
