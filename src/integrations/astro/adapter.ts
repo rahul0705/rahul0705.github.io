@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 
-import type { ContentCollectionModel, ContentField } from '../../config/content-model';
+import type { ContentCollectionModel, ContentField, ContentLink } from '../../config/content-model';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
@@ -17,6 +17,8 @@ type StringFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
 type BooleanFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, boolean, boolean>;
 type DateFieldOutput<Field> = OptionalUnlessRequired<Field, Date>;
 type StringListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, string[], string[]>;
+type LinkFieldOutput<Field> = OptionalUnlessRequired<Field, ContentLink>;
+type LinkListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, ContentLink[], ContentLink[]>;
 type FileFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
 
 type AstroFieldOutputByKind<Field extends ContentField> = {
@@ -25,6 +27,8 @@ type AstroFieldOutputByKind<Field extends ContentField> = {
   boolean: BooleanFieldOutput<Field>;
   date: DateFieldOutput<Field>;
   'string-list': StringListFieldOutput<Field>;
+  link: LinkFieldOutput<Field>;
+  'link-list': LinkListFieldOutput<Field>;
   image: unknown;
   file: FileFieldOutput<Field>;
   body: unknown;
@@ -39,6 +43,8 @@ type AstroSchemaShape<Model extends ContentCollectionModel> = {
 };
 
 const createAstroField = (field: ContentField, image: SchemaContext['image']): z.ZodType<unknown> => {
+  const linkSchema = z.object({ label: z.string().min(1), url: z.string().min(1) });
+
   switch (field.kind) {
     case 'string':
     case 'text':
@@ -59,6 +65,14 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
           ? z.array(z.string())
           : z.array(z.string()).optional()
         : z.array(z.string()).default(field.default as string[]);
+    case 'link':
+      return isRequired(field) ? linkSchema : linkSchema.optional();
+    case 'link-list':
+      return field.default === undefined
+        ? isRequired(field)
+          ? z.array(linkSchema)
+          : z.array(linkSchema).optional()
+        : z.array(linkSchema).default(field.default as ContentLink[]);
     case 'image':
       return isRequired(field) ? image() : image().optional();
     case 'file':

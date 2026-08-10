@@ -2,9 +2,16 @@
   "title": "Research Assistant",
   "organization": "Professor Charles Killian",
   "project": "TCP Keep-Alive Research",
+  "projectUrl": "/blog/2012-11-01-tcp-keepalive",
   "startDate": "2012-09-01",
   "endDate": "2012-12-01",
-  "description": "Tested TCP keep-alive implementations through distributed-system and node failures to create fault-tolerant code and compare operating-system behavior.",
+  "description": "Researched TCP keep-alive behavior across operating systems to understand how distributed applications detect silent node and network failures. Built C client-server test software, evaluated failure scenarios, and submitted the findings and implementation to the supervising professor.",
+  "highlights": [
+    "Implemented a C client and server to exercise TCP keep-alive behavior under controlled failure scenarios.",
+    "Tested failures by interrupting client and server network connectivity after establishing active connections.",
+    "Found that silent server failures could leave clients sending data without receiving a socket failure across multiple Linux distributions.",
+    "Documented the results and submitted the test implementation to the supervising professor."
+  ],
   "skills": [
     "tcpIp",
     "distributedSystems",

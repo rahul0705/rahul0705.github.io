@@ -3,15 +3,26 @@
   "organization": "Harris Corporation",
   "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
   "project": "GOES",
+  "projectUrl": "https://www.goes-r.gov/ground/overview.html",
+  "additionalInformation": [
+    {
+      "label": "GOES-R algorithm study poster",
+      "url": "/assets/2017/AMS2017_Poster_Zaccheo_v5.pdf"
+    }
+  ],
   "startDate": "2016-04-01",
   "endDate": "2016-09-01",
-  "description": "Pioneered a memory and CPU footprint improvement initiative for the GOES-R program, enabling additional processing without modifying existing infrastructure.",
+  "description": "Led a performance-improvement study for the GOES-R ground system's Oracle Coherence data grid. Prototyped a segmentation approach that reduced average CPU utilization by a factor of 10 and demonstrated a path to support additional algorithm processing on existing infrastructure.",
   "highlights": [
-    "Analyzed Oracle Coherence data-grid usage and implemented a segmentation approach to reduce its footprint."
+    "Profiled CPU and memory utilization in the Oracle Coherence-based Data Fabric.",
+    "Prototyped data segmentation by query name to reduce the amount of data held by each segment.",
+    "Reduced average CPU utilization by a factor of 10 in the prototype, as documented in the GOES-R algorithm study.",
+    "Established an implementation path for adding processing capacity without expanding the existing infrastructure."
   ],
   "skills": [
     "java",
     "clearCase",
-    "oracleCoherence"
+    "oracleCoherence",
+    "performanceOptimization"
   ]
 }

@@ -17,7 +17,6 @@ export const skillCatalog = {
     href: 'https://www.ansible.com/',
     trackExperienceCoverage: true,
   },
-  attentive: { name: 'Attentive', description: 'Careful attention to customer and operational needs.' },
   aws: {
     name: 'AWS',
     description: 'Cloud Service Provider',
@@ -42,6 +41,10 @@ export const skillCatalog = {
     href: 'https://www.ibm.com/products/rational-clearcase',
     trackExperienceCoverage: true,
   },
+  continuousIntegration: {
+    name: 'Continuous Integration',
+    description: 'Automated build, test, and delivery workflows.',
+  },
   codeReviews: { name: 'Code Reviews', description: 'Collaborative source-code quality review.' },
   computerScience: {
     name: 'Computer Science',
@@ -52,7 +55,6 @@ export const skillCatalog = {
     name: 'Cost Savings Analysis',
     description: 'Evaluation of cost and efficiency improvements.',
   },
-  customerRelations: { name: 'Customer Relations', description: 'Supporting customers and understanding their needs.' },
   cypress: {
     name: 'Cypress',
     description: 'JavaScript End-to-End Testing Library',
@@ -99,7 +101,6 @@ export const skillCatalog = {
     href: 'https://www.javascript.com/',
     trackExperienceCoverage: true,
   },
-  leadership: { name: 'Leadership', description: 'Guiding teams and coordinating work.' },
   magicDraw: {
     name: 'MagicDraw',
     description: 'Software Modeling Tool',
@@ -112,9 +113,10 @@ export const skillCatalog = {
     href: 'https://www.unidata.ucar.edu/software/netcdf/',
     trackExperienceCoverage: true,
   },
-  networkAdministration: {
-    name: 'Network Administration',
-    description: 'Administration of network systems and services.',
+  nistRiskManagementFramework: {
+    name: 'NIST Risk Management Framework',
+    description: 'Security control assessment and authorization under the NIST Risk Management Framework.',
+    href: 'https://csrc.nist.gov/projects/risk-management/about-rmf',
   },
   networkTesting: { name: 'Network Testing', description: 'Validation of network behavior and reliability.' },
   nodejs: {
@@ -129,13 +131,16 @@ export const skillCatalog = {
     href: 'https://www.oracle.com/middleware/technologies/coherence.html',
     trackExperienceCoverage: true,
   },
-  organization: { name: 'Organization', description: 'Planning and coordinating work.' },
   osProgramming: { name: 'OS Programming', description: 'Operating system-level software development.' },
   perl: {
     name: 'Perl',
     description: 'Programming Language',
     href: 'https://www.perl.org/',
     trackExperienceCoverage: true,
+  },
+  performanceOptimization: {
+    name: 'Performance Optimization',
+    description: 'Measurement and improvement of software resource utilization and throughput.',
   },
   presentationProficiency: {
     name: 'Presentation Proficiency',
@@ -159,22 +164,21 @@ export const skillCatalog = {
     href: 'https://react.dev/',
     trackExperienceCoverage: true,
   },
-  recruiting: { name: 'Recruiting', description: 'Hiring and candidate evaluation.' },
-  softwareMaintenance: { name: 'Software Maintenance', description: 'Ongoing support and upkeep of software systems.' },
   softwareTesting: { name: 'Software Testing', description: 'Validation of software quality and behavior.' },
+  systemArchitecture: {
+    name: 'System Architecture',
+    description: 'Design of software components, interfaces, and deployment topology.',
+  },
   tcpIp: { name: 'TCP/IP', description: 'Internet protocol suite.' },
-  teamCoordination: { name: 'Team Coordination', description: 'Coordinating work across people and teams.' },
-  ticketSystems: { name: 'Ticket Systems', description: 'Tracking and resolving support requests.' },
-  training: { name: 'Training', description: 'Onboarding and skill development.' },
   typescript: {
     name: 'TypeScript',
     description: 'Programming Language',
     href: 'https://www.typescriptlang.org/',
     trackExperienceCoverage: true,
   },
-  windowsAdministration: {
-    name: 'Windows Administration',
-    description: 'Administration of Windows systems and domains.',
+  uiUx: {
+    name: 'UI/UX',
+    description: 'Design and implementation of usable, consistent user interfaces.',
   },
   workInstructions: { name: 'Work Instructions', description: 'Operational and implementation documentation.' },
 } as const satisfies Record<string, SkillCatalogEntry>;

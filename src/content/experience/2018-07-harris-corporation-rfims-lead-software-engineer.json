@@ -3,13 +3,34 @@
   "organization": "Harris Corporation",
   "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
   "project": "RFIMS",
+  "projectUrl": "https://engage.l3harris.com/amd",
+  "additionalInformation": [
+    {
+      "label": "RFIMS development solicitation",
+      "url": "https://sam.gov/opp/9f05a7603905412e49b7cbfe2975252d/view"
+    },
+    {
+      "label": "RFIMS development award",
+      "url": "https://sam.gov/opp/2cecc7ecb2c9de5756cfd9c5cafa5704/view"
+    },
+    {
+      "label": "RFIMS Operations, Maintenance and Sustainment follow-on contract",
+      "url": "https://sam.gov/opp/682a025334874494a894c5a3cb10e09f/view"
+    },
+    {
+      "label": "L3Harris spectrum-monitoring overview",
+      "url": "https://downloads.regulations.gov/USCG-2019-0608-0002/attachment_1.pdf"
+    }
+  ],
   "startDate": "2018-07-01",
   "endDate": "2019-06-29",
-  "description": "Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.",
+  "description": "Led an 11-person team and served as scrum master for a radio-frequency data analysis system spanning embedded collection systems and AWS-based classification. Designed the cloud architecture and replaced a throughput-constrained workflow engine with a more scalable implementation.",
   "highlights": [
-    "Created large portions of the cloud architecture for classifying data.",
-    "Implemented cloud-infrastructure automation to support DevOps practices.",
-    "Pioneered continuous integration within the project."
+    "Designed major system components in MagicDraw before implementation and helped coordinate delivery across an 11-person team.",
+    "Built the AWS architecture around EC2, Route 53, and RDS to host data-classification and workflow services.",
+    "Replaced a Groovy workflow engine that could not meet throughput needs with a JavaScript and Node.js backend designed to scale more easily.",
+    "Developed the JavaScript and React frontend used to operate and monitor processing workflows.",
+    "Automated cloud infrastructure with Python and Ansible and established continuous integration for the project."
   ],
   "skills": [
     "python",
@@ -21,6 +42,8 @@
     "git",
     "groovy",
     "agileScrum",
-    "magicDraw"
+    "magicDraw",
+    "continuousIntegration",
+    "systemArchitecture"
   ]
 }

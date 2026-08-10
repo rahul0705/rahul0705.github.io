@@ -1,6 +1,7 @@
 ---
 import { BriefcaseBusiness, GraduationCap } from '@lucide/astro';
 import type { SkillId } from '../../data/resume/skills';
+import type { ContentLink } from '../../config/content-model';
 import SkillList from './SkillList.astro';
 
 interface TimelineItem {
@@ -9,6 +10,8 @@ interface TimelineItem {
   subtitle?: string;
   subtitleHref?: string;
   subtitleDetail?: string;
+  subtitleDetailHref?: string;
+  additionalInformation?: ContentLink[];
   startDate?: string;
   endDate?: string;
   description?: string;
@@ -53,7 +56,16 @@ const formatPeriod = (item: TimelineItem) => {
               {item.subtitle && (
                 <p class="text-base-content/70">
                   {item.subtitleHref ? <a href={item.subtitleHref} class="link link-hover">{item.subtitle}</a> : item.subtitle}
-                  {item.subtitleDetail && <><span aria-hidden="true"> - </span>{item.subtitleDetail}</>}
+                  {item.subtitleDetail && (
+                    <>
+                      <span aria-hidden="true"> - </span>
+                      {item.subtitleDetailHref ? (
+                        <a href={item.subtitleDetailHref} class="link link-hover">{item.subtitleDetail}</a>
+                      ) : (
+                        item.subtitleDetail
+                      )}
+                    </>
+                  )}
                 </p>
               )}
             </div>
@@ -67,6 +79,21 @@ const formatPeriod = (item: TimelineItem) => {
           )}
           {item.skills && item.skills.length > 0 && (
             <SkillList skills={item.skills} label={`${item.title} skills`} />
+          )}
+          {(item.additionalInformation?.length ?? 0) > 0 && (
+            <div class="border-t border-base-300 pt-3 text-sm text-base-content/70">
+              {item.additionalInformation && item.additionalInformation.length > 0 && (
+                <p>
+                  <span class="font-medium text-base-content">Additional information:</span>{' '}
+                  {item.additionalInformation.map((output, index) => (
+                    <>
+                      {index > 0 && <span aria-hidden="true"> · </span>}
+                      <a href={output.url} class="link link-hover">{output.label}</a>
+                    </>
+                  ))}
+                </p>
+              )}
+            </div>
           )}
         </div>
       </article>

@@ -5,10 +5,13 @@
   "project": "WxConnect",
   "startDate": "2014-01-01",
   "endDate": "2016-04-01",
-  "description": "Designed and developed direct-receive solutions for environmental satellites, including management, monitoring, REST interfaces, and data-recovery capabilities.",
+  "description": "Owned the system management, monitoring, and data-processing components of a direct-receive environmental satellite system deployed across 10 customer sites. Built the distributed services and space-packet assembly pipeline needed to control the system and process a 31 Mbps real-time stream producing approximately 1.8 TB of data.",
   "highlights": [
-    "Implemented initial data recovery from GOES satellites to netCDF files.",
-    "Implemented data recovery from Himawari satellites."
+    "Owned the management and monitoring component that reported system status and exposed centralized operational controls.",
+    "Used Flask and RabbitMQ to connect distributed elements to a unified monitoring and control dashboard.",
+    "Owned the codebase that assembled incoming space packets from two 15.5 Mbps streams into a 31 Mbps processing pipeline.",
+    "Processed approximately 1.8 TB of satellite data across 10 sites for a government customer.",
+    "Implemented GOES and Himawari data recovery workflows that produced netCDF files."
   ],
   "skills": [
     "python",

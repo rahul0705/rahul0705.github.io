@@ -1,10 +1,11 @@
 ---
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
+import type { ContentLink } from '../../config/content-model';
 import Timeline from './Timeline.astro';
 
 interface TimelineRole {
   company: ExperienceOrganization;
-  project: string;
+  project: { name: string; href?: string; additionalInformation: ContentLink[] };
   role: ExperienceRole;
 }
 
@@ -16,14 +17,16 @@ interface Props {
 
 const { title, description, companies } = Astro.props;
 const roles: TimelineRole[] = companies.flatMap((company) =>
-  company.projects.flatMap((project) => project.roles.map((role) => ({ company, project: project.name, role }))),
+  company.projects.flatMap((project) => project.roles.map((role) => ({ company, project, role }))),
 ).sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
 
 const timelineItems = roles.map(({ company, project, role }) => ({
   title: role.title,
   subtitle: company.name,
   subtitleHref: company.href,
-  subtitleDetail: project,
+  subtitleDetail: project.name,
+  subtitleDetailHref: project.href,
+  additionalInformation: project.additionalInformation,
   startDate: role.startDate,
   endDate: role.endDate,
   description: role.description,

@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+import type { ContentLink } from '../../config/content-model';
 import { skillCatalog, type SkillId } from './skills';
 
 export interface ExperienceRole {
@@ -13,6 +14,8 @@ export interface ExperienceRole {
 
 interface ExperienceProject {
   name: string;
+  href?: string;
+  additionalInformation: ContentLink[];
   roles: ExperienceRole[];
 }
 
@@ -59,8 +62,18 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
 
     let project = organization.projects.find((candidate) => candidate.name === entry.data.project);
     if (!project) {
-      project = { name: entry.data.project, roles: [] };
+      project = {
+        name: entry.data.project,
+        href: entry.data.projectUrl,
+        additionalInformation: entry.data.additionalInformation ?? [],
+        roles: [],
+      };
       organization.projects.push(project);
+    } else if (
+      project.href !== entry.data.projectUrl ||
+      JSON.stringify(project.additionalInformation) !== JSON.stringify(entry.data.additionalInformation ?? [])
+    ) {
+      throw new Error(`Conflicting project metadata for ${entry.data.organization} / ${entry.data.project}`);
     }
 
     project.roles.push(roleFromEntry(entry));

@@ -19,7 +19,11 @@ describe('resume text serializations', () => {
     const lines = resumeMarkdown.split('\n');
     const experienceHeadings = lines.filter((line) => line.startsWith('### ') && !line.startsWith('### ['));
 
-    expect(lines.filter((line) => !line.startsWith('#')).every((line) => line.length <= 120)).toBe(true);
+    expect(
+      lines
+        .filter((line) => !line.startsWith('#'))
+        .every((line) => line.length <= 120 || (line.includes('http') && !line.includes(' '))),
+    ).toBe(true);
     expect(new Set(experienceHeadings).size).toBe(experienceHeadings.length);
   });
 });
