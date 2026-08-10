@@ -32,9 +32,13 @@
     "aws",
     "bash",
     "git",
+    "nginx",
     "nistRiskManagementFramework",
+    "poamManagement",
     "presentationProficiency",
     "python",
+    "stigs",
+    "systemHardening",
     "workInstructions",
     "yaml"
   ]

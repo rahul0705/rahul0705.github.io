@@ -373,6 +373,171 @@ export const skillCatalog = {
     href: 'https://yaml.org/',
     trackExperienceCoverage: true,
   },
+  amazonAthena: {
+    name: 'Amazon Athena',
+    description: 'AWS serverless interactive query service.',
+    href: 'https://aws.amazon.com/athena/',
+    trackExperienceCoverage: true,
+  },
+  amazonEfs: {
+    name: 'Amazon EFS',
+    description: 'AWS managed elastic file system.',
+    href: 'https://aws.amazon.com/efs/',
+    trackExperienceCoverage: true,
+  },
+  amazonEventBridge: {
+    name: 'Amazon EventBridge',
+    description: 'AWS managed event bus service.',
+    href: 'https://aws.amazon.com/eventbridge/',
+    trackExperienceCoverage: true,
+  },
+  amazonKinesis: {
+    name: 'Amazon Kinesis',
+    description: 'AWS service for collecting and processing streaming data.',
+    href: 'https://aws.amazon.com/kinesis/',
+    trackExperienceCoverage: true,
+  },
+  amazonOpenSearchService: {
+    name: 'Amazon OpenSearch Service',
+    description: 'AWS managed search and analytics service.',
+    href: 'https://aws.amazon.com/opensearch-service/',
+    trackExperienceCoverage: true,
+  },
+  awsGlue: {
+    name: 'AWS Glue',
+    description: 'AWS managed data integration service.',
+    href: 'https://aws.amazon.com/glue/',
+    trackExperienceCoverage: true,
+  },
+  awsInspector: {
+    name: 'Amazon Inspector',
+    description: 'AWS vulnerability management service.',
+    href: 'https://aws.amazon.com/inspector/',
+    trackExperienceCoverage: true,
+  },
+  awsSecurityHub: {
+    name: 'AWS Security Hub',
+    description: 'AWS cloud security posture management service.',
+    href: 'https://aws.amazon.com/security-hub/',
+    trackExperienceCoverage: true,
+  },
+  codeCoverage: {
+    name: 'Code Coverage',
+    description: 'Measurement of code exercised by automated tests.',
+  },
+  docker: {
+    name: 'Docker',
+    description: 'Container build and runtime platform.',
+    href: 'https://www.docker.com/',
+    trackExperienceCoverage: true,
+  },
+  factoryAcceptanceTesting: {
+    name: 'Factory Acceptance Testing',
+    description: 'Formal verification that a system meets requirements before delivery.',
+  },
+  hdf5: {
+    name: 'HDF5',
+    description: 'Hierarchical data format for large scientific datasets.',
+    href: 'https://www.hdfgroup.org/solutions/hdf5/',
+    trackExperienceCoverage: true,
+  },
+  helm: {
+    name: 'Helm',
+    description: 'Package manager for Kubernetes applications.',
+    href: 'https://helm.sh/',
+    trackExperienceCoverage: true,
+  },
+  integrationTesting: {
+    name: 'Integration Testing',
+    description: 'Validation of interactions between system components.',
+  },
+  jest: {
+    name: 'Jest',
+    description: 'JavaScript testing framework.',
+    href: 'https://jestjs.io/',
+    trackExperienceCoverage: true,
+  },
+  junit: {
+    name: 'JUnit',
+    description: 'Java unit-testing framework.',
+    href: 'https://junit.org/',
+    trackExperienceCoverage: true,
+  },
+  kubernetes: {
+    name: 'Kubernetes',
+    description: 'Container orchestration platform.',
+    href: 'https://kubernetes.io/',
+    trackExperienceCoverage: true,
+  },
+  mariadb: {
+    name: 'MariaDB',
+    description: 'Open-source relational database.',
+    href: 'https://mariadb.org/',
+    trackExperienceCoverage: true,
+  },
+  mocha: {
+    name: 'Mocha',
+    description: 'JavaScript testing framework.',
+    href: 'https://mochajs.org/',
+    trackExperienceCoverage: true,
+  },
+  mockito: {
+    name: 'Mockito',
+    description: 'Java mocking framework.',
+    href: 'https://site.mockito.org/',
+    trackExperienceCoverage: true,
+  },
+  nginx: {
+    name: 'NGINX',
+    description: 'Web server, reverse proxy, and load balancer.',
+    href: 'https://nginx.org/',
+    trackExperienceCoverage: true,
+  },
+  poamManagement: {
+    name: 'POA&M Management',
+    description: 'Management of security remediation plans and milestones.',
+  },
+  postgresql: {
+    name: 'PostgreSQL',
+    description: 'Open-source relational database.',
+    href: 'https://www.postgresql.org/',
+    trackExperienceCoverage: true,
+  },
+  pytest: {
+    name: 'pytest',
+    description: 'Python testing framework.',
+    href: 'https://pytest.org/',
+    trackExperienceCoverage: true,
+  },
+  reactTestingLibrary: {
+    name: 'React Testing Library',
+    description: 'Testing utilities for React user interfaces.',
+    href: 'https://testing-library.com/docs/react-testing-library/intro/',
+    trackExperienceCoverage: true,
+  },
+  siteAcceptanceTesting: {
+    name: 'Site Acceptance Testing',
+    description: 'Formal verification of a system in its operational environment.',
+  },
+  stigs: {
+    name: 'STIGs',
+    description: 'Security Technical Implementation Guides for system hardening and compliance.',
+    href: 'https://public.cyber.mil/stigs/',
+  },
+  systemHardening: {
+    name: 'System Hardening',
+    description: 'Reduction of system attack surface through secure configuration.',
+  },
+  unitTesting: {
+    name: 'Unit Testing',
+    description: 'Automated validation of individual software units.',
+  },
+  xml: {
+    name: 'XML',
+    description: 'Markup language for structured data exchange.',
+    href: 'https://www.w3.org/XML/',
+    trackExperienceCoverage: true,
+  },
 } as const satisfies Record<string, SkillCatalogEntry>;
 
 export type SkillId = keyof typeof skillCatalog;

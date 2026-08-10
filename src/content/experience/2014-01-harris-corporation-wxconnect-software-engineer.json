@@ -17,11 +17,16 @@
     "ansible",
     "bash",
     "c",
+    "codeReviews",
     "flask",
     "git",
+    "hdf5",
     "netcdf",
     "python",
     "rabbitmq",
+    "stigs",
+    "systemHardening",
+    "xml",
     "yaml"
   ]
 }

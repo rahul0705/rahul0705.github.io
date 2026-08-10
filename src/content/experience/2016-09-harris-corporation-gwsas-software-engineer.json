@@ -16,8 +16,19 @@
     "ansible",
     "bash",
     "c",
+    "codeReviews",
+    "factoryAcceptanceTesting",
+    "flask",
     "git",
+    "hdf5",
+    "netcdf",
     "python",
+    "rabbitmq",
+    "siteAcceptanceTesting",
+    "stigs",
+    "systemHardening",
+    "unitTesting",
+    "xml",
     "yaml"
   ]
 }
