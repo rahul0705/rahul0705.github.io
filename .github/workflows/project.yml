@@ -54,7 +54,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint code
-        run: npm run lint:code 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+        run: npm run lint:code
 
   lint-styles:
     runs-on: ubuntu-latest
@@ -168,7 +168,7 @@ jobs:
         run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Run browser tests
-        run: npm run test:e2e 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+        run: npm run test:e2e
 
   lighthouse:
     runs-on: ubuntu-latest
@@ -236,7 +236,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Audit unused code and dependencies
-        run: npm run audit:unused 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+        run: npm run audit:unused -- --reporter markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   build:
     needs:
