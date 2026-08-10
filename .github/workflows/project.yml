@@ -322,11 +322,10 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout trusted reporting code
+      - name: Checkout reporting code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-          ref: ${{ github.event.repository.default_branch }}
 
       - name: Check for reporting code
         id: reporter
