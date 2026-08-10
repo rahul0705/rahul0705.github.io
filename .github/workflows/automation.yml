@@ -50,3 +50,41 @@ jobs:
 
       - name: Validate workflows
         uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2
+
+  report:
+    name: Report results
+
+    needs:
+      - security
+      - syntax
+
+    if: always() && github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout trusted reporting code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Check for reporting code
+        id: reporter
+        run: test -f .github/scripts/pr-check-report.ts && echo 'available=true' >> "$GITHUB_OUTPUT" || true
+
+      - name: Update pull request check report
+        if: steps.reporter.outputs.available == 'true'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { pathToFileURL } = require('node:url');
+            const reportUrl = pathToFileURL(`${process.env.GITHUB_WORKSPACE}/.github/scripts/pr-check-report.ts`);
+            const { default: report } = await import(reportUrl.href);
+            await report({ github, context, core });

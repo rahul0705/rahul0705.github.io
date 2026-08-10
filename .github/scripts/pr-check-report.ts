@@ -4,7 +4,6 @@ interface WorkflowRun {
   html_url: string;
   id: number;
   name: string;
-  pull_requests: Array<{ number: number }>;
 }
 
 interface JobStep {
@@ -57,8 +56,12 @@ interface GitHubClient {
 interface ScriptArguments {
   github: GitHubClient;
   context: {
-    payload: { workflow_run: WorkflowRun };
+    issue: { number?: number };
+    payload: { pull_request?: { head: { sha: string }; number: number } };
     repo: { owner: string; repo: string };
+    runId: number;
+    sha: string;
+    workflow: string;
   };
   core: {
     info(message: string): void;
@@ -67,21 +70,22 @@ interface ScriptArguments {
 }
 
 export default async function report({ github, context, core }: ScriptArguments) {
-  const run = context.payload.workflow_run;
-  const pullRequest = run.pull_requests[0];
+  const pullRequestNumber = context.payload.pull_request?.number ?? context.issue.number;
 
-  if (!pullRequest) {
-    core.info('The workflow run is not associated with a pull request.');
+  if (!pullRequestNumber) {
+    core.info('The workflow is not associated with a pull request.');
     return;
   }
 
   const { owner, repo } = context.repo;
-  const jobs = await github.paginate<WorkflowJob>(github.rest.actions.listJobsForWorkflowRun, {
-    owner,
-    repo,
-    run_id: run.id,
-    per_page: 100,
-  });
+  const jobs = (
+    await github.paginate<WorkflowJob>(github.rest.actions.listJobsForWorkflowRun, {
+      owner,
+      repo,
+      run_id: context.runId,
+      per_page: 100,
+    })
+  ).filter((job) => job.status === 'completed');
 
   const icons: Record<string, string> = {
     success: '✅',
@@ -141,6 +145,19 @@ export default async function report({ github, context, core }: ScriptArguments)
     );
   }
 
+  const conclusions = jobs.map((job) => job.conclusion);
+  const conclusion = ['failure', 'timed_out', 'action_required'].some((value) => conclusions.includes(value))
+    ? 'failure'
+    : conclusions.includes('cancelled')
+      ? 'cancelled'
+      : 'success';
+  const run: WorkflowRun = {
+    conclusion,
+    head_sha: context.payload.pull_request?.head.sha ?? context.sha,
+    html_url: `${process.env.GITHUB_SERVER_URL}/${owner}/${repo}/actions/runs/${context.runId}`,
+    id: context.runId,
+    name: context.workflow,
+  };
   const marker = `<!-- pr-check-report:${run.name} -->`;
   const body = [
     marker,
@@ -161,7 +178,7 @@ export default async function report({ github, context, core }: ScriptArguments)
   const comments = await github.paginate<IssueComment>(github.rest.issues.listComments, {
     owner,
     repo,
-    issue_number: pullRequest.number,
+    issue_number: pullRequestNumber,
     per_page: 100,
   });
   const previous = comments.find(
@@ -179,7 +196,7 @@ export default async function report({ github, context, core }: ScriptArguments)
     await github.rest.issues.createComment({
       owner,
       repo,
-      issue_number: pullRequest.number,
+      issue_number: pullRequestNumber,
       body,
     });
   }
