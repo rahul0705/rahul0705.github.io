@@ -32,7 +32,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Check formatting
-        run: npm run format
+        run: npm run ci:summary -- 'Formatting' npm run format
 
   lint-code:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint code
-        run: npm run lint:code
+        run: npm run ci:summary -- 'Code lint' npm run lint:code
 
   lint-styles:
     runs-on: ubuntu-latest
@@ -68,7 +68,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint styling
-        run: npm run lint:css
+        run: npm run ci:summary -- 'Style lint' npm run lint:css
 
   lint-markdown:
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint Markdown
-        run: npm run lint:markdown
+        run: npm run ci:summary -- 'Markdown lint' npm run lint:markdown
 
   typecheck:
     runs-on: ubuntu-latest
@@ -104,7 +104,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Typecheck TypeScript
-        run: npm run typecheck
+        run: npm run ci:summary -- 'TypeScript typecheck' npm run typecheck
 
   astro-check:
     runs-on: ubuntu-latest
@@ -122,7 +122,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Check Astro diagnostics
-        run: npm run astro:check
+        run: npm run ci:summary -- 'Astro diagnostics' npm run astro:check
 
   test-unit:
     runs-on: ubuntu-latest
@@ -140,7 +140,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Run unit tests
-        run: npm run test:unit
+        run: npm run ci:summary -- 'Unit tests' npm run test:unit
 
   test-browser:
     runs-on: ubuntu-latest
@@ -161,10 +161,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build project
-        run: npm run build
+        run: npm run ci:summary -- 'Browser-test build' npm run build
 
       - name: Run browser tests
-        run: npm run test:e2e
+        run: npm run ci:summary -- 'Browser tests' npm run test:e2e
 
   lighthouse:
     runs-on: ubuntu-latest
@@ -182,10 +182,10 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Build project
-        run: npm run build
+        run: npm run ci:summary -- 'Lighthouse build' npm run build
 
       - name: Run Lighthouse CI
-        run: npm run lighthouse:ci
+        run: npm run ci:summary -- 'Lighthouse' npm run lighthouse:ci
 
       - name: Upload Lighthouse reports
         if: always()
@@ -212,7 +212,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Spellcheck
-        run: npm run spellcheck
+        run: npm run ci:summary -- 'Spellcheck' npm run spellcheck
 
   audit-unused:
     runs-on: ubuntu-latest
@@ -232,7 +232,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Audit unused code and dependencies
-        run: npm run audit:unused
+        run: npm run ci:summary -- 'Unused code audit' npm run audit:unused
 
   build:
     needs:
@@ -262,7 +262,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Build project
-        run: npm run build
+        run: npm run ci:summary -- 'Production build' npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -301,7 +301,7 @@ jobs:
           path: ./dist
 
       - name: Lint generated resume Markdown
-        run: npm run lint:resume:markdown
+        run: npm run ci:summary -- 'Generated resume Markdown' npm run lint:resume:markdown
 
   deploy:
     needs:
