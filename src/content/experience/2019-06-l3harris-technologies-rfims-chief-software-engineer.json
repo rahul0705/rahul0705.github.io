@@ -3,20 +3,63 @@
   "organization": "L3Harris Technologies",
   "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
   "project": "RFIMS",
+  "projectUrl": "https://engage.l3harris.com/amd",
+  "additionalInformation": [
+    {
+      "label": "RFIMS development award (up to $148.4 million)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_DOCAB133018CN0003_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "RFIMS Operations, Maintenance and Sustainment award (up to $49.0 million)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_1332KP23CNEEG0002_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "L3Harris spectrum-monitoring overview",
+      "url": "https://downloads.regulations.gov/USCG-2019-0608-0002/attachment_1.pdf"
+    }
+  ],
   "startDate": "2019-06-29",
-  "description": "Led software for a system that analyzes radio-frequency data, with collection on purpose-built embedded systems and classification in an AWS cloud environment.",
+  "endDate": "2021-08-01",
+  "description": "Led an eight-person software team focused on turning the reusable RFIMS baseline from the original development effort, valued at up to $148.4 million, into an operational system. Owned technical direction, execution planning, security authorization, and deployment of the embedded collection and AWS classification system to operational sites.",
   "highlights": [
-    "Provided architectural guidance and oversight for the technical direction and implementation of the project.",
-    "Managed software budget and schedule in conformance with EVMS.",
-    "Coordinated team efforts to meet customer expectations and requirements.",
-    "Implemented controls and audits supporting ATO in a GovCloud environment.",
-    "Planned and implemented software tasks for internal teams and external customers.",
-    "Working with the software team to resolve blocking issues, handle technical challenges, and coordinate efforts between internal teams."
+    "Directed the engineering work required to turn the development baseline across embedded collection systems and AWS GovCloud into an operational capability.",
+    "Managed the software budget, schedule, and execution plan for an eight-person team using EVMS and Agile Scrum.",
+    "Worked through NIST security controls and audit evidence to obtain Authorization to Operate for deployed systems.",
+    "Coordinated internal teams and customer stakeholders to deliver software capabilities to operational sites.",
+    "Resolved cross-team technical blockers while providing hands-on implementation support for high-priority work."
   ],
   "skills": [
-    "evms",
+    "agileScrum",
+    "amazonEc2",
+    "amazonRds",
+    "amazonRoute53",
+    "amazonS3",
+    "amazonVpc",
     "ansible",
     "aws",
-    "agileScrum"
+    "bash",
+    "codeReviews",
+    "elasticLoadBalancing",
+    "evms",
+    "factoryAcceptanceTesting",
+    "git",
+    "hcl",
+    "javascript",
+    "mariadb",
+    "nginx",
+    "nistRiskManagementFramework",
+    "nodejs",
+    "poamManagement",
+    "python",
+    "react",
+    "siteAcceptanceTesting",
+    "sql",
+    "stigs",
+    "systemArchitecture",
+    "systemHardening",
+    "terraform",
+    "typescript",
+    "unitTesting",
+    "yaml"
   ]
 }

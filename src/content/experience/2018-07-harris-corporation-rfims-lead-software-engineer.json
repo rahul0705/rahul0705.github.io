@@ -3,24 +3,57 @@
   "organization": "Harris Corporation",
   "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
   "project": "RFIMS",
+  "projectUrl": "https://engage.l3harris.com/amd",
+  "additionalInformation": [
+    {
+      "label": "RFIMS development award (up to $148.4 million)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_DOCAB133018CN0003_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "L3Harris spectrum-monitoring overview",
+      "url": "https://downloads.regulations.gov/USCG-2019-0608-0002/attachment_1.pdf"
+    }
+  ],
   "startDate": "2018-07-01",
   "endDate": "2019-06-29",
-  "description": "Led a small team and served as scrum master for a radio-frequency data analysis system using embedded collection systems and AWS-based classification.",
+  "description": "Led an 11-person team building the reusable, extensible RFIMS baseline under a development contract valued at up to $148.4 million. Designed the cloud architecture for radio-frequency data analysis across embedded collection systems and AWS, establishing a foundation that could be extended for future operational deployments.",
   "highlights": [
-    "Created large portions of the cloud architecture for classifying data.",
-    "Implemented cloud-infrastructure automation to support DevOps practices.",
-    "Pioneered continuous integration within the project."
+    "Designed major system components in MagicDraw and coordinated an 11-person team around a modular baseline intended for reuse in future operational deployments.",
+    "Built the AWS architecture around EC2, Route 53, and RDS to host data-classification and workflow services.",
+    "Replaced a Groovy workflow engine that could not meet throughput needs with a JavaScript and Node.js backend designed to scale more easily.",
+    "Developed the JavaScript and React frontend used to operate and monitor processing workflows.",
+    "Automated cloud infrastructure with Python and Ansible and established continuous integration for the project."
   ],
   "skills": [
-    "python",
+    "agileScrum",
+    "amazonEc2",
+    "amazonRds",
+    "amazonRoute53",
+    "amazonS3",
     "ansible",
-    "javascript",
-    "nodejs",
-    "react",
     "aws",
+    "bash",
+    "codeReviews",
+    "continuousIntegration",
     "git",
     "groovy",
-    "agileScrum",
-    "magicDraw"
+    "integrationTesting",
+    "javascript",
+    "magicDraw",
+    "mariadb",
+    "mocha",
+    "nginx",
+    "nodejs",
+    "poamManagement",
+    "pytest",
+    "python",
+    "react",
+    "sql",
+    "stigs",
+    "systemArchitecture",
+    "systemHardening",
+    "typescript",
+    "unitTesting",
+    "yaml"
   ]
 }

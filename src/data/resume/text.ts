@@ -78,8 +78,10 @@ const wrapMarkdown = (value: string, firstPrefix = '', continuationPrefix = '') 
   return lines.join('\n');
 };
 
-const roleText = (organization: ExperienceOrganization, project: string, role: ExperienceRole) =>
-  [
+const roleText = (organization: ExperienceOrganization, project: string, role: ExperienceRole) => {
+  const projectData = organization.projects.find((candidate) => candidate.name === project);
+
+  return [
     role.title,
     [organization.name, project].filter(Boolean).join(' | '),
     formatPeriod(role),
@@ -88,22 +90,38 @@ const roleText = (organization: ExperienceOrganization, project: string, role: E
     role.skills && role.skills.length > 0
       ? `Skills: ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`
       : undefined,
+    projectData?.additionalInformation.length
+      ? `Additional information: ${projectData.additionalInformation.map((output) => `${output.label} — ${output.url}`).join(', ')}`
+      : undefined,
   ]
     .filter(Boolean)
     .join('\n');
+};
 
-const roleMarkdown = (organization: ExperienceOrganization, project: string, role: ExperienceRole) =>
-  [
-    `### ${role.title} — ${project}${formatYearPeriod(role) ? ` (${formatYearPeriod(role)})` : ''}`,
+const roleMarkdown = (organization: ExperienceOrganization, project: string, role: ExperienceRole) => {
+  const projectData = organization.projects.find((candidate) => candidate.name === project);
+
+  return [
+    `### ${role.title} — ${
+      projectData?.href ? `[${project}](${projectData.href})` : project
+    }${formatYearPeriod(role) ? ` (${formatYearPeriod(role)})` : ''}`,
     `Organization: **${organization.name}**`,
     role.description ? wrapMarkdown(role.description) : undefined,
     role.highlights?.map((highlight) => wrapMarkdown(highlight, '- ', '  ')).join('\n'),
     role.skills && role.skills.length > 0
       ? wrapMarkdown(`**Skills:** ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`)
       : undefined,
+    projectData?.additionalInformation.length
+      ? wrapMarkdown(
+          `**Additional information:** ${projectData.additionalInformation
+            .map((output) => `[${output.label}](${output.url})`)
+            .join(', ')}`,
+        )
+      : undefined,
   ]
     .filter(Boolean)
     .join('\n\n');
+};
 
 const experienceEntries = (experience: ExperienceOrganization[]) =>
   experience

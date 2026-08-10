@@ -1,5 +1,6 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
+import type { ContentLink } from '../../config/content-model';
 import { skillCatalog } from '../../data/resume/skills';
 import { siteTheme } from '../../themes/site-theme';
 
@@ -12,6 +13,8 @@ export interface ExperiencePreviewData {
   title: string;
   organization: string;
   project: string;
+  projectUrl: string;
+  additionalInformation: ContentLink[];
   startDate: string;
   endDate: string;
   description: string;
@@ -39,10 +42,39 @@ const getStringList = (entry: PreviewEntry, field: string) => {
   return Array.isArray(items) ? items.filter((item): item is string => typeof item === 'string') : [];
 };
 
+const toPlainValue = (value: unknown): unknown =>
+  value && typeof value === 'object' && 'toJS' in value && typeof value.toJS === 'function' ? value.toJS() : value;
+
+const isContentLink = (value: unknown): value is ContentLink => {
+  const plainValue = toPlainValue(value);
+
+  return (
+    plainValue !== null &&
+    plainValue !== undefined &&
+    typeof plainValue === 'object' &&
+    'label' in plainValue &&
+    typeof plainValue.label === 'string' &&
+    'url' in plainValue &&
+    typeof plainValue.url === 'string'
+  );
+};
+
+const getLinkList = (entry: PreviewEntry, field: string) => {
+  const value = entry.getIn(['data', field]);
+  const items =
+    value && typeof value === 'object' && 'toArray' in value && typeof value.toArray === 'function'
+      ? value.toArray()
+      : value;
+
+  return Array.isArray(items) ? items.map(toPlainValue).filter(isContentLink) : [];
+};
+
 export const getExperiencePreviewData = (entry: PreviewEntry): ExperiencePreviewData => ({
   title: getString(entry, 'title'),
   organization: getString(entry, 'organization'),
   project: getString(entry, 'project'),
+  projectUrl: getString(entry, 'projectUrl'),
+  additionalInformation: getLinkList(entry, 'additionalInformation'),
   startDate: getString(entry, 'startDate'),
   endDate: getString(entry, 'endDate'),
   description: getString(entry, 'description'),
@@ -118,12 +150,26 @@ const renderSkills = (h: CreateElement, skills: string[]) =>
       )
     : null;
 
-const renderOrganizationLink = (h: CreateElement, url: string) =>
-  url
+const renderLinks = (h: CreateElement, title: string, links: ContentLink[]) =>
+  links.length
     ? renderSection(
         h,
-        'Organization link',
-        h('a', { className: 'link link-primary break-all', href: url, rel: 'noreferrer', target: '_blank' }, url),
+        title,
+        h(
+          'ul',
+          { className: 'space-y-2' },
+          ...links.map(({ label, url }) =>
+            h(
+              'li',
+              null,
+              h(
+                'a',
+                { className: 'link link-primary break-all', href: url, rel: 'noreferrer', target: '_blank' },
+                label,
+              ),
+            ),
+          ),
+        ),
       )
     : null;
 
@@ -140,6 +186,10 @@ export const renderExperiencePreview = ({ document, entry, window }: CustomPrevi
     data.description ? h('p', { className: 'mt-5 leading-relaxed text-base-content/85' }, data.description) : null,
     renderHighlights(h, data.highlights),
     renderSkills(h, data.skills),
-    renderOrganizationLink(h, data.organizationUrl),
+    renderLinks(h, 'Primary links', [
+      ...(data.organizationUrl ? [{ label: 'Organization', url: data.organizationUrl }] : []),
+      ...(data.projectUrl ? [{ label: 'Project homepage', url: data.projectUrl }] : []),
+    ]),
+    renderLinks(h, 'Additional information', data.additionalInformation),
   );
 };

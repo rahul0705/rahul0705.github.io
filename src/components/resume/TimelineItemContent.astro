@@ -1,0 +1,60 @@
+---
+import type { ContentLink } from '../../config/content-model';
+import type { SkillId } from '../../data/resume/skills';
+import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
+import SkillList from './SkillList.astro';
+
+interface Props {
+  title: string;
+  href?: string;
+  subtitle?: string;
+  subtitleHref?: string;
+  subtitleDetail?: string;
+  subtitleDetailHref?: string;
+  period?: string;
+  description?: string;
+  highlights?: string[];
+  skills?: SkillId[];
+  additionalInformation?: ContentLink[];
+}
+
+const item = Astro.props;
+---
+
+<div class="space-y-4">
+  <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+    <div>
+      <h3 class="text-xl font-semibold">
+        {item.href ? <a href={item.href} class="link link-hover">{item.title}</a> : item.title}
+      </h3>
+      {item.subtitle && (
+        <p class="text-base-content/70">
+          {item.subtitleHref ? <a href={item.subtitleHref} class="link link-hover">{item.subtitle}</a> : item.subtitle}
+          {item.subtitleDetail && (
+            <>
+              <span aria-hidden="true"> - </span>
+              {item.subtitleDetailHref ? (
+                <a href={item.subtitleDetailHref} class="link link-hover">{item.subtitleDetail}</a>
+              ) : (
+                item.subtitleDetail
+              )}
+            </>
+          )}
+        </p>
+      )}
+    </div>
+    {item.period && <p class="shrink-0 text-sm text-base-content/60">{item.period}</p>}
+  </div>
+  {item.description && <p class="leading-relaxed text-base-content/75">{item.description}</p>}
+  {item.highlights && item.highlights.length > 0 && (
+    <ul class="list-disc space-y-1 ps-5 text-base-content/75">
+      {item.highlights.map((highlight) => <li>{highlight}</li>)}
+    </ul>
+  )}
+  {item.skills && item.skills.length > 0 && <SkillList skills={item.skills} label={`${item.title} skills`} />}
+  {item.additionalInformation && item.additionalInformation.length > 0 && (
+    <div class="border-t border-base-300 pt-3 text-sm text-base-content/70">
+      <AdditionalInformationLinks links={item.additionalInformation} />
+    </div>
+  )}
+</div>

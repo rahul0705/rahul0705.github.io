@@ -1,7 +1,8 @@
 ---
 import { BriefcaseBusiness, GraduationCap } from '@lucide/astro';
 import type { SkillId } from '../../data/resume/skills';
-import SkillList from './SkillList.astro';
+import type { ContentLink } from '../../config/content-model';
+import TimelineItemContent from './TimelineItemContent.astro';
 
 interface TimelineItem {
   title: string;
@@ -9,6 +10,8 @@ interface TimelineItem {
   subtitle?: string;
   subtitleHref?: string;
   subtitleDetail?: string;
+  subtitleDetailHref?: string;
+  additionalInformation?: ContentLink[];
   startDate?: string;
   endDate?: string;
   description?: string;
@@ -44,31 +47,7 @@ const formatPeriod = (item: TimelineItem) => {
         </span>
       </div>
       <article class:list={['timeline-box', 'bg-base-100', 'shadow-sm', index % 2 === 0 ? 'timeline-start' : 'timeline-end']}>
-        <div class="space-y-4">
-          <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-            <div>
-              <h3 class="text-xl font-semibold">
-                {item.href ? <a href={item.href} class="link link-hover">{item.title}</a> : item.title}
-              </h3>
-              {item.subtitle && (
-                <p class="text-base-content/70">
-                  {item.subtitleHref ? <a href={item.subtitleHref} class="link link-hover">{item.subtitle}</a> : item.subtitle}
-                  {item.subtitleDetail && <><span aria-hidden="true"> - </span>{item.subtitleDetail}</>}
-                </p>
-              )}
-            </div>
-            {formatPeriod(item) && <p class="shrink-0 text-sm text-base-content/60">{formatPeriod(item)}</p>}
-          </div>
-          {item.description && <p class="leading-relaxed text-base-content/75">{item.description}</p>}
-          {item.highlights && item.highlights.length > 0 && (
-            <ul class="list-disc space-y-1 ps-5 text-base-content/75">
-              {item.highlights.map((highlight) => <li>{highlight}</li>)}
-            </ul>
-          )}
-          {item.skills && item.skills.length > 0 && (
-            <SkillList skills={item.skills} label={`${item.title} skills`} />
-          )}
-        </div>
+        <TimelineItemContent {...item} period={formatPeriod(item)} />
       </article>
       {index < items.length - 1 && <hr />}
     </li>

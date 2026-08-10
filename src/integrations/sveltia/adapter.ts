@@ -41,6 +41,26 @@ const createSveltiaField = (field: ContentField): Field => {
             default: field.default as string[] | undefined,
           }
         : { ...common, widget: 'list', default: field.default as string[] | undefined };
+    case 'link':
+      return {
+        ...common,
+        widget: 'object',
+        fields: [
+          { name: 'label', label: 'Label' },
+          { name: 'url', label: 'URL' },
+        ],
+      };
+    case 'link-list':
+      return {
+        ...common,
+        widget: 'list',
+        summary: '{{fields.label}}',
+        default: field.default,
+        fields: [
+          { name: 'label', label: 'Label' },
+          { name: 'url', label: 'URL' },
+        ],
+      };
     case 'image':
       return { ...common, widget: 'image' };
     case 'file':

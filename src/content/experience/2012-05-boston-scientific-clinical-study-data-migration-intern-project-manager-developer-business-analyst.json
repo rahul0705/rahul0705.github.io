@@ -5,13 +5,21 @@
   "project": "Clinical Study Data Migration",
   "startDate": "2012-05-01",
   "endDate": "2012-08-01",
-  "description": "Developed a process and tools to migrate clinical studies between Electronic Data Capture systems, coordinated vendor solutions, and presented the approach to the CIO.",
+  "description": "Led the design and proof of a clinical-study migration process spanning project management, business analysis, and Perl development. Migrated several thousand records between Electronic Data Capture systems, established a production-ready approach, and supported a recommendation estimated to save tens of millions of dollars.",
+  "highlights": [
+    "Developed Perl tooling and migrated several thousand clinical-study records to prove the approach.",
+    "Created work instructions and design documentation so the team could operate the migration process after the internship.",
+    "Reviewed vendor solutions and built a cost-savings analysis estimating benefits in the tens of millions of dollars.",
+    "Presented the recommended approach to the CIO and saw it adopted for production use.",
+    "Continued providing technical guidance to the team after the internship as they operated the solution."
+  ],
   "skills": [
-    "workInstructions",
-    "designDocumentation",
     "codeReviews",
-    "presentationProficiency",
     "costSavingsAnalysis",
-    "perl"
+    "designDocumentation",
+    "perl",
+    "presentationProficiency",
+    "sql",
+    "workInstructions"
   ]
 }

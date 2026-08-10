@@ -1,0 +1,73 @@
+{
+  "title": "Cloud Infrastructure Engineer and Deputy Lead",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "GCCS",
+  "projectUrl": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/geostationary-satellites",
+  "additionalInformation": [
+    {
+      "label": "GGSS contract award and value history ($275.2 million original ceiling; $545.9 million current base and options)",
+      "url": "https://www.usaspending.gov/award/CONT_IDV_1332KP23DNAAA0003_1330"
+    },
+    {
+      "label": "GOES-R ground system contract (up to $1.833 billion)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_DOCDG133E09CN0094_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "NOAA SOLAR-1 mission",
+      "url": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/solar-1-launch"
+    }
+  ],
+  "startDate": "2024-05-06",
+  "endDate": "2025-06-24",
+  "description": "Designed and implemented the cloud foundation for the GEO Cloud Compute Subsystem (GCCS), migrating capabilities from the GOES-R ground system developed under a contract valued at up to $1.833 billion. Served as deputy infrastructure lead and alternate lead under NOAA's Geostationary Ground Sustainment Services (GGSS) contract, whose original $275.2 million ceiling has since increased to $545.9 million in base and options.",
+  "highlights": [
+    "Designed and implemented the complete AWS cloud infrastructure in TypeScript with AWS CDK, including Amazon EKS clusters, S3 buckets, EC2 instances, ECR repositories, RDS databases, and IAM controls.",
+    "Built the platform within an isolated cloud environment accessible only through controlled government interfaces while preserving the services required to process GOES data.",
+    "Completed infrastructure work estimated at three months in less than one month, accelerating availability of the cloud processing environment.",
+    "Served as deputy infrastructure lead and alternate team lead, supporting technical decisions, implementation coordination, and delivery continuity."
+  ],
+  "skills": [
+    "amazonCloudWatch",
+    "amazonDynamoDb",
+    "amazonEc2",
+    "amazonEcr",
+    "amazonEfs",
+    "amazonEks",
+    "amazonEventBridge",
+    "awsInspector",
+    "amazonKinesis",
+    "amazonRds",
+    "amazonS3",
+    "amazonSns",
+    "amazonSqs",
+    "amazonVpc",
+    "aws",
+    "awsBackup",
+    "awsCloudTrail",
+    "awsConfig",
+    "awsIam",
+    "awsKms",
+    "awsSecretsManager",
+    "awsSecurityHub",
+    "awsSystemsManager",
+    "bash",
+    "cdk",
+    "docker",
+    "elasticLoadBalancing",
+    "git",
+    "helm",
+    "jest",
+    "kubernetes",
+    "nodejs",
+    "postgresql",
+    "powershell",
+    "python",
+    "stigs",
+    "systemArchitecture",
+    "systemHardening",
+    "typescript",
+    "unitTesting",
+    "yaml"
+  ]
+}

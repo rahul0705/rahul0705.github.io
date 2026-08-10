@@ -1,0 +1,34 @@
+{
+  "title": "Software Engineer",
+  "organization": "Harris Corporation",
+  "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
+  "project": "GWSAS",
+  "startDate": "2016-09-01",
+  "endDate": "2018-07-01",
+  "description": "Enhanced GWSAS's operational weather-product processing and overhauled its deployment process. Reduced upgrades from a full day of engineering effort to less than an hour while diagnosing a customer-site data corruption issue that helped motivate the later RFIMS program.",
+  "highlights": [
+    "Automated deployments and configuration with Ansible, Bash, and YAML, reducing deployment time from a full day to less than one hour.",
+    "Enabled customer teams to perform upgrades that had previously required direct engineering support.",
+    "Traced corrupted weather products to radio-frequency interference at the receiving antenna.",
+    "Connected the interference finding to spectrum overlap near GOES frequencies, helping establish the operational need for RFIMS."
+  ],
+  "skills": [
+    "ansible",
+    "bash",
+    "c",
+    "codeReviews",
+    "factoryAcceptanceTesting",
+    "flask",
+    "git",
+    "hdf5",
+    "netcdf",
+    "python",
+    "rabbitmq",
+    "siteAcceptanceTesting",
+    "stigs",
+    "systemHardening",
+    "unitTesting",
+    "xml",
+    "yaml"
+  ]
+}

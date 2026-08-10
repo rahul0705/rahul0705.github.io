@@ -2,6 +2,7 @@
 import { resume } from '../../data/resume';
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
+import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
 
 interface PrintRole {
   company: ExperienceOrganization;
@@ -55,7 +56,13 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
       <article class="resume-print-entry print-avoid-break">
         <h3>{role.title}</h3>
         <p class="resume-print-meta">
-          <strong>{company.name}</strong> - {project}{formatPeriod(role) && ` | ${formatPeriod(role)}`}
+          <strong>{company.name}</strong> - {
+            company.projects.find((candidate) => candidate.name === project)?.href ? (
+              <a href={company.projects.find((candidate) => candidate.name === project)!.href}>{project}</a>
+            ) : (
+              project
+            )
+          }{formatPeriod(role) && ` | ${formatPeriod(role)}`}
         </p>
         {role.description && <p>{role.description}</p>}
         {role.highlights && role.highlights.length > 0 && (
@@ -66,6 +73,11 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
         {role.skills && role.skills.length > 0 && (
           <p class="resume-print-keywords"><strong>Skills:</strong> {role.skills.map((skill) => skillCatalog[skill].name).join(', ')}</p>
         )}
+        <AdditionalInformationLinks
+          links={company.projects.find((candidate) => candidate.name === project)?.additionalInformation ?? []}
+          separator=", "
+          print
+        />
       </article>
     ))}
     </section>

@@ -2,9 +2,9 @@ import { skillCatalog } from '../data/resume/skills';
 
 export interface ContentField {
   name: string;
-  kind: 'string' | 'text' | 'boolean' | 'date' | 'string-list' | 'image' | 'file' | 'body';
+  kind: 'string' | 'text' | 'boolean' | 'date' | 'string-list' | 'link' | 'link-list' | 'image' | 'file' | 'body';
   required?: boolean;
-  default?: boolean | string[];
+  default?: boolean | string[] | ContentLink[];
   cms: {
     label: string;
     default?: boolean | '{{now}}';
@@ -15,6 +15,11 @@ export interface ContentField {
       publicFolder: string;
     };
   };
+}
+
+export interface ContentLink {
+  label: string;
+  url: string;
 }
 
 export interface ContentCollectionModel {
@@ -96,6 +101,19 @@ export const experienceContentModel = {
     organization: { name: 'organization', kind: 'string', required: true, cms: { label: 'Organization' } },
     organizationUrl: { name: 'organizationUrl', kind: 'string', cms: { label: 'Organization URL' } },
     project: { name: 'project', kind: 'string', required: true, cms: { label: 'Project or team' } },
+    projectUrl: {
+      name: 'projectUrl',
+      kind: 'string',
+      cms: { label: 'Project URL', help: 'Optional public page with more information about the project.' },
+    },
+    additionalInformation: {
+      name: 'additionalInformation',
+      kind: 'link-list',
+      cms: {
+        label: 'Additional information',
+        help: 'Optional contracts, awards, reports, presentations, articles, or other project resources.',
+      },
+    },
     startDate: {
       name: 'startDate',
       kind: 'date',

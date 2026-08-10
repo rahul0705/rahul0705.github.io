@@ -8,6 +8,11 @@ const data = {
   title: 'Software Engineer',
   organization: 'L3Harris Technologies',
   project: 'WxConnect',
+  projectUrl: 'https://example.com/project',
+  additionalInformation: [
+    { label: 'Example contract', url: 'https://example.com/contract' },
+    { label: 'Project report', url: 'https://example.com/report' },
+  ],
   startDate: '2014-01-01',
   endDate: '2016-04-01',
   description: 'Built satellite data-recovery systems.',
@@ -67,6 +72,9 @@ describe('Sveltia experience preview', () => {
     expect(rendered).toContain('Recovered GOES data.');
     expect(rendered).toContain('Flask');
     expect(rendered).toContain('https://example.com');
+    expect(rendered).toContain('Project homepage');
+    expect(rendered).toContain('Example contract');
+    expect(rendered).toContain('Project report');
   });
 
   it('omits optional sections and separators when their data is empty', () => {
@@ -77,6 +85,8 @@ describe('Sveltia experience preview', () => {
     expect(rendered).not.toContain(' · ');
     expect(rendered).not.toContain('Highlights');
     expect(rendered).not.toContain('Skills');
-    expect(rendered).not.toContain('Organization link');
+    expect(rendered).not.toContain('Primary links');
+    expect(rendered).not.toContain('Contracts');
+    expect(rendered).not.toContain('Additional information');
   });
 });

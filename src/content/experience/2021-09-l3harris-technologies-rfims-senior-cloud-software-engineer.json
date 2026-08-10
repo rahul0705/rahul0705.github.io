@@ -1,0 +1,45 @@
+{
+  "title": "Senior Cloud Software Engineer",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "RFIMS",
+  "projectUrl": "https://engage.l3harris.com/amd",
+  "additionalInformation": [
+    {
+      "label": "RFIMS development award (up to $148.4 million)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_DOCAB133018CN0003_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "RFIMS Operations, Maintenance and Sustainment award (up to $49.0 million)",
+      "url": "https://www.usaspending.gov/award/CONT_AWD_1332KP23CNEEG0002_1330_-NONE-_-NONE-"
+    },
+    {
+      "label": "L3Harris spectrum-monitoring overview",
+      "url": "https://downloads.regulations.gov/USCG-2019-0608-0002/attachment_1.pdf"
+    }
+  ],
+  "startDate": "2021-09-07",
+  "endDate": "2024-05-06",
+  "description": "Provided part-time reach-back support for RFIMS while working at AWS, spanning completion of the development contract valued at up to $148.4 million and transition to a follow-on Operations, Maintenance and Sustainment contract valued at up to $49.0 million. Helped sustain security authorization, strengthen cloud-security practices, and keep customer delivery activities on schedule.",
+  "highlights": [
+    "Evaluated each deployed system against applicable NIST controls and supported the evidence and remediation work required to maintain Authorization to Operate.",
+    "Trained internal team members on AWS and cloud tooling that streamlined investigation and resolution of security findings.",
+    "Created internal technical and operational documentation that formed a reusable knowledge repository and accelerated onboarding for future team members.",
+    "Supported customer meetings, communicated technical and security progress, and helped keep site-delivery schedules on track."
+  ],
+  "skills": [
+    "ansible",
+    "aws",
+    "bash",
+    "git",
+    "nginx",
+    "nistRiskManagementFramework",
+    "poamManagement",
+    "presentationProficiency",
+    "python",
+    "stigs",
+    "systemHardening",
+    "workInstructions",
+    "yaml"
+  ]
+}

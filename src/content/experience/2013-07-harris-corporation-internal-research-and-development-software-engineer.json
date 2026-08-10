@@ -3,10 +3,26 @@
   "organization": "Harris Corporation",
   "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
   "project": "Internal Research and Development",
+  "additionalInformation": [
+    {
+      "label": "GOES-R service-oriented architecture paper",
+      "url": "https://www.mdpi.com/2072-4292/7/8/10385"
+    }
+  ],
   "startDate": "2013-07-01",
   "endDate": "2013-12-01",
-  "description": "Developed a prototype integrating Harris' Advanced Radar Processing system with Harris' Service Architecture.",
+  "description": "Developed a Java prototype to determine whether Harris' service-based architecture, originally created for GOES-R, could support radar-data processing. The work redirected the architecture toward the next generation of GOES-R processing and ultimately contributed to the WxConnect program.",
+  "highlights": [
+    "Integrated the Advanced Radar Processing system with Harris' service-based architecture platform to evaluate whether it could support radar-data processing workflows.",
+    "Used Ansible and YAML to automate prototype deployments and manage system configuration.",
+    "Helped pivot the research toward improving the architecture for next-generation GOES-R data processing.",
+    "Contributed prototype work that evolved into the WxConnect program."
+  ],
   "skills": [
-    "java"
+    "ansible",
+    "codeReviews",
+    "git",
+    "java",
+    "yaml"
   ]
 }

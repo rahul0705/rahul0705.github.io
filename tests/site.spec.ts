@@ -179,12 +179,18 @@ test('resume text endpoints provide plain text and Markdown', async ({ request }
 test('resume role skills retain their documentation links and descriptions', async ({ page }) => {
   await page.goto('/resume/');
 
-  const typeScriptSkill = page.getByRole('link', { name: 'TypeScript: Programming Language' });
+  const typeScriptSkill = page
+    .getByRole('list', { name: 'Software Development Engineer skills' })
+    .getByRole('link', { name: 'TypeScript: Programming Language' });
   const evmsSkill = page.getByRole('link', { name: 'EVMS: Project Management Technique' });
   await expect(typeScriptSkill).toHaveAttribute('href', 'https://www.typescriptlang.org/');
   await expect(evmsSkill).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Earned_value_management');
   expect(await page.locator('li.tooltip[data-tip="Programming Language"]').count()).toBeGreaterThan(0);
-  await expect(page.getByText('Presentation Proficiency', { exact: true })).toBeVisible();
+  await expect(
+    page
+      .getByRole('list', { name: 'Senior Cloud Software Engineer skills' })
+      .getByText('Presentation Proficiency', { exact: true }),
+  ).toBeVisible();
   await expect(page.getByText('TCP/IP', { exact: true })).toBeVisible();
 });
 

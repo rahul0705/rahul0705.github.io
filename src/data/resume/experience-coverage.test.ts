@@ -24,6 +24,7 @@ const experience: ExperienceOrganization[] = [
     projects: [
       {
         name: 'Example Project',
+        additionalInformation: [],
         roles: [
           role('Current role', '2024-01', undefined, ['typescript']),
           role('Earlier role', '2022-01', '2023-12', ['typescript', 'python']),

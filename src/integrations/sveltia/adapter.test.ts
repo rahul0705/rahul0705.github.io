@@ -56,4 +56,23 @@ describe('Sveltia CMS adapter', () => {
       expect.objectContaining({ name: 'attachment', widget: 'file' }),
     ]);
   });
+
+  it('maps structured link fields to nested CMS editors', () => {
+    const model = {
+      name: 'projects',
+      label: 'Projects',
+      labelSingular: 'Project',
+      folder: 'src/content/projects',
+      slug: '{{slug}}',
+      fields: {
+        contract: { name: 'contract', kind: 'link', cms: { label: 'Contract' } },
+        outputs: { name: 'outputs', kind: 'link-list', default: [], cms: { label: 'Outputs' } },
+      },
+    } as const satisfies ContentCollectionModel;
+
+    expect(createSveltiaCollection(model).fields).toEqual([
+      expect.objectContaining({ name: 'contract', widget: 'object', required: false }),
+      expect.objectContaining({ name: 'outputs', widget: 'list', required: false, summary: '{{fields.label}}' }),
+    ]);
+  });
 });

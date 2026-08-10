@@ -50,6 +50,21 @@ describe('Astro content adapter', () => {
     expect(experienceSchema.parse({ ...requiredFields, startDate: '2026-08-06' })).toMatchObject({
       startDate: new Date('2026-08-06T00:00:00.000Z'),
     });
+    expect(
+      experienceSchema.parse({
+        ...requiredFields,
+        startDate: '2026-08-06',
+        additionalInformation: [
+          { label: 'Award notice', url: 'https://example.com/contract' },
+          { label: 'Project report', url: '/report.pdf' },
+        ],
+      }),
+    ).toMatchObject({
+      additionalInformation: [
+        { label: 'Award notice', url: 'https://example.com/contract' },
+        { label: 'Project report', url: '/report.pdf' },
+      ],
+    });
     expect(experienceSchema.parse({ ...requiredFields, startDate: '2026-08-06', endDate: null })).toMatchObject({
       startDate: new Date('2026-08-06T00:00:00.000Z'),
       endDate: undefined,
