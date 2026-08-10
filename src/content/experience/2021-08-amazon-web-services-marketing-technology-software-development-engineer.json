@@ -29,11 +29,15 @@
     "awsWaf",
     "cdk",
     "continuousIntegration",
+    "css",
     "cypress",
     "git",
     "java",
+    "javascript",
+    "python",
     "react",
     "typescript",
-    "uiUx"
+    "uiUx",
+    "yaml"
   ]
 }

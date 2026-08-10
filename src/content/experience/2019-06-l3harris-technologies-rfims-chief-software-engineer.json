@@ -37,11 +37,18 @@
     "amazonVpc",
     "ansible",
     "aws",
+    "bash",
     "elasticLoadBalancing",
     "evms",
     "git",
+    "hcl",
+    "javascript",
     "nistRiskManagementFramework",
+    "python",
+    "sql",
     "systemArchitecture",
-    "terraform"
+    "terraform",
+    "typescript",
+    "yaml"
   ]
 }

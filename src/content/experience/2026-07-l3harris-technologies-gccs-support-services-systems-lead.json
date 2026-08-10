@@ -42,10 +42,14 @@
     "awsKms",
     "awsSecretsManager",
     "awsSystemsManager",
+    "bash",
     "cdk",
     "elasticLoadBalancing",
     "git",
+    "powershell",
+    "python",
     "systemArchitecture",
-    "typescript"
+    "typescript",
+    "yaml"
   ]
 }

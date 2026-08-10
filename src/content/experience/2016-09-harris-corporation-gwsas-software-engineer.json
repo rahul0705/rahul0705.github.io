@@ -7,14 +7,17 @@
   "endDate": "2018-07-01",
   "description": "Enhanced GWSAS's operational weather-product processing and overhauled its deployment process. Reduced upgrades from a full day of engineering effort to less than an hour while diagnosing a customer-site data corruption issue that helped motivate the later RFIMS program.",
   "highlights": [
-    "Automated deployments with Ansible, reducing deployment time from a full day to less than one hour.",
+    "Automated deployments and configuration with Ansible, Bash, and YAML, reducing deployment time from a full day to less than one hour.",
     "Enabled customer teams to perform upgrades that had previously required direct engineering support.",
     "Traced corrupted weather products to radio-frequency interference at the receiving antenna.",
     "Connected the interference finding to spectrum overlap near GOES frequencies, helping establish the operational need for RFIMS."
   ],
   "skills": [
     "ansible",
+    "bash",
+    "c",
     "git",
-    "python"
+    "python",
+    "yaml"
   ]
 }

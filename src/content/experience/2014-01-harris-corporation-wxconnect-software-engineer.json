@@ -8,17 +8,20 @@
   "description": "Owned the system management, monitoring, and data-processing components of WxConnect, a direct-receive environmental satellite system deployed across 10 customer sites. Built the distributed services and space-packet assembly pipeline needed to control the system and process a 31 Mbps real-time stream producing approximately 1.8 TB of data per day, establishing capabilities that later evolved into the GWSAS project.",
   "highlights": [
     "Owned the management and monitoring component that reported system status and exposed centralized operational controls.",
-    "Used Flask and RabbitMQ to connect distributed elements to a unified monitoring and control dashboard.",
+    "Used Flask and RabbitMQ to connect distributed elements to a unified monitoring and control dashboard, and automated deployments and configuration with Ansible, Bash, and YAML.",
     "Owned the codebase that assembled incoming space packets from two 15.5 Mbps streams into a 31 Mbps processing pipeline.",
     "Processed approximately 1.8 TB of satellite data per day across 10 sites for a government customer.",
     "Implemented GOES and Himawari data-recovery workflows that produced netCDF files and helped establish the processing foundation for the later GWSAS project."
   ],
   "skills": [
+    "ansible",
+    "bash",
     "c",
     "flask",
     "git",
     "netcdf",
     "python",
-    "rabbitmq"
+    "rabbitmq",
+    "yaml"
   ]
 }

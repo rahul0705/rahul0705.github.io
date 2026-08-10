@@ -32,6 +32,7 @@
     "amazonS3",
     "ansible",
     "aws",
+    "bash",
     "continuousIntegration",
     "git",
     "groovy",
@@ -40,6 +41,9 @@
     "nodejs",
     "python",
     "react",
-    "systemArchitecture"
+    "sql",
+    "systemArchitecture",
+    "typescript",
+    "yaml"
   ]
 }

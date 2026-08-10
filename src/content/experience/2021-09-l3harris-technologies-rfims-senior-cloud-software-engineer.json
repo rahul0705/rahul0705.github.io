@@ -28,11 +28,14 @@
     "Supported customer meetings, communicated technical and security progress, and helped keep site-delivery schedules on track."
   ],
   "skills": [
+    "ansible",
     "aws",
+    "bash",
     "git",
     "nistRiskManagementFramework",
     "presentationProficiency",
     "python",
-    "workInstructions"
+    "workInstructions",
+    "yaml"
   ]
 }

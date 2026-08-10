@@ -167,6 +167,12 @@ export const skillCatalog = {
     href: 'https://aws.amazon.com/waf/',
     trackExperienceCoverage: true,
   },
+  bash: {
+    name: 'Bash',
+    description: 'Unix shell and scripting language.',
+    href: 'https://www.gnu.org/software/bash/',
+    trackExperienceCoverage: true,
+  },
   c: {
     name: 'C',
     description: 'Programming Language',
@@ -188,6 +194,12 @@ export const skillCatalog = {
   continuousIntegration: {
     name: 'Continuous Integration',
     description: 'Automated build, test, and delivery workflows.',
+  },
+  css: {
+    name: 'CSS',
+    description: 'Style sheet language for web interfaces.',
+    href: 'https://www.w3.org/Style/CSS/',
+    trackExperienceCoverage: true,
   },
   codeReviews: { name: 'Code Reviews', description: 'Collaborative source-code quality review.' },
   computerScience: {
@@ -237,6 +249,12 @@ export const skillCatalog = {
     name: 'Groovy',
     description: 'Programming Language',
     href: 'https://groovy-lang.org/',
+    trackExperienceCoverage: true,
+  },
+  hcl: {
+    name: 'HCL',
+    description: 'HashiCorp configuration language used with infrastructure as code.',
+    href: 'https://github.com/hashicorp/hcl',
     trackExperienceCoverage: true,
   },
   java: {
@@ -296,6 +314,12 @@ export const skillCatalog = {
     name: 'Presentation Proficiency',
     description: 'Clear communication of technical work to stakeholders.',
   },
+  powershell: {
+    name: 'PowerShell',
+    description: 'Cross-platform command shell and scripting language.',
+    href: 'https://learn.microsoft.com/powershell/',
+    trackExperienceCoverage: true,
+  },
   python: {
     name: 'Python',
     description: 'Programming Language',
@@ -315,6 +339,12 @@ export const skillCatalog = {
     trackExperienceCoverage: true,
   },
   softwareTesting: { name: 'Software Testing', description: 'Validation of software quality and behavior.' },
+  sql: {
+    name: 'SQL',
+    description: 'Language for querying and managing relational data.',
+    href: 'https://www.iso.org/standard/76583.html',
+    trackExperienceCoverage: true,
+  },
   systemArchitecture: {
     name: 'System Architecture',
     description: 'Design of software components, interfaces, and deployment topology.',
@@ -337,6 +367,12 @@ export const skillCatalog = {
     description: 'Design and implementation of usable, consistent user interfaces.',
   },
   workInstructions: { name: 'Work Instructions', description: 'Operational and implementation documentation.' },
+  yaml: {
+    name: 'YAML',
+    description: 'Human-readable data serialization language used for configuration and automation.',
+    href: 'https://yaml.org/',
+    trackExperienceCoverage: true,
+  },
 } as const satisfies Record<string, SkillCatalogEntry>;
 
 export type SkillId = keyof typeof skillCatalog;
