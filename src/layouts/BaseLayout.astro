@@ -3,6 +3,7 @@ import '../styles/global.css';
 
 import Footer from '../components/navigation/Footer.astro';
 import Navbar from '../components/navigation/Navbar.astro';
+import Analytics from '../components/ui/Analytics.astro';
 import SeoHead from '../components/ui/SeoHead.astro';
 import { siteTheme } from '../themes/site-theme';
 
@@ -24,6 +25,7 @@ const { title, description, canonicalPath = Astro.url.pathname, image, type, pub
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <SeoHead {title} {description} {canonicalPath} {image} {type} {publishedAt} {noindex} />
+    {!noindex && <Analytics />}
   </head>
   <body class="bg-base-100 text-base-content min-h-screen">
     <Navbar />
