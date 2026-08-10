@@ -1,0 +1,46 @@
+{
+  "title": "Cloud Infrastructure Engineer and Deputy Lead",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "GCCS",
+  "projectUrl": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/geostationary-satellites",
+  "additionalInformation": [
+    {
+      "label": "GGSS request for proposal",
+      "url": "https://sam.gov/workspace/contract/opp/e0f6e21ce68245d785abfd46d1dcdd84/view"
+    },
+    {
+      "label": "GGSS contract award",
+      "url": "https://sam.gov/workspace/contract/opp/1f65113c27b64dce810b6b00c7aaa23c/view"
+    },
+    {
+      "label": "GGSS contract value increase",
+      "url": "https://sam.gov/opp/c95d19258cb44a409683afceae4dfcee/view"
+    },
+    {
+      "label": "NOAA SOLAR-1 mission",
+      "url": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/solar-1-launch"
+    }
+  ],
+  "startDate": "2024-05-06",
+  "endDate": "2025-06-24",
+  "description": "Designed and implemented the cloud foundation for the GEO Cloud Compute Subsystem (GCCS) under NOAA's Geostationary Ground Sustainment Services (GGSS) contract, serving as deputy infrastructure lead and alternate to the team lead.",
+  "highlights": [
+    "Designed and implemented the complete AWS cloud infrastructure in TypeScript with AWS CDK, including Amazon EKS clusters, S3 buckets, EC2 instances, ECR repositories, RDS databases, and IAM controls.",
+    "Built the platform within an isolated cloud environment accessible only through controlled government interfaces while preserving the services required to process GOES data.",
+    "Completed infrastructure work estimated at three months in less than one month, accelerating availability of the cloud processing environment.",
+    "Served as deputy infrastructure lead and alternate team lead, supporting technical decisions, implementation coordination, and delivery continuity."
+  ],
+  "skills": [
+    "aws",
+    "cdk",
+    "typescript",
+    "amazonEks",
+    "amazonS3",
+    "amazonEc2",
+    "amazonEcr",
+    "amazonRds",
+    "awsIam",
+    "systemArchitecture"
+  ]
+}

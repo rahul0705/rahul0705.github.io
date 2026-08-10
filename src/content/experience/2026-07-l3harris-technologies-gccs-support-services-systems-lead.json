@@ -1,0 +1,44 @@
+{
+  "title": "Support Services Systems Lead",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "GCCS",
+  "projectUrl": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/geostationary-satellites",
+  "additionalInformation": [
+    {
+      "label": "GGSS request for proposal",
+      "url": "https://sam.gov/workspace/contract/opp/e0f6e21ce68245d785abfd46d1dcdd84/view"
+    },
+    {
+      "label": "GGSS contract award",
+      "url": "https://sam.gov/workspace/contract/opp/1f65113c27b64dce810b6b00c7aaa23c/view"
+    },
+    {
+      "label": "GGSS contract value increase",
+      "url": "https://sam.gov/opp/c95d19258cb44a409683afceae4dfcee/view"
+    },
+    {
+      "label": "NOAA SOLAR-1 mission",
+      "url": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/solar-1-launch"
+    }
+  ],
+  "startDate": "2026-07-20",
+  "description": "Lead the GCCS Support Services Systems organization across observability, infrastructure, shared services, and security, with responsibility for the supporting systems that enable reliable and timely delivery of processed NOAA products under the GGSS contract, valued at up to $275 million.",
+  "highlights": [
+    "Manage more than 12 direct reports and over 30 engineers across the observability, infrastructure, shared-services, and security teams.",
+    "Own the supporting-system strategy and delivery required for GCCS data operations to process and distribute products on schedule.",
+    "Coordinate technical direction and execution across Amazon EKS, S3, EC2, ECR, RDS, IAM, and CDK-based infrastructure.",
+    "Align cross-team security, platform reliability, and shared-service priorities with operational delivery commitments."
+  ],
+  "skills": [
+    "aws",
+    "cdk",
+    "amazonEks",
+    "amazonS3",
+    "amazonEc2",
+    "amazonEcr",
+    "amazonRds",
+    "awsIam",
+    "systemArchitecture"
+  ]
+}

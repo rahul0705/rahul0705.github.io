@@ -11,6 +11,36 @@ export const skillCatalog = {
     description: 'Software Development Methodology',
     href: 'https://en.wikipedia.org/wiki/Scrum_(software_development)',
   },
+  amazonEc2: {
+    name: 'Amazon EC2',
+    description: 'AWS virtual compute service.',
+    href: 'https://aws.amazon.com/ec2/',
+    trackExperienceCoverage: true,
+  },
+  amazonEcr: {
+    name: 'Amazon ECR',
+    description: 'AWS managed container registry.',
+    href: 'https://aws.amazon.com/ecr/',
+    trackExperienceCoverage: true,
+  },
+  amazonEks: {
+    name: 'Amazon EKS',
+    description: 'AWS managed Kubernetes service.',
+    href: 'https://aws.amazon.com/eks/',
+    trackExperienceCoverage: true,
+  },
+  amazonRds: {
+    name: 'Amazon RDS',
+    description: 'AWS managed relational database service.',
+    href: 'https://aws.amazon.com/rds/',
+    trackExperienceCoverage: true,
+  },
+  amazonS3: {
+    name: 'Amazon S3',
+    description: 'AWS object storage service.',
+    href: 'https://aws.amazon.com/s3/',
+    trackExperienceCoverage: true,
+  },
   ansible: {
     name: 'Ansible',
     description: 'Automation Tool',
@@ -21,6 +51,12 @@ export const skillCatalog = {
     name: 'AWS',
     description: 'Cloud Service Provider',
     href: 'https://aws.amazon.com/',
+    trackExperienceCoverage: true,
+  },
+  awsIam: {
+    name: 'AWS IAM',
+    description: 'AWS identity and access management service.',
+    href: 'https://aws.amazon.com/iam/',
     trackExperienceCoverage: true,
   },
   c: {

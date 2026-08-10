@@ -1,0 +1,46 @@
+{
+  "title": "Infrastructure Team Lead",
+  "organization": "L3Harris Technologies",
+  "organizationUrl": "https://en.wikipedia.org/wiki/L3Harris_Technologies",
+  "project": "GCCS",
+  "projectUrl": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/geostationary-satellites",
+  "additionalInformation": [
+    {
+      "label": "GGSS request for proposal",
+      "url": "https://sam.gov/workspace/contract/opp/e0f6e21ce68245d785abfd46d1dcdd84/view"
+    },
+    {
+      "label": "GGSS contract award",
+      "url": "https://sam.gov/workspace/contract/opp/1f65113c27b64dce810b6b00c7aaa23c/view"
+    },
+    {
+      "label": "GGSS contract value increase",
+      "url": "https://sam.gov/opp/c95d19258cb44a409683afceae4dfcee/view"
+    },
+    {
+      "label": "NOAA SOLAR-1 mission",
+      "url": "https://www.nesdis.noaa.gov/our-satellites/currently-flying/solar-1-launch"
+    }
+  ],
+  "startDate": "2025-06-24",
+  "endDate": "2026-07-20",
+  "description": "Led the nine-person GCCS infrastructure team responsible for the AWS foundation supporting migration of the GOES ground system to the cloud and expansion of the platform to distribute NOAA SOLAR-1 data.",
+  "highlights": [
+    "Managed nine direct reports and set implementation direction, schedules, and delivery priorities for the GCCS infrastructure team.",
+    "Directed completion of the AWS infrastructure required to migrate operational GOES processing from the existing ground system to GCCS.",
+    "Expanded the cloud platform to support distribution of real-time SOLAR-1 space-weather data alongside GOES products.",
+    "Supported the formal transition of GCCS into operations and the Service Transition Readiness Review completed on June 24, 2026."
+  ],
+  "skills": [
+    "aws",
+    "cdk",
+    "typescript",
+    "amazonEks",
+    "amazonS3",
+    "amazonEc2",
+    "amazonEcr",
+    "amazonRds",
+    "awsIam",
+    "systemArchitecture"
+  ]
+}
