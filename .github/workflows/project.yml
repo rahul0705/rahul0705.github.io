@@ -15,6 +15,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -32,7 +36,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Check formatting
-        run: npm run ci:summary -- 'Formatting' npm run format
+        run: npm run format 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   lint-code:
     runs-on: ubuntu-latest
@@ -50,7 +54,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint code
-        run: npm run ci:summary -- 'Code lint' npm run lint:code
+        run: npm run lint:code 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   lint-styles:
     runs-on: ubuntu-latest
@@ -68,7 +72,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint styling
-        run: npm run ci:summary -- 'Style lint' npm run lint:css
+        run: npm run lint:css 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   lint-markdown:
     runs-on: ubuntu-latest
@@ -86,7 +90,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Lint Markdown
-        run: npm run ci:summary -- 'Markdown lint' npm run lint:markdown
+        run: npm run lint:markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   typecheck:
     runs-on: ubuntu-latest
@@ -104,7 +108,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Typecheck TypeScript
-        run: npm run ci:summary -- 'TypeScript typecheck' npm run typecheck
+        run: npm run typecheck 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   astro-check:
     runs-on: ubuntu-latest
@@ -122,7 +126,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Check Astro diagnostics
-        run: npm run ci:summary -- 'Astro diagnostics' npm run astro:check
+        run: npm run astro:check 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   test-unit:
     runs-on: ubuntu-latest
@@ -140,7 +144,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Run unit tests
-        run: npm run ci:summary -- 'Unit tests' npm run test:unit
+        run: npm run test:unit
 
   test-browser:
     runs-on: ubuntu-latest
@@ -161,10 +165,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build project
-        run: npm run ci:summary -- 'Browser-test build' npm run build
+        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Run browser tests
-        run: npm run ci:summary -- 'Browser tests' npm run test:e2e
+        run: npm run test:e2e 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   lighthouse:
     runs-on: ubuntu-latest
@@ -182,10 +186,10 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Build project
-        run: npm run ci:summary -- 'Lighthouse build' npm run build
+        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Run Lighthouse CI
-        run: npm run ci:summary -- 'Lighthouse' npm run lighthouse:ci
+        run: npm run lighthouse:ci 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload Lighthouse reports
         if: always()
@@ -212,7 +216,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Spellcheck
-        run: npm run ci:summary -- 'Spellcheck' npm run spellcheck
+        run: npm run spellcheck 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   audit-unused:
     runs-on: ubuntu-latest
@@ -232,7 +236,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Audit unused code and dependencies
-        run: npm run ci:summary -- 'Unused code audit' npm run audit:unused
+        run: npm run audit:unused 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   build:
     needs:
@@ -262,7 +266,7 @@ jobs:
         uses: ./.github/actions/setup-project
 
       - name: Build project
-        run: npm run ci:summary -- 'Production build' npm run build
+        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -301,7 +305,7 @@ jobs:
           path: ./dist
 
       - name: Lint generated resume Markdown
-        run: npm run ci:summary -- 'Generated resume Markdown' npm run lint:resume:markdown
+        run: npm run lint:resume:markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
 
   deploy:
     needs:
