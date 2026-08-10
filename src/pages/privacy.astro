@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { articleContentClasses } from '../styles/article-classes';
+---
+
+<BaseLayout
+  title="Privacy"
+  description="How rahulmohandas.com handles analytics data and protects visitor privacy."
+  canonicalPath="/privacy/"
+>
+  <article class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-5xl font-bold tracking-tight">Privacy</h1>
+    <div class:list={[articleContentClasses, 'mt-8']}>
+      <p>
+        This site uses Google Analytics to understand aggregate page traffic. It measures standard page visits only;
+        the site does not define custom analytics events or send form content, resume-export content, custom user
+        identifiers, or advertising-personalization signals.
+      </p>
+      <p>
+        Analytics runs without analytics or advertising storage. The Google tag may send cookieless measurement pings,
+        but it is instructed not to create or read analytics or advertising cookies. Page and referrer URLs are reduced
+        to their origin and path before measurement, excluding query parameters and fragments.
+      </p>
+      <p>
+        Analytics is limited to public HTML pages. The content manager, error pages, and the JSON, text, and Markdown
+        resume exports are excluded.
+      </p>
+      <p>
+        Google processes the resulting measurement data under its own terms. For more information, read
+        <a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google's Privacy Policy</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

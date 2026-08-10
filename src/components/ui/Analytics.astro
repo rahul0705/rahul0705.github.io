@@ -1,0 +1,53 @@
+---
+import { analytics } from '../../config/analytics';
+
+const googleTagUrl = `https://www.googletagmanager.com/gtag/js?id=${analytics.measurementId}`;
+---
+
+<script is:inline define:vars={{ googleTagUrl, measurementId: analytics.measurementId }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+  });
+  window.gtag('set', 'ads_data_redaction', true);
+  window.gtag('set', 'url_passthrough', false);
+
+  const publicUrl = (value) => {
+    if (!value) return undefined;
+
+    try {
+      const url = new URL(value, window.location.origin);
+      return `${url.origin}${url.pathname}`;
+    } catch {
+      return undefined;
+    }
+  };
+
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId, {
+    allow_ad_personalization_signals: false,
+    allow_google_signals: false,
+    page_location: publicUrl(window.location.href),
+    page_referrer: publicUrl(document.referrer),
+  });
+
+  const loadGoogleTag = () => {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = googleTagUrl;
+    document.head.append(script);
+  };
+
+  if (document.readyState === 'complete') {
+    loadGoogleTag();
+  } else {
+    window.addEventListener('load', loadGoogleTag, { once: true });
+  }
+</script>
