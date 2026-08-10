@@ -13,15 +13,27 @@
     "Built and tested Java and TypeScript features using AWS CDK, React, and Cypress."
   ],
   "skills": [
-    "java",
-    "typescript",
-    "react",
-    "cypress",
-    "cdk",
-    "aws",
     "agileScrum",
+    "amazonApiGateway",
+    "amazonCloudWatch",
+    "amazonDynamoDb",
+    "amazonS3",
+    "amazonSns",
+    "amazonSqs",
+    "aws",
+    "awsCodeBuild",
+    "awsCodePipeline",
+    "awsIam",
+    "awsLambda",
+    "awsStepFunctions",
+    "awsWaf",
+    "cdk",
     "continuousIntegration",
-    "uiUx",
-    "git"
+    "cypress",
+    "git",
+    "java",
+    "react",
+    "typescript",
+    "uiUx"
   ]
 }

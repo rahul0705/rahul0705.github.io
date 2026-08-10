@@ -13,8 +13,8 @@
     "Connected the interference finding to spectrum overlap near GOES frequencies, helping establish the operational need for RFIMS."
   ],
   "skills": [
-    "python",
     "ansible",
-    "git"
+    "git",
+    "python"
   ]
 }

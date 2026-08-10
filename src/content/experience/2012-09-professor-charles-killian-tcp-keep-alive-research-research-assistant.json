@@ -13,11 +13,11 @@
     "Documented the results and submitted the test implementation to the supervising professor."
   ],
   "skills": [
-    "tcpIp",
+    "c",
     "distributedSystems",
-    "osProgramming",
     "networkTesting",
+    "osProgramming",
     "softwareTesting",
-    "c"
+    "tcpIp"
   ]
 }

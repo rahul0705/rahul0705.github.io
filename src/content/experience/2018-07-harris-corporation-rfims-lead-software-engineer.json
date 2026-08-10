@@ -25,17 +25,21 @@
     "Automated cloud infrastructure with Python and Ansible and established continuous integration for the project."
   ],
   "skills": [
-    "python",
+    "agileScrum",
+    "amazonEc2",
+    "amazonRds",
+    "amazonRoute53",
+    "amazonS3",
     "ansible",
-    "javascript",
-    "nodejs",
-    "react",
     "aws",
+    "continuousIntegration",
     "git",
     "groovy",
-    "agileScrum",
+    "javascript",
     "magicDraw",
-    "continuousIntegration",
+    "nodejs",
+    "python",
+    "react",
     "systemArchitecture"
   ]
 }

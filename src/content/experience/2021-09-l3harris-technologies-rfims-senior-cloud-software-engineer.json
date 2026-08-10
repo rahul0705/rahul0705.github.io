@@ -29,10 +29,10 @@
   ],
   "skills": [
     "aws",
-    "python",
     "git",
     "nistRiskManagementFramework",
-    "workInstructions",
-    "presentationProficiency"
+    "presentationProficiency",
+    "python",
+    "workInstructions"
   ]
 }

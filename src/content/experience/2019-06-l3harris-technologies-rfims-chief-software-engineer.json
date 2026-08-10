@@ -29,12 +29,19 @@
     "Resolved cross-team technical blockers while providing hands-on implementation support for high-priority work."
   ],
   "skills": [
-    "evms",
+    "agileScrum",
+    "amazonEc2",
+    "amazonRds",
+    "amazonRoute53",
+    "amazonS3",
+    "amazonVpc",
     "ansible",
     "aws",
-    "agileScrum",
+    "elasticLoadBalancing",
+    "evms",
+    "git",
     "nistRiskManagementFramework",
     "systemArchitecture",
-    "git"
+    "terraform"
   ]
 }

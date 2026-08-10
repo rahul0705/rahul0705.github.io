@@ -14,11 +14,11 @@
     "Implemented GOES and Himawari data-recovery workflows that produced netCDF files and helped establish the processing foundation for the later GWSAS project."
   ],
   "skills": [
-    "python",
     "c",
-    "rabbitmq",
-    "netcdf",
     "flask",
-    "git"
+    "git",
+    "netcdf",
+    "python",
+    "rabbitmq"
   ]
 }

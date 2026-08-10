@@ -28,16 +28,25 @@
     "Served as deputy infrastructure lead and alternate team lead, supporting technical decisions, implementation coordination, and delivery continuity."
   ],
   "skills": [
-    "aws",
-    "cdk",
-    "typescript",
-    "amazonEks",
-    "amazonS3",
+    "amazonCloudWatch",
     "amazonEc2",
     "amazonEcr",
+    "amazonEks",
     "amazonRds",
+    "amazonS3",
+    "amazonVpc",
+    "aws",
+    "awsBackup",
+    "awsCloudTrail",
+    "awsConfig",
     "awsIam",
+    "awsKms",
+    "awsSecretsManager",
+    "awsSystemsManager",
+    "cdk",
+    "elasticLoadBalancing",
+    "git",
     "systemArchitecture",
-    "git"
+    "typescript"
   ]
 }

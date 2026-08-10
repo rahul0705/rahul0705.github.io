@@ -27,15 +27,25 @@
     "Align cross-team security, platform reliability, and shared-service priorities with operational delivery commitments."
   ],
   "skills": [
-    "aws",
-    "cdk",
-    "amazonEks",
-    "amazonS3",
+    "amazonCloudWatch",
     "amazonEc2",
     "amazonEcr",
+    "amazonEks",
     "amazonRds",
+    "amazonS3",
+    "amazonVpc",
+    "aws",
+    "awsBackup",
+    "awsCloudTrail",
+    "awsConfig",
     "awsIam",
+    "awsKms",
+    "awsSecretsManager",
+    "awsSystemsManager",
+    "cdk",
+    "elasticLoadBalancing",
+    "git",
     "systemArchitecture",
-    "git"
+    "typescript"
   ]
 }

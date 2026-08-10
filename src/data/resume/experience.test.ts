@@ -37,4 +37,20 @@ describe('experience content', () => {
       .filter((entry) => gitOrganizations.has(entry.data.organization))
       .forEach((entry) => expect(entry.data.skills, entry.id).toContain('git'));
   });
+
+  it('lists every role skill alphabetically by display name', () => {
+    const collator = new Intl.Collator('en', { sensitivity: 'base' });
+
+    experienceEntries.forEach((entry) => {
+      const skillNames = entry.data.skills.map((skill) => skillCatalog[skill as SkillId].name);
+      expect(skillNames, entry.id).toEqual([...skillNames].sort(collator.compare));
+    });
+  });
+
+  it('uses the same skill set for every GCCS role', () => {
+    const gccsRoles = experienceEntries.filter((entry) => entry.data.project === 'GCCS');
+    const expectedSkills = gccsRoles[0]?.data.skills;
+
+    gccsRoles.forEach((entry) => expect(entry.data.skills, entry.id).toEqual(expectedSkills));
+  });
 });

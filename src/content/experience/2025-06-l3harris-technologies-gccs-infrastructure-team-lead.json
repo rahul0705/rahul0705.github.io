@@ -28,16 +28,25 @@
     "Supported the formal transition of GCCS into operations and the Service Transition Readiness Review completed on June 24, 2026."
   ],
   "skills": [
-    "aws",
-    "cdk",
-    "typescript",
-    "amazonEks",
-    "amazonS3",
+    "amazonCloudWatch",
     "amazonEc2",
     "amazonEcr",
+    "amazonEks",
     "amazonRds",
+    "amazonS3",
+    "amazonVpc",
+    "aws",
+    "awsBackup",
+    "awsCloudTrail",
+    "awsConfig",
     "awsIam",
+    "awsKms",
+    "awsSecretsManager",
+    "awsSystemsManager",
+    "cdk",
+    "elasticLoadBalancing",
+    "git",
     "systemArchitecture",
-    "git"
+    "typescript"
   ]
 }
