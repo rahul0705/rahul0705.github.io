@@ -7,7 +7,7 @@ on: # yamllint disable-line rule:truthy
       - main
   push:
     branches:
-      - '**'
+      - main
 
 permissions: {}
 

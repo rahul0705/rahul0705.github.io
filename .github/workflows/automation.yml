@@ -9,7 +9,7 @@ on: # yamllint disable-line rule:truthy
       - '.github/**'
   push:
     branches:
-      - '**'
+      - main
     paths:
       - '.github/**'
 
