@@ -1,0 +1,23 @@
+---
+import type { ContentLink } from '../../config/content-model';
+
+interface Props {
+  links: ContentLink[];
+  separator?: string;
+  print?: boolean;
+}
+
+const { links, separator = ' · ', print = false } = Astro.props;
+---
+
+{links.length > 0 && (
+  <p class:list={{ 'resume-print-keywords': print }}>
+    <strong class:list={{ 'font-medium text-base-content': !print }}>Additional information:</strong>{' '}
+    {links.map((link, index) => (
+      <>
+        {index > 0 && <span aria-hidden="true">{separator}</span>}
+        <a href={link.url} class:list={{ 'link link-hover': !print }}>{link.label}</a>
+      </>
+    ))}
+  </p>
+)}

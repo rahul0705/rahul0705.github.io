@@ -2,6 +2,7 @@
 import { resume } from '../../data/resume';
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
+import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
 
 interface PrintRole {
   company: ExperienceOrganization;
@@ -72,14 +73,11 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
         {role.skills && role.skills.length > 0 && (
           <p class="resume-print-keywords"><strong>Skills:</strong> {role.skills.map((skill) => skillCatalog[skill].name).join(', ')}</p>
         )}
-        {(company.projects.find((candidate) => candidate.name === project)?.additionalInformation.length ?? 0) > 0 && (
-          <p class="resume-print-keywords">
-            <strong>Additional information:</strong>{' '}
-            {company.projects.find((candidate) => candidate.name === project)!.additionalInformation.map((output, index) => (
-              <>{index > 0 && ', '}<a href={output.url}>{output.label}</a></>
-            ))}
-          </p>
-        )}
+        <AdditionalInformationLinks
+          links={company.projects.find((candidate) => candidate.name === project)?.additionalInformation ?? []}
+          separator=", "
+          print
+        />
       </article>
     ))}
     </section>
