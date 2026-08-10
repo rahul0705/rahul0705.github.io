@@ -144,7 +144,11 @@ test('resume role skills retain their documentation links and descriptions', asy
   await expect(typeScriptSkill).toHaveAttribute('href', 'https://www.typescriptlang.org/');
   await expect(evmsSkill).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Earned_value_management');
   expect(await page.locator('li.tooltip[data-tip="Programming Language"]').count()).toBeGreaterThan(0);
-  await expect(page.getByText('Presentation Proficiency', { exact: true })).toBeVisible();
+  await expect(
+    page
+      .getByRole('list', { name: 'Senior Cloud Software Engineer skills' })
+      .getByText('Presentation Proficiency', { exact: true }),
+  ).toBeVisible();
   await expect(page.getByText('TCP/IP', { exact: true })).toBeVisible();
 });
 
