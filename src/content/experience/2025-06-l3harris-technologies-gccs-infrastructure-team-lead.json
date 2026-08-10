@@ -41,6 +41,7 @@
     "amazonEcr",
     "amazonRds",
     "awsIam",
-    "systemArchitecture"
+    "systemArchitecture",
+    "git"
   ]
 }

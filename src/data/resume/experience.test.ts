@@ -29,4 +29,12 @@ describe('experience content', () => {
 
     expect(Object.keys(skillCatalog).filter((skill) => !evidencedSkills.has(skill as SkillId))).toEqual([]);
   });
+
+  it('includes Git for every Harris, L3Harris, and AWS role', () => {
+    const gitOrganizations = new Set(['Harris Corporation', 'L3Harris Technologies', 'Amazon Web Services']);
+
+    experienceEntries
+      .filter((entry) => gitOrganizations.has(entry.data.organization))
+      .forEach((entry) => expect(entry.data.skills, entry.id).toContain('git'));
+  });
 });

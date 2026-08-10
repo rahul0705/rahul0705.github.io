@@ -24,9 +24,9 @@
   ],
   "startDate": "2018-07-01",
   "endDate": "2019-06-29",
-  "description": "Led an 11-person team delivering RFIMS under a development contract valued at up to $148.4 million. Designed the cloud architecture for radio-frequency data analysis across embedded collection systems and AWS, and replaced a throughput-constrained workflow engine with a more scalable implementation.",
+  "description": "Led an 11-person team building the reusable, extensible RFIMS baseline under a development contract valued at up to $148.4 million. Designed the cloud architecture for radio-frequency data analysis across embedded collection systems and AWS, establishing a foundation that could be extended for future operational deployments.",
   "highlights": [
-    "Designed major system components in MagicDraw before implementation and helped coordinate delivery across an 11-person team.",
+    "Designed major system components in MagicDraw and coordinated an 11-person team around a modular baseline intended for reuse in future operational deployments.",
     "Built the AWS architecture around EC2, Route 53, and RDS to host data-classification and workflow services.",
     "Replaced a Groovy workflow engine that could not meet throughput needs with a JavaScript and Node.js backend designed to scale more easily.",
     "Developed the JavaScript and React frontend used to operate and monitor processing workflows.",
