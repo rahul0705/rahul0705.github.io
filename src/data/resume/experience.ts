@@ -49,7 +49,7 @@ const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
   };
 };
 
-export const financialScopeIdsFromEntries = (entries: ExperienceEntry[]): FinancialScopeId[] => {
+const financialScopeIdsFromEntries = (entries: ExperienceEntry[]): FinancialScopeId[] => {
   const ids = entries.flatMap((entry) => entry.data.financialScopeIds ?? []);
   const invalidIds = ids.filter((id) => !isFinancialScopeId(id));
   if (invalidIds.length > 0) {

@@ -37,9 +37,9 @@ type AstroFieldOutputByKind<Field extends ContentField> = {
 type AstroFieldOutput<Field extends ContentField> = AstroFieldOutputByKind<Field>[Field['kind']];
 
 type AstroSchemaShape<Model extends ContentCollectionModel> = {
-  [Key in keyof Model['fields'] as Model['fields'][Key]['kind'] extends 'body'
-    ? never
-    : Model['fields'][Key]['name']]: z.ZodType<AstroFieldOutput<Model['fields'][Key]>>;
+  [
+    Key in keyof Model['fields'] as Model['fields'][Key]['kind'] extends 'body' ? never : Model['fields'][Key]['name']
+  ]: z.ZodType<AstroFieldOutput<Model['fields'][Key]>>;
 };
 
 const createAstroField = (field: ContentField, image: SchemaContext['image']): z.ZodType<unknown> => {
