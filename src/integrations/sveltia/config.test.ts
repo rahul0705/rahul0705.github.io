@@ -95,6 +95,7 @@ describe('Sveltia CMS configuration', () => {
       'project',
       'projectUrl',
       'additionalInformation',
+      'financialScopeIds',
       'startDate',
       'endDate',
       'description',

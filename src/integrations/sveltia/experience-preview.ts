@@ -1,6 +1,11 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
 import type { ContentLink } from '../../config/content-model';
+import {
+  financialScopeCatalog,
+  financialScopeSourceUrl,
+  formatFinancialScopeDetail,
+} from '../../data/resume/financial-scopes';
 import { skillCatalog } from '../../data/resume/skills';
 import { siteTheme } from '../../themes/site-theme';
 
@@ -15,6 +20,7 @@ export interface ExperiencePreviewData {
   project: string;
   projectUrl: string;
   additionalInformation: ContentLink[];
+  financialScopeIds: string[];
   startDate: string;
   endDate: string;
   description: string;
@@ -75,6 +81,7 @@ export const getExperiencePreviewData = (entry: PreviewEntry): ExperiencePreview
   project: getString(entry, 'project'),
   projectUrl: getString(entry, 'projectUrl'),
   additionalInformation: getLinkList(entry, 'additionalInformation'),
+  financialScopeIds: getStringList(entry, 'financialScopeIds'),
   startDate: getString(entry, 'startDate'),
   endDate: getString(entry, 'endDate'),
   description: getString(entry, 'description'),
@@ -173,6 +180,13 @@ const renderLinks = (h: CreateElement, title: string, links: ContentLink[]) =>
       )
     : null;
 
+const financialScopeLinks = (ids: string[]): ContentLink[] =>
+  ids.flatMap((id) => {
+    const scope = financialScopeCatalog[id as keyof typeof financialScopeCatalog];
+    const url = scope && financialScopeSourceUrl(scope);
+    return scope && url ? [{ label: `${scope.name} — ${formatFinancialScopeDetail(scope)}`, url }] : [];
+  });
+
 export const renderExperiencePreview = ({ document, entry, window }: CustomPreviewTemplateProps) => {
   document.documentElement.dataset.theme = siteTheme;
 
@@ -190,6 +204,7 @@ export const renderExperiencePreview = ({ document, entry, window }: CustomPrevi
       ...(data.organizationUrl ? [{ label: 'Organization', url: data.organizationUrl }] : []),
       ...(data.projectUrl ? [{ label: 'Project homepage', url: data.projectUrl }] : []),
     ]),
+    renderLinks(h, 'Financial context', financialScopeLinks(data.financialScopeIds)),
     renderLinks(h, 'Additional information', data.additionalInformation),
   );
 };

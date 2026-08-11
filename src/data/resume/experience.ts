@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import type { ContentLink } from '../../config/content-model';
+import { financialScopeCatalog, type FinancialScopeId } from './financial-scopes';
 import { skillCatalog, type SkillId } from './skills';
 
 export interface ExperienceRole {
@@ -12,10 +13,11 @@ export interface ExperienceRole {
   skills?: SkillId[];
 }
 
-interface ExperienceProject {
+export interface ExperienceProject {
   name: string;
   href?: string;
   additionalInformation: ContentLink[];
+  financialScopeIds: FinancialScopeId[];
   roles: ExperienceRole[];
 }
 
@@ -28,6 +30,7 @@ export interface ExperienceOrganization {
 export type ExperienceEntry = CollectionEntry<'experience'>;
 
 const isSkillId = (value: string): value is SkillId => value in skillCatalog;
+const isFinancialScopeId = (value: string): value is FinancialScopeId => value in financialScopeCatalog;
 const toResumeMonth = (date: Date) => date.toISOString().slice(0, 7);
 
 const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
@@ -44,6 +47,16 @@ const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
     highlights: entry.data.highlights,
     skills: entry.data.skills.filter(isSkillId),
   };
+};
+
+export const financialScopeIdsFromEntries = (entries: ExperienceEntry[]): FinancialScopeId[] => {
+  const ids = entries.flatMap((entry) => entry.data.financialScopeIds ?? []);
+  const invalidIds = ids.filter((id) => !isFinancialScopeId(id));
+  if (invalidIds.length > 0) {
+    throw new Error(`Unknown financial scope ID: ${[...new Set(invalidIds)].join(', ')}`);
+  }
+
+  return [...new Set(ids.filter(isFinancialScopeId))];
 };
 
 const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganization[] => {
@@ -66,6 +79,7 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
         name: entry.data.project,
         href: entry.data.projectUrl,
         additionalInformation: entry.data.additionalInformation ?? [],
+        financialScopeIds: (entry.data.financialScopeIds ?? []).filter(isFinancialScopeId),
         roles: [],
       };
       organization.projects.push(project);
@@ -76,6 +90,12 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
       throw new Error(`Conflicting project metadata for ${entry.data.organization} / ${entry.data.project}`);
     }
 
+    for (const id of entry.data.financialScopeIds ?? []) {
+      if (isFinancialScopeId(id) && !project.financialScopeIds.includes(id)) {
+        project.financialScopeIds.push(id);
+      }
+    }
+
     project.roles.push(roleFromEntry(entry));
   }
 
@@ -83,4 +103,5 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
 };
 
 export const experienceEntries = await getCollection('experience');
+export const experienceFinancialScopeIds = financialScopeIdsFromEntries(experienceEntries);
 export const experience = groupExperienceEntries(experienceEntries);
