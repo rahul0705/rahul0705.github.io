@@ -13,6 +13,7 @@ const data = {
     { label: 'Example contract', url: 'https://example.com/contract' },
     { label: 'Project report', url: 'https://example.com/report' },
   ],
+  financialScopeIds: ['rfims-development'],
   startDate: '2014-01-01',
   endDate: '2016-04-01',
   description: 'Built satellite data-recovery systems.',

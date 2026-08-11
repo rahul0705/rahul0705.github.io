@@ -2,6 +2,7 @@ import { defineConfig } from 'cspell';
 
 export default defineConfig({
   ignorePaths: ['node_modules', 'dist', 'coverage', 'playwright-report', 'test-results', '.lighthouseci'],
+  ignoreRegExpList: [/CONT_(?:AWD|IDV)_[A-Z0-9_-]+/g],
   words: [
     'affordances',
     'Arroz',
@@ -42,6 +43,7 @@ export default defineConfig({
     'STIGs',
     'sveltia',
     'transpiles',
+    'USAspending',
     'WCAG',
     'workstream',
     'workstreams',
