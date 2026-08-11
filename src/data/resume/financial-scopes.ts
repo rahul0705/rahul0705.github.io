@@ -1,7 +1,7 @@
-export type FinancialScopeCategory = 'contract' | 'program-budget' | 'investment' | 'revenue' | 'other';
-export type FinancialScopeAmountBasis = 'ceiling' | 'base-and-options' | 'annual' | 'lifetime' | 'estimated';
+type FinancialScopeCategory = 'contract' | 'program-budget' | 'investment' | 'revenue' | 'other';
+type FinancialScopeAmountBasis = 'ceiling' | 'base-and-options' | 'annual' | 'lifetime' | 'estimated';
 
-export interface UsaSpendingSource {
+interface UsaSpendingSource {
   provider: 'usaspending';
   awardId: string;
   amountField: 'base_and_all_options';
