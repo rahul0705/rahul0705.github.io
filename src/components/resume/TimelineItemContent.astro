@@ -1,7 +1,9 @@
 ---
 import type { ContentLink } from '../../config/content-model';
 import type { SkillId } from '../../data/resume/skills';
+import type { FinancialScope } from '../../data/resume/financial-scopes';
 import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
+import FinancialScopeLinks from './FinancialScopeLinks.astro';
 import SkillList from './SkillList.astro';
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
   highlights?: string[];
   skills?: SkillId[];
   additionalInformation?: ContentLink[];
+  financialScopes?: FinancialScope[];
 }
 
 const item = Astro.props;
@@ -52,9 +55,11 @@ const item = Astro.props;
     </ul>
   )}
   {item.skills && item.skills.length > 0 && <SkillList skills={item.skills} label={`${item.title} skills`} />}
-  {item.additionalInformation && item.additionalInformation.length > 0 && (
+  {((item.financialScopes && item.financialScopes.length > 0) ||
+    (item.additionalInformation && item.additionalInformation.length > 0)) && (
     <div class="border-t border-base-300 pt-3 text-sm text-base-content/70">
-      <AdditionalInformationLinks links={item.additionalInformation} />
+      {item.financialScopes && <FinancialScopeLinks scopes={item.financialScopes} />}
+      {item.additionalInformation && <AdditionalInformationLinks links={item.additionalInformation} />}
     </div>
   )}
 </div>

@@ -2,7 +2,9 @@
 import { resume } from '../../data/resume';
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
+import { getFinancialScopeCatalog } from '../../data/resume/financial-scopes';
 import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
+import FinancialScopeLinks from './FinancialScopeLinks.astro';
 
 interface PrintRole {
   company: ExperienceOrganization;
@@ -15,6 +17,7 @@ const roles: PrintRole[] = resume.experience
     company.projects.flatMap((project) => project.roles.map((role) => ({ company, project: project.name, role }))),
   )
   .sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
+const financialScopes = await getFinancialScopeCatalog();
 
 const formatDate = (value?: string) =>
   value && new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}-01T00:00:00Z`));
@@ -73,6 +76,13 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
         {role.skills && role.skills.length > 0 && (
           <p class="resume-print-keywords"><strong>Skills:</strong> {role.skills.map((skill) => skillCatalog[skill].name).join(', ')}</p>
         )}
+        <FinancialScopeLinks
+          scopes={(company.projects.find((candidate) => candidate.name === project)?.financialScopeIds ?? []).map(
+            (id) => financialScopes[id],
+          )}
+          separator=", "
+          print
+        />
         <AdditionalInformationLinks
           links={company.projects.find((candidate) => candidate.name === project)?.additionalInformation ?? []}
           separator=", "

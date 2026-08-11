@@ -1,11 +1,11 @@
 ---
-import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
-import type { ContentLink } from '../../config/content-model';
+import type { ExperienceOrganization, ExperienceProject, ExperienceRole } from '../../data/resume/experience';
+import { getFinancialScopeCatalog } from '../../data/resume/financial-scopes';
 import Timeline from './Timeline.astro';
 
 interface TimelineRole {
   company: ExperienceOrganization;
-  project: { name: string; href?: string; additionalInformation: ContentLink[] };
+  project: ExperienceProject;
   role: ExperienceRole;
 }
 
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const { title, description, companies } = Astro.props;
+const financialScopes = await getFinancialScopeCatalog();
 const roles: TimelineRole[] = companies.flatMap((company) =>
   company.projects.flatMap((project) => project.roles.map((role) => ({ company, project, role }))),
 ).sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
@@ -27,6 +28,7 @@ const timelineItems = roles.map(({ company, project, role }) => ({
   subtitleDetail: project.name,
   subtitleDetailHref: project.href,
   additionalInformation: project.additionalInformation,
+  financialScopes: project.financialScopeIds.map((id) => financialScopes[id]),
   startDate: role.startDate,
   endDate: role.endDate,
   description: role.description,

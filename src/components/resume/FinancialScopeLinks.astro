@@ -1,0 +1,33 @@
+---
+import {
+  financialScopeSourceUrl,
+  formatFinancialScopeDetail,
+  type FinancialScope,
+} from '../../data/resume/financial-scopes';
+
+interface Props {
+  scopes: FinancialScope[];
+  separator?: string;
+  print?: boolean;
+}
+
+const { scopes, separator = ' · ', print = false } = Astro.props;
+---
+
+{scopes.length > 0 && (
+  <p class:list={{ 'resume-print-keywords': print }}>
+    <strong class:list={{ 'font-medium text-base-content': !print }}>Financial context:</strong>{' '}
+    {scopes.map((scope, index) => (
+      <>
+        {index > 0 && <span aria-hidden="true">{separator}</span>}
+        {financialScopeSourceUrl(scope) ? (
+          <a href={financialScopeSourceUrl(scope)} class:list={{ 'link link-hover': !print }}>
+            {scope.name} — {formatFinancialScopeDetail(scope)}
+          </a>
+        ) : (
+          <span>{scope.name} — {formatFinancialScopeDetail(scope)}</span>
+        )}
+      </>
+    ))}
+  </p>
+)}

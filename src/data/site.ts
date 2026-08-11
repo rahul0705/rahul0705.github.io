@@ -2,7 +2,9 @@ import defaultSocialImage from '../assets/covers/code.jpg';
 import { getPublishedPosts } from '../lib/blog';
 import { resume } from './resume';
 import { basics } from './resume/basics';
+import { experienceFinancialScopeIds } from './resume/experience';
 import { yearsOfExperience } from './resume/experience-coverage';
+import { formatFinancialScope, getFinancialScopeCatalog, totalFinancialScope } from './resume/financial-scopes';
 
 const linkedIn = basics.profiles.find((profile) => profile.network === 'LinkedIn')?.url ?? '';
 const github = basics.profiles.find((profile) => profile.network === 'GitHub')?.url ?? '';
@@ -15,18 +17,15 @@ const currentRoles = resume.experience
 const currentRoleDescription = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' }).format(
   currentRoles.map(({ organization, role }) => `${role.title} at ${organization.name}`),
 );
-const roleCount = resume.experience.reduce(
-  (count, company) =>
-    count + company.projects.reduce((projectCount, project) => projectCount + project.roles.length, 0),
-  0,
-);
-
 export const getSiteStats = async () => {
-  const publishedPosts = await getPublishedPosts();
+  const [publishedPosts, financialScopes] = await Promise.all([getPublishedPosts(), getFinancialScopeCatalog()]);
 
   return [
     { label: 'Years in engineering', value: `${yearsOfExperience(resume.experience)}+` },
-    { label: 'Roles represented', value: `${roleCount}` },
+    {
+      label: 'Program scale',
+      value: formatFinancialScope(totalFinancialScope(experienceFinancialScopeIds, financialScopes)),
+    },
     { label: 'Published articles', value: `${publishedPosts.length}` },
   ];
 };

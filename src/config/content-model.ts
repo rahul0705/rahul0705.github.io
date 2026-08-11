@@ -1,3 +1,4 @@
+import { financialScopeCatalog } from '../data/resume/financial-scopes';
 import { skillCatalog } from '../data/resume/skills';
 
 export interface ContentField {
@@ -83,6 +84,10 @@ const skillOptions = Object.entries(skillCatalog)
   .map(([value, skill]) => ({ label: skill.name, value }))
   .sort((a, b) => a.label.localeCompare(b.label));
 
+const financialScopeOptions = Object.entries(financialScopeCatalog)
+  .map(([value, scope]) => ({ label: scope.name, value }))
+  .sort((a, b) => a.label.localeCompare(b.label));
+
 export const experienceContentModel = {
   name: 'experience',
   label: 'Experience',
@@ -112,6 +117,16 @@ export const experienceContentModel = {
       cms: {
         label: 'Additional information',
         help: 'Optional contracts, awards, reports, presentations, articles, or other project resources.',
+      },
+    },
+    financialScopeIds: {
+      name: 'financialScopeIds',
+      kind: 'string-list',
+      default: [],
+      cms: {
+        label: 'Financial scopes',
+        help: 'Programs, contracts, budgets, investments, or other financial scope represented by this work.',
+        options: financialScopeOptions,
       },
     },
     startDate: {
