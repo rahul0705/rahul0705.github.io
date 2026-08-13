@@ -2,12 +2,10 @@
 title: TCP Keep-Alive
 description: Research into TCP keep-alive behavior across operating systems and network failures.
 coverImage: ../../assets/covers/network.jpg
-categories:
-  - Projects
+section: Projects
 tags:
-  - projects
   - networking
-  - TCP
+  - tcp
   - research
 ---
 

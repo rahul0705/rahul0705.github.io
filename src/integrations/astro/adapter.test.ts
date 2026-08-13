@@ -25,17 +25,25 @@ describe('Astro content adapter', () => {
   const schema = createAstroSchema(blogContentModel, { image });
 
   it('derives frontmatter defaults from the shared content model', () => {
-    expect(schema.parse({ title: 'A post' })).toMatchObject({
+    expect(schema.parse({ title: 'A post', section: 'Process' })).toMatchObject({
       title: 'A post',
       draft: false,
       featured: false,
-      categories: [],
+      section: 'Process',
       tags: [],
     });
   });
 
   it('requires fields marked as required in the shared content model', () => {
     expect(() => schema.parse({})).toThrow();
+    expect(() => schema.parse({ title: 'A post', section: 'process' })).toThrow();
+  });
+
+  it('supports an optional updated date without requiring it on existing posts', () => {
+    expect(schema.parse({ title: 'Existing post', section: 'Process' }).updatedDate).toBeUndefined();
+    expect(schema.parse({ title: 'Revised post', section: 'Process', updatedDate: '2026-08-12' }).updatedDate).toEqual(
+      new Date('2026-08-12T00:00:00.000Z'),
+    );
   });
 
   it('coerces experience calendar dates to Date values', () => {

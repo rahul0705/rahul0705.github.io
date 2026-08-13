@@ -17,10 +17,13 @@ const publishedAt = getPublishedAt(entry);
   image={entry.data.coverImage?.src}
   type="article"
   publishedAt={publishedAt}
+  updatedAt={entry.data.updatedDate}
+  articleSection={entry.data.section}
+  articleTags={entry.data.tags}
 >
   <article class="mx-auto max-w-3xl px-6 py-20">
     <header class="mb-12">
-      <ContentMeta date={publishedAt} label={entry.data.categories[0]} />
+      <ContentMeta date={publishedAt} updatedDate={entry.data.updatedDate} label={entry.data.section} />
       <div class="mt-6">
         <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-2/1 rounded-box" />
       </div>

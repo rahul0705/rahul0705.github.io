@@ -2,7 +2,7 @@
   "title": "Software Engineer",
   "organization": "Harris Corporation",
   "organizationUrl": "https://en.wikipedia.org/wiki/Harris_Corporation",
-  "project": "GOES",
+  "project": "GOES-R",
   "projectUrl": "https://www.goes-r.gov/ground/overview.html",
   "additionalInformation": [
     {
@@ -15,7 +15,7 @@
   ],
   "startDate": "2016-04-01",
   "endDate": "2016-09-01",
-  "description": "Led a performance-improvement study for the GOES-R ground system, developed under a contract valued at up to $1.833 billion. Prototyped a segmentation approach for its Oracle Coherence data grid that reduced average CPU utilization by a factor of 10 and demonstrated a path to support additional algorithm processing on existing infrastructure.",
+  "description": "Led a performance-improvement study for NOAA's Geostationary Operational Environmental Satellites (GOES), specifically the GOES-R Series ground system developed under a contract valued at up to $1.833 billion. Prototyped a segmentation approach for its Oracle Coherence data grid that reduced average CPU utilization by a factor of 10 and demonstrated a path to support additional algorithm processing on existing infrastructure.",
   "highlights": [
     "Profiled CPU and memory utilization in the Oracle Coherence-based Data Fabric.",
     "Prototyped data segmentation by query name to reduce the amount of data held by each segment.",

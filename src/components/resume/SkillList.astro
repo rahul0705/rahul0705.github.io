@@ -7,14 +7,17 @@ interface Props {
   skills?: SkillId[];
   size?: 'sm' | 'md' | 'lg';
   label?: string;
+  initiallyVisible?: number;
 }
 
-const { skills = [], size = 'md', label } = Astro.props;
+const { skills = [], size = 'md', label, initiallyVisible = 12 } = Astro.props;
+const visibleSkills = skills.slice(0, initiallyVisible);
+const additionalSkills = skills.slice(initiallyVisible);
 ---
 
 {skills.length > 0 && (
   <ul class="flex flex-wrap gap-2" aria-label={label}>
-    {skills.map((skillId) => {
+    {visibleSkills.map((skillId) => {
       const skill: SkillCatalogEntry = skillCatalog[skillId];
       return (
         <li class="tooltip" data-tip={skill.description} tabindex="0">
@@ -30,5 +33,40 @@ const { skills = [], size = 'md', label } = Astro.props;
         </li>
       );
     })}
+    {additionalSkills.length > 0 && (
+      <li class="w-full list-none pt-1">
+        <details class="collapse-arrow collapse group border border-base-300 bg-base-200/50">
+          <summary class="collapse-title min-h-0 cursor-pointer py-2 text-sm font-medium text-primary">
+            <span class="group-open:hidden">Show {additionalSkills.length} more skills</span>
+            <span class="hidden group-open:inline">Show fewer skills</span>
+          </summary>
+          <div class="collapse-content">
+            <ul class="flex flex-wrap gap-2 pt-2">
+              {additionalSkills.map((skillId) => {
+                const skill: SkillCatalogEntry = skillCatalog[skillId];
+                return (
+                  <li class="tooltip" data-tip={skill.description} tabindex="0">
+                    {skill.href ? (
+                      <a
+                        href={skill.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${skill.name}: ${skill.description}`}
+                      >
+                        <Badge variant="skill" size={size}>{skill.name}</Badge>
+                      </a>
+                    ) : (
+                      <span aria-label={`${skill.name}: ${skill.description}`}>
+                        <Badge variant="skill" size={size}>{skill.name}</Badge>
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </details>
+      </li>
+    )}
   </ul>
 )}

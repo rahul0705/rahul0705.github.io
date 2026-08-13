@@ -40,7 +40,7 @@ describe('Sveltia CMS configuration', () => {
     });
     expect(blog.fields).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ name: 'categories', widget: 'list' }),
+        expect.objectContaining({ name: 'section', widget: 'select', required: true }),
         expect.objectContaining({
           name: 'coverImage',
           widget: 'image',

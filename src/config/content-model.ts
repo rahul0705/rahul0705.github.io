@@ -62,8 +62,28 @@ export const blogContentModel = {
       },
     },
     description: { name: 'description', kind: 'text', cms: { label: 'Description' } },
+    updatedDate: {
+      name: 'updatedDate',
+      kind: 'date',
+      cms: {
+        label: 'Updated date',
+        help: 'Set this only when a post receives a meaningful content revision.',
+      },
+    },
     featured: { name: 'featured', kind: 'boolean', default: false, cms: { label: 'Featured' } },
-    categories: { name: 'categories', kind: 'string-list', default: [], cms: { label: 'Categories' } },
+    section: {
+      name: 'section',
+      kind: 'string',
+      required: true,
+      cms: {
+        label: 'Section',
+        help: 'Choose the broad editorial section for this article.',
+        options: [
+          { label: 'Process', value: 'Process' },
+          { label: 'Projects', value: 'Projects' },
+        ],
+      },
+    },
     tags: { name: 'tags', kind: 'string-list', default: [], cms: { label: 'Tags' } },
     coverImage: {
       name: 'coverImage',

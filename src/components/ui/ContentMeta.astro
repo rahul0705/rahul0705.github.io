@@ -1,15 +1,19 @@
 ---
 interface Props {
   date?: Date;
+  updatedDate?: Date;
   label?: string;
 }
 
-const { date, label } = Astro.props;
-const formattedDate = date && new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' }).format(date);
+const { date, updatedDate, label } = Astro.props;
+const formatter = new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const formattedDate = date && formatter.format(date);
+const formattedUpdatedDate = updatedDate && formatter.format(updatedDate);
+const dateText = formattedUpdatedDate ? `Published ${formattedDate} · Updated ${formattedUpdatedDate}` : formattedDate;
 ---
 
-{(formattedDate || label) && (
+{(dateText || label) && (
   <p class="text-sm text-base-content/60">
-    {[label, formattedDate].filter(Boolean).join(' - ')}
+    {[label, dateText].filter(Boolean).join(' - ')}
   </p>
 )}

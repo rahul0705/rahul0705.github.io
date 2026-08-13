@@ -9,6 +9,9 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   publishedAt?: Date;
+  updatedAt?: Date;
+  articleSection?: string;
+  articleTags?: string[];
   noindex?: boolean;
 }
 
@@ -19,6 +22,9 @@ const {
   image = site.defaultSocialImage,
   type = 'website',
   publishedAt,
+  updatedAt,
+  articleSection,
+  articleTags = [],
   noindex = false,
 } = Astro.props;
 
@@ -54,3 +60,6 @@ const pageTitle = title ? `${title} - ${site.title}` : site.title;
 <meta name="twitter:image:alt" content={pageTitle} />
 
 {type === 'article' && publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+{type === 'article' && updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
+{type === 'article' && articleSection && <meta property="article:section" content={articleSection} />}
+{type === 'article' && articleTags.map((tag) => <meta property="article:tag" content={tag} />)}

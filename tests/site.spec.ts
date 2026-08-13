@@ -186,11 +186,11 @@ test('resume role skills retain their documentation links and descriptions', asy
   await expect(typeScriptSkill).toHaveAttribute('href', 'https://www.typescriptlang.org/');
   await expect(evmsSkill).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Earned_value_management');
   expect(await page.locator('li.tooltip[data-tip="Programming Language"]').count()).toBeGreaterThan(0);
-  await expect(
-    page
-      .getByRole('list', { name: 'Senior Cloud Software Engineer skills' })
-      .getByText('Presentation Proficiency', { exact: true }),
-  ).toBeVisible();
+  const seniorCloudSkills = page.getByRole('list', { name: 'Senior Cloud Software Engineer skills' });
+  await expect(seniorCloudSkills.getByText('Presentation Proficiency', { exact: true })).toBeVisible();
+  await expect(seniorCloudSkills.getByText('YAML', { exact: true })).toBeHidden();
+  await seniorCloudSkills.getByText(/Show \d+ more skills/).click();
+  await expect(seniorCloudSkills.getByText('YAML', { exact: true })).toBeVisible();
   await expect(page.getByText('TCP/IP', { exact: true })).toBeVisible();
 });
 
@@ -212,6 +212,21 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
     'href',
     'https://www.rahulmohandas.com/blog/2019-05-16-how-to-use-git-effectively/',
   );
+
+  await expect(page.locator('meta[property="article:modified_time"]')).toHaveCount(0);
+
+  await page.goto('/blog/2018-10-08-peer-reviews/');
+  await expect(page.locator('article header')).toContainText('Published Oct 2018 · Updated Aug 2026');
+  await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute(
+    'content',
+    '2018-10-08T00:00:00.000Z',
+  );
+  await expect(page.locator('meta[property="article:modified_time"]')).toHaveAttribute(
+    'content',
+    '2026-08-12T00:00:00.000Z',
+  );
+  await expect(page.locator('meta[property="article:section"]')).toHaveAttribute('content', 'Process');
+  await expect(page.locator('meta[property="article:tag"]')).toHaveCount(4);
 });
 
 test('the content manager is not indexed, uses its bundled configuration, and supports local editing', async ({

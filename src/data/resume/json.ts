@@ -69,5 +69,5 @@ export const toResumeJson = ({
     name: interest.name,
     ...(interest.keywords && interest.keywords.length > 0 ? { keywords: interest.keywords } : {}),
   })),
-  meta: { canonical: 'https://jsonresume.org/schema', version: '1.0.0', lastModified: '2026-07-26' },
+  meta: { canonical: 'https://jsonresume.org/schema', version: '1.0.0', lastModified: '2026-08-12' },
 });

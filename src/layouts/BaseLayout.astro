@@ -14,17 +14,42 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   publishedAt?: Date;
+  updatedAt?: Date;
+  articleSection?: string;
+  articleTags?: string[];
   noindex?: boolean;
 }
 
-const { title, description, canonicalPath = Astro.url.pathname, image, type, publishedAt, noindex } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  image,
+  type,
+  publishedAt,
+  updatedAt,
+  articleSection,
+  articleTags,
+  noindex,
+} = Astro.props;
 ---
 
 <html lang="en" data-theme={siteTheme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <SeoHead {title} {description} {canonicalPath} {image} {type} {publishedAt} {noindex} />
+    <SeoHead
+      {title}
+      {description}
+      {canonicalPath}
+      {image}
+      {type}
+      {publishedAt}
+      {updatedAt}
+      {articleSection}
+      {articleTags}
+      {noindex}
+    />
     {!noindex && <Analytics />}
   </head>
   <body class="bg-base-100 text-base-content min-h-screen">

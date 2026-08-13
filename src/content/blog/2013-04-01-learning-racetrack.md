@@ -2,10 +2,8 @@
 title: Learning Racetrack
 description: Rebuilding an interactive racetrack to help middle-school students learn through hands-on play.
 coverImage: ../../assets/covers/circuit.jpg
-categories:
-  - Projects
+section: Projects
 tags:
-  - projects
   - community service
   - raspberry pi
 
