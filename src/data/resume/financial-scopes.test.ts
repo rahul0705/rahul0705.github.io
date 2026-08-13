@@ -14,7 +14,6 @@ describe('financial scope', () => {
   const usaSpendingScopeCount = Object.values(financialScopeCatalog).filter(
     (scope) => scope.source?.provider === 'usaspending',
   ).length;
-
   it('deduplicates repeated scope references before totaling them', () => {
     expect(totalFinancialScope(['ggss', 'ggss', 'rfims-development'])).toBe(694_287_958);
   });
