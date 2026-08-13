@@ -8,8 +8,11 @@ import PageHeader from '../../components/ui/PageHeader.astro';
 import { getPublishedAt, getPublishedPosts } from '../../lib/blog';
 
 const posts = await getPublishedPosts();
-const categories = new Set(posts.flatMap((post) => post.data.categories)).size;
-const latestPublicationYear = posts[0] && getPublishedAt(posts[0])?.getUTCFullYear();
+const sections = new Set(posts.map((post) => post.data.section)).size;
+const latestArticleDate = posts.reduce<Date | undefined>((latest, post) => {
+  const articleDate = post.data.updatedDate ?? getPublishedAt(post);
+  return articleDate && (!latest || articleDate > latest) ? articleDate : latest;
+}, undefined);
 const description = 'Writing about software engineering, distributed systems, cloud infrastructure, and developer tooling.';
 ---
 
@@ -23,8 +26,8 @@ const description = 'Writing about software engineering, distributed systems, cl
     <div class="pb-20">
       <div class="stats stats-vertical mb-10 w-full shadow-sm sm:stats-horizontal">
         <div class="stat"><p class="stat-value text-2xl">{posts.length}</p><p class="stat-title">Articles</p></div>
-        <div class="stat"><p class="stat-value text-2xl">{categories}</p><p class="stat-title">Topics</p></div>
-        <div class="stat"><p class="stat-value text-2xl">{latestPublicationYear ?? '-'}</p><p class="stat-title">Latest publication</p></div>
+        <div class="stat"><p class="stat-value text-2xl">{sections}</p><p class="stat-title">Sections</p></div>
+        <div class="stat"><p class="stat-value text-2xl">{latestArticleDate?.getUTCFullYear() ?? '-'}</p><p class="stat-title">Latest update</p></div>
       </div>
       <div class="grid gap-6 md:grid-cols-2">
         {posts.map((post, index) => <BlogCard post={post} featured={index === 0} />)}

@@ -11,6 +11,9 @@ import {
 afterEach(() => vi.restoreAllMocks());
 
 describe('financial scope', () => {
+  const usaSpendingScopeCount = Object.values(financialScopeCatalog).filter(
+    (scope) => scope.source?.provider === 'usaspending',
+  ).length;
   it('deduplicates repeated scope references before totaling them', () => {
     expect(totalFinancialScope(['ggss', 'ggss', 'rfims-development'])).toBe(694_287_958);
   });
@@ -21,6 +24,9 @@ describe('financial scope', () => {
 
   it('formats detailed values according to their basis', () => {
     expect(formatFinancialScopeDetail(financialScopeCatalog['goes-r-ground-system'])).toBe('up to $1.833 billion');
+    expect(formatFinancialScopeDetail(financialScopeCatalog['gwsas-ground-readiness-antennas'])).toBe(
+      'up to $24.6 million',
+    );
     expect(formatFinancialScopeDetail(financialScopeCatalog.ggss)).toBe('$545.9 million in base and options');
   });
 
@@ -31,7 +37,7 @@ describe('financial scope', () => {
 
     const catalog = await resolveFinancialScopeCatalog(fetcher);
 
-    expect(fetcher).toHaveBeenCalledTimes(4);
+    expect(fetcher).toHaveBeenCalledTimes(usaSpendingScopeCount);
     expect(catalog.ggss.amount).toBe(600_000_000);
     expect(catalog.ggss.asOf).toBe('2026-07-02');
   });
@@ -43,6 +49,6 @@ describe('financial scope', () => {
     const catalog = await resolveFinancialScopeCatalog(fetcher);
 
     expect(catalog.ggss.amount).toBe(financialScopeCatalog.ggss.amount);
-    expect(console.warn).toHaveBeenCalledTimes(4);
+    expect(console.warn).toHaveBeenCalledTimes(usaSpendingScopeCount);
   });
 });

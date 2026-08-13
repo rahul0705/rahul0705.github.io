@@ -31,6 +31,18 @@ export const financialScopeCatalog = {
       amountField: 'base_and_all_options',
     },
   },
+  'gwsas-ground-readiness-antennas': {
+    name: 'GWSAS Ground Readiness Antennas',
+    amount: 24_623_736.74,
+    currency: 'USD',
+    category: 'contract',
+    amountBasis: 'ceiling',
+    source: {
+      provider: 'usaspending',
+      awardId: 'CONT_AWD_DOCEA133W14NC1680_1330_GS35F0283J_4730',
+      amountField: 'base_and_all_options',
+    },
+  },
   'rfims-development': {
     name: 'RFIMS Development',
     amount: 148_391_605,

@@ -10,6 +10,13 @@
 :root {
   --font-sans: 'Fira Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, monospace;
+  --site-navbar-height: 4rem;
+
+  scroll-padding-top: calc(var(--site-navbar-height) + 1rem);
+}
+
+:where(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: calc(var(--site-navbar-height) + 1rem);
 }
 
 @plugin 'daisyui' {

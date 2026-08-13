@@ -20,7 +20,7 @@ const createSveltiaField = (field: ContentField): Field => {
 
   switch (field.kind) {
     case 'string':
-      return common;
+      return field.cms.options ? { ...common, widget: 'select', options: [...field.cms.options] } : common;
     case 'text':
       return { ...common, widget: 'text' };
     case 'boolean':

@@ -46,7 +46,14 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
   const linkSchema = z.object({ label: z.string().min(1), url: z.string().min(1) });
 
   switch (field.kind) {
-    case 'string':
+    case 'string': {
+      const schema = field.cms.options
+        ? z.string().refine((value) => field.cms.options!.some((option) => option.value === value), {
+            message: `Choose a configured ${field.cms.label.toLowerCase()}.`,
+          })
+        : z.string();
+      return isRequired(field) ? schema : schema.optional();
+    }
     case 'text':
       return isRequired(field) ? z.string() : z.string().optional();
     case 'boolean':
