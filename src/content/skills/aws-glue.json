@@ -1,0 +1,6 @@
+{
+  "name": "AWS Glue",
+  "description": "AWS managed data integration service.",
+  "href": "https://aws.amazon.com/glue/",
+  "trackExperienceCoverage": true
+}

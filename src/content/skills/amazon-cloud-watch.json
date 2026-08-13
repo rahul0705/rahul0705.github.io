@@ -1,0 +1,6 @@
+{
+  "name": "Amazon CloudWatch",
+  "description": "AWS observability service for metrics, logs, dashboards, and alarms.",
+  "href": "https://aws.amazon.com/cloudwatch/",
+  "trackExperienceCoverage": true
+}

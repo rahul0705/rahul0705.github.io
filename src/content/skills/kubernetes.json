@@ -1,0 +1,6 @@
+{
+  "name": "Kubernetes",
+  "description": "Container orchestration platform.",
+  "href": "https://kubernetes.io/",
+  "trackExperienceCoverage": true
+}

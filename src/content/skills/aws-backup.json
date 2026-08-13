@@ -1,0 +1,6 @@
+{
+  "name": "AWS Backup",
+  "description": "AWS centralized data-protection and backup service.",
+  "href": "https://aws.amazon.com/backup/",
+  "trackExperienceCoverage": true
+}

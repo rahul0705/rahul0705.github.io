@@ -1,0 +1,6 @@
+{
+  "name": "Amazon S3",
+  "description": "AWS object storage service.",
+  "href": "https://aws.amazon.com/s3/",
+  "trackExperienceCoverage": true
+}

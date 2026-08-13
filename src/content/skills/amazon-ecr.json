@@ -1,0 +1,6 @@
+{
+  "name": "Amazon ECR",
+  "description": "AWS managed container registry.",
+  "href": "https://aws.amazon.com/ecr/",
+  "trackExperienceCoverage": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Helm",
+  "description": "Package manager for Kubernetes applications.",
+  "href": "https://helm.sh/",
+  "trackExperienceCoverage": true
+}

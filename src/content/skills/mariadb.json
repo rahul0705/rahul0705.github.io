@@ -1,0 +1,6 @@
+{
+  "name": "MariaDB",
+  "description": "Open-source relational database.",
+  "href": "https://mariadb.org/",
+  "trackExperienceCoverage": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Mockito",
+  "description": "Java mocking framework.",
+  "href": "https://site.mockito.org/",
+  "trackExperienceCoverage": true
+}

@@ -29,6 +29,13 @@ const createSveltiaField = (field: ContentField): Field => {
         widget: 'boolean',
         default: typeof field.cms.default === 'boolean' ? field.cms.default : (field.default as boolean | undefined),
       };
+    case 'number':
+      return {
+        ...common,
+        widget: 'number',
+        value_type: 'float',
+        ...(field.min === undefined ? {} : { min: field.min }),
+      };
     case 'date':
       return { ...common, widget: 'datetime', type: 'date', format: 'YYYY-MM-DD', default: field.cms.default };
     case 'string-list':
@@ -41,6 +48,24 @@ const createSveltiaField = (field: ContentField): Field => {
             default: field.default as string[] | undefined,
           }
         : { ...common, widget: 'list', default: field.default as string[] | undefined };
+    case 'relation':
+      if (!field.relation) throw new Error(`Missing relation configuration for ${field.name}`);
+      return {
+        ...common,
+        widget: 'relation',
+        collection: field.relation.collection,
+        value_field: field.relation.valueField ?? '{{slug}}',
+        display_fields: [...field.relation.displayFields],
+        ...(field.relation.searchFields ? { search_fields: [...field.relation.searchFields] } : {}),
+        multiple: field.relation.multiple ?? false,
+        default: field.default as string[] | undefined,
+      };
+    case 'object':
+      return {
+        ...common,
+        widget: 'object',
+        fields: Object.values(field.fields ?? {}).map(createSveltiaField),
+      };
     case 'link':
       return {
         ...common,
@@ -76,6 +101,7 @@ export const createSveltiaCollection = (model: ContentCollectionModel): EntryCol
   label_singular: model.labelSingular,
   folder: model.folder,
   slug: model.slug,
+  ...(model.identifierField ? { identifier_field: model.identifierField } : {}),
   ...(model.format ? { format: model.format, extension: model.extensions?.[0] ?? model.format } : {}),
   ...(model.summary ? { summary: model.summary } : {}),
   ...(model.sort

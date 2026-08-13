@@ -1,0 +1,6 @@
+{
+  "name": "Docker",
+  "description": "Container build and runtime platform.",
+  "href": "https://www.docker.com/",
+  "trackExperienceCoverage": true
+}

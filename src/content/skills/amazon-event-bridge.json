@@ -1,0 +1,6 @@
+{
+  "name": "Amazon EventBridge",
+  "description": "AWS managed event bus service.",
+  "href": "https://aws.amazon.com/eventbridge/",
+  "trackExperienceCoverage": true
+}

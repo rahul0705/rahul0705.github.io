@@ -1,12 +1,6 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
 import type { ContentLink } from '../../config/content-model';
-import {
-  financialScopeCatalog,
-  financialScopeSourceUrl,
-  formatFinancialScopeDetail,
-} from '../../data/resume/financial-scopes';
-import { skillCatalog } from '../../data/resume/skills';
 import { siteTheme } from '../../themes/site-theme';
 
 type PreviewTemplate = (props: CustomPreviewTemplateProps) => unknown;
@@ -63,6 +57,22 @@ const isContentLink = (value: unknown): value is ContentLink => {
     'url' in plainValue &&
     typeof plainValue.url === 'string'
   );
+};
+
+const relationLabels = (fieldsMetaData: CustomPreviewTemplateProps['fieldsMetaData'], field: string, ids: string[]) => {
+  const metadata = toPlainValue(fieldsMetaData?.get(field));
+  const records = Array.isArray(metadata)
+    ? metadata
+    : metadata && typeof metadata === 'object'
+      ? Object.values(metadata)
+      : [];
+
+  return ids.map((id, index) => {
+    const candidate = toPlainValue(records[index]);
+    const data =
+      candidate && typeof candidate === 'object' && 'data' in candidate ? toPlainValue(candidate.data) : candidate;
+    return data && typeof data === 'object' && 'name' in data && typeof data.name === 'string' ? data.name : id;
+  });
 };
 
 const getLinkList = (entry: PreviewEntry, field: string) => {
@@ -138,21 +148,15 @@ const renderHighlights = (h: CreateElement, highlights: string[]) =>
       )
     : null;
 
-const renderSkills = (h: CreateElement, skills: string[]) =>
-  skills.length
+const renderBadges = (h: CreateElement, title: string, labels: string[]) =>
+  labels.length
     ? renderSection(
         h,
-        'Skills',
+        title,
         h(
           'div',
           { className: 'flex flex-wrap gap-2' },
-          ...skills.map((skill) =>
-            h(
-              'span',
-              { className: 'badge badge-outline badge-primary' },
-              skill in skillCatalog ? skillCatalog[skill as keyof typeof skillCatalog].name : skill,
-            ),
-          ),
+          ...labels.map((label) => h('span', { className: 'badge badge-outline badge-primary' }, label)),
         ),
       )
     : null;
@@ -180,14 +184,7 @@ const renderLinks = (h: CreateElement, title: string, links: ContentLink[]) =>
       )
     : null;
 
-const financialScopeLinks = (ids: string[]): ContentLink[] =>
-  ids.flatMap((id) => {
-    const scope = financialScopeCatalog[id as keyof typeof financialScopeCatalog];
-    const url = scope && financialScopeSourceUrl(scope);
-    return scope && url ? [{ label: `${scope.name} — ${formatFinancialScopeDetail(scope)}`, url }] : [];
-  });
-
-export const renderExperiencePreview = ({ document, entry, window }: CustomPreviewTemplateProps) => {
+export const renderExperiencePreview = ({ document, entry, fieldsMetaData, window }: CustomPreviewTemplateProps) => {
   document.documentElement.dataset.theme = siteTheme;
 
   const h = getCreateElement(window.parent);
@@ -199,12 +196,12 @@ export const renderExperiencePreview = ({ document, entry, window }: CustomPrevi
     renderHeader(h, data),
     data.description ? h('p', { className: 'mt-5 leading-relaxed text-base-content/85' }, data.description) : null,
     renderHighlights(h, data.highlights),
-    renderSkills(h, data.skills),
+    renderBadges(h, 'Skills', relationLabels(fieldsMetaData, 'skills', data.skills)),
     renderLinks(h, 'Primary links', [
       ...(data.organizationUrl ? [{ label: 'Organization', url: data.organizationUrl }] : []),
       ...(data.projectUrl ? [{ label: 'Project homepage', url: data.projectUrl }] : []),
     ]),
-    renderLinks(h, 'Financial context', financialScopeLinks(data.financialScopeIds)),
+    renderBadges(h, 'Financial context', relationLabels(fieldsMetaData, 'financialScopeIds', data.financialScopeIds)),
     renderLinks(h, 'Additional information', data.additionalInformation),
   );
 };

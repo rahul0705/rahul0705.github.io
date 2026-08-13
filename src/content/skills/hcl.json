@@ -1,0 +1,6 @@
+{
+  "name": "HCL",
+  "description": "HashiCorp configuration language used with infrastructure as code.",
+  "href": "https://github.com/hashicorp/hcl",
+  "trackExperienceCoverage": true
+}

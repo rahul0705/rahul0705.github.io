@@ -1,0 +1,6 @@
+{
+  "name": "Amazon Athena",
+  "description": "AWS serverless interactive query service.",
+  "href": "https://aws.amazon.com/athena/",
+  "trackExperienceCoverage": true
+}

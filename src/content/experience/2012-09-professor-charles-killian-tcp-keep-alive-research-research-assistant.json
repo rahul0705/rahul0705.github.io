@@ -14,10 +14,10 @@
   ],
   "skills": [
     "c",
-    "distributedSystems",
-    "networkTesting",
-    "osProgramming",
-    "softwareTesting",
-    "tcpIp"
+    "distributed-systems",
+    "network-testing",
+    "os-programming",
+    "software-testing",
+    "tcp-ip"
   ]
 }

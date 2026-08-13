@@ -1,3 +1,5 @@
+import { getCollection, type CollectionEntry } from 'astro:content';
+
 type FinancialScopeCategory = 'contract' | 'program-budget' | 'investment' | 'revenue' | 'other';
 type FinancialScopeAmountBasis = 'ceiling' | 'base-and-options' | 'annual' | 'lifetime' | 'estimated';
 
@@ -18,71 +20,21 @@ export interface FinancialScope {
   asOf?: string;
 }
 
-export const financialScopeCatalog = {
-  'goes-r-ground-system': {
-    name: 'GOES-R Ground System',
-    amount: 1_832_957_654.99,
-    currency: 'USD',
-    category: 'contract',
-    amountBasis: 'ceiling',
-    source: {
-      provider: 'usaspending',
-      awardId: 'CONT_AWD_DOCDG133E09CN0094_1330_-NONE-_-NONE-',
-      amountField: 'base_and_all_options',
-    },
-  },
-  'gwsas-ground-readiness-antennas': {
-    name: 'GWSAS Ground Readiness Antennas',
-    amount: 24_623_736.74,
-    currency: 'USD',
-    category: 'contract',
-    amountBasis: 'ceiling',
-    source: {
-      provider: 'usaspending',
-      awardId: 'CONT_AWD_DOCEA133W14NC1680_1330_GS35F0283J_4730',
-      amountField: 'base_and_all_options',
-    },
-  },
-  'rfims-development': {
-    name: 'RFIMS Development',
-    amount: 148_391_605,
-    currency: 'USD',
-    category: 'contract',
-    amountBasis: 'ceiling',
-    source: {
-      provider: 'usaspending',
-      awardId: 'CONT_AWD_DOCAB133018CN0003_1330_-NONE-_-NONE-',
-      amountField: 'base_and_all_options',
-    },
-  },
-  'rfims-oms': {
-    name: 'RFIMS Operations, Maintenance and Sustainment',
-    amount: 49_015_914,
-    currency: 'USD',
-    category: 'contract',
-    amountBasis: 'ceiling',
-    source: {
-      provider: 'usaspending',
-      awardId: 'CONT_AWD_1332KP23CNEEG0002_1330_-NONE-_-NONE-',
-      amountField: 'base_and_all_options',
-    },
-  },
-  ggss: {
-    name: 'Geostationary Ground Sustainment Services',
-    amount: 545_896_353,
-    currency: 'USD',
-    category: 'contract',
-    amountBasis: 'base-and-options',
-    source: {
-      provider: 'usaspending',
-      awardId: 'CONT_IDV_1332KP23DNAAA0003_1330',
-      amountField: 'base_and_all_options',
-    },
-  },
-} as const satisfies Record<string, FinancialScope>;
-
-export type FinancialScopeId = keyof typeof financialScopeCatalog;
+export type FinancialScopeId = CollectionEntry<'financialScopes'>['id'];
 export type FinancialScopeCatalog = Record<FinancialScopeId, FinancialScope>;
+
+const financialScopeEntries = await getCollection('financialScopes');
+
+export const financialScopeCatalog: FinancialScopeCatalog = Object.fromEntries(
+  financialScopeEntries.map((entry) => [entry.id, entry.data as FinancialScope]),
+);
+
+export const validateFinancialScopeIds = (ids: Iterable<string>, context: string): void => {
+  const invalidIds = [...ids].filter((id) => !(id in financialScopeCatalog));
+  if (invalidIds.length > 0) {
+    throw new Error(`Unknown financial scope ID in ${context}: ${[...new Set(invalidIds)].join(', ')}`);
+  }
+};
 
 export const totalFinancialScope = (
   ids: Iterable<FinancialScopeId>,

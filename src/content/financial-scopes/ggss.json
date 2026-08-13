@@ -1,0 +1,12 @@
+{
+  "name": "Geostationary Ground Sustainment Services",
+  "amount": 545896353,
+  "currency": "USD",
+  "category": "contract",
+  "amountBasis": "base-and-options",
+  "source": {
+    "provider": "usaspending",
+    "awardId": "CONT_IDV_1332KP23DNAAA0003_1330",
+    "amountField": "base_and_all_options"
+  }
+}

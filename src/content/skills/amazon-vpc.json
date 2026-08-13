@@ -1,0 +1,6 @@
+{
+  "name": "Amazon VPC",
+  "description": "AWS service for isolated virtual networks.",
+  "href": "https://aws.amazon.com/vpc/",
+  "trackExperienceCoverage": true
+}

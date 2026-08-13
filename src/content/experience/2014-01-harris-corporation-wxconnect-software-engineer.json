@@ -17,7 +17,7 @@
     "ansible",
     "bash",
     "c",
-    "codeReviews",
+    "code-reviews",
     "flask",
     "git",
     "hdf5",
@@ -25,7 +25,7 @@
     "python",
     "rabbitmq",
     "stigs",
-    "systemHardening",
+    "system-hardening",
     "xml",
     "yaml"
   ]

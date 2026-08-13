@@ -1,8 +1,8 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 import type { ContentLink } from '../../config/content-model';
-import { financialScopeCatalog, type FinancialScopeId } from './financial-scopes';
-import { skillCatalog, type SkillId } from './skills';
+import { type FinancialScopeId, validateFinancialScopeIds } from './financial-scopes';
+import { type SkillId, validateSkillIds } from './skills';
 
 export interface ExperienceRole {
   title: string;
@@ -29,15 +29,10 @@ export interface ExperienceOrganization {
 
 export type ExperienceEntry = CollectionEntry<'experience'>;
 
-const isSkillId = (value: string): value is SkillId => value in skillCatalog;
-const isFinancialScopeId = (value: string): value is FinancialScopeId => value in financialScopeCatalog;
 const toResumeMonth = (date: Date) => date.toISOString().slice(0, 7);
 
 const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
-  const invalidSkills = entry.data.skills.filter((skill) => !isSkillId(skill));
-  if (invalidSkills.length > 0) {
-    throw new Error(`Unknown skill ID in ${entry.id}: ${invalidSkills.join(', ')}`);
-  }
+  validateSkillIds(entry.data.skills, entry.id);
 
   return {
     title: entry.data.title,
@@ -45,18 +40,15 @@ const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
     endDate: entry.data.endDate ? toResumeMonth(entry.data.endDate) : undefined,
     description: entry.data.description,
     highlights: entry.data.highlights,
-    skills: entry.data.skills.filter(isSkillId),
+    skills: entry.data.skills,
   };
 };
 
 const financialScopeIdsFromEntries = (entries: ExperienceEntry[]): FinancialScopeId[] => {
+  entries.forEach((entry) => validateFinancialScopeIds(entry.data.financialScopeIds ?? [], entry.id));
   const ids = entries.flatMap((entry) => entry.data.financialScopeIds ?? []);
-  const invalidIds = ids.filter((id) => !isFinancialScopeId(id));
-  if (invalidIds.length > 0) {
-    throw new Error(`Unknown financial scope ID: ${[...new Set(invalidIds)].join(', ')}`);
-  }
 
-  return [...new Set(ids.filter(isFinancialScopeId))];
+  return [...new Set(ids)];
 };
 
 const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganization[] => {
@@ -79,7 +71,7 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
         name: entry.data.project,
         href: entry.data.projectUrl,
         additionalInformation: entry.data.additionalInformation ?? [],
-        financialScopeIds: (entry.data.financialScopeIds ?? []).filter(isFinancialScopeId),
+        financialScopeIds: entry.data.financialScopeIds ?? [],
         roles: [],
       };
       organization.projects.push(project);
@@ -91,7 +83,7 @@ const groupExperienceEntries = (entries: ExperienceEntry[]): ExperienceOrganizat
     }
 
     for (const id of entry.data.financialScopeIds ?? []) {
-      if (isFinancialScopeId(id) && !project.financialScopeIds.includes(id)) {
+      if (!project.financialScopeIds.includes(id)) {
         project.financialScopeIds.push(id);
       }
     }

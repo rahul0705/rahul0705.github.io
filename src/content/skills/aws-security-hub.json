@@ -1,0 +1,6 @@
+{
+  "name": "AWS Security Hub",
+  "description": "AWS cloud security posture management service.",
+  "href": "https://aws.amazon.com/security-hub/",
+  "trackExperienceCoverage": true
+}

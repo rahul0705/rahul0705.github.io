@@ -1,0 +1,6 @@
+{
+  "name": "CDK",
+  "description": "Infrastructure as Code Tool",
+  "href": "https://aws.amazon.com/cdk/",
+  "trackExperienceCoverage": true
+}

@@ -48,6 +48,14 @@ const createProps = (values: Record<string, unknown>) => {
     props: {
       document,
       entry: createEntry(values),
+      fieldsMetaData: {
+        get: (field: string) =>
+          field === 'skills'
+            ? [{ data: { name: 'C' } }, { data: { name: 'Flask' } }]
+            : field === 'financialScopeIds'
+              ? [{ data: { name: 'RFIMS Development' } }]
+              : undefined,
+      },
       window: { parent: cmsWindow },
     } as unknown as CustomPreviewTemplateProps,
   };
@@ -72,10 +80,20 @@ describe('Sveltia experience preview', () => {
     expect(rendered).toContain('Jan 2014 — Apr 2016');
     expect(rendered).toContain('Recovered GOES data.');
     expect(rendered).toContain('Flask');
+    expect(rendered).toContain('RFIMS Development');
     expect(rendered).toContain('https://example.com');
     expect(rendered).toContain('Project homepage');
     expect(rendered).toContain('Example contract');
     expect(rendered).toContain('Project report');
+  });
+
+  it('falls back to stable relation IDs when CMS metadata has not loaded', () => {
+    const { props } = createProps({ ...data, skills: ['newSkill'], financialScopeIds: ['new-contract'] });
+    (props as unknown as { fieldsMetaData: { get: () => undefined } }).fieldsMetaData = { get: () => undefined };
+    const rendered = JSON.stringify(renderExperiencePreview(props));
+
+    expect(rendered).toContain('newSkill');
+    expect(rendered).toContain('new-contract');
   });
 
   it('omits optional sections and separators when their data is empty', () => {

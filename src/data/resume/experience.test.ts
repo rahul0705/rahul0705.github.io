@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { education } from './education';
 import { experienceEntries } from './experience';
 import { createExperienceSlug } from './experience-slug';
-import { skillCatalog, type SkillId } from './skills';
+import { skillCatalog, type SkillId, validateSkillIds } from './skills';
 
 describe('experience content', () => {
   it('uses the start-date-organization-project-role filename schema', () => {
@@ -28,6 +28,25 @@ describe('experience content', () => {
     ]);
 
     expect(Object.keys(skillCatalog).filter((skill) => !evidencedSkills.has(skill as SkillId))).toEqual([]);
+  });
+
+  it('resolves every education skill through the catalog', () => {
+    education.forEach((entry) =>
+      entry.skills?.forEach((skill) => expect(skillCatalog, `${entry.title}: ${skill}`).toHaveProperty(skill)),
+    );
+  });
+
+  it('uses readable kebab-case filename IDs for experience relations', () => {
+    expect(skillCatalog['amazon-cloud-watch'].name).toBe('Amazon CloudWatch');
+    expect(skillCatalog['aws-iam'].name).toBe('AWS IAM');
+    expect(skillCatalog['tcp-ip'].name).toBe('TCP/IP');
+    expect(Object.keys(skillCatalog).every((id) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id))).toBe(true);
+  });
+
+  it('rejects dangling skill relations with their referring content entry', () => {
+    expect(() => validateSkillIds(['missing-skill'], 'example-experience')).toThrow(
+      'Unknown skill ID in example-experience: missing-skill',
+    );
   });
 
   it('includes Git for every Harris, L3Harris, and AWS role', () => {

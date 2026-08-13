@@ -1,0 +1,6 @@
+{
+  "name": "Bash",
+  "description": "Unix shell and scripting language.",
+  "href": "https://www.gnu.org/software/bash/",
+  "trackExperienceCoverage": true
+}

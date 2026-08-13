@@ -1,0 +1,6 @@
+{
+  "name": "Terraform",
+  "description": "Infrastructure as code tool.",
+  "href": "https://developer.hashicorp.com/terraform",
+  "trackExperienceCoverage": true
+}

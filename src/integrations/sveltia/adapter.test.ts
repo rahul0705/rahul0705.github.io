@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, type ContentCollectionModel } from '../../config/content-model';
+import {
+  blogContentModel,
+  experienceContentModel,
+  financialScopeContentModel,
+  type ContentCollectionModel,
+} from '../../config/content-model';
 import { createSveltiaCollection } from './adapter';
 
 describe('Sveltia CMS adapter', () => {
@@ -74,5 +79,37 @@ describe('Sveltia CMS adapter', () => {
       expect.objectContaining({ name: 'contract', widget: 'object', required: false }),
       expect.objectContaining({ name: 'outputs', widget: 'list', required: false, summary: '{{fields.label}}' }),
     ]);
+  });
+
+  it('maps catalog fields and searchable relations to CMS widgets', () => {
+    const financialScopes = createSveltiaCollection(financialScopeContentModel);
+    const experience = createSveltiaCollection(experienceContentModel);
+
+    expect(financialScopes).toMatchObject({
+      identifier_field: 'name',
+      slug: '{{fields._slug}}',
+      format: 'json',
+      extension: 'json',
+    });
+    expect(financialScopes.fields.find((field) => field.name === 'amount')).toMatchObject({
+      widget: 'number',
+      value_type: 'float',
+      min: 0.01,
+    });
+    expect(financialScopes.fields.find((field) => field.name === 'source')).toMatchObject({
+      widget: 'object',
+      fields: expect.arrayContaining([
+        expect.objectContaining({ name: 'provider', widget: 'select' }),
+        expect.objectContaining({ name: 'awardId', required: true }),
+      ]),
+    });
+    expect(experience.fields.find((field) => field.name === 'skills')).toMatchObject({
+      widget: 'relation',
+      collection: 'skills',
+      value_field: '{{slug}}',
+      display_fields: ['name'],
+      search_fields: ['name', 'description'],
+      multiple: true,
+    });
   });
 });
