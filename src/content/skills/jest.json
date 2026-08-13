@@ -1,0 +1,6 @@
+{
+  "name": "Jest",
+  "description": "JavaScript testing framework.",
+  "href": "https://jestjs.io/",
+  "trackExperienceCoverage": true
+}

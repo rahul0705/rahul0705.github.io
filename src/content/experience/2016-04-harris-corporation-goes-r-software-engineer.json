@@ -23,10 +23,10 @@
     "Established an implementation path for adding processing capacity without expanding the existing infrastructure."
   ],
   "skills": [
-    "clearCase",
+    "clear-case",
     "git",
     "java",
-    "oracleCoherence",
-    "performanceOptimization"
+    "oracle-coherence",
+    "performance-optimization"
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "name": "JUnit",
+  "description": "Java unit-testing framework.",
+  "href": "https://junit.org/",
+  "trackExperienceCoverage": true
+}

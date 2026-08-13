@@ -1,0 +1,6 @@
+{
+  "name": "Mocha",
+  "description": "JavaScript testing framework.",
+  "href": "https://mochajs.org/",
+  "trackExperienceCoverage": true
+}

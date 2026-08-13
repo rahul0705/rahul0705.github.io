@@ -1,11 +1,30 @@
-import { financialScopeCatalog } from '../data/resume/financial-scopes';
-import { skillCatalog } from '../data/resume/skills';
-
 export interface ContentField {
   name: string;
-  kind: 'string' | 'text' | 'boolean' | 'date' | 'string-list' | 'link' | 'link-list' | 'image' | 'file' | 'body';
+  kind:
+    | 'string'
+    | 'text'
+    | 'boolean'
+    | 'number'
+    | 'date'
+    | 'string-list'
+    | 'relation'
+    | 'object'
+    | 'link'
+    | 'link-list'
+    | 'image'
+    | 'file'
+    | 'body';
   required?: boolean;
-  default?: boolean | string[] | ContentLink[];
+  default?: boolean | number | string[] | ContentLink[];
+  min?: number;
+  fields?: Record<string, ContentField>;
+  relation?: {
+    collection: string;
+    multiple?: boolean;
+    valueField?: string;
+    displayFields: readonly string[];
+    searchFields?: readonly string[];
+  };
   cms: {
     label: string;
     default?: boolean | '{{now}}';
@@ -30,6 +49,7 @@ export interface ContentCollectionModel {
   folder: string;
   extensions?: readonly string[];
   format?: 'json';
+  identifierField?: string;
   slug: string;
   summary?: string;
   sort?: {
@@ -100,13 +120,116 @@ export const blogContentModel = {
   },
 } as const satisfies ContentCollectionModel;
 
-const skillOptions = Object.entries(skillCatalog)
-  .map(([value, skill]) => ({ label: skill.name, value }))
-  .sort((a, b) => a.label.localeCompare(b.label));
+export const skillContentModel = {
+  name: 'skills',
+  label: 'Skills',
+  labelSingular: 'Skill',
+  folder: 'src/content/skills',
+  extensions: ['json'],
+  format: 'json',
+  identifierField: 'name',
+  slug: '{{fields._slug}}',
+  summary: '{{name}}',
+  sort: { fields: ['name'], default: { field: 'name', direction: 'ascending' } },
+  fields: {
+    name: { name: 'name', kind: 'string', required: true, cms: { label: 'Name' } },
+    description: { name: 'description', kind: 'text', required: true, cms: { label: 'Description' } },
+    href: { name: 'href', kind: 'string', cms: { label: 'URL' } },
+    trackExperienceCoverage: {
+      name: 'trackExperienceCoverage',
+      kind: 'boolean',
+      default: false,
+      cms: {
+        label: 'Track experience coverage',
+        help: 'Include this skill in the duration-based experience coverage summary.',
+      },
+    },
+  },
+} as const satisfies ContentCollectionModel;
 
-const financialScopeOptions = Object.entries(financialScopeCatalog)
-  .map(([value, scope]) => ({ label: scope.name, value }))
-  .sort((a, b) => a.label.localeCompare(b.label));
+export const financialScopeContentModel = {
+  name: 'financialScopes',
+  label: 'Financial Scopes',
+  labelSingular: 'Financial Scope',
+  folder: 'src/content/financial-scopes',
+  extensions: ['json'],
+  format: 'json',
+  identifierField: 'name',
+  slug: '{{fields._slug}}',
+  summary: '{{name}}',
+  sort: { fields: ['name'], default: { field: 'name', direction: 'ascending' } },
+  fields: {
+    name: { name: 'name', kind: 'string', required: true, cms: { label: 'Name' } },
+    amount: {
+      name: 'amount',
+      kind: 'number',
+      required: true,
+      min: 0.01,
+      cms: { label: 'Fallback amount', help: 'Positive checked-in value used when the source cannot be refreshed.' },
+    },
+    currency: {
+      name: 'currency',
+      kind: 'string',
+      required: true,
+      cms: { label: 'Currency', options: [{ label: 'USD', value: 'USD' }] },
+    },
+    category: {
+      name: 'category',
+      kind: 'string',
+      required: true,
+      cms: {
+        label: 'Category',
+        options: [
+          { label: 'Contract', value: 'contract' },
+          { label: 'Program budget', value: 'program-budget' },
+          { label: 'Investment', value: 'investment' },
+          { label: 'Revenue', value: 'revenue' },
+          { label: 'Other', value: 'other' },
+        ],
+      },
+    },
+    amountBasis: {
+      name: 'amountBasis',
+      kind: 'string',
+      required: true,
+      cms: {
+        label: 'Amount basis',
+        options: [
+          { label: 'Ceiling', value: 'ceiling' },
+          { label: 'Base and options', value: 'base-and-options' },
+          { label: 'Annual', value: 'annual' },
+          { label: 'Lifetime', value: 'lifetime' },
+          { label: 'Estimated', value: 'estimated' },
+        ],
+      },
+    },
+    source: {
+      name: 'source',
+      kind: 'object',
+      cms: { label: 'USAspending source', help: 'Optional source used to refresh the checked-in fallback value.' },
+      fields: {
+        provider: {
+          name: 'provider',
+          kind: 'string',
+          required: true,
+          cms: { label: 'Provider', options: [{ label: 'USAspending', value: 'usaspending' }] },
+        },
+        awardId: { name: 'awardId', kind: 'string', required: true, cms: { label: 'Award ID' } },
+        amountField: {
+          name: 'amountField',
+          kind: 'string',
+          required: true,
+          cms: {
+            label: 'Amount field',
+            options: [{ label: 'Base and all options', value: 'base_and_all_options' }],
+          },
+        },
+      },
+    },
+    sourceUrl: { name: 'sourceUrl', kind: 'string', cms: { label: 'Source URL' } },
+    asOf: { name: 'asOf', kind: 'string', cms: { label: 'As-of date' } },
+  },
+} as const satisfies ContentCollectionModel;
 
 export const experienceContentModel = {
   name: 'experience',
@@ -141,12 +264,18 @@ export const experienceContentModel = {
     },
     financialScopeIds: {
       name: 'financialScopeIds',
-      kind: 'string-list',
+      kind: 'relation',
       default: [],
+      relation: {
+        collection: financialScopeContentModel.name,
+        multiple: true,
+        valueField: '{{slug}}',
+        displayFields: ['name'],
+        searchFields: ['name'],
+      },
       cms: {
         label: 'Financial scopes',
         help: 'Programs, contracts, budgets, investments, or other financial scope represented by this work.',
-        options: financialScopeOptions,
       },
     },
     startDate: {
@@ -164,11 +293,23 @@ export const experienceContentModel = {
     highlights: { name: 'highlights', kind: 'string-list', default: [], cms: { label: 'Highlights' } },
     skills: {
       name: 'skills',
-      kind: 'string-list',
+      kind: 'relation',
       default: [],
-      cms: { label: 'Skills', options: skillOptions },
+      relation: {
+        collection: skillContentModel.name,
+        multiple: true,
+        valueField: '{{slug}}',
+        displayFields: ['name'],
+        searchFields: ['name', 'description'],
+      },
+      cms: { label: 'Skills' },
     },
   },
 } as const satisfies ContentCollectionModel;
 
-export const contentModels = [blogContentModel, experienceContentModel] as const;
+export const contentModels = [
+  blogContentModel,
+  skillContentModel,
+  financialScopeContentModel,
+  experienceContentModel,
+] as const;

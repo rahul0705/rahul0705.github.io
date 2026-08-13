@@ -1,0 +1,6 @@
+{
+  "name": "AWS Systems Manager",
+  "description": "AWS service for managing infrastructure, operations, and application resources.",
+  "href": "https://aws.amazon.com/systems-manager/",
+  "trackExperienceCoverage": true
+}

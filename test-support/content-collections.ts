@@ -11,7 +11,8 @@ interface TestCollectionEntry {
 }
 
 const readCollection = async (name: string): Promise<TestCollectionEntry[]> => {
-  const collectionUrl = new URL(`${name}/`, new URL('../src/content/', import.meta.url));
+  const folder = name === 'financialScopes' ? 'financial-scopes' : name;
+  const collectionUrl = new URL(`${folder}/`, new URL('../src/content/', import.meta.url));
   const files = (await readdir(collectionUrl)).filter((file) => ['.json', '.md', '.mdx'].includes(extname(file)));
 
   return Promise.all(
@@ -22,9 +23,10 @@ const readCollection = async (name: string): Promise<TestCollectionEntry[]> => {
         extname(file) === '.json' ? JSON.parse(source) : match?.groups ? parse(match.groups.frontmatter) : undefined
       ) as Record<string, unknown> | undefined;
       if (!data) throw new Error(`Could not parse content in ${name}/${file}`);
-      data.highlights ??= [];
-      data.skills ??= [];
       if (name === 'experience') {
+        data.highlights ??= [];
+        data.skills ??= [];
+        data.financialScopeIds ??= [];
         data.startDate = new Date(data.startDate as string);
         if (data.endDate) data.endDate = new Date(data.endDate as string);
       }

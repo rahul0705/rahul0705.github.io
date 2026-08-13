@@ -84,8 +84,9 @@ under `src/assets/<year>/`.
 
 ### Experience and resume
 
-Individual experience records live in `src/content/experience/` as JSON. The site combines them with the structured
-data in `src/data/resume/` to render the resume and generate its alternate formats.
+Individual experience records live in `src/content/experience/` as JSON. Reusable skill and financial-scope records
+live in `src/content/skills/` and `src/content/financial-scopes/`. The site validates their stable filename IDs, combines
+them with the structured data in `src/data/resume/`, and renders the resume and its alternate formats.
 
 The public resume routes are:
 
@@ -112,6 +113,25 @@ Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScrip
 
 On localhost, choose **Work with Local Repository** and grant access to this repository. On the deployed site, use a
 GitHub personal access token with access to the repository.
+
+### Adding resume catalog entries
+
+Skills and financial scopes are first-class CMS collections. Their filename is a stable ID persisted by experience
+relations, so changing a filename requires updating every referencing experience in the same change.
+
+To add a catalog record and use it in an experience:
+
+1. Create and save the skill or financial scope in its CMS collection. Choose a concise, durable slug in the slug field.
+2. Allow the CMS to commit the new JSON entry, then reload the CMS so it refreshes repository-backed relation data.
+3. Create or edit the experience, select the new entry in the searchable relation field, and save the second commit.
+
+The catalog commit may trigger a deployment, but that deployment does not need to finish before the relation becomes
+available after the CMS refresh. Sveltia currently saves these related entries as two commits rather than one atomic
+editorial change. An intermediate build containing an unreferenced catalog entry is valid.
+
+Deleting or renaming a catalog record without updating its references causes resume generation to fail with the missing
+ID and referring entry. Financial scopes retain checked-in fallback values; supported external sources refresh those
+values during builds without making upstream availability a deployment requirement.
 
 ## Architecture
 

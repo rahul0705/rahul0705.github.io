@@ -15,8 +15,12 @@ type OptionalUnlessRequiredOrDefault<Field, Output, Default> = Field extends { r
 
 type StringFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
 type BooleanFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, boolean, boolean>;
+type NumberFieldOutput<Field> = OptionalUnlessRequired<Field, number>;
 type DateFieldOutput<Field> = OptionalUnlessRequired<Field, Date>;
 type StringListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, string[], string[]>;
+type RelationFieldOutput<Field> = Field extends { relation: { multiple: true } }
+  ? OptionalUnlessRequiredOrDefault<Field, string[], string[]>
+  : OptionalUnlessRequired<Field, string>;
 type LinkFieldOutput<Field> = OptionalUnlessRequired<Field, ContentLink>;
 type LinkListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, ContentLink[], ContentLink[]>;
 type FileFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
@@ -25,8 +29,11 @@ type AstroFieldOutputByKind<Field extends ContentField> = {
   string: StringFieldOutput<Field>;
   text: StringFieldOutput<Field>;
   boolean: BooleanFieldOutput<Field>;
+  number: NumberFieldOutput<Field>;
   date: DateFieldOutput<Field>;
   'string-list': StringListFieldOutput<Field>;
+  relation: RelationFieldOutput<Field>;
+  object: unknown;
   link: LinkFieldOutput<Field>;
   'link-list': LinkListFieldOutput<Field>;
   image: unknown;
@@ -62,6 +69,11 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
           ? z.boolean()
           : z.boolean().optional()
         : z.boolean().default(field.default as boolean);
+    case 'number': {
+      let schema = z.number();
+      if (field.min !== undefined) schema = schema.min(field.min);
+      return isRequired(field) ? schema : schema.optional();
+    }
     case 'date':
       return isRequired(field)
         ? dateSchema
@@ -72,6 +84,29 @@ const createAstroField = (field: ContentField, image: SchemaContext['image']): z
           ? z.array(z.string())
           : z.array(z.string()).optional()
         : z.array(z.string()).default(field.default as string[]);
+    case 'relation': {
+      if (field.relation?.multiple) {
+        const schema = z.array(z.string().min(1));
+        return field.default === undefined
+          ? isRequired(field)
+            ? schema
+            : schema.optional()
+          : schema.default(field.default as string[]);
+      }
+      const schema = z.string().min(1);
+      return isRequired(field) ? schema : schema.optional();
+    }
+    case 'object': {
+      const schema = z.object(
+        Object.fromEntries(
+          Object.values(field.fields ?? {}).map((nestedField) => [
+            nestedField.name,
+            createAstroField(nestedField, image),
+          ]),
+        ),
+      );
+      return isRequired(field) ? schema : schema.optional();
+    }
     case 'link':
       return isRequired(field) ? linkSchema : linkSchema.optional();
     case 'link-list':

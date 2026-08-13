@@ -1,0 +1,6 @@
+{
+  "name": "YAML",
+  "description": "Human-readable data serialization language used for configuration and automation.",
+  "href": "https://yaml.org/",
+  "trackExperienceCoverage": true
+}

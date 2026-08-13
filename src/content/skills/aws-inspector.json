@@ -1,0 +1,6 @@
+{
+  "name": "Amazon Inspector",
+  "description": "AWS vulnerability management service.",
+  "href": "https://aws.amazon.com/inspector/",
+  "trackExperienceCoverage": true
+}

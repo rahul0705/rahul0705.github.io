@@ -15,7 +15,7 @@ export const education: EducationEntry[] = [
     href: 'https://www.purdue.edu/',
     subtitle: "Bachelor's Degree in Computer Science",
     endDate: '2013-05',
-    skills: ['computerScience'],
+    skills: ['computer-science'],
   },
   {
     title: 'Palmer Trinity School',

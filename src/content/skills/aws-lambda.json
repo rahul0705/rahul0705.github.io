@@ -1,0 +1,6 @@
+{
+  "name": "AWS Lambda",
+  "description": "AWS serverless compute service.",
+  "href": "https://aws.amazon.com/lambda/",
+  "trackExperienceCoverage": true
+}

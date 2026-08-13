@@ -1,0 +1,6 @@
+{
+  "name": "AWS CloudTrail",
+  "description": "AWS service for recording account activity and API events.",
+  "href": "https://aws.amazon.com/cloudtrail/",
+  "trackExperienceCoverage": true
+}

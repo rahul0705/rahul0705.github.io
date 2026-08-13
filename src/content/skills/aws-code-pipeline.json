@@ -1,0 +1,6 @@
+{
+  "name": "AWS CodePipeline",
+  "description": "AWS managed continuous-delivery service.",
+  "href": "https://aws.amazon.com/codepipeline/",
+  "trackExperienceCoverage": true
+}

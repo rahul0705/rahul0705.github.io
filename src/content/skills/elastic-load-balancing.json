@@ -1,0 +1,6 @@
+{
+  "name": "Elastic Load Balancing",
+  "description": "AWS service for distributing traffic across application targets.",
+  "href": "https://aws.amazon.com/elasticloadbalancing/",
+  "trackExperienceCoverage": true
+}

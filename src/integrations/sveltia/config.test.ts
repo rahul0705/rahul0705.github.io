@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, contentModels, experienceContentModel } from '../../config/content-model';
+import {
+  blogContentModel,
+  contentModels,
+  experienceContentModel,
+  financialScopeContentModel,
+  skillContentModel,
+} from '../../config/content-model';
 import { sveltiaConfig } from './config';
 
 describe('Sveltia CMS configuration', () => {
@@ -103,9 +109,20 @@ describe('Sveltia CMS configuration', () => {
       'skills',
     ]);
     expect(experience.fields.find((field) => field.name === 'skills')).toMatchObject({
-      widget: 'select',
+      widget: 'relation',
+      collection: 'skills',
+      value_field: '{{slug}}',
+      display_fields: ['name'],
+      search_fields: ['name', 'description'],
       multiple: true,
-      options: expect.arrayContaining([{ label: 'TypeScript', value: 'typescript' }]),
+    });
+    expect(experience.fields.find((field) => field.name === 'financialScopeIds')).toMatchObject({
+      widget: 'relation',
+      collection: 'financialScopes',
+      value_field: '{{slug}}',
+      display_fields: ['name'],
+      search_fields: ['name'],
+      multiple: true,
     });
     expect(experience.fields.find((field) => field.name === 'startDate')).toMatchObject({
       widget: 'datetime',
@@ -119,5 +136,24 @@ describe('Sveltia CMS configuration', () => {
       format: 'YYYY-MM-DD',
       required: false,
     });
+  });
+
+  it('exposes skills and financial scopes as stable-ID JSON collections', () => {
+    const skills = sveltiaConfig.collections.find((collection) => collection.name === skillContentModel.name)!;
+    const financialScopes = sveltiaConfig.collections.find(
+      (collection) => collection.name === financialScopeContentModel.name,
+    )!;
+
+    for (const collection of [skills, financialScopes]) {
+      expect(collection).toMatchObject({
+        format: 'json',
+        extension: 'json',
+        identifier_field: 'name',
+        slug: '{{fields._slug}}',
+        sortable_fields: { fields: ['name'], default: { field: 'name', direction: 'ascending' } },
+      });
+    }
+    expect(skills.folder).toBe('src/content/skills');
+    expect(financialScopes.folder).toBe('src/content/financial-scopes');
   });
 });

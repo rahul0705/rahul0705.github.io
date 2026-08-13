@@ -2,7 +2,7 @@ import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, experienceContentModel } from '../../config/content-model';
+import { blogContentModel, experienceContentModel, financialScopeContentModel } from '../../config/content-model';
 import { createAstroSchema } from './adapter';
 
 describe('Astro content adapter', () => {
@@ -79,5 +79,44 @@ describe('Astro content adapter', () => {
     });
     expect(() => experienceSchema.parse({ ...requiredFields, startDate: '2026-13-01' })).toThrow();
     expect(() => experienceSchema.parse({ ...requiredFields, startDate: null })).toThrow();
+  });
+
+  it('validates financial scope numbers, enums, and nested source metadata', () => {
+    const financialScopeSchema = createAstroSchema(financialScopeContentModel, { image });
+    const validScope = {
+      name: 'Example contract',
+      amount: 1_000_000,
+      currency: 'USD',
+      category: 'contract',
+      amountBasis: 'ceiling',
+      source: {
+        provider: 'usaspending',
+        awardId: 'CONT_AWD_EXAMPLE',
+        amountField: 'base_and_all_options',
+      },
+    };
+
+    expect(financialScopeSchema.parse(validScope)).toMatchObject(validScope);
+    expect(() => financialScopeSchema.parse({ ...validScope, amount: 0 })).toThrow();
+    expect(() => financialScopeSchema.parse({ ...validScope, currency: 'EUR' })).toThrow();
+    expect(() => financialScopeSchema.parse({ ...validScope, category: 'unsupported' })).toThrow();
+    expect(() => financialScopeSchema.parse({ ...validScope, source: { provider: 'usaspending' } })).toThrow();
+  });
+
+  it('keeps relation values as validated stable IDs with list defaults', () => {
+    const experienceSchema = createAstroSchema(experienceContentModel, { image });
+    const requiredFields = {
+      title: 'Engineer',
+      organization: 'Example',
+      project: 'Platform',
+      description: 'Built the platform.',
+      startDate: '2026-08-06',
+    };
+
+    expect(experienceSchema.parse(requiredFields)).toMatchObject({ skills: [], financialScopeIds: [] });
+    expect(
+      experienceSchema.parse({ ...requiredFields, skills: ['typescript'], financialScopeIds: ['ggss'] }),
+    ).toMatchObject({ skills: ['typescript'], financialScopeIds: ['ggss'] });
+    expect(() => experienceSchema.parse({ ...requiredFields, skills: [''] })).toThrow();
   });
 });

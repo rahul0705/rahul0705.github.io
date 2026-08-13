@@ -1,0 +1,12 @@
+{
+  "name": "GOES-R Ground System",
+  "amount": 1832957654.99,
+  "currency": "USD",
+  "category": "contract",
+  "amountBasis": "ceiling",
+  "source": {
+    "provider": "usaspending",
+    "awardId": "CONT_AWD_DOCDG133E09CN0094_1330_-NONE-_-NONE-",
+    "amountField": "base_and_all_options"
+  }
+}

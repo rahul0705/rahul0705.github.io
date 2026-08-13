@@ -1,0 +1,6 @@
+{
+  "name": "Amazon DynamoDB",
+  "description": "AWS managed NoSQL database service.",
+  "href": "https://aws.amazon.com/dynamodb/",
+  "trackExperienceCoverage": true
+}

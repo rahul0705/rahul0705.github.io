@@ -5,7 +5,7 @@ import { experience } from './experience';
 import { deriveSkillExperienceCoverage, type SkillExperienceCoverage } from './experience-coverage';
 import { interests } from './interests';
 import { toResumeJson } from './json';
-import { skillCatalog, type SkillCatalogEntry, type SkillId } from './skills';
+import { skillCatalog, type SkillCatalogEntry, type SkillId, validateSkillIds } from './skills';
 import { toResumeMarkdown, toResumeText } from './text';
 
 export interface SkillGroup {
@@ -40,6 +40,8 @@ const skillGroups: SkillGroup[] = [
 ];
 
 export const resume = { basics, experience, education, skills: skillGroups, awards, interests };
+
+for (const entry of education) validateSkillIds(entry.skills ?? [], `education entry ${entry.title}`);
 
 const trackedSkills = new Set<SkillId>(
   Object.entries(skillCatalog)

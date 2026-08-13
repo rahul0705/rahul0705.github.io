@@ -1,0 +1,6 @@
+{
+  "name": "pytest",
+  "description": "Python testing framework.",
+  "href": "https://pytest.org/",
+  "trackExperienceCoverage": true
+}

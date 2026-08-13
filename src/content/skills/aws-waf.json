@@ -1,0 +1,6 @@
+{
+  "name": "AWS WAF",
+  "description": "AWS web application firewall service.",
+  "href": "https://aws.amazon.com/waf/",
+  "trackExperienceCoverage": true
+}

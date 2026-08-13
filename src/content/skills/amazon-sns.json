@@ -1,0 +1,6 @@
+{
+  "name": "Amazon SNS",
+  "description": "AWS managed publish-and-subscribe messaging service.",
+  "href": "https://aws.amazon.com/sns/",
+  "trackExperienceCoverage": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "NGINX",
+  "description": "Web server, reverse proxy, and load balancer.",
+  "href": "https://nginx.org/",
+  "trackExperienceCoverage": true
+}

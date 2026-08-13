@@ -1,0 +1,6 @@
+{
+  "name": "Amazon EFS",
+  "description": "AWS managed elastic file system.",
+  "href": "https://aws.amazon.com/efs/",
+  "trackExperienceCoverage": true
+}

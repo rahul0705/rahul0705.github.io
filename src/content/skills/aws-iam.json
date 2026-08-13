@@ -1,0 +1,6 @@
+{
+  "name": "AWS IAM",
+  "description": "AWS identity and access management service.",
+  "href": "https://aws.amazon.com/iam/",
+  "trackExperienceCoverage": true
+}

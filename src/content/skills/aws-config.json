@@ -1,0 +1,6 @@
+{
+  "name": "AWS Config",
+  "description": "AWS resource configuration, inventory, and compliance service.",
+  "href": "https://aws.amazon.com/config/",
+  "trackExperienceCoverage": true
+}

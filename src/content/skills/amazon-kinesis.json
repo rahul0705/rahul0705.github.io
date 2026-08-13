@@ -1,0 +1,6 @@
+{
+  "name": "Amazon Kinesis",
+  "description": "AWS service for collecting and processing streaming data.",
+  "href": "https://aws.amazon.com/kinesis/",
+  "trackExperienceCoverage": true
+}

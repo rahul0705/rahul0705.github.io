@@ -29,13 +29,13 @@
     "bash",
     "git",
     "nginx",
-    "nistRiskManagementFramework",
-    "poamManagement",
-    "presentationProficiency",
+    "nist-risk-management-framework",
+    "poam-management",
+    "presentation-proficiency",
     "python",
     "stigs",
-    "systemHardening",
-    "workInstructions",
+    "system-hardening",
+    "work-instructions",
     "yaml"
   ]
 }

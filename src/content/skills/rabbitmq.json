@@ -1,0 +1,6 @@
+{
+  "name": "RabbitMQ",
+  "description": "Messaging Queue",
+  "href": "https://www.rabbitmq.com/",
+  "trackExperienceCoverage": true
+}

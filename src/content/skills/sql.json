@@ -1,0 +1,6 @@
+{
+  "name": "SQL",
+  "description": "Language for querying and managing relational data.",
+  "href": "https://www.iso.org/standard/76583.html",
+  "trackExperienceCoverage": true
+}

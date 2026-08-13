@@ -1,0 +1,6 @@
+{
+  "name": "netCDF",
+  "description": "Data Format",
+  "href": "https://www.unidata.ucar.edu/software/netcdf/",
+  "trackExperienceCoverage": true
+}

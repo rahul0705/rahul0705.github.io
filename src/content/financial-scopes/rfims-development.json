@@ -1,0 +1,12 @@
+{
+  "name": "RFIMS Development",
+  "amount": 148391605,
+  "currency": "USD",
+  "category": "contract",
+  "amountBasis": "ceiling",
+  "source": {
+    "provider": "usaspending",
+    "awardId": "CONT_AWD_DOCAB133018CN0003_1330_-NONE-_-NONE-",
+    "amountField": "base_and_all_options"
+  }
+}

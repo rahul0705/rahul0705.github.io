@@ -1,0 +1,6 @@
+{
+  "name": "PostgreSQL",
+  "description": "Open-source relational database.",
+  "href": "https://www.postgresql.org/",
+  "trackExperienceCoverage": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Amazon RDS",
+  "description": "AWS managed relational database service.",
+  "href": "https://aws.amazon.com/rds/",
+  "trackExperienceCoverage": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "AWS KMS",
+  "description": "AWS managed encryption-key service.",
+  "href": "https://aws.amazon.com/kms/",
+  "trackExperienceCoverage": true
+}

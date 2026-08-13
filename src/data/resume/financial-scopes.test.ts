@@ -6,6 +6,7 @@ import {
   formatFinancialScopeDetail,
   resolveFinancialScopeCatalog,
   totalFinancialScope,
+  validateFinancialScopeIds,
 } from './financial-scopes';
 
 afterEach(() => vi.restoreAllMocks());
@@ -14,6 +15,18 @@ describe('financial scope', () => {
   const usaSpendingScopeCount = Object.values(financialScopeCatalog).filter(
     (scope) => scope.source?.provider === 'usaspending',
   ).length;
+
+  it('loads stable filename IDs from the financial-scope collection', () => {
+    expect(Object.keys(financialScopeCatalog)).toEqual(
+      expect.arrayContaining(['ggss', 'goes-r-ground-system', 'gwsas-ground-readiness-antennas']),
+    );
+  });
+
+  it('rejects dangling financial-scope relations with their referring content entry', () => {
+    expect(() => validateFinancialScopeIds(['missing-scope'], 'example-experience')).toThrow(
+      'Unknown financial scope ID in example-experience: missing-scope',
+    );
+  });
   it('deduplicates repeated scope references before totaling them', () => {
     expect(totalFinancialScope(['ggss', 'ggss', 'rfims-development'])).toBe(694_287_958);
   });

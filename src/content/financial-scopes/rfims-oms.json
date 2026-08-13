@@ -1,0 +1,12 @@
+{
+  "name": "RFIMS Operations, Maintenance and Sustainment",
+  "amount": 49015914,
+  "currency": "USD",
+  "category": "contract",
+  "amountBasis": "ceiling",
+  "source": {
+    "provider": "usaspending",
+    "awardId": "CONT_AWD_1332KP23CNEEG0002_1330_-NONE-_-NONE-",
+    "amountField": "base_and_all_options"
+  }
+}
