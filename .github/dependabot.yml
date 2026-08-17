@@ -24,7 +24,7 @@ updates:
       - github-actions
 
     groups:
-      npm-dependencies:
+      github-actions:
         patterns:
           - '*'
 
@@ -50,6 +50,6 @@ updates:
       - npm
 
     groups:
-      github-actions:
+      npm-dependencies:
         patterns:
           - '*'
