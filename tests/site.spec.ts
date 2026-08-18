@@ -199,6 +199,7 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.rahulmohandas.com/');
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+  await expect(page.locator('link[rel="alternate"][type="application/rss+xml"]')).toHaveAttribute('href', '/rss.xml');
 
   await page.goto('/blog/2019-05-16-how-to-use-git-effectively/');
   await expect(page).toHaveTitle('How to use Git effectively - Rahul Mohandas');
@@ -226,6 +227,21 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   );
   await expect(page.locator('meta[property="article:section"]')).toHaveAttribute('content', 'Process');
   await expect(page.locator('meta[property="article:tag"]')).toHaveCount(4);
+});
+
+test('RSS feed publishes discoverable article metadata', async ({ page, request }) => {
+  await page.goto('/blog/');
+  await expect(page.getByRole('link', { name: 'RSS', exact: true })).toHaveAttribute('href', '/rss.xml');
+
+  const response = await request.get('/rss.xml');
+  expect(response.ok()).toBe(true);
+  expect(response.headers()['content-type']).toContain('application/xml');
+
+  const feed = await response.text();
+  expect(feed).toContain('<title>Rahul Mohandas Articles</title>');
+  expect(feed).toContain('<language>en-us</language>');
+  expect(feed).toContain('<link>https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/</link>');
+  expect(feed).toContain('<pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>');
 });
 
 test('the content manager is not indexed, uses its bundled configuration, and supports local editing', async ({
