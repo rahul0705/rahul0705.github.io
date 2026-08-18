@@ -235,7 +235,7 @@ test('RSS feed publishes discoverable article metadata', async ({ page, request 
 
   const response = await request.get('/rss.xml');
   expect(response.ok()).toBe(true);
-  expect(response.headers()['content-type']).toContain('application/xml');
+  expect(response.headers()['content-type']).toMatch(/^(?:application\/(?:rss\+)?xml|text\/xml)(?:;|$)/);
 
   const feed = await response.text();
   expect(feed).toContain('<title>Rahul Mohandas Articles</title>');
