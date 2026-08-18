@@ -15,7 +15,7 @@ interface Props {
 const { title = 'Featured Articles', description = 'A few recent write-ups worth a read.', limit = 3, posts: providedPosts } = Astro.props;
 
 const fallbackPosts = await getPublishedPosts();
-const featured = (providedPosts ?? fallbackPosts).filter((post) => post.data.featured).slice(0, limit);
+const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
 ---
 
 <Section title={title} description={description}>
@@ -24,6 +24,6 @@ const featured = (providedPosts ?? fallbackPosts).filter((post) => post.data.fea
   </a>
 
   <div class="border-t border-base-300">
-    {featured.map((post, index) => <FeaturedPostCard post={post} index={index} />)}
+    {posts.map((post, index) => <FeaturedPostCard post={post} index={index} />)}
   </div>
 </Section>

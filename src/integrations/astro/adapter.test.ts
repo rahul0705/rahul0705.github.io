@@ -31,7 +31,6 @@ describe('Astro content adapter', () => {
     expect(schema.parse({ title: 'A post', section: 'Process' })).toMatchObject({
       title: 'A post',
       draft: false,
-      featured: false,
       tableOfContents: false,
       section: 'Process',
       tags: [],

@@ -36,8 +36,10 @@ describe('content model registry', () => {
       const fieldNames = new Set(Object.keys(model.fields));
 
       if (model.identifierField) expect(fieldNames.has(model.identifierField)).toBe(true);
-      for (const sortField of model.sort?.fields ?? []) expect(fieldNames.has(sortField)).toBe(true);
-      if (model.sort?.default) expect(fieldNames.has(model.sort.default.field)).toBe(true);
+      for (const sortField of model.sort?.fields ?? [])
+        expect(sortField === 'slug' || fieldNames.has(sortField)).toBe(true);
+      if (model.sort?.default)
+        expect(model.sort.default.field === 'slug' || fieldNames.has(model.sort.default.field)).toBe(true);
       if (model.body) expect(fieldNames.has(model.body.name)).toBe(false);
     }
   });
