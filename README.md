@@ -163,3 +163,7 @@ production build. A push to `main` deploys the generated `dist/` artifact to Git
 
 The canonical site URL and sitemap configuration are defined in `astro.config.ts`. The custom domain is recorded in
 `CNAME`.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
