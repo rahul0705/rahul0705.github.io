@@ -1,134 +1,148 @@
 import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 
-import type { ContentCollectionModel, ContentField, ContentLink } from '../../config/content-model';
+import type { ContentCollectionModel, ContentField } from '../../lib/content-model/types';
 
 const isRequired = (field: ContentField) => field.required ?? false;
 
-const dateSchema = z.preprocess((value) => (typeof value === 'string' ? new Date(value) : value), z.date());
+const parseDate = (value: unknown) => {
+  if (typeof value === 'string') return new Date(value);
+  return value;
+};
 
-type OptionalUnlessRequired<Field, Output> = Field extends { required: true } ? Output : Output | undefined;
+const parseOptionalDate = (value: unknown) => {
+  if (value === null || value === '') return undefined;
+  return parseDate(value);
+};
 
-type OptionalUnlessRequiredOrDefault<Field, Output, Default> = Field extends { required: true } | { default: Default }
+const dateSchema = z.preprocess(parseDate, z.date());
+
+type OptionalUnlessRequiredOrDefault<Field, Output> = Field extends { required: true } | { default: unknown }
   ? Output
   : Output | undefined;
 
-type StringFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
-type BooleanFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, boolean, boolean>;
-type NumberFieldOutput<Field> = OptionalUnlessRequired<Field, number>;
-type DateFieldOutput<Field> = OptionalUnlessRequired<Field, Date>;
-type StringListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, string[], string[]>;
-type RelationFieldOutput<Field> = Field extends { relation: { multiple: true } }
-  ? OptionalUnlessRequiredOrDefault<Field, string[], string[]>
-  : OptionalUnlessRequired<Field, string>;
-type LinkFieldOutput<Field> = OptionalUnlessRequired<Field, ContentLink>;
-type LinkListFieldOutput<Field> = OptionalUnlessRequiredOrDefault<Field, ContentLink[], ContentLink[]>;
-type FileFieldOutput<Field> = OptionalUnlessRequired<Field, string>;
-
-type AstroFieldOutputByKind<Field extends ContentField> = {
-  string: StringFieldOutput<Field>;
-  text: StringFieldOutput<Field>;
-  boolean: BooleanFieldOutput<Field>;
-  number: NumberFieldOutput<Field>;
-  date: DateFieldOutput<Field>;
-  'string-list': StringListFieldOutput<Field>;
-  relation: RelationFieldOutput<Field>;
-  object: unknown;
-  link: LinkFieldOutput<Field>;
-  'link-list': LinkListFieldOutput<Field>;
-  image: unknown;
-  file: FileFieldOutput<Field>;
-  body: unknown;
+type AstroObjectOutput<Fields extends Record<string, ContentField>> = {
+  [Key in keyof Fields]: AstroFieldOutput<Fields[Key]>;
 };
 
-type AstroFieldOutput<Field extends ContentField> = AstroFieldOutputByKind<Field>[Field['kind']];
+type AstroFieldValueByKind<Field extends ContentField> = {
+  string: string;
+  boolean: boolean;
+  number: number;
+  date: Date;
+  list: AstroListValue<Field>;
+  object: AstroObjectValue<Field>;
+  reference: AstroReferenceValue<Field>;
+  asset: AstroAssetValue<Field>;
+};
+
+type AstroListValue<Field extends ContentField> = Field extends {
+  kind: 'list';
+  items: infer Item extends ContentField;
+}
+  ? Array<Exclude<AstroFieldOutput<Item>, undefined>>
+  : never;
+
+type AstroObjectValue<Field extends ContentField> = Field extends {
+  kind: 'object';
+  fields: infer Fields extends Record<string, ContentField>;
+}
+  ? AstroObjectOutput<Fields>
+  : never;
+
+type AstroReferenceValue<Field extends ContentField> = Field extends { kind: 'reference'; multiple: true }
+  ? string[]
+  : string;
+
+type AstroAssetValue<Field extends ContentField> = Field extends { kind: 'asset'; assetType: 'file' }
+  ? string
+  : unknown;
+
+type AstroFieldValue<Field extends ContentField> = AstroFieldValueByKind<Field>[Field['kind']];
+
+type AstroFieldOutput<Field extends ContentField> = OptionalUnlessRequiredOrDefault<Field, AstroFieldValue<Field>>;
 
 type AstroSchemaShape<Model extends ContentCollectionModel> = {
-  [
-    Key in keyof Model['fields'] as Model['fields'][Key]['kind'] extends 'body' ? never : Model['fields'][Key]['name']
-  ]: z.ZodType<AstroFieldOutput<Model['fields'][Key]>>;
+  [Key in keyof Model['fields']]: z.ZodType<AstroFieldOutput<Model['fields'][Key]>>;
 };
 
-const createAstroField = (field: ContentField, image: SchemaContext['image']): z.ZodType<unknown> => {
-  const linkSchema = z.object({ label: z.string().min(1), url: z.string().min(1) });
-
+const createAstroField = (name: string, field: ContentField, image: SchemaContext['image']): z.ZodType<unknown> => {
   switch (field.kind) {
     case 'string': {
-      const schema = field.cms.options
-        ? z.string().refine((value) => field.cms.options!.some((option) => option.value === value), {
-            message: `Choose a configured ${field.cms.label.toLowerCase()}.`,
-          })
-        : z.string();
-      return isRequired(field) ? schema : schema.optional();
+      if (!field.options) {
+        const schema = z.string();
+        if (isRequired(field)) return schema;
+        return schema.optional();
+      }
+
+      const schema = z.string().refine((value) => field.options!.some((option) => option.value === value), {
+        message: `Choose a configured value for ${name}.`,
+      });
+      if (isRequired(field)) return schema;
+      return schema.optional();
     }
-    case 'text':
-      return isRequired(field) ? z.string() : z.string().optional();
-    case 'boolean':
-      return field.default === undefined
-        ? isRequired(field)
-          ? z.boolean()
-          : z.boolean().optional()
-        : z.boolean().default(field.default as boolean);
+    case 'boolean': {
+      const schema = z.boolean();
+      if (field.default !== undefined) return schema.default(field.default);
+      if (isRequired(field)) return schema;
+      return schema.optional();
+    }
     case 'number': {
       let schema = z.number();
       if (field.min !== undefined) schema = schema.min(field.min);
-      return isRequired(field) ? schema : schema.optional();
+      if (isRequired(field)) return schema;
+      return schema.optional();
     }
-    case 'date':
-      return isRequired(field)
-        ? dateSchema
-        : z.preprocess((value) => (value === null || value === '' ? undefined : value), dateSchema.optional());
-    case 'string-list':
-      return field.default === undefined
-        ? isRequired(field)
-          ? z.array(z.string())
-          : z.array(z.string()).optional()
-        : z.array(z.string()).default(field.default as string[]);
-    case 'relation': {
-      if (field.relation?.multiple) {
+    case 'date': {
+      if (isRequired(field)) return dateSchema;
+      return z.preprocess(parseOptionalDate, dateSchema.optional());
+    }
+    case 'list': {
+      const schema = z.array(createAstroField(`${name} item`, field.items, image));
+      if (field.default !== undefined) return schema.default(field.default);
+      if (isRequired(field)) return schema;
+      return schema.optional();
+    }
+    case 'reference': {
+      if (field.multiple) {
         const schema = z.array(z.string().min(1));
-        return field.default === undefined
-          ? isRequired(field)
-            ? schema
-            : schema.optional()
-          : schema.default(field.default as string[]);
+        if (field.default !== undefined) return schema.default(field.default as string[]);
+        if (isRequired(field)) return schema;
+        return schema.optional();
       }
       const schema = z.string().min(1);
-      return isRequired(field) ? schema : schema.optional();
+      if (isRequired(field)) return schema;
+      return schema.optional();
     }
     case 'object': {
       const schema = z.object(
         Object.fromEntries(
-          Object.values(field.fields ?? {}).map((nestedField) => [
-            nestedField.name,
-            createAstroField(nestedField, image),
+          Object.entries(field.fields).map(([nestedName, nestedField]) => [
+            nestedName,
+            createAstroField(nestedName, nestedField, image),
           ]),
         ),
       );
-      return isRequired(field) ? schema : schema.optional();
+      if (isRequired(field)) return schema;
+      return schema.optional();
     }
-    case 'link':
-      return isRequired(field) ? linkSchema : linkSchema.optional();
-    case 'link-list':
-      return field.default === undefined
-        ? isRequired(field)
-          ? z.array(linkSchema)
-          : z.array(linkSchema).optional()
-        : z.array(linkSchema).default(field.default as ContentLink[]);
-    case 'image':
-      return isRequired(field) ? image() : image().optional();
-    case 'file':
-      return isRequired(field) ? z.string() : z.string().optional();
-    case 'body':
-      return z.never();
+    case 'asset': {
+      if (field.assetType === 'image') {
+        const schema = image();
+        if (isRequired(field)) return schema;
+        return schema.optional();
+      }
+
+      const schema = z.string();
+      if (isRequired(field)) return schema;
+      return schema.optional();
+    }
   }
 };
 
 export const createAstroSchema = <Model extends ContentCollectionModel>(model: Model, context: SchemaContext) => {
   const shape = Object.fromEntries(
-    Object.values(model.fields)
-      .filter((field) => field.kind !== 'body')
-      .map((field) => [field.name, createAstroField(field, context.image)]),
+    Object.entries(model.fields).map(([name, field]) => [name, createAstroField(name, field, context.image)]),
   );
 
   return z.object(shape as AstroSchemaShape<Model>);

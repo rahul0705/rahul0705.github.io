@@ -1,12 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  blogContentModel,
-  contentModels,
-  experienceContentModel,
-  financialScopeContentModel,
-  skillContentModel,
-} from '../../config/content-model';
+import { blogContentModel } from '../../config/content-models/blog';
+import { experienceContentModel } from '../../config/content-models/experience';
+import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
+import { contentModels } from '../../config/content-models/registry';
+import { skillContentModel } from '../../config/content-models/skills';
 import { sveltiaConfig } from './config';
 
 describe('Sveltia CMS configuration', () => {
@@ -26,9 +24,7 @@ describe('Sveltia CMS configuration', () => {
       folder: blogContentModel.folder,
       slug: blogContentModel.slug,
     });
-    const frontmatterFieldNames = Object.values(blogContentModel.fields)
-      .filter((field) => field.kind !== 'body')
-      .map((field) => field.name);
+    const frontmatterFieldNames = Object.keys(blogContentModel.fields);
 
     expect(blog.fields.map((field) => field.name)).toEqual([...frontmatterFieldNames, 'body']);
   });

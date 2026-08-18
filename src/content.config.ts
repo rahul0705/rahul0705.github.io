@@ -1,8 +1,9 @@
 import { glob } from 'astro/loaders';
 import { defineCollection } from 'astro:content';
 
-import { contentModels, type ContentCollectionModel } from './config/content-model';
+import { contentModels } from './config/content-models/registry';
 import { createAstroSchema } from './integrations/astro/adapter';
+import type { ContentCollectionModel } from './lib/content-model/types';
 
 const createAstroCollection = <Model extends ContentCollectionModel>(model: Model) => {
   const extensions = model.extensions ?? ['md', 'mdx'];

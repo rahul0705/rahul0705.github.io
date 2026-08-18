@@ -2,7 +2,9 @@ import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 import { describe, expect, it } from 'vitest';
 
-import { blogContentModel, experienceContentModel, financialScopeContentModel } from '../../config/content-model';
+import { blogContentModel } from '../../config/content-models/blog';
+import { experienceContentModel } from '../../config/content-models/experience';
+import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
 import { createAstroSchema } from './adapter';
 
 describe('Astro content adapter', () => {

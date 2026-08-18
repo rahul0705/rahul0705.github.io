@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import type { ContentLink } from '../../config/content-model';
+import type { ContentLink } from '../../lib/content-link';
 import { type FinancialScopeId, validateFinancialScopeIds } from './financial-scopes';
 import { type SkillId, validateSkillIds } from './skills';
 
