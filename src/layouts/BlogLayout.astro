@@ -15,6 +15,7 @@ interface Props {
 
 const { entry, headings = [] } = Astro.props;
 const publishedAt = getPublishedAt(entry);
+const hasTableOfContents = entry.data.tableOfContents;
 ---
 
 <BaseLayout
@@ -43,13 +44,18 @@ const publishedAt = getPublishedAt(entry);
 
     </header>
 
-    <div class="mx-auto grid max-w-3xl xl:max-w-6xl xl:grid-cols-[minmax(0,48rem)_18rem] xl:items-start xl:gap-12">
+    <div
+      class:list={[
+        'mx-auto grid max-w-3xl',
+        hasTableOfContents && 'xl:max-w-6xl xl:grid-cols-[minmax(0,48rem)_18rem] xl:items-start xl:gap-12',
+      ]}
+    >
       <div class={articleContentClasses}>
         <slot />
       </div>
 
       {
-        entry.data.tableOfContents && (
+        hasTableOfContents && (
           <aside
             class="order-first mb-10 xl:sticky xl:top-20 xl:order-last xl:mb-0 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto"
             aria-label="Article navigation"
