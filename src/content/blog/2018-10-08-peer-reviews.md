@@ -254,6 +254,9 @@ Repeating a small model, function, or block of code can be a deliberate way to p
 code when the concepts follow the same business rule and should change together—not only because their current shapes
 match. Duplication is a cost, but coupling is also a cost.
 
+For a deeper discussion of this tradeoff, see
+[Duplication Is Cheaper Than the Wrong Abstraction](/blog/2026-08-17-duplication-vs-coupling/).
+
 #### Does the code exit early?
 
 Early returns can keep the primary path from being buried in nested conditions. This is usually a readability benefit
