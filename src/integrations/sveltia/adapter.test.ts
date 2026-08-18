@@ -1,11 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  blogContentModel,
-  experienceContentModel,
-  financialScopeContentModel,
-  type ContentCollectionModel,
-} from '../../config/content-model';
+import { blogContentModel } from '../../config/content-models/blog';
+import { experienceContentModel } from '../../config/content-models/experience';
+import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
+import type { ContentCollectionModel } from '../../lib/content-model/types';
 import { createSveltiaCollection } from './adapter';
 
 describe('Sveltia CMS adapter', () => {
@@ -19,9 +17,10 @@ describe('Sveltia CMS adapter', () => {
       folder: blogContentModel.folder,
       slug: blogContentModel.slug,
     });
-    expect(collection.fields.map((field) => field.name)).toEqual(
-      Object.values(blogContentModel.fields).map((field) => field.name),
-    );
+    expect(collection.fields.map((field) => field.name)).toEqual([
+      ...Object.keys(blogContentModel.fields),
+      blogContentModel.body.name,
+    ]);
   });
 
   it('maps shared field kinds to the expected CMS widgets and options', () => {
@@ -53,7 +52,7 @@ describe('Sveltia CMS adapter', () => {
       folder: 'src/content/documents',
       slug: '{{slug}}',
       fields: {
-        attachment: { name: 'attachment', kind: 'file', cms: { label: 'Attachment' } },
+        attachment: { kind: 'asset', assetType: 'file', cms: { label: 'Attachment' } },
       },
     } as const satisfies ContentCollectionModel;
 
@@ -70,8 +69,28 @@ describe('Sveltia CMS adapter', () => {
       folder: 'src/content/projects',
       slug: '{{slug}}',
       fields: {
-        contract: { name: 'contract', kind: 'link', cms: { label: 'Contract' } },
-        outputs: { name: 'outputs', kind: 'link-list', default: [], cms: { label: 'Outputs' } },
+        contract: {
+          kind: 'object',
+          fields: {
+            label: { kind: 'string', required: true, cms: { label: 'Label' } },
+            url: { kind: 'string', required: true, cms: { label: 'URL' } },
+          },
+          cms: { label: 'Contract' },
+        },
+        outputs: {
+          kind: 'list',
+          default: [],
+          items: {
+            kind: 'object',
+            required: true,
+            fields: {
+              label: { kind: 'string', required: true, cms: { label: 'Label' } },
+              url: { kind: 'string', required: true, cms: { label: 'URL' } },
+            },
+            cms: { label: 'Link' },
+          },
+          cms: { label: 'Outputs', itemSummary: '{{fields.label}}' },
+        },
       },
     } as const satisfies ContentCollectionModel;
 
@@ -110,6 +129,59 @@ describe('Sveltia CMS adapter', () => {
       display_fields: ['name'],
       search_fields: ['name', 'description'],
       multiple: true,
+    });
+  });
+
+  it('maps list variants and minimal collection metadata', () => {
+    const model = {
+      name: 'variants',
+      label: 'Variants',
+      labelSingular: 'Variant',
+      folder: 'src/content/variants',
+      slug: '{{slug}}',
+      fields: {
+        statuses: {
+          kind: 'list',
+          items: {
+            kind: 'string',
+            options: [
+              { label: 'Active', value: 'active' },
+              { label: 'Inactive', value: 'inactive' },
+            ],
+            cms: { label: 'Status' },
+          },
+          cms: { label: 'Statuses' },
+        },
+        flags: {
+          kind: 'list',
+          items: { kind: 'boolean', cms: { label: 'Flag' } },
+          cms: { label: 'Flags' },
+        },
+        owner: {
+          kind: 'reference',
+          collection: 'people',
+          displayFields: ['name'],
+          cms: { label: 'Owner' },
+        },
+      },
+    } as const satisfies ContentCollectionModel;
+
+    expect(createSveltiaCollection(model)).toMatchObject({
+      name: 'variants',
+      fields: [
+        expect.objectContaining({ name: 'statuses', widget: 'select', multiple: true }),
+        expect.objectContaining({
+          name: 'flags',
+          widget: 'list',
+          field: expect.objectContaining({ name: 'item', widget: 'boolean' }),
+        }),
+        expect.objectContaining({
+          name: 'owner',
+          widget: 'relation',
+          value_field: '{{slug}}',
+          multiple: false,
+        }),
+      ],
     });
   });
 });

@@ -6,7 +6,7 @@ export default getViteConfig({
     include: ['src/**/*.test.ts'],
     setupFiles: ['./test-support/content-collections.ts'],
     coverage: {
-      include: ['src/data/resume/experience-coverage.ts'],
+      include: ['src/**/*.ts'],
       provider: 'v8',
       reporter: ['text', 'html'],
     },

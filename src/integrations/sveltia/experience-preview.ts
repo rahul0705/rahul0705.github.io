@@ -1,6 +1,6 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
-import type { ContentLink } from '../../config/content-model';
+import type { ContentLink } from '../../lib/content-link';
 import { siteTheme } from '../../themes/site-theme';
 
 type PreviewTemplate = (props: CustomPreviewTemplateProps) => unknown;

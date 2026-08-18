@@ -41,6 +41,7 @@ const readCollection = async (name: string): Promise<TestCollectionEntry[]> => {
 };
 
 vi.mock('astro:content', () => ({
+  defineCollection: <Collection>(collection: Collection): Collection => collection,
   getCollection: async (
     name: string,
     filter?: (entry: TestCollectionEntry) => boolean,
