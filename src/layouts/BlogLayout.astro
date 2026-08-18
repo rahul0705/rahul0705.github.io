@@ -1,12 +1,19 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
 import ContentMeta from '../components/ui/ContentMeta.astro';
 import TagList from '../components/ui/TagList.astro';
 import BlogCover from '../components/blog/BlogCover.astro';
+import TableOfContents, { type TableOfContentsHeading } from '../components/blog/TableOfContents.astro';
 import { getPublishedAt } from '../lib/blog';
 import { articleContentClasses } from '../styles/article-classes';
 
-const { entry } = Astro.props;
+interface Props {
+  entry: CollectionEntry<'blog'>;
+  headings?: TableOfContentsHeading[];
+}
+
+const { entry, headings = [] } = Astro.props;
 const publishedAt = getPublishedAt(entry);
 ---
 
@@ -37,6 +44,7 @@ const publishedAt = getPublishedAt(entry);
     </header>
 
     <div class={articleContentClasses}>
+      {entry.data.tableOfContents && <TableOfContents headings={headings} />}
       <slot />
     </div>
   </article>

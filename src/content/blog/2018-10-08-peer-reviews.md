@@ -1,6 +1,7 @@
 ---
 title: Code Reviews
 featured: true
+tableOfContents: true
 description: A living guide to reviewing code with clarity, consistency, and constructive feedback.
 updatedDate: 2026-08-12
 coverImage: ../../assets/covers/review.jpg
