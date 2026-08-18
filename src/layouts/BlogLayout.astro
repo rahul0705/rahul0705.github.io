@@ -28,8 +28,8 @@ const publishedAt = getPublishedAt(entry);
   articleSection={entry.data.section}
   articleTags={entry.data.tags}
 >
-  <article class="mx-auto max-w-3xl px-6 py-20">
-    <header class="mb-12">
+  <article class="mx-auto max-w-7xl px-6 py-20">
+    <header class="mx-auto mb-12 max-w-3xl">
       <ContentMeta date={publishedAt} updatedDate={entry.data.updatedDate} label={entry.data.section} />
       <div class="mt-6">
         <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-2/1 rounded-box" />
@@ -43,9 +43,21 @@ const publishedAt = getPublishedAt(entry);
 
     </header>
 
-    <div class={articleContentClasses}>
-      {entry.data.tableOfContents && <TableOfContents headings={headings} />}
-      <slot />
+    <div class="mx-auto grid max-w-3xl xl:max-w-6xl xl:grid-cols-[minmax(0,48rem)_18rem] xl:items-start xl:gap-12">
+      <div class={articleContentClasses}>
+        <slot />
+      </div>
+
+      {
+        entry.data.tableOfContents && (
+          <aside
+            class="order-first mb-10 xl:sticky xl:top-20 xl:order-last xl:mb-0 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto"
+            aria-label="Article navigation"
+          >
+            <TableOfContents headings={headings} />
+          </aside>
+        )
+      }
     </div>
   </article>
 </BaseLayout>

@@ -10,15 +10,19 @@ interface Props {
   title?: string;
   minDepth?: number;
   maxDepth?: number;
+  class?: string;
 }
 
-const { headings, title = 'On this page', minDepth = 2, maxDepth = 3 } = Astro.props;
+const { headings, title = 'On this page', minDepth = 2, maxDepth = 3, class: className } = Astro.props;
 const visibleHeadings = headings.filter(({ depth }) => depth >= minDepth && depth <= maxDepth);
 ---
 
 {
   visibleHeadings.length > 0 && (
-    <nav class="card not-prose mb-10 border border-base-300 bg-base-200/50 shadow-sm" aria-labelledby="table-of-contents-title">
+    <nav
+      class:list={['card not-prose border border-base-300 bg-base-200/50 shadow-sm', className]}
+      aria-labelledby="table-of-contents-title"
+    >
       <div class="card-body gap-2 p-5 sm:p-6">
         <h2 id="table-of-contents-title" class="card-title text-base">
           {title}
