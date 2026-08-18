@@ -1,0 +1,40 @@
+---
+export interface TableOfContentsHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TableOfContentsHeading[];
+  title?: string;
+  minDepth?: number;
+  maxDepth?: number;
+  class?: string;
+}
+
+const { headings, title = 'On this page', minDepth = 2, maxDepth = 3, class: className } = Astro.props;
+const visibleHeadings = headings.filter(({ depth }) => depth >= minDepth && depth <= maxDepth);
+---
+
+{
+  visibleHeadings.length > 0 && (
+    <nav
+      class:list={['card not-prose border border-base-300 bg-base-200/50 shadow-sm', className]}
+      aria-labelledby="table-of-contents-title"
+    >
+      <div class="card-body gap-2 p-5 sm:p-6">
+        <h2 id="table-of-contents-title" class="card-title text-base">
+          {title}
+        </h2>
+        <ul class="menu menu-sm w-full p-0">
+          {visibleHeadings.map((heading) => (
+            <li class={heading.depth > minDepth ? 'ml-4' : undefined}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}

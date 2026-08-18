@@ -27,6 +27,14 @@ export const blogContentModel = defineModel({
       },
     },
     featured: { kind: 'boolean', default: false, cms: { label: 'Featured' } },
+    tableOfContents: {
+      kind: 'boolean',
+      default: false,
+      cms: {
+        label: 'Table of contents',
+        help: 'Show links to the article headings above the body.',
+      },
+    },
     section: {
       kind: 'string',
       required: true,

@@ -32,6 +32,7 @@ describe('Astro content adapter', () => {
       title: 'A post',
       draft: false,
       featured: false,
+      tableOfContents: false,
       section: 'Process',
       tags: [],
     });

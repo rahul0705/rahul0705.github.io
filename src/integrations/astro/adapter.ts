@@ -1,3 +1,4 @@
+import type { ImageMetadata } from 'astro';
 import { z } from 'astro/zod';
 import type { SchemaContext } from 'astro:content';
 
@@ -56,7 +57,7 @@ type AstroReferenceValue<Field extends ContentField> = Field extends { kind: 're
 
 type AstroAssetValue<Field extends ContentField> = Field extends { kind: 'asset'; assetType: 'file' }
   ? string
-  : unknown;
+  : ImageMetadata;
 
 type AstroFieldValue<Field extends ContentField> = AstroFieldValueByKind<Field>[Field['kind']];
 
