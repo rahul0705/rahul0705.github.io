@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { blogContentModel } from '../../config/content-models/blog';
 import { experienceContentModel } from '../../config/content-models/experience';
 import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
+import { defineModel } from '../../lib/content-model/define-model';
 import { createAstroSchema } from './adapter';
 
 describe('Astro content adapter', () => {
@@ -120,5 +121,63 @@ describe('Astro content adapter', () => {
       experienceSchema.parse({ ...requiredFields, skills: ['typescript'], financialScopeIds: ['ggss'] }),
     ).toMatchObject({ skills: ['typescript'], financialScopeIds: ['ggss'] });
     expect(() => experienceSchema.parse({ ...requiredFields, skills: [''] })).toThrow();
+  });
+
+  it('maps required, optional, and recursive shared primitives', () => {
+    const primitiveModel = defineModel({
+      name: 'primitiveTests',
+      label: 'Primitive tests',
+      labelSingular: 'Primitive test',
+      folder: 'src/content/primitive-tests',
+      slug: '{{slug}}',
+      fields: {
+        enabled: { kind: 'boolean', required: true, cms: { label: 'Enabled' } },
+        attachment: { kind: 'asset', assetType: 'file', required: true, cms: { label: 'Attachment' } },
+        screenshot: { kind: 'asset', assetType: 'image', required: true, cms: { label: 'Screenshot' } },
+        owner: {
+          kind: 'reference',
+          collection: 'people',
+          required: true,
+          displayFields: ['name'],
+          cms: { label: 'Owner' },
+        },
+        reviewer: {
+          kind: 'reference',
+          collection: 'people',
+          displayFields: ['name'],
+          cms: { label: 'Reviewer' },
+        },
+        aliases: {
+          kind: 'list',
+          required: true,
+          items: { kind: 'string', required: true, cms: { label: 'Alias' } },
+          cms: { label: 'Aliases' },
+        },
+        metadata: {
+          kind: 'object',
+          required: true,
+          fields: {
+            note: { kind: 'string', required: true, cms: { label: 'Note' } },
+          },
+          cms: { label: 'Metadata' },
+        },
+      },
+    });
+    const primitiveSchema = createAstroSchema(primitiveModel, { image });
+    const valid = {
+      enabled: true,
+      attachment: '/files/example.pdf',
+      screenshot: { src: '/image.png', width: 10, height: 10, format: 'png' },
+      owner: 'person-1',
+      aliases: ['example'],
+      metadata: { note: 'Reviewed' },
+    };
+
+    expect(primitiveSchema.parse(valid)).toMatchObject(valid);
+    expect(primitiveSchema.parse(valid).reviewer).toBeUndefined();
+    expect(() => primitiveSchema.parse({ ...valid, attachment: undefined })).toThrow();
+    expect(() => primitiveSchema.parse({ ...valid, owner: '' })).toThrow();
+    expect(() => primitiveSchema.parse({ ...valid, aliases: undefined })).toThrow();
+    expect(() => primitiveSchema.parse({ ...valid, metadata: {} })).toThrow();
   });
 });

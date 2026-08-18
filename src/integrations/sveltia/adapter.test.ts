@@ -131,4 +131,57 @@ describe('Sveltia CMS adapter', () => {
       multiple: true,
     });
   });
+
+  it('maps list variants and minimal collection metadata', () => {
+    const model = {
+      name: 'variants',
+      label: 'Variants',
+      labelSingular: 'Variant',
+      folder: 'src/content/variants',
+      slug: '{{slug}}',
+      fields: {
+        statuses: {
+          kind: 'list',
+          items: {
+            kind: 'string',
+            options: [
+              { label: 'Active', value: 'active' },
+              { label: 'Inactive', value: 'inactive' },
+            ],
+            cms: { label: 'Status' },
+          },
+          cms: { label: 'Statuses' },
+        },
+        flags: {
+          kind: 'list',
+          items: { kind: 'boolean', cms: { label: 'Flag' } },
+          cms: { label: 'Flags' },
+        },
+        owner: {
+          kind: 'reference',
+          collection: 'people',
+          displayFields: ['name'],
+          cms: { label: 'Owner' },
+        },
+      },
+    } as const satisfies ContentCollectionModel;
+
+    expect(createSveltiaCollection(model)).toMatchObject({
+      name: 'variants',
+      fields: [
+        expect.objectContaining({ name: 'statuses', widget: 'select', multiple: true }),
+        expect.objectContaining({
+          name: 'flags',
+          widget: 'list',
+          field: expect.objectContaining({ name: 'item', widget: 'boolean' }),
+        }),
+        expect.objectContaining({
+          name: 'owner',
+          widget: 'relation',
+          value_field: '{{slug}}',
+          multiple: false,
+        }),
+      ],
+    });
+  });
 });

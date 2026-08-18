@@ -1,6 +1,6 @@
-export type ContentFieldKind = 'string' | 'boolean' | 'number' | 'date' | 'list' | 'object' | 'reference' | 'asset';
+type ContentFieldKind = 'string' | 'boolean' | 'number' | 'date' | 'list' | 'object' | 'reference' | 'asset';
 
-export interface CmsFieldConfig {
+interface CmsFieldConfig {
   label: string;
   help?: string;
   initialValue?: never;
@@ -9,23 +9,23 @@ export interface CmsFieldConfig {
   media?: never;
 }
 
-export type CmsStringFieldConfig = Omit<CmsFieldConfig, 'multiline'> & {
+type CmsStringFieldConfig = Omit<CmsFieldConfig, 'multiline'> & {
   multiline?: boolean;
 };
 
-export type CmsBooleanFieldConfig = Omit<CmsFieldConfig, 'initialValue'> & {
+type CmsBooleanFieldConfig = Omit<CmsFieldConfig, 'initialValue'> & {
   initialValue?: boolean;
 };
 
-export type CmsDateFieldConfig = Omit<CmsFieldConfig, 'initialValue'> & {
+type CmsDateFieldConfig = Omit<CmsFieldConfig, 'initialValue'> & {
   initialValue?: string;
 };
 
-export type CmsListFieldConfig = Omit<CmsFieldConfig, 'itemSummary'> & {
+type CmsListFieldConfig = Omit<CmsFieldConfig, 'itemSummary'> & {
   itemSummary?: string;
 };
 
-export type CmsAssetFieldConfig = Omit<CmsFieldConfig, 'media'> & {
+type CmsAssetFieldConfig = Omit<CmsFieldConfig, 'media'> & {
   media?: {
     mediaFolder: string;
     publicFolder: string;
@@ -43,27 +43,27 @@ interface ContentFieldBase<
   cms: CmsConfig;
 }
 
-export interface StringContentField extends ContentFieldBase<'string', CmsStringFieldConfig> {
+interface StringContentField extends ContentFieldBase<'string', CmsStringFieldConfig> {
   options?: ReadonlyArray<{ label: string; value: string }>;
 }
 
-export type BooleanContentField = ContentFieldBase<'boolean', CmsBooleanFieldConfig, boolean>;
+type BooleanContentField = ContentFieldBase<'boolean', CmsBooleanFieldConfig, boolean>;
 
-export interface NumberContentField extends ContentFieldBase<'number', CmsFieldConfig> {
+interface NumberContentField extends ContentFieldBase<'number', CmsFieldConfig> {
   min?: number;
 }
 
-export type DateContentField = ContentFieldBase<'date', CmsDateFieldConfig>;
+type DateContentField = ContentFieldBase<'date', CmsDateFieldConfig>;
 
-export interface ListContentField extends ContentFieldBase<'list', CmsListFieldConfig, unknown[]> {
+interface ListContentField extends ContentFieldBase<'list', CmsListFieldConfig, unknown[]> {
   items: ContentField;
 }
 
-export interface ObjectContentField extends ContentFieldBase<'object', CmsFieldConfig> {
+interface ObjectContentField extends ContentFieldBase<'object', CmsFieldConfig> {
   fields: Record<string, ContentField>;
 }
 
-export interface ReferenceContentField extends ContentFieldBase<'reference', CmsFieldConfig, string | string[]> {
+interface ReferenceContentField extends ContentFieldBase<'reference', CmsFieldConfig, string | string[]> {
   collection: string;
   multiple?: boolean;
   valueField?: string;
@@ -71,7 +71,7 @@ export interface ReferenceContentField extends ContentFieldBase<'reference', Cms
   searchFields?: readonly string[];
 }
 
-export interface AssetContentField extends ContentFieldBase<'asset', CmsAssetFieldConfig> {
+interface AssetContentField extends ContentFieldBase<'asset', CmsAssetFieldConfig> {
   assetType: 'image' | 'file';
 }
 
