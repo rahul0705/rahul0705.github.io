@@ -7,6 +7,10 @@ export const blogContentModel = defineModel({
   folder: 'src/content/blog',
   extensions: ['md', 'mdx'],
   slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+  sort: {
+    fields: ['slug', 'title'],
+    default: { field: 'slug', direction: 'descending' },
+  },
   fields: {
     title: { kind: 'string', required: true, cms: { label: 'Title' } },
     draft: {
@@ -26,7 +30,6 @@ export const blogContentModel = defineModel({
         help: 'Set this only when a post receives a meaningful content revision.',
       },
     },
-    featured: { kind: 'boolean', default: false, cms: { label: 'Featured' } },
     tableOfContents: {
       kind: 'boolean',
       default: false,

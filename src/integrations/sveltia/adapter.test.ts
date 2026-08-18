@@ -16,6 +16,10 @@ describe('Sveltia CMS adapter', () => {
       label_singular: blogContentModel.labelSingular,
       folder: blogContentModel.folder,
       slug: blogContentModel.slug,
+      sortable_fields: {
+        fields: ['slug', 'title'],
+        default: { field: 'slug', direction: 'descending' },
+      },
     });
     expect(collection.fields.map((field) => field.name)).toEqual([
       ...Object.keys(blogContentModel.fields),
@@ -29,7 +33,6 @@ describe('Sveltia CMS adapter', () => {
         expect.objectContaining({ name: 'title', required: true }),
         expect.objectContaining({ name: 'draft', widget: 'boolean', default: true, required: false }),
         expect.objectContaining({ name: 'description', widget: 'text', required: false }),
-        expect.objectContaining({ name: 'featured', widget: 'boolean', default: false }),
         expect.objectContaining({ name: 'section', widget: 'select', required: true }),
         expect.objectContaining({ name: 'tags', widget: 'list', default: [] }),
         expect.objectContaining({
