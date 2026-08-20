@@ -30,7 +30,6 @@ export const toResumeJson = ({
     name: basics.name,
     label: basics.label,
     email: basics.email,
-    phone: basics.phone,
     url: basics.url,
     profiles: basics.profiles,
   },
