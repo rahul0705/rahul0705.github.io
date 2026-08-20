@@ -109,7 +109,7 @@ change was the entire fix, one was a genuine but separate improvement, and one d
 
 Say an account summary endpoint occasionally times out under load.
 
-```plain
+```python
 def get_account_summary(account_id):
     account = account_repo.get(account_id)
     recent_orders = order_repo.get_recent(account_id)
@@ -124,7 +124,7 @@ investigating, you try three things, keeping each change if it seems to help.
 
 **First**, the client timeout looks tight for a call that touches two repositories, so you raise it:
 
-```plain
+```python
 TIMEOUT_SECONDS = 10  # was 2
 ```
 
@@ -132,7 +132,7 @@ The requests stop timing out, but the load test still misses its latency target.
 
 **Second**, suspecting the account lookup is the slow part, you add a cache in front of it:
 
-```plain
+```python
 @cache.memoize(ttl=30)
 def get_account(account_id):
     return account_repo.get(account_id)
@@ -150,7 +150,7 @@ query still runs on every request.
 **Third**, you notice `order_repo.get_recent` is being called twice for the same account, once for all orders and once
 filtered to pending, and remove the second call:
 
-```plain
+```python
 def get_account_summary(account_id):
     account = get_account(account_id)
     recent_orders = order_repo.get_recent(account_id)
@@ -177,7 +177,7 @@ regressing from the snapshot:
 
 Removing the duplicate query is sufficient on its own. The cache and the longer timeout can both come out:
 
-```plain
+```python
 def get_account_summary(account_id):
     account = account_repo.get(account_id)
     recent_orders = order_repo.get_recent(account_id)
