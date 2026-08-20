@@ -1,6 +1,6 @@
 ---
 title: Did You Fix the Bug—or Just Move It?
-description: A passing test proves the symptom is gone. Isolate the change that mattered before you call it a fix.
+description: A passing test proves the symptom is gone, not that the work is done. Isolate the change that mattered before adding it to the system.
 coverImage: ../../assets/covers/did-you-fix-the-bug.jpg
 tableOfContents: false
 section: Process
@@ -22,8 +22,10 @@ it is gone. You do not know which action helped—or whether the headache was al
 enough in daily life. Next time, you may repeat the whole ritual. A codebase does not get the same courtesy.
 
 The software equivalent of “drink more water next time” might be a cache left in production, adding a failure mode to a
-problem it never solved. The water glass empties; the cache stays. It must remain correct through every future change to
-the data and becomes one more thing a teammate has to reason about without knowing why it exists.
+problem it never actually solved. The headache remedy leaves almost no lasting complexity: rinse the glass, put it away,
+and you are done. A cache becomes part of the system. It needs an invalidation policy, capacity limits, monitoring, and
+failure handling, and every future change to the underlying data must preserve its correctness. That is an ongoing cost
+for a benefit you never established—and one more component a teammate has to understand without knowing why it exists.
 
 _(This started as a short section in a piece on_ [_code review_](/blog/2018-10-08-peer-reviews/) _— it turned out to be
 less about review and more about how debugging itself ends, so it gets its own space here.)_
@@ -214,6 +216,6 @@ habit — the shortcut a headache can afford and a codebase can't.
 ## Closing thought
 
 A fix that works and a fix you understand are not always the same thing, and the gap is invisible in a green test suite.
-It appears later—in a change nobody feels safe reverting, or a symptom that returns in a different form. Reducing an
-experiment to what mattered takes longer than shipping the version that happens to work. It is also how you find out,
-while the context is still fresh, whether you fixed the problem or merely moved it somewhere quieter.
+It appears later—in a change nobody feels safe reverting, or a symptom that returns in a different form. Reducing a set
+of working changes to what mattered takes longer than shipping the version that happens to work. It is also how you find
+out, while the context is still fresh, whether you fixed the problem or merely moved it somewhere quieter.

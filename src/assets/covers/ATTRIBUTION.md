@@ -1,7 +1,5 @@
 # Article cover images
 
-<!-- cSpell:ignore Shahadat Rahman -->
-
 These generic article covers are downloaded from Unsplash and are used under the
 [Unsplash License](https://unsplash.com/license).
 
@@ -11,5 +9,4 @@ These generic article covers are downloaded from Unsplash and are used under the
 - `review.jpg`: <https://images.unsplash.com/photo-1516321318423-f06f85e504b3>
 - `git.jpg`: <https://images.unsplash.com/photo-1515879218367-8466d910aaa4>
 - `duplication-vs-coupling.jpg`: <https://unsplash.com/photos/XbWtzkRA9S8>
-- `did-you-fix-the-bug.jpg`: [Shahadat Rahman](https://unsplash.com/@hishahadat),
-  <https://unsplash.com/photos/BfrQnKBulYQ>
+- `did-you-fix-the-bug.jpg`: <https://unsplash.com/photos/BfrQnKBulYQ>
