@@ -30,7 +30,6 @@ const formatPeriod = (entry: { startDate?: string; endDate?: string }) => {
 
 const contacts: Array<{ label: string; value: string; href: string }> = [
   ...(resume.basics.email ? [{ label: 'Email', value: resume.basics.email, href: `mailto:${resume.basics.email}` }] : []),
-  ...(resume.basics.phone ? [{ label: 'Phone', value: resume.basics.phone, href: `tel:${resume.basics.phone}` }] : []),
   ...resume.basics.profiles
     .filter((profile) => profile.network && profile.url)
     .map((profile) => ({ label: profile.network, value: profile.url, href: profile.url })),

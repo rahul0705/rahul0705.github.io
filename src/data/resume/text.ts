@@ -142,7 +142,6 @@ export const toResumeText = ({
 }: ResumeTextInput) => {
   const contact = [
     basics.email,
-    basics.phone,
     basics.url,
     ...basics.profiles.map((profile) => `${profile.network}: ${profile.url}`),
   ].filter(Boolean);
@@ -191,7 +190,6 @@ export const toResumeMarkdown = ({
 }: ResumeTextInput) => {
   const contact = [
     basics.email && `[${basics.email}](mailto:${basics.email})`,
-    basics.phone,
     basics.url && `[${basics.url}](${basics.url})`,
     ...basics.profiles.map((profile) => `[${profile.network}](${profile.url})`),
   ].filter(Boolean);
