@@ -605,6 +605,9 @@ final combination of edits does not.
 Where practical, write a failing test or repeatable measurement before reducing the experiments. It gives you a stable
 signal for comparing A, B, and C instead of relying on memory or a one-time observation.
 
+For a closer look at this reduction process, see
+[_Did You Fix the Bug—or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
+
 ### Run the automated checks
 
 Run the same formatter, linter, type checker, tests, and build that continuous integration will run. When a check cannot
