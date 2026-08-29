@@ -19,6 +19,13 @@
   scroll-margin-top: calc(var(--site-navbar-height) + 1rem);
 }
 
+@media (width < 40rem) {
+  .tooltip::before,
+  .tooltip::after {
+    display: none;
+  }
+}
+
 @plugin 'daisyui' {
   themes: false;
 }
