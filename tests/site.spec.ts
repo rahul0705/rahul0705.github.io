@@ -175,6 +175,9 @@ test('resume actions remain usable within the mobile viewport', async ({ page })
     'download',
     'rahul-mohandas-resume.md',
   );
+  for (const format of ['JSON', 'TXT', 'Markdown']) {
+    await expect(page.getByRole('link', { name: `Download ${format}` })).toHaveAttribute('rel', 'nofollow');
+  }
   const box = await menu.boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
@@ -283,6 +286,30 @@ test('RSS feed publishes discoverable article metadata', async ({ page, request 
   expect(feed).toContain('<language>en-us</language>');
   expect(feed).toContain('<link>https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/</link>');
   expect(feed).toContain('<pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>');
+});
+
+test('crawl policy excludes raw resume exports while allowing HTML noindex directives', async ({ request }) => {
+  const robots = await request.get('/robots.txt');
+  expect(robots.ok()).toBe(true);
+  expect(await robots.text()).toBe(
+    [
+      'User-agent: *',
+      'Allow: /',
+      'Disallow: /resume.json',
+      'Disallow: /resume.md',
+      'Disallow: /resume.txt',
+      '',
+      'Sitemap: https://www.rahulmohandas.com/sitemap-index.xml',
+      '',
+    ].join('\n'),
+  );
+
+  const sitemap = await request.get('/sitemap-0.xml');
+  expect(sitemap.ok()).toBe(true);
+  const sitemapBody = await sitemap.text();
+  for (const route of ['/admin/', '/resume.json', '/resume.md', '/resume.txt']) {
+    expect(sitemapBody).not.toContain(route);
+  }
 });
 
 test('the content manager is not indexed, uses its bundled configuration, and supports local editing', async ({

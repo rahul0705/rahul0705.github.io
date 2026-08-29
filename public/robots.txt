@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /resume.json
+Disallow: /resume.md
+Disallow: /resume.txt
 
 Sitemap: https://www.rahulmohandas.com/sitemap-index.xml
