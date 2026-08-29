@@ -5,6 +5,9 @@ import { siteTheme, siteThemeColor } from '../src/themes/site-theme';
 
 const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/', '/privacy/'];
 
+const sitemapLocations = (xml: string) =>
+  Array.from(xml.matchAll(/<loc>(.*?)<\/loc>/g), ([, location]) => location.replaceAll('&amp;', '&'));
+
 test('analytics uses denied consent and sanitized page data on public HTML pages', async ({ page }) => {
   await page.route('https://www.googletagmanager.com/**', (route) => route.fulfill({ status: 204 }));
   await page.goto('/?private=value#fragment');
@@ -30,7 +33,7 @@ test('analytics uses denied consent and sanitized page data on public HTML pages
     expect.objectContaining({
       allow_ad_personalization_signals: false,
       allow_google_signals: false,
-      page_location: 'http://127.0.0.1:4321/',
+      page_location: `${new URL(page.url()).origin}/`,
     }),
   ]);
 });
@@ -111,6 +114,44 @@ test('mobile navigation closes when tapping outside it', async ({ page }) => {
 
   await page.locator('main').click({ position: { x: 10, y: 100 } });
   await expect(articles).toBeHidden();
+});
+
+test('every public page uses the mobile viewport without horizontal overflow', async ({ page, request }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  const sitemapIndex = await request.get('/sitemap-index.xml');
+  expect(sitemapIndex.ok()).toBe(true);
+
+  const sitemapUrls = sitemapLocations(await sitemapIndex.text());
+  expect(sitemapUrls.length).toBeGreaterThan(0);
+
+  const pagePaths: string[] = [];
+  for (const sitemapUrl of sitemapUrls) {
+    const sitemap = await request.get(new URL(sitemapUrl).pathname);
+    expect(sitemap.ok()).toBe(true);
+    pagePaths.push(...sitemapLocations(await sitemap.text()).map((location) => new URL(location).pathname));
+  }
+
+  expect(pagePaths.length).toBeGreaterThan(0);
+  for (const path of pagePaths) {
+    await test.step(path, async () => {
+      await page.goto(path);
+      await expect(page.locator('meta[name="viewport"]')).toHaveAttribute(
+        'content',
+        'width=device-width, initial-scale=1',
+      );
+      await expect(page.locator('main')).toBeVisible();
+
+      const viewport = await page.evaluate(() => ({
+        clientWidth: document.documentElement.clientWidth,
+        innerWidth: window.innerWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+      }));
+      expect(viewport.clientWidth).toBe(390);
+      expect(viewport.innerWidth).toBe(390);
+      expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+    });
+  }
 });
 
 test('resume actions remain usable within the mobile viewport', async ({ page }) => {
