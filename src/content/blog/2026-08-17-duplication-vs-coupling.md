@@ -1,7 +1,10 @@
 ---
 title: Duplication Is Cheaper Than the Wrong Abstraction
 description: DRY reduces repetition, but the wrong abstraction couples concepts that should be free to change independently.
+publishedDate: 2026-08-17
+featured: true
 coverImage: ../../assets/covers/duplication-vs-coupling.jpg
+coverImageAlt: Railway tracks converging and separating across a rural junction
 section: Process
 tags:
   - software

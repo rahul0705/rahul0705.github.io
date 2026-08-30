@@ -12,6 +12,7 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   image?: string;
+  imageAlt?: string;
   type?: 'website' | 'article';
   publishedAt?: Date;
   updatedAt?: Date;
@@ -25,6 +26,7 @@ const {
   description,
   canonicalPath = Astro.url.pathname,
   image,
+  imageAlt,
   type,
   publishedAt,
   updatedAt,
@@ -43,6 +45,7 @@ const {
       {description}
       {canonicalPath}
       {image}
+      {imageAlt}
       {type}
       {publishedAt}
       {updatedAt}

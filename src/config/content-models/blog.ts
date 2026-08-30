@@ -6,13 +6,17 @@ export const blogContentModel = defineModel({
   labelSingular: 'Blog Post',
   folder: 'src/content/blog',
   extensions: ['md', 'mdx'],
-  slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+  slug: "{{publishedDate | date('YYYY-MM-DD')}}-{{slug}}",
   sort: {
     fields: ['slug', 'title'],
     default: { field: 'slug', direction: 'descending' },
   },
   fields: {
-    title: { kind: 'string', required: true, cms: { label: 'Title' } },
+    title: {
+      kind: 'string',
+      required: true,
+      cms: { label: 'Title', help: 'Use a unique, descriptive article title.' },
+    },
     draft: {
       kind: 'boolean',
       default: false,
@@ -22,7 +26,16 @@ export const blogContentModel = defineModel({
         help: 'Draft posts will not be published on the site.',
       },
     },
-    description: { kind: 'string', cms: { label: 'Description', multiline: true } },
+    description: {
+      kind: 'string',
+      required: true,
+      cms: { label: 'Description', multiline: true, help: 'Write a concise, unique search and social summary.' },
+    },
+    publishedDate: {
+      kind: 'date',
+      required: true,
+      cms: { label: 'Publication date', help: 'The authoritative public publication date for this article.' },
+    },
     updatedDate: {
       kind: 'date',
       cms: {
@@ -37,6 +50,11 @@ export const blogContentModel = defineModel({
         label: 'Table of contents',
         help: 'Show links to the article headings above the body.',
       },
+    },
+    featured: {
+      kind: 'boolean',
+      default: false,
+      cms: { label: 'Featured', help: 'Include this article in the Selected Writing section on the homepage.' },
     },
     section: {
       kind: 'string',
@@ -59,12 +77,22 @@ export const blogContentModel = defineModel({
     coverImage: {
       kind: 'asset',
       assetType: 'image',
+      required: true,
       cms: {
         label: 'Cover image',
+        help: 'Store article covers in src/assets and record third-party attribution in the adjacent attribution file.',
         media: {
           mediaFolder: '/src/assets/{{year}}',
           publicFolder: '../../assets/{{year}}',
         },
+      },
+    },
+    coverImageAlt: {
+      kind: 'string',
+      required: true,
+      cms: {
+        label: 'Cover image alt text',
+        help: 'Describe the meaningful visual content rather than repeating the title.',
       },
     },
   },

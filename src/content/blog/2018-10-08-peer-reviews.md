@@ -2,8 +2,10 @@
 title: Code Reviews
 tableOfContents: true
 description: A living guide to reviewing code with clarity, consistency, and constructive feedback.
+publishedDate: 2018-10-08
 updatedDate: 2026-08-12
 coverImage: ../../assets/covers/review.jpg
+coverImageAlt: Laptop and notebook arranged on a desk for collaborative review
 section: Process
 tags:
   - software

@@ -15,7 +15,7 @@ interface Props {
 const { title = 'Featured Articles', description = 'A few recent write-ups worth a read.', limit = 3, posts: providedPosts } = Astro.props;
 
 const fallbackPosts = await getPublishedPosts();
-const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
+const posts = (providedPosts ?? fallbackPosts.filter((post) => post.data.featured)).slice(0, limit);
 ---
 
 <Section title={title} description={description}>
