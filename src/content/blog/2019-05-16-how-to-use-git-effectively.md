@@ -1,8 +1,6 @@
 ---
 title: How to use Git effectively
 description: A practical overview of GitFlow and the roles of master, develop, feature, and release branches.
-publishedDate: 2019-05-16
-featured: true
 coverImage: ../../assets/covers/git.jpg
 coverImageAlt: Source code displayed on a laptop screen
 section: Process

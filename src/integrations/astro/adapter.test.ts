@@ -29,7 +29,6 @@ describe('Astro content adapter', () => {
   const requiredBlogFields = {
     title: 'A post',
     description: 'A concise description.',
-    publishedDate: '2026-08-29',
     section: 'Process',
     coverImage: { src: '/cover.jpg', width: 1200, height: 675, format: 'jpg' as const },
     coverImageAlt: 'A descriptive cover',
@@ -40,7 +39,6 @@ describe('Astro content adapter', () => {
       title: 'A post',
       draft: false,
       tableOfContents: false,
-      featured: false,
       section: 'Process',
       tags: [],
     });
@@ -49,7 +47,6 @@ describe('Astro content adapter', () => {
   it('requires fields marked as required in the shared content model', () => {
     expect(() => schema.parse({})).toThrow();
     expect(() => schema.parse({ ...requiredBlogFields, section: 'process' })).toThrow();
-    expect(() => schema.parse({ ...requiredBlogFields, publishedDate: undefined })).toThrow();
     expect(() => schema.parse({ ...requiredBlogFields, coverImageAlt: undefined })).toThrow();
   });
 

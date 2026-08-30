@@ -6,7 +6,7 @@ export const blogContentModel = defineModel({
   labelSingular: 'Blog Post',
   folder: 'src/content/blog',
   extensions: ['md', 'mdx'],
-  slug: "{{publishedDate | date('YYYY-MM-DD')}}-{{slug}}",
+  slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
   sort: {
     fields: ['slug', 'title'],
     default: { field: 'slug', direction: 'descending' },
@@ -31,11 +31,6 @@ export const blogContentModel = defineModel({
       required: true,
       cms: { label: 'Description', multiline: true, help: 'Write a concise, unique search and social summary.' },
     },
-    publishedDate: {
-      kind: 'date',
-      required: true,
-      cms: { label: 'Publication date', help: 'The authoritative public publication date for this article.' },
-    },
     updatedDate: {
       kind: 'date',
       cms: {
@@ -50,11 +45,6 @@ export const blogContentModel = defineModel({
         label: 'Table of contents',
         help: 'Show links to the article headings above the body.',
       },
-    },
-    featured: {
-      kind: 'boolean',
-      default: false,
-      cms: { label: 'Featured', help: 'Include this article in the Selected Writing section on the homepage.' },
     },
     section: {
       kind: 'string',

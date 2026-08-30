@@ -2,7 +2,6 @@
 title: Learning Racetrack
 tableOfContents: true
 description: Rebuilding an interactive racetrack to help middle-school students learn through hands-on play.
-publishedDate: 2013-04-01
 coverImage: ../../assets/covers/circuit.jpg
 coverImageAlt: Close-up of a circuit board and its electronic components
 section: Projects

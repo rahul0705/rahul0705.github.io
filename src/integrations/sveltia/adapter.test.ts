@@ -33,8 +33,6 @@ describe('Sveltia CMS adapter', () => {
         expect.objectContaining({ name: 'title', required: true }),
         expect.objectContaining({ name: 'draft', widget: 'boolean', default: true, required: false }),
         expect.objectContaining({ name: 'description', widget: 'text', required: true }),
-        expect.objectContaining({ name: 'publishedDate', widget: 'datetime', required: true }),
-        expect.objectContaining({ name: 'featured', widget: 'boolean', default: false }),
         expect.objectContaining({ name: 'section', widget: 'select', required: true }),
         expect.objectContaining({ name: 'tags', widget: 'list', default: [] }),
         expect.objectContaining({
