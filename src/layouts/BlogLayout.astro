@@ -23,6 +23,7 @@ const hasTableOfContents = entry.data.tableOfContents;
   description={entry.data.description}
   canonicalPath={`/blog/${entry.id}/`}
   image={entry.data.coverImage?.src}
+  imageAlt={entry.data.coverImageAlt}
   type="article"
   publishedAt={publishedAt}
   updatedAt={entry.data.updatedDate}
@@ -33,7 +34,7 @@ const hasTableOfContents = entry.data.tableOfContents;
     <header class="mx-auto mb-12 max-w-3xl">
       <ContentMeta date={publishedAt} updatedDate={entry.data.updatedDate} label={entry.data.section} />
       <div class="mt-6">
-        <BlogCover image={entry.data.coverImage} title={entry.data.title} class="aspect-2/1 rounded-box" />
+        <BlogCover image={entry.data.coverImage} alt={entry.data.coverImageAlt} class="aspect-2/1 rounded-box" />
       </div>
       <h1 class="mt-8 text-5xl font-bold tracking-tight">
         {entry.data.title}

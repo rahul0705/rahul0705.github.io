@@ -26,9 +26,16 @@ describe('Astro content adapter', () => {
       ]),
     });
   const schema = createAstroSchema(blogContentModel, { image });
+  const requiredBlogFields = {
+    title: 'A post',
+    description: 'A concise description.',
+    section: 'Process',
+    coverImage: { src: '/cover.jpg', width: 1200, height: 675, format: 'jpg' as const },
+    coverImageAlt: 'A descriptive cover',
+  };
 
   it('derives frontmatter defaults from the shared content model', () => {
-    expect(schema.parse({ title: 'A post', section: 'Process' })).toMatchObject({
+    expect(schema.parse(requiredBlogFields)).toMatchObject({
       title: 'A post',
       draft: false,
       tableOfContents: false,
@@ -39,12 +46,13 @@ describe('Astro content adapter', () => {
 
   it('requires fields marked as required in the shared content model', () => {
     expect(() => schema.parse({})).toThrow();
-    expect(() => schema.parse({ title: 'A post', section: 'process' })).toThrow();
+    expect(() => schema.parse({ ...requiredBlogFields, section: 'process' })).toThrow();
+    expect(() => schema.parse({ ...requiredBlogFields, coverImageAlt: undefined })).toThrow();
   });
 
   it('supports an optional updated date without requiring it on existing posts', () => {
-    expect(schema.parse({ title: 'Existing post', section: 'Process' }).updatedDate).toBeUndefined();
-    expect(schema.parse({ title: 'Revised post', section: 'Process', updatedDate: '2026-08-12' }).updatedDate).toEqual(
+    expect(schema.parse(requiredBlogFields).updatedDate).toBeUndefined();
+    expect(schema.parse({ ...requiredBlogFields, updatedDate: '2026-08-12' }).updatedDate).toEqual(
       new Date('2026-08-12T00:00:00.000Z'),
     );
   });

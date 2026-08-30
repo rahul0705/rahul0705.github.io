@@ -2,6 +2,7 @@
 title: TCP Keep-Alive
 description: Research into TCP keep-alive behavior across operating systems and network failures.
 coverImage: ../../assets/covers/network.jpg
+coverImageAlt: Blue network cables connected to illuminated server equipment
 section: Projects
 tags:
   - networking

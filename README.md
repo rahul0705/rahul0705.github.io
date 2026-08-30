@@ -77,10 +77,24 @@ test-support/         Vitest setup utilities
 ### Articles
 
 Articles live in `src/content/blog/` as Markdown files. Their front matter fields are defined in
-`src/config/content-model.ts` and validated by `src/content.config.ts`.
+`src/config/content-models/blog.ts` and validated by `src/content.config.ts`. The same model supplies the article fields
+in Sveltia CMS.
 
 Set `draft: true` to keep an article out of production listings and generated routes. Article cover images are stored
-under `src/assets/<year>/`.
+under `src/assets/`. The date prefix in the article filename is the authoritative publication date and determines its
+position in newest-first article lists. The homepage Selected Writing section automatically uses the three newest
+published articles; there is no separate editorial featured state.
+
+Before publishing an article:
+
+1. Confirm the title is unique and the description is a concise search and social summary.
+2. Confirm the filename date, section, tags, and table-of-contents behavior. Check whether the filename date places the
+   article in the three newest posts shown under Selected Writing; do not add duplicate publication or featured fields.
+3. Store the cover in `src/assets/`, write alt text that describes its meaningful visual content, and record any
+   third-party source in the `ATTRIBUTION.md` file beside the image.
+4. Build or preview the site and review the generated article title, publication date, canonical URL, Open Graph and
+   Twitter copy, cover image, and social-image alt text.
+5. Keep the article as a draft until those checks are complete; then remove `draft: true` or switch Draft off in the CMS.
 
 ### Experience and resume
 
