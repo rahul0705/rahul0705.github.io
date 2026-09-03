@@ -114,7 +114,7 @@ describe('Sveltia CMS configuration', () => {
     });
     expect(experience.fields.find((field) => field.name === 'financialScopeIds')).toMatchObject({
       widget: 'relation',
-      collection: 'financialScopes',
+      collection: 'financial-scopes',
       value_field: '{{slug}}',
       display_fields: ['name'],
       search_fields: ['name'],

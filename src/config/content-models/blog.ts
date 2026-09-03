@@ -1,4 +1,4 @@
-import { defineModel } from '../../lib/content-model/define-model';
+import { defineModel } from '@rm-industries/content-model';
 
 export const blogContentModel = defineModel({
   name: 'blog',
@@ -12,31 +12,24 @@ export const blogContentModel = defineModel({
     default: { field: 'slug', direction: 'descending' },
   },
   fields: {
-    title: { kind: 'string', required: true, cms: { label: 'Title' } },
+    title: { kind: 'string', required: true, label: 'Title' },
     draft: {
       kind: 'boolean',
       default: false,
-      cms: {
-        label: 'Draft',
-        initialValue: true,
-        help: 'Draft posts will not be published on the site.',
-      },
+      label: 'Draft',
+      help: 'Draft posts will not be published on the site.',
     },
-    description: { kind: 'string', cms: { label: 'Description', multiline: true } },
+    description: { kind: 'string', label: 'Description', multiline: true },
     updatedDate: {
       kind: 'date',
-      cms: {
-        label: 'Updated date',
-        help: 'Set this only when a post receives a meaningful content revision.',
-      },
+      label: 'Updated date',
+      help: 'Set this only when a post receives a meaningful content revision.',
     },
     tableOfContents: {
       kind: 'boolean',
       default: false,
-      cms: {
-        label: 'Table of contents',
-        help: 'Show links to the article headings above the body.',
-      },
+      label: 'Table of contents',
+      help: 'Show links to the article headings above the body.',
     },
     section: {
       kind: 'string',
@@ -45,28 +38,20 @@ export const blogContentModel = defineModel({
         { label: 'Process', value: 'Process' },
         { label: 'Projects', value: 'Projects' },
       ],
-      cms: {
-        label: 'Section',
-        help: 'Choose the broad editorial section for this article.',
-      },
+      label: 'Section',
+      help: 'Choose the broad editorial section for this article.',
     },
     tags: {
       kind: 'list',
       default: [],
-      items: { kind: 'string', required: true, cms: { label: 'Tag' } },
-      cms: { label: 'Tags' },
+      items: { kind: 'string', required: true, label: 'Tag' },
+      label: 'Tags',
     },
     coverImage: {
       kind: 'asset',
       assetType: 'image',
-      cms: {
-        label: 'Cover image',
-        media: {
-          mediaFolder: '/src/assets/{{year}}',
-          publicFolder: '../../assets/{{year}}',
-        },
-      },
+      label: 'Cover image',
     },
   },
-  body: { name: 'body', cms: { label: 'Body' } },
+  body: { name: 'body', label: 'Body' },
 });

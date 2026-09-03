@@ -77,7 +77,7 @@ test-support/         Vitest setup utilities
 ### Articles
 
 Articles live in `src/content/blog/` as Markdown files. Their front matter fields are defined in
-`src/config/content-model.ts` and validated by `src/content.config.ts`.
+`src/config/content-models/` and validated by `src/content.config.ts` through `@rm-industries/content-model`.
 
 Set `draft: true` to keep an article out of production listings and generated routes. Article cover images are stored
 under `src/assets/<year>/`.
@@ -107,9 +107,10 @@ Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScrip
 `config.yml` file:
 
 - The shared content model defines the fields available to both Astro and the CMS.
-- The Sveltia integration under `src/integrations/sveltia/` adapts that model into CMS collections and owns the CMS
-  configuration, branding, and content previews.
-- The Astro integration under `src/integrations/astro/` adapts the same model into Astro collection schemas.
+- The published content-model package adapts the shared models into Astro collection schemas and base Sveltia CMS
+  collections.
+- The Sveltia integration under `src/integrations/sveltia/` owns site-specific CMS configuration, collection overrides,
+  branding, and content previews.
 
 On localhost, choose **Work with Local Repository** and grant access to this repository. On the deployed site, use a
 GitHub personal access token with access to the repository.
@@ -149,9 +150,9 @@ The integration-independent content model is the source for both Astro validatio
 reducing schema drift without coupling either integration to the other:
 
 ```text
-Shared content model
-|-- Astro validation adapter
-`-- Sveltia CMS adapter and previews
+Shared content models
+|-- @rm-industries/content-model/astro
+`-- @rm-industries/content-model/sveltia + site-specific CMS configuration and previews
 ```
 
 Resume exports are generated from the same structured data used by the HTML page.
