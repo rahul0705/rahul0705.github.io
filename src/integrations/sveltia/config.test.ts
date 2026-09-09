@@ -5,6 +5,7 @@ import { experienceContentModel } from '../../config/content-models/experience';
 import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
 import { contentModels } from '../../config/content-models/registry';
 import { skillContentModel } from '../../config/content-models/skills';
+import { siteConfig } from '../../config/site';
 import { sveltiaConfig } from './config';
 
 describe('Sveltia CMS configuration', () => {
@@ -60,6 +61,7 @@ describe('Sveltia CMS configuration', () => {
   it('uses the site branding in the CMS', () => {
     expect(sveltiaConfig).toMatchObject({
       app_title: 'Rahul Mohandas Content Manager',
+      backend: { repo: `${siteConfig.repository.owner}/${siteConfig.repository.name}` },
       logo: {
         src: '/favicon.svg',
       },

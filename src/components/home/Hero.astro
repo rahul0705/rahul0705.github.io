@@ -1,6 +1,6 @@
 ---
 import { site } from '../../data/site';
-import { socials } from '../../data/socials';
+import { siteConfig } from '../../config/site';
 import type { SocialNetwork } from '../../lib/social-networks';
 import Container from '../ui/Container.astro';
 import SocialIcon from '../ui/SocialIcon.astro';
@@ -24,11 +24,7 @@ const {
   primaryLabel = 'View Resume',
   secondaryHref = '/blog',
   secondaryLabel = 'Read Articles',
-  links = [
-    { label: 'GitHub', href: socials.github, external: true },
-    { label: 'LinkedIn', href: socials.linkedin, external: true },
-    { label: 'Email', href: socials.email },
-  ],
+  links = siteConfig.socialLinks.map((link) => ({ ...link })),
 } = Astro.props;
 ---
 

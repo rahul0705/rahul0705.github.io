@@ -1,10 +1,10 @@
 ---
-import { analytics } from '../../config/analytics';
+import { siteConfig } from '../../config/site';
 
-const googleTagUrl = `https://www.googletagmanager.com/gtag/js?id=${analytics.measurementId}`;
+const googleTagUrl = `https://www.googletagmanager.com/gtag/js?id=${siteConfig.analytics.measurementId}`;
 ---
 
-<script is:inline define:vars={{ googleTagUrl, measurementId: analytics.measurementId }}>
+<script is:inline define:vars={{ googleTagUrl, measurementId: siteConfig.analytics.measurementId }}>
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () {
     window.dataLayer.push(arguments);

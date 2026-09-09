@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
+import { siteConfig } from '../src/config/site';
 import { siteTheme, siteThemeColor } from '../src/themes/site-theme';
 
 const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/', '/privacy/'];
@@ -29,7 +30,7 @@ test('analytics uses denied consent and sanitized page data on public HTML pages
   ]);
   expect(analyticsState).toContainEqual([
     'config',
-    'G-K6P860TJ0W',
+    siteConfig.analytics.measurementId,
     expect.objectContaining({
       allow_ad_personalization_signals: false,
       allow_google_signals: false,
@@ -46,7 +47,7 @@ test('analytics is absent from non-public and non-HTML endpoints', async ({ page
   }
 
   for (const route of ['/resume.json', '/resume.txt', '/resume.md']) {
-    expect(await (await request.get(route)).text()).not.toContain('G-K6P860TJ0W');
+    expect(await (await request.get(route)).text()).not.toContain(siteConfig.analytics.measurementId);
   }
 });
 
@@ -239,14 +240,17 @@ test('resume role skills retain their documentation links and descriptions', asy
 
 test('public pages provide accurate sharing metadata', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle('Rahul Mohandas');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.rahulmohandas.com/');
+  await expect(page).toHaveTitle(siteConfig.title);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteConfig.url}/`);
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
-  await expect(page.locator('link[rel="alternate"][type="application/rss+xml"]')).toHaveAttribute('href', '/rss.xml');
+  await expect(page.locator('link[rel="alternate"][type="application/rss+xml"]')).toHaveAttribute(
+    'href',
+    siteConfig.rss.path,
+  );
 
   await page.goto('/blog/2019-05-16-how-to-use-git-effectively/');
-  await expect(page).toHaveTitle('How to use Git effectively - Rahul Mohandas');
+  await expect(page).toHaveTitle(`How to use Git effectively - ${siteConfig.title}`);
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
   await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
     'content',
@@ -262,7 +266,7 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    'https://www.rahulmohandas.com/blog/2019-05-16-how-to-use-git-effectively/',
+    `${siteConfig.url}/blog/2019-05-16-how-to-use-git-effectively/`,
   );
 
   await expect(page.locator('meta[property="article:modified_time"]')).toHaveCount(0);
@@ -283,16 +287,16 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
 
 test('RSS feed publishes discoverable article metadata', async ({ page, request }) => {
   await page.goto('/blog/');
-  await expect(page.getByRole('link', { name: 'RSS', exact: true })).toHaveAttribute('href', '/rss.xml');
+  await expect(page.getByRole('link', { name: 'RSS', exact: true })).toHaveAttribute('href', siteConfig.rss.path);
 
-  const response = await request.get('/rss.xml');
+  const response = await request.get(siteConfig.rss.path);
   expect(response.ok()).toBe(true);
   expect(response.headers()['content-type']).toMatch(/^(?:application\/(?:rss\+)?xml|text\/xml)(?:;|$)/);
 
   const feed = await response.text();
-  expect(feed).toContain('<title>Rahul Mohandas Articles</title>');
+  expect(feed).toContain(`<title>${siteConfig.rss.title}</title>`);
   expect(feed).toContain('<language>en-us</language>');
-  expect(feed).toContain('<link>https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/</link>');
+  expect(feed).toContain(`<link>${siteConfig.url}/blog/2026-08-17-duplication-vs-coupling/</link>`);
   expect(feed).toContain('<pubDate>Mon, 17 Aug 2026 00:00:00 GMT</pubDate>');
 });
 
@@ -307,7 +311,7 @@ test('crawl policy excludes raw resume exports while allowing HTML noindex direc
       'Disallow: /resume.md',
       'Disallow: /resume.txt',
       '',
-      'Sitemap: https://www.rahulmohandas.com/sitemap-index.xml',
+      `Sitemap: ${siteConfig.url}/sitemap-index.xml`,
       '',
     ].join('\n'),
   );
@@ -315,7 +319,7 @@ test('crawl policy excludes raw resume exports while allowing HTML noindex direc
   const sitemap = await request.get('/sitemap-0.xml');
   expect(sitemap.ok()).toBe(true);
   const sitemapBody = await sitemap.text();
-  for (const route of ['/admin/', '/resume.json', '/resume.md', '/resume.txt']) {
+  for (const route of siteConfig.nonIndexablePaths) {
     expect(sitemapBody).not.toContain(route);
   }
 });

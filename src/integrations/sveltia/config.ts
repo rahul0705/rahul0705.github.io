@@ -3,6 +3,7 @@ import { createSveltiaCollections, type SveltiaCollectionOptions } from '@rm-ind
 import type { CmsConfig } from '@sveltia/cms';
 
 import { contentModels } from '../../config/content-models/registry';
+import { siteConfig } from '../../config/site';
 
 const collectionOptions = (model: ContentCollectionModel): SveltiaCollectionOptions | undefined => {
   if (model.name === 'blog')
@@ -26,13 +27,13 @@ const collectionOptions = (model: ContentCollectionModel): SveltiaCollectionOpti
 
 export const sveltiaConfig = {
   load_config_file: false,
-  app_title: 'Rahul Mohandas Content Manager',
+  app_title: `${siteConfig.title} Content Manager`,
   logo: {
     src: '/favicon.svg',
   },
   backend: {
     name: 'github',
-    repo: 'rahul0705/rahul0705.github.io',
+    repo: `${siteConfig.repository.owner}/${siteConfig.repository.name}`,
     auth_methods: ['token'],
     commit_messages: {
       create: 'content({{collection}}): create {{slug}}',

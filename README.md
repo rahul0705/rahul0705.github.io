@@ -61,7 +61,8 @@ src/
 |-- content/blog/     Markdown articles
 |-- content/experience/
 |                     Individual JSON experience records
-|-- data/             Site, home-page, social, and resume data
+|-- config/           Typed site, content-model, analytics, and integration configuration
+|-- data/             Computed site, home-page, and resume data
 |-- integrations/     Astro and Sveltia integration boundaries
 |-- layouts/          Shared page layouts
 |-- pages/            Astro routes and resume export endpoints
@@ -176,8 +177,10 @@ Resume exports are generated from the same structured data used by the HTML page
 The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
 production build. A push to `main` deploys the generated `dist/` artifact to GitHub Pages after required checks pass.
 
-The canonical site URL and sitemap configuration are defined in `astro.config.ts`. The custom domain is recorded in
-`CNAME`.
+Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
+in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
+Environment-specific and secret values must remain in environment variables or deployment settings. The custom domain
+is recorded in `CNAME`.
 
 ## License
 
