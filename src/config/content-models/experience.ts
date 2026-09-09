@@ -1,6 +1,8 @@
 import { defineModel } from '@rm-industries/content-model';
 
+import { financialScopeContentModel } from './financial-scopes';
 import { contentLinkFields } from './shared-fields';
+import { skillContentModel } from './skills';
 
 export const experienceContentModel = defineModel({
   name: 'experience',
@@ -37,9 +39,13 @@ export const experienceContentModel = defineModel({
       itemLabel: '{{fields.label}}',
     },
     financialScopeIds: {
-      kind: 'list',
+      kind: 'reference',
       default: [],
-      items: { kind: 'string', required: true, label: 'Financial scope' },
+      collection: financialScopeContentModel.name,
+      multiple: true,
+      valueField: 'slug',
+      displayFields: ['name'],
+      searchFields: ['name'],
       label: 'Financial scopes',
       help: 'Programs, contracts, budgets, investments, or other financial scope represented by this work.',
     },
@@ -67,9 +73,13 @@ export const experienceContentModel = defineModel({
       label: 'Highlights',
     },
     skills: {
-      kind: 'list',
+      kind: 'reference',
       default: [],
-      items: { kind: 'string', required: true, label: 'Skill' },
+      collection: skillContentModel.name,
+      multiple: true,
+      valueField: 'slug',
+      displayFields: ['name'],
+      searchFields: ['name', 'description'],
       label: 'Skills',
     },
   },

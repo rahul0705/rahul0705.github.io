@@ -8,6 +8,7 @@ export const skillContentModel = defineModel({
   extensions: ['json'],
   format: 'json',
   slug: '{{fields._slug}}',
+  entryLabelField: 'name',
   sort: { fields: ['name'], default: { field: 'name', direction: 'ascending' } },
   fields: {
     name: { kind: 'string', required: true, label: 'Name' },
