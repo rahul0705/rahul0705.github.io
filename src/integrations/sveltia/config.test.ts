@@ -52,6 +52,7 @@ describe('Sveltia CMS configuration', () => {
         expect.objectContaining({ name: 'description', widget: 'text' }),
         expect.objectContaining({ name: 'draft', default: true }),
         expect.objectContaining({ name: 'title', required: true }),
+        expect.objectContaining({ name: 'coverImageAlt', required: true }),
       ]),
     );
   });

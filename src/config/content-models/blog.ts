@@ -12,14 +12,25 @@ export const blogContentModel = defineModel({
     default: { field: 'slug', direction: 'descending' },
   },
   fields: {
-    title: { kind: 'string', required: true, label: 'Title' },
+    title: {
+      kind: 'string',
+      required: true,
+      label: 'Title',
+      help: 'Use a unique, descriptive article title.',
+    },
     draft: {
       kind: 'boolean',
       default: false,
       label: 'Draft',
       help: 'Draft posts will not be published on the site.',
     },
-    description: { kind: 'string', label: 'Description', multiline: true },
+    description: {
+      kind: 'string',
+      required: true,
+      label: 'Description',
+      multiline: true,
+      help: 'Write a concise, unique search and social summary.',
+    },
     updatedDate: {
       kind: 'date',
       label: 'Updated date',
@@ -50,7 +61,15 @@ export const blogContentModel = defineModel({
     coverImage: {
       kind: 'asset',
       assetType: 'image',
+      required: true,
       label: 'Cover image',
+      help: 'Store article covers in src/assets and record third-party attribution in the adjacent attribution file.',
+    },
+    coverImageAlt: {
+      kind: 'string',
+      required: true,
+      label: 'Cover image alt text',
+      help: 'Describe the meaningful visual content rather than repeating the title.',
     },
   },
   body: { name: 'body', label: 'Body' },

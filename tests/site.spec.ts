@@ -248,6 +248,14 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   await page.goto('/blog/2019-05-16-how-to-use-git-effectively/');
   await expect(page).toHaveTitle('How to use Git effectively - Rahul Mohandas');
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
+  await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+    'content',
+    'Source code displayed on a laptop screen',
+  );
+  await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute(
+    'content',
+    'Source code displayed on a laptop screen',
+  );
   await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute(
     'content',
     '2019-05-16T00:00:00.000Z',
