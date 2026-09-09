@@ -1,4 +1,4 @@
-import { defineModel } from '../../lib/content-model/define-model';
+import { defineModel } from '@rm-industries/content-model';
 
 export const blogContentModel = defineModel({
   name: 'blog',
@@ -15,36 +15,32 @@ export const blogContentModel = defineModel({
     title: {
       kind: 'string',
       required: true,
-      cms: { label: 'Title', help: 'Use a unique, descriptive article title.' },
+      label: 'Title',
+      help: 'Use a unique, descriptive article title.',
     },
     draft: {
       kind: 'boolean',
       default: false,
-      cms: {
-        label: 'Draft',
-        initialValue: true,
-        help: 'Draft posts will not be published on the site.',
-      },
+      label: 'Draft',
+      help: 'Draft posts will not be published on the site.',
     },
     description: {
       kind: 'string',
       required: true,
-      cms: { label: 'Description', multiline: true, help: 'Write a concise, unique search and social summary.' },
+      label: 'Description',
+      multiline: true,
+      help: 'Write a concise, unique search and social summary.',
     },
     updatedDate: {
       kind: 'date',
-      cms: {
-        label: 'Updated date',
-        help: 'Set this only when a post receives a meaningful content revision.',
-      },
+      label: 'Updated date',
+      help: 'Set this only when a post receives a meaningful content revision.',
     },
     tableOfContents: {
       kind: 'boolean',
       default: false,
-      cms: {
-        label: 'Table of contents',
-        help: 'Show links to the article headings above the body.',
-      },
+      label: 'Table of contents',
+      help: 'Show links to the article headings above the body.',
     },
     section: {
       kind: 'string',
@@ -53,38 +49,28 @@ export const blogContentModel = defineModel({
         { label: 'Process', value: 'Process' },
         { label: 'Projects', value: 'Projects' },
       ],
-      cms: {
-        label: 'Section',
-        help: 'Choose the broad editorial section for this article.',
-      },
+      label: 'Section',
+      help: 'Choose the broad editorial section for this article.',
     },
     tags: {
       kind: 'list',
       default: [],
-      items: { kind: 'string', required: true, cms: { label: 'Tag' } },
-      cms: { label: 'Tags' },
+      items: { kind: 'string', required: true, label: 'Tag' },
+      label: 'Tags',
     },
     coverImage: {
       kind: 'asset',
       assetType: 'image',
       required: true,
-      cms: {
-        label: 'Cover image',
-        help: 'Store article covers in src/assets and record third-party attribution in the adjacent attribution file.',
-        media: {
-          mediaFolder: '/src/assets/{{year}}',
-          publicFolder: '../../assets/{{year}}',
-        },
-      },
+      label: 'Cover image',
+      help: 'Store article covers in src/assets and record third-party attribution in the adjacent attribution file.',
     },
     coverImageAlt: {
       kind: 'string',
       required: true,
-      cms: {
-        label: 'Cover image alt text',
-        help: 'Describe the meaningful visual content rather than repeating the title.',
-      },
+      label: 'Cover image alt text',
+      help: 'Describe the meaningful visual content rather than repeating the title.',
     },
   },
-  body: { name: 'body', cms: { label: 'Body' } },
+  body: { name: 'body', label: 'Body' },
 });

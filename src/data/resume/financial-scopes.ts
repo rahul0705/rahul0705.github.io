@@ -20,10 +20,10 @@ export interface FinancialScope {
   asOf?: string;
 }
 
-export type FinancialScopeId = CollectionEntry<'financialScopes'>['id'];
+export type FinancialScopeId = CollectionEntry<'financial-scopes'>['id'];
 export type FinancialScopeCatalog = Record<FinancialScopeId, FinancialScope>;
 
-const financialScopeEntries = await getCollection('financialScopes');
+const financialScopeEntries = await getCollection('financial-scopes');
 
 export const financialScopeCatalog: FinancialScopeCatalog = Object.fromEntries(
   financialScopeEntries.map((entry) => [entry.id, entry.data as FinancialScope]),

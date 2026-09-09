@@ -1,11 +1,13 @@
+import { defineModels } from '@rm-industries/content-model';
+
 import { blogContentModel } from './blog';
 import { experienceContentModel } from './experience';
 import { financialScopeContentModel } from './financial-scopes';
 import { skillContentModel } from './skills';
 
-export const contentModels = [
+export const contentModels = defineModels([
   blogContentModel,
   skillContentModel,
   financialScopeContentModel,
   experienceContentModel,
-] as const;
+]);
