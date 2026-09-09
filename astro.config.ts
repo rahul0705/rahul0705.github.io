@@ -2,13 +2,13 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
-const nonIndexablePaths = ['/admin/', '/resume.json', '/resume.md', '/resume.txt'];
+import { siteConfig } from './src/config/site';
 
 export default defineConfig({
-  site: 'https://www.rahulmohandas.com',
+  site: siteConfig.url,
   integrations: [
     sitemap({
-      filter: (page) => !nonIndexablePaths.some((path) => page.endsWith(path)),
+      filter: (page) => !siteConfig.nonIndexablePaths.some((path) => page.endsWith(path)),
     }),
   ],
   vite: {

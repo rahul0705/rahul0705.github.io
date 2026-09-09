@@ -1,17 +1,6 @@
 ---
 import { Menu } from '@lucide/astro';
-import { socials } from '../../data/socials';
-
-const navItems = [
-  {
-    label: 'Articles',
-    href: '/blog',
-  },
-  {
-    label: 'Resume',
-    href: '/resume',
-  },
-];
+import { siteConfig, socialLinks } from '../../config/site';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -20,12 +9,12 @@ const currentPath = Astro.url.pathname;
   <div class="mx-auto max-w-5xl px-6">
     <div class="navbar min-h-(--site-navbar-height) px-0">
       <div class="navbar-start flex-1">
-        <a href="/" class="text-lg font-semibold tracking-tight"> Rahul Mohandas </a>
+        <a href="/" class="text-lg font-semibold tracking-tight"> {siteConfig.title} </a>
       </div>
 
       <nav class="navbar-end hidden gap-1 md:flex" aria-label="Primary navigation">
         {
-          navItems.map((item) => (
+          siteConfig.navigation.primary.map((item) => (
             <a
               href={item.href}
               class:list={['btn btn-ghost btn-sm', currentPath.startsWith(item.href) && 'btn-active']}
@@ -36,7 +25,7 @@ const currentPath = Astro.url.pathname;
         }
 
         <a
-          href={socials.github}
+          href={socialLinks.GitHub.href}
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-ghost btn-sm"
@@ -64,7 +53,7 @@ const currentPath = Astro.url.pathname;
           style="position-anchor: --mobile-navigation-menu"
         >
           {
-            navItems.map((item) => (
+            siteConfig.navigation.primary.map((item) => (
               <li>
                 <a href={item.href}>{item.label}</a>
               </li>
@@ -72,7 +61,7 @@ const currentPath = Astro.url.pathname;
           }
 
           <li>
-            <a href={socials.github} target="_blank" rel="noopener noreferrer"> GitHub </a>
+            <a href={socialLinks.GitHub.href} target="_blank" rel="noopener noreferrer"> GitHub </a>
           </li>
         </ul>
       </div>

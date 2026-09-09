@@ -1,3 +1,4 @@
+import { siteConfig, socialLinks } from '../../config/site';
 import type { ProfileNetwork } from '../../lib/social-networks';
 
 interface ResumeProfile {
@@ -15,12 +16,12 @@ export interface ResumeBasics {
 }
 
 export const basics: ResumeBasics = {
-  name: 'Rahul Mohandas',
-  label: 'Software Development Engineer',
-  email: 'rahul@rahulmohandas.com',
-  url: 'https://www.rahulmohandas.com',
+  name: siteConfig.author.name,
+  label: siteConfig.author.role,
+  email: siteConfig.author.email,
+  url: siteConfig.url,
   profiles: [
-    { network: 'LinkedIn', username: 'rahul0705', url: 'https://www.linkedin.com/in/rahul0705' },
-    { network: 'GitHub', username: 'rahul0705', url: 'https://github.com/rahul0705' },
+    { network: 'LinkedIn', username: 'rahul0705', url: socialLinks.LinkedIn.href },
+    { network: 'GitHub', username: siteConfig.repository.owner, url: socialLinks.GitHub.href },
   ],
 } as const;

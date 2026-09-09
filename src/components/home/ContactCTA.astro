@@ -1,7 +1,7 @@
 ---
 import Card from '../ui/Card.astro';
 import Container from '../ui/Container.astro';
-import { socials } from '../../data/socials';
+import { siteConfig } from '../../config/site';
 
 interface Props {
   eyebrow?: string;
@@ -14,11 +14,10 @@ const {
   eyebrow = "Let's connect",
   title = 'Interested in working together or swapping ideas?',
   description = "I'm always open to thoughtful conversations around product engineering, writing, and building better developer experiences.",
-  actions = [
-    { label: 'GitHub', href: socials.github, variant: 'primary', external: true },
-    { label: 'LinkedIn', href: socials.linkedin, variant: 'outline', external: true },
-    { label: 'Email', href: socials.email, variant: 'ghost' },
-  ],
+  actions = siteConfig.socialLinks.map((link, index) => ({
+    ...link,
+    variant: index === 0 ? 'primary' : index === 1 ? 'outline' : 'ghost',
+  })),
 } = Astro.props;
 ---
 

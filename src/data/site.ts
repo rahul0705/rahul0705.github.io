@@ -1,4 +1,5 @@
 import defaultSocialImage from '../assets/covers/code.jpg';
+import { siteConfig, socialLinks } from '../config/site';
 import { getPublishedPosts } from '../lib/blog';
 import { resume } from './resume';
 import { basics } from './resume/basics';
@@ -6,8 +7,6 @@ import { experienceFinancialScopeIds } from './resume/experience';
 import { yearsOfExperience } from './resume/experience-coverage';
 import { formatFinancialScope, getFinancialScopeCatalog, totalFinancialScope } from './resume/financial-scopes';
 
-const linkedIn = basics.profiles.find((profile) => profile.network === 'LinkedIn')?.url ?? '';
-const github = basics.profiles.find((profile) => profile.network === 'GitHub')?.url ?? '';
 const currentRoles = resume.experience
   .flatMap((organization) =>
     organization.projects.flatMap((project) => project.roles.map((role) => ({ organization, role }))),
@@ -31,13 +30,13 @@ export const getSiteStats = async () => {
 };
 
 export const site = {
-  url: basics.url,
-  title: basics.name,
+  url: siteConfig.url,
+  title: siteConfig.title,
   description: currentRoleDescription || basics.label,
   defaultSocialImage: defaultSocialImage.src,
-  github,
-  linkedin: linkedIn,
-  email: basics.email,
-  name: basics.name,
-  role: basics.label,
+  github: socialLinks.GitHub.href,
+  linkedin: socialLinks.LinkedIn.href,
+  email: siteConfig.author.email,
+  name: siteConfig.author.name,
+  role: siteConfig.author.role,
 };

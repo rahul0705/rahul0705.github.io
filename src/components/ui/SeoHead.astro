@@ -1,4 +1,5 @@
 ---
+import { siteConfig } from '../../config/site';
 import { site } from '../../data/site';
 import { siteThemeColor } from '../../themes/site-theme';
 
@@ -34,9 +35,9 @@ const normalizedPath = (() => {
   const path = `/${canonicalPath}`.replace(/\/{2,}/g, '/');
   return path === '/' ? path : `${path.replace(/\/$/, '')}/`;
 })();
-const canonicalUrl = new URL(normalizedPath, site.url).href;
-const imageUrl = new URL(image, site.url).href;
-const pageTitle = title ? `${title} - ${site.title}` : site.title;
+const canonicalUrl = new URL(normalizedPath, siteConfig.url).href;
+const imageUrl = new URL(image, siteConfig.url).href;
+const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
 const socialImageAlt = imageAlt ?? pageTitle;
 ---
 
@@ -45,11 +46,11 @@ const socialImageAlt = imageAlt ?? pageTitle;
 <meta name="theme-color" content={siteThemeColor} />
 <link rel="canonical" href={canonicalUrl} />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="alternate" type="application/rss+xml" title={`${site.title} Articles`} href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title={siteConfig.rss.title} href={siteConfig.rss.path} />
 
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<meta property="og:site_name" content={site.title} />
+<meta property="og:site_name" content={siteConfig.title} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
