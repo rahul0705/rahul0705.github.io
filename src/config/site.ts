@@ -37,6 +37,7 @@ interface SiteConfig {
     measurementId: string;
   };
   nonIndexablePaths: readonly string[];
+  robotsDisallowPaths: readonly string[];
 }
 
 export const siteConfig = {
@@ -77,6 +78,7 @@ export const siteConfig = {
     measurementId: 'G-K6P860TJ0W',
   },
   nonIndexablePaths: ['/admin/', '/resume.json', '/resume.md', '/resume.txt'],
+  robotsDisallowPaths: ['/resume.json', '/resume.md', '/resume.txt'],
 } as const satisfies SiteConfig;
 
 export const socialLinks = Object.fromEntries(siteConfig.socialLinks.map((link) => [link.label, link])) as Record<
