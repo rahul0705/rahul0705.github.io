@@ -179,7 +179,7 @@ decisions:
 
 - Generate `robots.txt` from `src/config/site.ts` through `src/pages/robots.txt.ts`. Astro writes the endpoint to
   `dist/robots.txt` at build time, so GitHub Pages still serves a static file. The existing directives are preserved.
-  `robotsDisallowPaths` controls crawling separately from sitemap exclusions: `/admin/` remains crawlable so its HTML
+  `robotsDisallowPaths` controls crawling separately from sitemap exclusions: crawlers can access `/admin/` so its HTML
   `noindex` directive can be read, while raw resume exports remain disallowed.
 - Omit a web app manifest for now. This portfolio has no installation or app-specific experience that warrants one.
 - Retain the existing fallback social image, `src/assets/covers/code.jpg`, used by `SeoHead` when a page supplies no
