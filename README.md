@@ -116,6 +116,18 @@ When changing resume generation, run:
 npm run verify:resume:markdown
 ```
 
+## Buttons and color
+
+Use DaisyUI semantic colors from the Catppuccin theme. Filled primary buttons identify the main action in a
+context: View Resume in the hero, Email in Contact, Export Resume on the resume, and Go home on the error page.
+Use outlined buttons for secondary actions, including article browsing and Contact profile links. Ghost buttons
+serve navigation and lightweight profile shortcuts. Choose variants by purpose, never by array position; Contact
+actions without an explicit variant default to outline.
+
+Primary-colored text also serves as the site accent for labels and links; it does not always indicate a button.
+Use base-content for body text and the matching content token on filled colored surfaces. Catppuccin's secondary
+token is a dark surface in Mocha, so it is not suitable as text on the page background.
+
 ## Content manager
 
 Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScript rather than loaded from a

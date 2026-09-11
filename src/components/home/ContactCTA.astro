@@ -1,23 +1,41 @@
 ---
 import Card from '../ui/Card.astro';
 import Container from '../ui/Container.astro';
-import { siteConfig } from '../../config/site';
+import { socialLinks } from '../../config/site';
+
+type ActionVariant = 'primary' | 'outline' | 'ghost';
+
+interface ContactAction {
+  label: string;
+  href: string;
+  variant?: ActionVariant;
+  external?: boolean;
+}
+
+const defaultActions: ContactAction[] = [
+  { ...socialLinks.Email, variant: 'primary' },
+  { ...socialLinks.LinkedIn, variant: 'outline' },
+  { ...socialLinks.GitHub, variant: 'outline' },
+];
+
+const buttonClasses: Record<ActionVariant, string> = {
+  primary: 'btn btn-primary',
+  outline: 'btn btn-outline',
+  ghost: 'btn btn-ghost',
+};
 
 interface Props {
   eyebrow?: string;
   title?: string;
   description?: string;
-  actions?: Array<{ label: string; href: string; variant?: string; external?: boolean }>;
+  actions?: ContactAction[];
 }
 
 const {
   eyebrow = 'Contact',
   title = "Let's talk software.",
   description = "Have a question about an article or a project? Get in touch.",
-  actions = siteConfig.socialLinks.map((link, index) => ({
-    ...link,
-    variant: index === 0 ? 'primary' : index === 1 ? 'outline' : 'ghost',
-  })),
+  actions = defaultActions,
 } = Astro.props;
 ---
 
@@ -33,7 +51,7 @@ const {
 
         <div class="flex flex-wrap gap-3">
           {actions.map((action) => {
-            const buttonClass = action.variant === 'outline' ? 'btn btn-outline' : action.variant === 'ghost' ? 'btn btn-ghost' : 'btn btn-primary';
+            const buttonClass = buttonClasses[action.variant ?? 'outline'];
 
             return (
               <a

@@ -24,6 +24,6 @@ const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
     {posts.map((post) => <FeaturedPostCard post={post} />)}
   </div>
   <div class="mt-8 flex justify-center">
-    <a class="btn btn-primary gap-2" href="/blog">View all articles <ArrowRight class="size-4" aria-hidden="true" /></a>
+    <a class="btn btn-outline gap-2" href="/blog">View all articles <ArrowRight class="size-4" aria-hidden="true" /></a>
   </div>
 </Section>
