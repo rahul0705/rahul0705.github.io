@@ -39,6 +39,9 @@ updates:
 
     cooldown:
       default-days: 7
+      semver-major-days: 21
+      semver-minor-days: 7
+      semver-patch-days: 3
 
     open-pull-requests-limit: 5
 
@@ -50,6 +53,20 @@ updates:
       - npm
 
     groups:
-      npm-dependencies:
-        patterns:
-          - '*'
+      production-dependencies:
+        applies-to: version-updates
+        dependency-type: production
+        exclude-patterns:
+          - '@sveltia/cms'
+          - '@rm-industries/content-model'
+        update-types:
+          - minor
+          - patch
+      development-dependencies:
+        applies-to: version-updates
+        dependency-type: development
+        exclude-patterns:
+          - astro
+        update-types:
+          - minor
+          - patch

@@ -194,6 +194,34 @@ existing public pages.
 
 ## Deployment
 
+### Dependency updates
+
+`.github/dependabot.yml` follows the
+[Forge template policy](https://github.com/rm-industries/forge/blob/main/templates/default/.github/dependabot.yml),
+with additional isolation for this site's shared content model and its Astro peer:
+
+- npm checks run Mondays at 05:30 UTC. Minor and patch updates form separate production and development PRs, based on
+  `dependencies` and `devDependencies` in `package.json`. Astro integrations and other build tooling currently belong
+  to the development group even though they affect the generated site.
+- Major releases wait 21 days, minor releases 7 days, and patches 3 days; releases without a matching version category
+  use 7 days. These are minimum release ages, followed by the next scheduled check, not promises of a PR on that day.
+- Major npm updates remain individual PRs. Sveltia CMS, `@rm-industries/content-model`, and Astro are excluded from broad
+  groups for all update types. Review their peer dependency ranges together; a compatible upgrade may require a
+  coordinated PR. Exclusion from a group does not ignore or disable updates for those packages.
+- GitHub Actions checks run Mondays at 05:00 UTC and retain one group with a 7-day cooldown. Keep full commit SHA pins
+  and the adjacent version comments (`# v7`, for example) in workflows and composite actions. Review both the SHA and
+  version comment when updating an action.
+- Each ecosystem allows up to five open version-update PRs. Security updates use GitHub's separate security-update
+  mechanism and limit; the npm groups apply only to version updates. Keep Dependabot security updates enabled in
+  repository settings. Version-update cooldown periods do not delay security updates.
+
+For example, eligible font updates share a production PR, eligible linting tools share a development PR, and a Sveltia
+patch or TypeScript major gets its own PR. Dependabot may include required dependency changes to resolve compatibility.
+See the [GitHub options reference](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
+for grouping and cooldown semantics.
+
+### Publishing
+
 The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
 production build. A push to `main` deploys the generated `dist/` artifact to GitHub Pages after required checks pass.
 
