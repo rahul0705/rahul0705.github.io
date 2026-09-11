@@ -11,6 +11,7 @@ interface Props {
   eyebrow?: string;
   title?: string;
   description?: string;
+  supportingText?: string;
   primaryHref?: string;
   primaryLabel?: string;
   secondaryHref?: string;
@@ -22,6 +23,7 @@ const {
   eyebrow = site.title,
   title = site.name,
   description = site.description,
+  supportingText,
   primaryHref = '/resume',
   primaryLabel = 'View Resume',
   secondaryHref = '/blog',
@@ -46,6 +48,8 @@ const {
       <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-base-content/80 md:text-lg lg:mx-0">
         {description}
       </p>
+
+      {supportingText && <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-base-content/80 lg:mx-0">{supportingText}</p>}
 
       <div class="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start">
         <slot name="actions" />

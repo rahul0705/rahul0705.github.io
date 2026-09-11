@@ -18,14 +18,15 @@ const stats = await getSiteStats();
     eyebrow={site.role}
     title={site.name}
     description={site.description}
+    supportingText={home.hero.supportingText}
     primaryHref="/resume"
     primaryLabel="View Resume"
     secondaryHref="/blog"
     secondaryLabel="Read Articles"
   />
   <Highlights items={stats} />
-  <FeaturedPosts title="Recent Articles" description="Notes on software engineering, systems, and technical projects." />
+  <FeaturedPosts {...home.writing} />
   <AboutSection {...home.about} />
   <ToolkitSection {...home.toolkit} />
-  <ContactCTA />
+  <ContactCTA {...home.contact} />
 </BaseLayout>
