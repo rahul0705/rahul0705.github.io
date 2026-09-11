@@ -23,8 +23,8 @@ const stats = await getSiteStats();
     secondaryHref="/blog"
     secondaryLabel="Read Articles"
   />
-  <FeaturedPosts title="Recent Articles" description="Notes on software engineering, systems, and technical projects." />
   <Highlights items={stats} />
+  <FeaturedPosts title="Recent Articles" description="Notes on software engineering, systems, and technical projects." />
   <AboutSection {...home.about} />
   <ToolkitSection {...home.toolkit} />
   <ContactCTA />
