@@ -3,9 +3,10 @@ interface Props {
   date?: Date;
   updatedDate?: Date;
   label?: string;
+  emphasis?: boolean;
 }
 
-const { date, updatedDate, label } = Astro.props;
+const { date, updatedDate, label, emphasis = false } = Astro.props;
 const formatter = new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 const formattedDate = date && formatter.format(date);
 const formattedUpdatedDate = updatedDate && formatter.format(updatedDate);
@@ -13,7 +14,7 @@ const dateText = formattedUpdatedDate ? `Published ${formattedDate} · Updated $
 ---
 
 {(dateText || label) && (
-  <p class="text-sm text-base-content/60">
+  <p class:list={['text-sm text-base-content/60', emphasis && 'font-semibold']}>
     {[label, dateText].filter(Boolean).join(' - ')}
   </p>
 )}

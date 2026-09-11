@@ -1,25 +1,19 @@
 ---
-import BlogCover from './BlogCover.astro';
+import ArticleCardShell from './ArticleCardShell.astro';
 import ContentMeta from '../ui/ContentMeta.astro';
 import TagList from '../ui/TagList.astro';
 import { getPublishedAt } from '../../lib/blog';
 
 interface Props {
   post: any;
-  featured?: boolean;
+  priority?: boolean;
 }
 
-const { post, featured = false } = Astro.props;
+const { post, priority = false } = Astro.props;
 const publishedAt = getPublishedAt(post);
 ---
 
-<a
-  href={`/blog/${post.id}`}
-  class:list={[
-    'card group overflow-hidden bg-base-100 shadow-xl transition-shadow duration-300 hover:shadow-2xl',
-  ]}
->
-  <BlogCover image={post.data.coverImage} alt={post.data.coverImageAlt} priority={featured} class="aspect-video" />
+<ArticleCardShell href={`/blog/${post.id}`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt} {priority}>
   <article class="card-body justify-center gap-4 p-6 md:p-8">
     <div>
       <h2 class="card-title text-xl leading-snug">
@@ -32,4 +26,4 @@ const publishedAt = getPublishedAt(post);
     <ContentMeta date={publishedAt} label={post.data.section} />
     <TagList items={post.data.tags} label="Article tags" />
   </article>
-</a>
+</ArticleCardShell>

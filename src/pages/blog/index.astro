@@ -30,7 +30,7 @@ const description = 'Writing about software engineering, distributed systems, cl
         <div class="stat"><p class="stat-value text-2xl">{latestArticleDate?.getUTCFullYear() ?? '-'}</p><p class="stat-title">Latest update</p></div>
       </div>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post, index) => <BlogCard post={post} featured={index === 0} />)}
+        {posts.map((post, index) => <BlogCard post={post} priority={index === 0} />)}
       </div>
     </div>
   </Container>

@@ -1,21 +1,19 @@
 ---
-import BlogCover from '../blog/BlogCover.astro';
+import ArticleCardShell from '../blog/ArticleCardShell.astro';
 import ContentMeta from '../ui/ContentMeta.astro';
 import { getPublishedAt } from '../../lib/blog';
 
 interface Props {
   post: any;
-  index: number;
 }
 
 const { post } = Astro.props;
 const publishedAt = getPublishedAt(post);
 ---
 
-<a href={`/blog/${post.id}`} class="card group overflow-hidden bg-base-100 shadow-xl transition-shadow duration-300 hover:shadow-2xl">
-  <BlogCover image={post.data.coverImage} alt={post.data.coverImageAlt} class="aspect-video" />
+<ArticleCardShell href={`/blog/${post.id}`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt}>
   <div class="card-body gap-4 p-6">
     <h3 class="card-title text-xl leading-snug">{post.data.title}</h3>
-    <div class="text-sm font-semibold text-base-content/70"><ContentMeta date={publishedAt} /></div>
+    <ContentMeta date={publishedAt} emphasis />
   </div>
-</a>
+</ArticleCardShell>

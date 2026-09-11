@@ -1,0 +1,18 @@
+---
+import type { ImageMetadata } from 'astro';
+import BlogCover from './BlogCover.astro';
+
+interface Props {
+  href: string;
+  image?: ImageMetadata;
+  imageAlt: string;
+  priority?: boolean;
+}
+
+const { href, image, imageAlt, priority = false } = Astro.props;
+---
+
+<a {href} class="card group overflow-hidden bg-base-100 shadow-xl transition-shadow duration-300 hover:shadow-2xl">
+  <BlogCover {image} alt={imageAlt} {priority} class="aspect-video" />
+  <slot />
+</a>

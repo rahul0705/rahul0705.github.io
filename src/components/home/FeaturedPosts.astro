@@ -21,7 +21,7 @@ const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
 <Section title={title} description={description}>
 
   <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-    {posts.map((post, index) => <FeaturedPostCard post={post} index={index} />)}
+    {posts.map((post) => <FeaturedPostCard post={post} />)}
   </div>
   <div class="mt-8 flex justify-center">
     <a class="btn btn-primary gap-2" href="/blog">View all articles <ArrowRight class="size-4" aria-hidden="true" /></a>
