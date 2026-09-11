@@ -3,15 +3,15 @@ import { siteConfig } from '../../config/site';
 import { site } from '../../data/site';
 ---
 
-<footer class="mt-24 border-t border-base-300">
-  <div class="footer footer-horizontal mx-auto max-w-5xl px-6 py-12">
+<footer class="mt-16 bg-base-200">
+  <div class="footer footer-center mx-auto max-w-6xl px-6 py-12">
     <aside class="max-w-md">
       <h2 class="footer-title">{site.name}</h2>
       <p class="text-base-content/70">{site.description}</p>
     </aside>
 
-    <nav class="md:justify-self-end">
-      <h3 class="footer-title">Elsewhere</h3>
+    <nav class="flex flex-wrap justify-center gap-x-6 gap-y-3">
+
       {
         [...siteConfig.socialLinks, ...siteConfig.navigation.footer].map((item) => (
           <a
@@ -26,8 +26,8 @@ import { site } from '../../data/site';
       }
     </nav>
 
-    <aside class="text-sm text-base-content/60 md:col-span-2">
-      <p>(c) {new Date().getFullYear()} {site.name}</p>
+    <aside class="text-sm text-base-content/60 ">
+      <p>© {new Date().getFullYear()} {site.name}</p>
     </aside>
   </div>
 </footer>

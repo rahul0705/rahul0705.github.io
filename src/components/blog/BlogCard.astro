@@ -16,14 +16,13 @@ const publishedAt = getPublishedAt(post);
 <a
   href={`/blog/${post.id}`}
   class:list={[
-    'card group overflow-hidden border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md',
-    featured && 'md:col-span-2',
+    'card group overflow-hidden bg-base-100 shadow-xl transition-shadow duration-300 hover:shadow-2xl',
   ]}
 >
-  <BlogCover image={post.data.coverImage} alt={post.data.coverImageAlt} priority={featured} class={featured ? 'aspect-2/1' : 'aspect-video'} />
-  <article class="card-body p-6">
+  <BlogCover image={post.data.coverImage} alt={post.data.coverImageAlt} priority={featured} class="aspect-video" />
+  <article class="card-body justify-center gap-4 p-6 md:p-8">
     <div>
-      <h2 class="card-title text-xl">
+      <h2 class="card-title text-xl leading-snug">
         {post.data.title}
       </h2>
 
