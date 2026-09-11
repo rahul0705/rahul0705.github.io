@@ -172,6 +172,26 @@ Shared content models
 
 Resume exports are generated from the same structured data used by the HTML page.
 
+### Public route decisions
+
+The Forge route comparison in [issue #67](https://github.com/rahul0705/rahul0705.github.io/issues/67) resulted in these
+decisions:
+
+- Generate `robots.txt` from `src/config/site.ts` through `src/pages/robots.txt.ts`. Astro writes the endpoint to
+  `dist/robots.txt` at build time, so GitHub Pages still serves a static file. The existing directives are preserved.
+  `robotsDisallowPaths` controls crawling separately from sitemap exclusions: crawlers can access `/admin/` so its HTML
+  `noindex` directive can be read, while raw resume exports remain disallowed.
+- Omit a web app manifest for now. This portfolio has no installation or app-specific experience that warrants one.
+- Retain the existing fallback social image, `src/assets/covers/code.jpg`, used by `SeoHead` when a page supplies no
+  image. Article covers continue to override it; a second fallback asset would duplicate an existing capability.
+- Keep the article index unpaginated while its seven articles remain easy to browse together. Revisit pagination when
+  the collection becomes cumbersome to scan or materially affects page performance.
+- Keep About content on the homepage, with the resume providing career detail. Add a separate About route only when
+  there is distinct content that benefits from its own page.
+
+The browser suite checks the generated crawl policy, sitemap exclusions, sharing metadata, and accessibility of the
+existing public pages.
+
 ## Deployment
 
 The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a

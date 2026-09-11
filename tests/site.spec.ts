@@ -303,6 +303,7 @@ test('RSS feed publishes discoverable article metadata', async ({ page, request 
 test('crawl policy excludes raw resume exports while allowing HTML noindex directives', async ({ request }) => {
   const robots = await request.get('/robots.txt');
   expect(robots.ok()).toBe(true);
+  expect(robots.headers()['content-type']).toMatch(/^text\/plain(?:;|$)/);
   expect(await robots.text()).toBe(
     [
       'User-agent: *',
@@ -319,6 +320,7 @@ test('crawl policy excludes raw resume exports while allowing HTML noindex direc
   const sitemap = await request.get('/sitemap-0.xml');
   expect(sitemap.ok()).toBe(true);
   const sitemapBody = await sitemap.text();
+  expect(sitemapBody).not.toContain('/robots.txt');
   for (const route of siteConfig.nonIndexablePaths) {
     expect(sitemapBody).not.toContain(route);
   }

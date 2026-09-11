@@ -5,10 +5,11 @@ import { Image } from 'astro:assets';
 interface Props {
   image?: any;
   alt: string;
+  priority?: boolean;
   class?: string;
 }
 
-const { image, alt, class: className = 'aspect-video' } = Astro.props;
+const { image, alt, priority = false, class: className = 'aspect-video' } = Astro.props;
 ---
 
 {
@@ -21,7 +22,8 @@ const { image, alt, class: className = 'aspect-video' } = Astro.props;
         height={675}
         sizes="(min-width: 1024px) 66vw, 100vw"
         class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchpriority={priority ? 'high' : undefined}
       />
     </figure>
   ) : (
