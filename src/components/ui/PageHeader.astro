@@ -17,8 +17,8 @@ const hasActions = Astro.slots.has('actions');
   <div class={`hero-content w-full max-w-none px-0 ${spacing}`}>
     <Container>
       <div class="max-w-3xl">
-      {eyebrow && <p class="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-primary">{eyebrow}</p>}
-      <h1 class="text-4xl font-bold tracking-tight md:text-6xl">{title}</h1>
+      {eyebrow && <p class="mb-4 font-mono text-sm font-medium uppercase tracking-[0.12em] text-primary">{eyebrow}</p>}
+      <h1 class="text-4xl leading-tight font-bold tracking-tight md:text-5xl">{title}</h1>
       {description && <p class="mt-5 text-lg leading-relaxed text-base-content/70 md:text-xl">{description}</p>}
       {hasActions && (
         <div class="mt-8 flex flex-wrap gap-3">

@@ -1,12 +1,12 @@
 ---
 import { Menu } from '@lucide/astro';
-import { siteConfig, socialLinks } from '../../config/site';
+import { siteConfig } from '../../config/site';
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-base-300 bg-base-100/80 backdrop-blur">
-  <div class="mx-auto max-w-5xl px-6">
+<header class="sticky top-0 z-50 bg-base-100 shadow-sm">
+  <div class="mx-auto max-w-6xl px-6">
     <div class="navbar min-h-(--site-navbar-height) px-0">
       <div class="navbar-start flex-1">
         <a href="/" class="text-lg font-semibold tracking-tight"> {siteConfig.title} </a>
@@ -17,21 +17,13 @@ const currentPath = Astro.url.pathname;
           siteConfig.navigation.primary.map((item) => (
             <a
               href={item.href}
-              class:list={['btn btn-ghost btn-sm', currentPath.startsWith(item.href) && 'btn-active']}
+              class:list={['btn btn-ghost text-base', currentPath.startsWith(item.href) && 'btn-active']}
             >
               {item.label}
             </a>
           ))
         }
 
-        <a
-          href={socialLinks.GitHub.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn-ghost btn-sm"
-        >
-          GitHub
-        </a>
       </nav>
 
       <!-- Mobile Menu -->
@@ -60,9 +52,6 @@ const currentPath = Astro.url.pathname;
             ))
           }
 
-          <li>
-            <a href={socialLinks.GitHub.href} target="_blank" rel="noopener noreferrer"> GitHub </a>
-          </li>
         </ul>
       </div>
     </div>

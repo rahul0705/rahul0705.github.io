@@ -16,12 +16,10 @@ const paddingClasses = {
 const cardClasses = [
   'card',
   'rounded-box',
-  'border',
-  'border-base-300',
   'bg-base-100',
-  'shadow-sm',
+  'shadow-xl',
 
-  hover && 'transition-all duration-200 hover:-translate-y-1 hover:shadow-md',
+  hover && 'transition-shadow duration-300 hover:shadow-2xl',
 ]
   .filter(Boolean)
   .join(' ');

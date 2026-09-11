@@ -1,23 +1,41 @@
 ---
 import Card from '../ui/Card.astro';
 import Container from '../ui/Container.astro';
-import { siteConfig } from '../../config/site';
+import { socialLinks } from '../../config/site';
+
+type ActionVariant = 'primary' | 'outline' | 'ghost';
+
+interface ContactAction {
+  label: string;
+  href: string;
+  variant?: ActionVariant;
+  external?: boolean;
+}
+
+const defaultActions: ContactAction[] = [
+  { ...socialLinks.Email, variant: 'primary' },
+  { ...socialLinks.LinkedIn, variant: 'outline' },
+  { ...socialLinks.GitHub, variant: 'outline' },
+];
+
+const buttonClasses: Record<ActionVariant, string> = {
+  primary: 'btn btn-primary',
+  outline: 'btn btn-outline',
+  ghost: 'btn btn-ghost',
+};
 
 interface Props {
   eyebrow?: string;
   title?: string;
   description?: string;
-  actions?: Array<{ label: string; href: string; variant?: string; external?: boolean }>;
+  actions?: ContactAction[];
 }
 
 const {
-  eyebrow = "Let's connect",
-  title = 'Interested in working together or swapping ideas?',
-  description = "I'm always open to thoughtful conversations around product engineering, writing, and building better developer experiences.",
-  actions = siteConfig.socialLinks.map((link, index) => ({
-    ...link,
-    variant: index === 0 ? 'primary' : index === 1 ? 'outline' : 'ghost',
-  })),
+  eyebrow = 'Contact',
+  title = "Let's talk software.",
+  description = "Have a question about an article or a project? Get in touch.",
+  actions = defaultActions,
 } = Astro.props;
 ---
 
@@ -26,14 +44,14 @@ const {
     <Card padding="lg">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div class="max-w-2xl">
-          <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">{eyebrow}</p>
-          <h2 class="mt-2 text-3xl font-semibold tracking-tight">{title}</h2>
+          <p class="font-mono text-sm font-medium uppercase tracking-[0.12em] text-primary">{eyebrow}</p>
+          <h2 class="mt-2 text-3xl leading-tight font-bold tracking-[-0.04em] md:text-4xl">{title}</h2>
           <p class="mt-3 text-base-content/70">{description}</p>
         </div>
 
         <div class="flex flex-wrap gap-3">
           {actions.map((action) => {
-            const buttonClass = action.variant === 'outline' ? 'btn btn-outline' : action.variant === 'ghost' ? 'btn btn-ghost' : 'btn btn-primary';
+            const buttonClass = buttonClasses[action.variant ?? 'outline'];
 
             return (
               <a

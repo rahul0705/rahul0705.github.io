@@ -83,14 +83,14 @@ same model supplies the article fields in Sveltia CMS.
 
 Set `draft: true` to keep an article out of production listings and generated routes. Article cover images are stored
 under `src/assets/`. The date prefix in the article filename is the authoritative publication date and determines its
-position in newest-first article lists. The homepage Selected Writing section automatically uses the three newest
+position in newest-first article lists. The homepage Recent Articles section automatically uses the three newest
 published articles; there is no separate editorial featured state.
 
 Before publishing an article:
 
 1. Confirm the title is unique and the description is a concise search and social summary.
 2. Confirm the filename date, section, tags, and table-of-contents behavior. Check whether the filename date places the
-   article in the three newest posts shown under Selected Writing; do not add duplicate publication or featured fields.
+   article in the three newest posts shown under Recent Articles; do not add duplicate publication or featured fields.
 3. Store the cover in `src/assets/`, write alt text that describes its meaningful visual content, and record any
    third-party source in the `ATTRIBUTION.md` file beside the image.
 4. Build or preview the site and review the generated article title, publication date, canonical URL, Open Graph and
@@ -115,6 +115,18 @@ When changing resume generation, run:
 ```sh
 npm run verify:resume:markdown
 ```
+
+## Buttons and color
+
+Use DaisyUI semantic colors from the Catppuccin theme. Filled primary buttons identify the main action in a
+context: View Resume in the hero, Email in Contact, Export Resume on the resume, and Go home on the error page.
+Use outlined buttons for secondary actions, including article browsing and Contact profile links. Ghost buttons
+serve navigation and lightweight profile shortcuts. Choose variants by purpose, never by array position; Contact
+actions without an explicit variant default to outline.
+
+Primary-colored text also serves as the site accent for labels and links; it does not always indicate a button.
+Use base-content for body text and the matching content token on filled colored surfaces. Catppuccin's secondary
+token is a dark surface in Mocha, so it is not suitable as text on the page background.
 
 ## Content manager
 
