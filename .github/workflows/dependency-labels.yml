@@ -2,7 +2,8 @@
 name: Label dependency groups
 
 on: # yamllint disable-line rule:truthy
-  pull_request_target:
+  # Required for labeling Dependabot PRs; only metadata is used, with no checkout.
+  pull_request_target: # zizmor: ignore[dangerous-triggers]
     types: [opened, reopened, synchronize]
 
 permissions: {}
