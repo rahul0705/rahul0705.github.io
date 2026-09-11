@@ -227,6 +227,18 @@ for grouping and cooldown semantics.
 
 ### Publishing
 
+Repository Automation Validation runs on `.github/**` changes, every Monday at 05:43 UTC, and on manual dispatch.
+Zizmor scans all supported automation inputs and uploads advisory findings to the Security tab. Findings do not gate
+the site build. The stable `Automation` check succeeds when the security scan and syntax jobs complete successfully;
+failures, cancellations, and skipped checks do not count as success. Each run includes a summary linking the results
+to the job logs and Security tab.
+
+For scheduled failures, inspect the failed run, review the finding, and submit a focused correction or documented
+exception. Use GitHub Actions notification preferences to receive failed-run notifications. Successful runs do not
+create issues or comments. This weekly automated scan complements the broader manual review cadence in
+[issue #9](https://github.com/rahul0705/rahul0705.github.io/issues/9). The schedule becomes active after merge to `main`;
+the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
+
 The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
 production build. A push to `main` deploys the generated `dist/` artifact to GitHub Pages after required checks pass.
 
