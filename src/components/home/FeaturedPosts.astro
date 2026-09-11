@@ -12,7 +12,7 @@ interface Props {
   posts?: Array<any>;
 }
 
-const { title = 'Featured Articles', description = 'A few recent write-ups worth a read.', limit = 3, posts: providedPosts } = Astro.props;
+const { title = 'Recent Articles', description = 'Notes on software engineering, systems, and technical projects.', limit = 3, posts: providedPosts } = Astro.props;
 
 const fallbackPosts = await getPublishedPosts();
 const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
