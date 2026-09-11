@@ -53,6 +53,15 @@ updates:
       - npm
 
     groups:
+      content-platform:
+        applies-to: version-updates
+        patterns:
+          - '@rm-industries/content-model'
+          - astro
+          - '@sveltia/cms'
+        update-types:
+          - minor
+          - patch
       production-dependencies:
         applies-to: version-updates
         dependency-type: production
