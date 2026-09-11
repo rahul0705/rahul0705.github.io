@@ -27,7 +27,7 @@ export interface ExperienceOrganization {
   projects: ExperienceProject[];
 }
 
-export type ExperienceEntry = CollectionEntry<'experience'>;
+type ExperienceEntry = CollectionEntry<'experience'>;
 
 const toResumeMonth = (date: Date) => date.toISOString().slice(0, 7);
 
