@@ -7,13 +7,13 @@ export const home = {
     title: 'About',
     description: 'My engineering background.',
     intro:
-      'I develop software for cloud platforms, embedded systems, and operational tools. My work spans system architecture, technical direction, delivery planning, and collaboration with customers.',
+      'I lead engineering teams and build cloud platforms for operational systems. My experience spans NOAA satellite-data infrastructure, radio-frequency monitoring, and self-service software at Amazon Web Services.',
     highlights: [
-      'Self-service marketing technology at Amazon Web Services.',
-      'Cloud-based radio-frequency analysis and satellite-data processing.',
-      'Security controls and tooling for operational systems.',
+      'Lead more than 30 engineers across infrastructure, observability, shared services, and security for NOAA’s GEO Cloud Compute Subsystem.',
+      'Built the AWS foundation with TypeScript and CDK, then led infrastructure delivery for GOES processing and real-time SOLAR-1 data distribution.',
+      'Led an eight-person RFIMS software team through security authorization and deployment of embedded collection and AWS GovCloud systems.',
     ],
-    focusAreas: ['Cloud architecture', 'Developer tooling', 'Distributed systems'],
+    focusAreas: ['Engineering leadership', 'Cloud architecture', 'Operational systems'],
   },
   toolkit: {
     title: 'Technical Toolkit',
