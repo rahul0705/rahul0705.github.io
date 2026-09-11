@@ -1,0 +1,32 @@
+---
+name: Label dependency groups
+
+on: # yamllint disable-line rule:truthy
+  # Required for labeling Dependabot PRs; only metadata is used, with no checkout.
+  pull_request_target: # zizmor: ignore[dangerous-triggers]
+    types: [opened, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  label:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      # Only PR metadata is read; no checkout or PR code execution is needed.
+      - name: Label the npm update group
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          case "$HEAD_BRANCH" in
+            dependabot/npm_and_yarn/content-platform-*) label='deps:content-platform' ;;
+            dependabot/npm_and_yarn/production-dependencies-*) label='deps:production' ;;
+            dependabot/npm_and_yarn/development-dependencies-*) label='deps:development' ;;
+            *) exit 0 ;;
+          esac
+          gh pr edit "$PR_NUMBER" --add-label "$label"
