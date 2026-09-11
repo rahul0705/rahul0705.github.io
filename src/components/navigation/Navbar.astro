@@ -1,6 +1,6 @@
 ---
 import { Menu } from '@lucide/astro';
-import { siteConfig, socialLinks } from '../../config/site';
+import { siteConfig } from '../../config/site';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -24,14 +24,6 @@ const currentPath = Astro.url.pathname;
           ))
         }
 
-        <a
-          href={socialLinks.GitHub.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn-ghost btn-sm"
-        >
-          GitHub
-        </a>
       </nav>
 
       <!-- Mobile Menu -->
@@ -60,9 +52,6 @@ const currentPath = Astro.url.pathname;
             ))
           }
 
-          <li>
-            <a href={socialLinks.GitHub.href} target="_blank" rel="noopener noreferrer"> GitHub </a>
-          </li>
         </ul>
       </div>
     </div>
