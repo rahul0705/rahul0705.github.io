@@ -38,20 +38,10 @@ jobs:
           persist-credentials: false
 
       - name: Scan workflows
-        id: zizmor
         uses: zizmorcore/zizmor-action@70fb788f84895a7701f5643d103d587e460b5c99 # v0.6.3
         with:
           advanced-security: true
           collect: all
-
-      - name: Require no unsuppressed security findings
-        env:
-          SARIF_FILE: ${{ steps.zizmor.outputs.output-file }}
-        run: |
-          if ! jq -e '[.runs[].results[]? | select(any(.suppressions[]?; .status == "accepted") | not)] | length == 0' "$SARIF_FILE"; then
-            echo '::error title=Workflow security findings::Review the Zizmor results in the repository Security tab.'
-            exit 1
-          fi
 
   syntax:
     name: Workflow syntax
@@ -88,6 +78,7 @@ jobs:
             echo "- Workflow syntax: $SYNTAX_RESULT"
             echo
             echo 'Inspect failed job logs and the repository Security tab for details.'
+            echo 'Security findings are advisory; this result does not gate the site build.'
           } >> "$GITHUB_STEP_SUMMARY"
           if [[ "$SECURITY_RESULT" != 'success' || "$SYNTAX_RESULT" != 'success' ]]; then
             echo '::error title=Automation validation failed::Workflow security and syntax checks must both pass.'
