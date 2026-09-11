@@ -33,7 +33,7 @@
   "dependencies": {
     "@fontsource/fira-code": "^5.3.0",
     "@fontsource/fira-sans": "^5.3.0",
-    "@lucide/astro": "^1.27.0",
+    "@lucide/astro": "^1.40.0",
     "@rm-industries/content-model": "1.1.0",
     "@sveltia/cms": "0.207.1"
   },
