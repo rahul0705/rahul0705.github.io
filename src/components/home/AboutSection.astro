@@ -26,9 +26,8 @@ const { title, description, intro, highlights, focusAreas } = Astro.props;
 
     <slot name="sidebar">
       <div class="grid gap-4">
-        {highlights.map((item, index) => (
-          <div class="flex items-start gap-4 rounded-box bg-base-200 p-6">
-            <span class="font-mono text-sm text-primary" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        {highlights.map((item) => (
+          <div class="rounded-box bg-base-200 p-6">
             <p class="text-base leading-relaxed">{item}</p>
           </div>
         ))}
