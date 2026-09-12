@@ -117,43 +117,47 @@ test('mobile navigation closes when tapping outside it', async ({ page }) => {
   await expect(articles).toBeHidden();
 });
 
-test('every public page uses the mobile viewport without horizontal overflow', async ({ page, request }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
+  test(`every public page fits the ${width}px viewport`, async ({ page, request }) => {
+    await page.setViewportSize({ width, height: 844 });
 
-  const sitemapIndex = await request.get('/sitemap-index.xml');
-  expect(sitemapIndex.ok()).toBe(true);
+    const sitemapIndex = await request.get('/sitemap-index.xml');
+    expect(sitemapIndex.ok()).toBe(true);
 
-  const sitemapUrls = sitemapLocations(await sitemapIndex.text());
-  expect(sitemapUrls.length).toBeGreaterThan(0);
+    const sitemapUrls = sitemapLocations(await sitemapIndex.text());
+    expect(sitemapUrls.length).toBeGreaterThan(0);
 
-  const pagePaths: string[] = [];
-  for (const sitemapUrl of sitemapUrls) {
-    const sitemap = await request.get(new URL(sitemapUrl).pathname);
-    expect(sitemap.ok()).toBe(true);
-    pagePaths.push(...sitemapLocations(await sitemap.text()).map((location) => new URL(location).pathname));
-  }
+    const pagePaths: string[] = ['/this-page-does-not-exist/'];
+    for (const sitemapUrl of sitemapUrls) {
+      const sitemap = await request.get(new URL(sitemapUrl).pathname);
+      expect(sitemap.ok()).toBe(true);
+      pagePaths.push(...sitemapLocations(await sitemap.text()).map((location) => new URL(location).pathname));
+    }
 
-  expect(pagePaths.length).toBeGreaterThan(0);
-  for (const path of pagePaths) {
-    await test.step(path, async () => {
-      await page.goto(path);
-      await expect(page.locator('meta[name="viewport"]')).toHaveAttribute(
-        'content',
-        'width=device-width, initial-scale=1',
-      );
-      await expect(page.locator('main')).toBeVisible();
+    expect(pagePaths.length).toBeGreaterThan(0);
+    for (const path of pagePaths) {
+      await test.step(path, async () => {
+        await page.goto(path);
+        await expect(page.locator('meta[name="viewport"]')).toHaveAttribute(
+          'content',
+          'width=device-width, initial-scale=1',
+        );
+        await expect(page.locator('main')).toBeVisible();
 
-      const viewport = await page.evaluate(() => ({
-        clientWidth: document.documentElement.clientWidth,
-        innerWidth: window.innerWidth,
-        scrollWidth: document.documentElement.scrollWidth,
-      }));
-      expect(viewport.clientWidth).toBe(390);
-      expect(viewport.innerWidth).toBe(390);
-      expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
-    });
-  }
-});
+        await page.evaluate(() => document.fonts.ready);
+        await page.locator('footer').scrollIntoViewIfNeeded();
+        const viewport = await page.evaluate(() => ({
+          clientWidth: document.documentElement.clientWidth,
+          innerWidth: window.innerWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+        }));
+        expect(viewport.clientWidth).toBe(width);
+        expect(viewport.innerWidth).toBe(width);
+        expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+      });
+    }
+  });
+}
 
 test('resume actions remain usable within the mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -161,6 +165,9 @@ test('resume actions remain usable within the mobile viewport', async ({ page })
   await page.getByRole('button', { name: 'Export Resume' }).click();
 
   const menu = page.locator('#resume-actions-menu');
+  const background = await menu.evaluate((element) => getComputedStyle(element).backgroundColor);
+  expect(background).not.toBe('rgba(0, 0, 0, 0)');
+  expect(background).not.toBe('transparent');
   await expect(menu.locator(':scope > li')).toHaveCount(4);
   await expect(menu.locator(':scope > li > :is(a, button)')).toHaveCount(4);
   await expect(page.getByRole('button', { name: 'Print Resume' })).toBeVisible();
@@ -339,4 +346,113 @@ test('the content manager is not indexed, uses its bundled configuration, and su
   await expect(page.getByRole('button', { name: 'Work with Local Repository' })).toBeVisible();
   await page.waitForTimeout(100);
   expect(requestedConfigFile).toBe(false);
+});
+
+for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
+  test(`expanded resume controls fit at ${width}px`, async ({ page }) => {
+    // Opening every skill disclosure can take nearly 30 seconds in Linux WebKit.
+    test.setTimeout(60_000);
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/resume/');
+    await page.evaluate(() => document.fonts.ready);
+    for (const toggle of await page.getByText(/Show \d+ more skills/).all()) await toggle.click();
+    await page.getByRole('button', { name: 'Export Resume' }).click();
+    const menu = page.locator('#resume-actions-menu');
+    const box = await menu.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+
+  test(`navigation controls fit at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
+    const navigation = page.getByRole('button', { name: 'Open navigation menu' });
+    if (await navigation.isVisible()) {
+      await navigation.click();
+      const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
+      await expect(articles).toBeVisible();
+      const linkBox = await articles.boundingBox();
+      expect(linkBox!.x).toBeGreaterThanOrEqual(0);
+      expect(linkBox!.x + linkBox!.width).toBeLessThanOrEqual(width);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      await articles.click();
+      await expect(page).toHaveURL(/\/blog\/?$/);
+    }
+  });
+}
+
+test('production pages have complete metadata and working internal references', async ({ page, request }) => {
+  const sitemap = await request.get('/sitemap-0.xml');
+  expect(sitemap.ok()).toBe(true);
+  const paths = sitemapLocations(await sitemap.text()).map((location) => new URL(location).pathname);
+  expect(paths).toEqual(expect.arrayContaining(['/', '/blog/', '/resume/', '/privacy/']));
+  const checked = new Set<string>();
+  for (const path of paths) {
+    await test.step(path, async () => {
+      expect((await page.goto(path))?.ok()).toBe(true);
+      const canonical = `${siteConfig.url}${path}`;
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', canonical);
+      const title = await page.title();
+      expect(title.trim()).not.toBe('');
+      const description = await page.locator('meta[name="description"]').getAttribute('content');
+      expect(description?.trim()).toBeTruthy();
+      for (const [key, value] of Object.entries({
+        'og:title': title,
+        'twitter:title': title,
+        'og:description': description!,
+        'twitter:description': description!,
+        'og:url': canonical,
+        'twitter:card': 'summary_large_image',
+      })) {
+        await expect(page.locator(`meta[name="${key}"], meta[property="${key}"]`)).toHaveAttribute('content', value);
+      }
+      await expect(page.locator('link[rel="manifest"]')).toHaveCount(0);
+      for (const key of ['og:image', 'twitter:image']) {
+        const image = await page.locator(`meta[name="${key}"], meta[property="${key}"]`).getAttribute('content');
+        expect(new URL(image!).origin).toBe(new URL(siteConfig.url).origin);
+        expect((await request.get(new URL(image!).pathname)).ok()).toBe(true);
+      }
+      const references = await page.evaluate(() =>
+        [...document.querySelectorAll('[href], [src]')].flatMap((element) =>
+          ['href', 'src']
+            .map((attribute) => element.getAttribute(attribute))
+            .filter((value): value is string => Boolean(value)),
+        ),
+      );
+      for (const reference of references) {
+        const url = new URL(reference, page.url());
+        if (![new URL(page.url()).origin, siteConfig.url].includes(url.origin)) continue;
+        const target = url.pathname + url.search;
+        if (checked.has(target)) continue;
+        checked.add(target);
+        expect((await request.get(target)).ok(), `${path}: broken reference ${reference}`).toBe(true);
+      }
+    });
+  }
+  const resume = await (await request.get('/resume.json')).json();
+  expect(resume.basics.name).toBe(siteConfig.author.name);
+  expect(resume.work.length).toBeGreaterThan(0);
+});
+
+test('long inline code wraps within the article column on narrow phones', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/blog/2018-10-08-peer-reviews/');
+  await page.evaluate(() => document.fonts.ready);
+  const code = page.locator('p > code').filter({ hasText: 'calculate_tax(taxable_amount, tax_rate)' });
+  await expect(code).toHaveCount(1);
+  const bounds = await code.evaluate((element) => {
+    const parent = element.parentElement!.getBoundingClientRect();
+    return {
+      left: parent.left,
+      right: parent.right,
+      fragments: [...element.getClientRects()].map((rect) => ({ left: rect.left, right: rect.right })),
+    };
+  });
+  for (const fragment of bounds.fragments) {
+    expect(fragment.left).toBeGreaterThanOrEqual(bounds.left);
+    expect(fragment.right).toBeLessThanOrEqual(bounds.right);
+  }
 });
