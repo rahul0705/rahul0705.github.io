@@ -10,7 +10,7 @@ visual system, while Sveltia CMS supports browser-based editing of articles and 
 
 - Node.js 22.12 or newer
 - npm
-- Chromium for the Playwright browser tests
+- Chromium, Firefox, and WebKit for the Playwright browser tests
 
 ## Local development
 
@@ -50,7 +50,7 @@ npm run preview
 Install the Playwright browser before running browser tests for the first time:
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
 
 ## Project structure
@@ -257,3 +257,7 @@ which checks every sitemap page and the 404 page for horizontal overflow at 320,
 Open navigation and resume export menus and expanded resume skills are checked at those widths as well.
 These automated checks catch layout regressions; visual review on real mobile devices remains useful for issues
 that geometry and accessibility checks cannot detect.
+
+The browser suite runs in Chromium, Firefox, and WebKit before deployment. CI retains failure screenshots, traces,
+and the HTML report for 14 days. To run one engine locally, use `npm run test:e2e -- --project=webkit` (or `chromium`
+or `firefox`).
