@@ -261,3 +261,12 @@ that geometry and accessibility checks cannot detect.
 The browser suite runs in Chromium, Firefox, and WebKit before deployment. CI retains failure screenshots, traces,
 and the HTML report for 14 days. To run one engine locally, use `npm run test:e2e -- --project=webkit` (or `chromium`
 or `firefox`).
+
+After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without
+starting a local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and
+390px mobile overflow, plus feed/export reachability and the custom 404 response. Failed checks retry twice and
+retain evidence for 14 days. A failure marks the workflow failed after publishing; it does not roll back the deployment.
+
+Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or
+`npm run test:smoke` to check the local production preview. These checks also run before deployment as part of the
+regular browser suite.

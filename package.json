@@ -30,7 +30,8 @@
     "typecheck": "astro sync && tsc --noEmit",
     "verify:resume:markdown": "npm run build && npm run lint:resume:markdown",
     "validate:build": "node --experimental-strip-types scripts/validate-build.ts",
-    "preview:test": "node --experimental-strip-types scripts/preview-test.ts"
+    "preview:test": "node --experimental-strip-types scripts/preview-test.ts",
+    "test:smoke": "playwright test tests/deployment.spec.ts --project=chromium"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.3.0",
