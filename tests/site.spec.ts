@@ -349,7 +349,9 @@ test('the content manager is not indexed, uses its bundled configuration, and su
 });
 
 for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
-  test(`expanded mobile controls fit at ${width}px`, async ({ page }) => {
+  test(`expanded resume controls fit at ${width}px`, async ({ page }) => {
+    // Opening every skill disclosure can take nearly 30 seconds in Linux WebKit.
+    test.setTimeout(60_000);
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/resume/');
     await page.evaluate(() => document.fonts.ready);
@@ -361,7 +363,12 @@ for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(width);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+
+  test(`navigation controls fit at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
     await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
     const navigation = page.getByRole('button', { name: 'Open navigation menu' });
     if (await navigation.isVisible()) {
       await navigation.click();
