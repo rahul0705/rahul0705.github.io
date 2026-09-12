@@ -29,7 +29,8 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "astro sync && tsc --noEmit",
     "verify:resume:markdown": "npm run build && npm run lint:resume:markdown",
-    "validate:build": "node --experimental-strip-types scripts/validate-build.ts"
+    "validate:build": "node --experimental-strip-types scripts/validate-build.ts",
+    "preview:test": "node --experimental-strip-types scripts/preview-test.ts"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.3.0",

@@ -13,7 +13,7 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'node --experimental-strip-types scripts/preview-test.ts',
+    command: 'npm run preview:test',
     reuseExistingServer: false,
     url: baseURL,
   },

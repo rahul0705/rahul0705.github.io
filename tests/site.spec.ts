@@ -405,7 +405,7 @@ test('production pages have complete metadata and working internal references', 
       await expect(page.locator('link[rel="manifest"]')).toHaveCount(0);
       for (const key of ['og:image', 'twitter:image']) {
         const image = await page.locator(`meta[name="${key}"], meta[property="${key}"]`).getAttribute('content');
-        expect(image).toMatch(new RegExp(`^${siteConfig.url.replaceAll('.', '\\.')}/`));
+        expect(new URL(image!).origin).toBe(new URL(siteConfig.url).origin);
         expect((await request.get(new URL(image!).pathname)).ok()).toBe(true);
       }
       const references = await page.evaluate(() =>

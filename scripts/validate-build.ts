@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { closeSync, existsSync, fstatSync, openSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -48,9 +48,14 @@ export function validateBuild(outputDirectory: string, contentDirectory: string)
   for (const file of readdirSync(output, { recursive: true }).map(String)) {
     if (!/\.(?:html|css|js|json|xml|txt|md)$/.test(file)) continue;
     const path = join(output, file);
-    if (!statSync(path).isFile()) continue;
-    const token = readFileSync(path, 'utf8').match(/__FORGE_[A-Z0-9_]+__|FORGE_[A-Z0-9_]+_PLACEHOLDER/);
-    if (token) errors.push(`${file}: unresolved template token ${token[0]}`);
+    const descriptor = openSync(path, 'r');
+    try {
+      if (!fstatSync(descriptor).isFile()) continue;
+      const token = readFileSync(descriptor, 'utf8').match(/__FORGE_[A-Z0-9_]+__|FORGE_[A-Z0-9_]+_PLACEHOLDER/);
+      if (token) errors.push(`${file}: unresolved template token ${token[0]}`);
+    } finally {
+      closeSync(descriptor);
+    }
   }
   if (errors.length) throw new Error(`Build validation failed:\n${errors.join('\n')}`);
 }
