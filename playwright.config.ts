@@ -13,8 +13,8 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `npm run preview -- --host 127.0.0.1 --port ${port}`,
-    reuseExistingServer: !process.env.CI,
+    command: 'node --experimental-strip-types scripts/preview-test.ts',
+    reuseExistingServer: false,
     url: baseURL,
   },
 });

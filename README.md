@@ -30,21 +30,22 @@ npm run preview
 
 ## Common commands
 
-| Command                 | Purpose                                            |
-| ----------------------- | -------------------------------------------------- |
-| `npm run dev`           | Start the Astro development server                 |
-| `npm run build`         | Generate the static site in `dist/`                |
-| `npm run preview`       | Serve the generated production build               |
-| `npm run typecheck`     | Check TypeScript types                             |
-| `npm run astro:check`   | Run Astro diagnostics                              |
-| `npm run format`        | Check formatting                                   |
-| `npm run format:fix`    | Apply formatting                                   |
-| `npm run lint:all`      | Lint code, CSS, and Markdown                       |
-| `npm run test:unit`     | Run Vitest unit tests                              |
-| `npm run test:e2e`      | Run Playwright interaction and accessibility tests |
-| `npm run test:coverage` | Generate unit-test coverage                        |
-| `npm run quality`       | Run the complete local quality pipeline            |
-| `npm run audit:unused`  | Report unused files, exports, and dependencies     |
+| Command                  | Purpose                                            |
+| ------------------------ | -------------------------------------------------- |
+| `npm run dev`            | Start the Astro development server                 |
+| `npm run build`          | Generate the static site in `dist/`                |
+| `npm run validate:build` | Smoke-check required production artifacts          |
+| `npm run preview`        | Serve the generated production build               |
+| `npm run typecheck`      | Check TypeScript types                             |
+| `npm run astro:check`    | Run Astro diagnostics                              |
+| `npm run format`         | Check formatting                                   |
+| `npm run format:fix`     | Apply formatting                                   |
+| `npm run lint:all`       | Lint code, CSS, and Markdown                       |
+| `npm run test:unit`      | Run Vitest unit tests                              |
+| `npm run test:e2e`       | Run Playwright interaction and accessibility tests |
+| `npm run test:coverage`  | Generate unit-test coverage                        |
+| `npm run quality`        | Run the complete local quality pipeline            |
+| `npm run audit:unused`   | Report unused files, exports, and dependencies     |
 
 Install the Playwright browser before running browser tests for the first time:
 
@@ -228,7 +229,8 @@ for grouping and cooldown semantics.
 ### Publishing
 
 The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
-production build. A push to `main` deploys the generated `dist/` artifact to GitHub Pages after required checks pass.
+production build with artifact validation. A push to `main` deploys the generated `dist/` artifact to GitHub Pages
+after required checks pass.
 
 Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
@@ -238,3 +240,20 @@ is recorded in `CNAME`.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+### Production validation and mobile release checks
+
+Run `npm run build && npm run validate:build && npm run test:e2e` before deployment.
+The artifact smoke check follows
+[Forge's build validator](https://github.com/rm-industries/forge/blob/main/templates/default/scripts/validate-build.ts).
+It uses Node filesystem APIs and the existing YAML dependency to check required outputs, published and draft article
+routes, and unresolved template tokens. It also enforces the intentional absence of a web app manifest.
+The TypeScript scripts run with Node’s built-in type stripping; no additional packages are required.
+Playwright checks metadata, internal references, feeds, crawl policy, analytics,
+CMS behavior, and resume exports against the generated site. Failures identify the artifact or page involved.
+
+CI validates the final build before uploading deployment artifacts. Deployment also depends on the browser suite,
+which checks every sitemap page and the 404 page for horizontal overflow at 320, 375, 390, 640, 768, 820, and 1024 CSS pixels.
+Open navigation and resume export menus and expanded resume skills are checked at those widths as well.
+These automated checks catch layout regressions; visual review on real mobile devices remains useful for issues
+that geometry and accessibility checks cannot detect.
