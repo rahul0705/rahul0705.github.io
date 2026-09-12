@@ -429,3 +429,23 @@ test('production pages have complete metadata and working internal references', 
   expect(resume.basics.name).toBe(siteConfig.author.name);
   expect(resume.work.length).toBeGreaterThan(0);
 });
+
+test('long inline code wraps within the article column on narrow phones', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/blog/2018-10-08-peer-reviews/');
+  await page.evaluate(() => document.fonts.ready);
+  const code = page.locator('p > code').filter({ hasText: 'calculate_tax(taxable_amount, tax_rate)' });
+  await expect(code).toHaveCount(1);
+  const bounds = await code.evaluate((element) => {
+    const parent = element.parentElement!.getBoundingClientRect();
+    return {
+      left: parent.left,
+      right: parent.right,
+      fragments: [...element.getClientRects()].map((rect) => ({ left: rect.left, right: rect.right })),
+    };
+  });
+  for (const fragment of bounds.fragments) {
+    expect(fragment.left).toBeGreaterThanOrEqual(bounds.left);
+    expect(fragment.right).toBeLessThanOrEqual(bounds.right);
+  }
+});
