@@ -10,17 +10,19 @@ its package, generator, and template compatibility jobs are not requirements for
 
 ```mermaid
 flowchart TD
-  S[Source checks including Knip] --> B[Build and validate one artifact]
+  S[Source checks including Knip] --> B[Build one artifact]
   U[Unit tests] --> B
   B --> P[Chromium, Firefox, WebKit]
   B --> L[Lighthouse]
   B --> R[Generated Markdown lint]
+  B --> V[Artifact validation]
   S --> D[Deploy on main]
   U --> D
   B --> D
   P --> D
   L --> D
   R --> D
+  V --> D
   D --> M[Live Chromium smoke checks]
 ```
 
@@ -34,7 +36,8 @@ flowchart TD
 | `audit-unused`            | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
 | `typecheck`               | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
 | `test-unit`               | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
-| `build`                   | One Astro build and output validation                              | Requires all source checks and unit tests                        |
+| `build`                   | One Astro build and artifact upload                                | Requires all source checks and unit tests                        |
+| `validate-build`          | Validate required production artifacts                             | Downloads `site-build`; parallel with other artifact checks      |
 | `test-browser`            | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
 | `lint-generated-markdown` | Lint generated resume Markdown                                     | Downloads `site-build`; parallel with browsers and Lighthouse    |
 | `lighthouse`              | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
@@ -48,8 +51,8 @@ and Lighthouse run in separate jobs after the build; their independence avoids b
 affecting
 Lighthouse measurements.
 
-The build job validates its output before uploading `site-build`. A separate job lints `dist/resume.md`
-from that artifact alongside browser tests and Lighthouse. On `main`, it
+The build job uploads `site-build`. Artifact validation, generated Markdown lint, browser tests, and
+Lighthouse each download that output and run independently in parallel. On `main`, it
 also packages
 those same files for GitHub Pages. Packaging does not publish them. The test jobs download `site-build` from
 this run,
@@ -62,9 +65,9 @@ Deployment directly depends on every source check, unit tests, artifact validati
 Lighthouse. GitHub's default success condition prevents deployment if any prerequisite fails or is skipped;
 there is no aggregate job. Deployment and live smoke checks are intentionally skipped on PRs.
 
-When adopting this workflow, retain the repository ruleset's required `build` context and require all twelve
+When adopting this workflow, retain the repository ruleset's required `build` context and require all thirteen
 pre-deployment checks: `format`, `lint-code`, `lint-styles`, `lint-markdown`, `spellcheck`, `audit-unused`,
-`typecheck`, `test-unit`, `build`, `test-browser`, `lighthouse`, and `lint-generated-markdown`.
+`typecheck`, `test-unit`, `build`, `test-browser`, `lighthouse`, `lint-generated-markdown`, and `validate-build`.
 Requiring every check prevents
 a skipped downstream job from hiding a source failure. Browser checks alone do not cover Lighthouse failures.
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its

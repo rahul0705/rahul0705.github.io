@@ -253,7 +253,7 @@ create issues or comments. This weekly automated scan complements the broader ma
 the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
 
 The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
-Browser tests, Lighthouse, and generated Markdown lint consume that validated artifact in parallel.
+Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
 Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
 Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
@@ -276,7 +276,7 @@ The TypeScript scripts run with Node’s built-in type stripping; no additional 
 Playwright checks metadata, internal references, feeds, crawl policy, analytics,
 CMS behavior, and resume exports against the generated site. Failures identify the artifact or page involved.
 
-CI validates the final build before uploading deployment artifacts. Deployment also depends on the browser suite,
+CI validates the uploaded build before deployment. Deployment also depends on the browser suite,
 which checks every sitemap page and the 404 page for horizontal overflow at 320, 375, 390, 640, 768, 820, and 1024 CSS pixels.
 Open navigation and resume export menus and expanded resume skills are checked at those widths as well.
 These automated checks catch layout regressions; visual review on real mobile devices remains useful for issues

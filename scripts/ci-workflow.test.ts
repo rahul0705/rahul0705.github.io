@@ -70,7 +70,12 @@ describe('website CI dependency and artifact contract', () => {
   it('builds only after source checks and unit tests pass', () => {
     expect(ancestors('build')).toEqual(expect.arrayContaining(sourceJobs));
     const commands = steps('build').map((step) => step.run);
-    expect(commands.indexOf('npm run build')).toBeLessThan(commands.indexOf('npm run validate:build'));
+    expect(commands.filter(Boolean)).toEqual(['npm run build']);
+    expect(
+      steps('validate-build')
+        .filter((step) => step.run)
+        .map((step) => step.run),
+    ).toEqual(['npm run validate:build']);
     expect(commands).not.toContain('npm run lint:resume:markdown');
     expect(
       steps('lint-generated-markdown')
@@ -80,7 +85,7 @@ describe('website CI dependency and artifact contract', () => {
   });
 
   it('tests and packages the same build instead of rebuilding downstream', () => {
-    for (const consumer of ['test-browser', 'lighthouse', 'lint-generated-markdown']) {
+    for (const consumer of ['test-browser', 'lighthouse', 'lint-generated-markdown', 'validate-build']) {
       expect(dependencies(jobs[consumer])).toEqual(['build']);
       expect(steps(consumer).find((step) => step.uses?.startsWith('actions/download-artifact@'))?.with).toMatchObject({
         name: 'site-build',
@@ -95,7 +100,7 @@ describe('website CI dependency and artifact contract', () => {
 
   it('requires every check directly before deployment and verifies the live result afterward', () => {
     expect(dependencies(jobs.deploy).sort()).toEqual(
-      [...sourceJobs, 'build', 'test-browser', 'lighthouse', 'lint-generated-markdown'].sort(),
+      [...sourceJobs, 'build', 'test-browser', 'lighthouse', 'lint-generated-markdown', 'validate-build'].sort(),
     );
     expect(jobs.deploy.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/main'");
     expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
@@ -106,6 +111,7 @@ describe('website CI dependency and artifact contract', () => {
         'test-browser',
         'lighthouse',
         'lint-generated-markdown',
+        'validate-build',
         'deploy',
         'smoke-deployed',
       ].sort(),
