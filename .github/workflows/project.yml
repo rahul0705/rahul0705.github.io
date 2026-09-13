@@ -13,14 +13,14 @@ permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  format:
+  static-checks:
     runs-on: ubuntu-latest
 
     permissions:
@@ -36,97 +36,25 @@ jobs:
         uses: $/.github/actions/setup-project
 
       - name: Check formatting
-        run: npm run format 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-  lint-code:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
+        run: npm run format
 
       - name: Lint code
         run: npm run lint:code
 
-  lint-styles:
-    runs-on: ubuntu-latest
+      - name: Lint styles
+        run: npm run lint:css
 
-    permissions:
-      contents: read
+      - name: Lint source Markdown
+        run: npm run lint:markdown
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
+      - name: Spellcheck source
+        run: npm run spellcheck
 
-      - name: Setup project
-        uses: $/.github/actions/setup-project
+      - name: Audit unused code and dependencies
+        run: npm run audit:unused
 
-      - name: Lint styling
-        run: npm run lint:css 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-  lint-markdown:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Lint Markdown
-        run: npm run lint:markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-  typecheck:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Typecheck TypeScript
-        run: npm run typecheck 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-  astro-check:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Check Astro diagnostics
-        run: npm run astro:check 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Check TypeScript and Astro diagnostics
+        run: npm run typecheck
 
   test-unit:
     runs-on: ubuntu-latest
@@ -146,7 +74,47 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
 
+  build-artifact:
+    needs: [static-checks, test-unit]
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
+
+      - name: Build production site once
+        run: npm run build
+
+      - name: Validate production artifacts
+        run: npm run validate:build
+
+      - name: Lint generated resume Markdown
+        run: npm run lint:resume:markdown
+
+      - name: Upload validated build
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: site-build
+          path: ./dist
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Package the same build for GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: ./dist
+
   test-browser:
+    needs: build-artifact
     runs-on: ubuntu-latest
 
     permissions:
@@ -164,8 +132,11 @@ jobs:
       - name: Install browsers
         run: npx playwright install --with-deps chromium firefox webkit
 
-      - name: Build project
-        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Download validated build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: site-build
+          path: ./dist
 
       - name: Run browser tests
         run: npm run test:e2e
@@ -182,6 +153,7 @@ jobs:
           if-no-files-found: ignore
 
   lighthouse:
+    needs: build-artifact
     runs-on: ubuntu-latest
 
     permissions:
@@ -196,8 +168,11 @@ jobs:
       - name: Setup project
         uses: $/.github/actions/setup-project
 
-      - name: Build project
-        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Download validated build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: site-build
+          path: ./dist
 
       - name: Run Lighthouse CI
         run: npm run lighthouse:ci 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
@@ -207,124 +182,29 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: lighthouse-reports
+          retention-days: 14
           path: .lighthouseci
           include-hidden-files: true
           if-no-files-found: warn
 
-  spellcheck:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Spellcheck
-        run: npm run spellcheck 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-  audit-unused:
-    runs-on: ubuntu-latest
-
-    continue-on-error: true
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Audit unused code and dependencies
-        run: npm run audit:unused -- --reporter markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
+  # Preserve the existing required status-check name. This job only aggregates results.
   build:
-    needs:
-      - format
-      - lint-code
-      - lint-styles
-      - lint-markdown
-      - spellcheck
-      - typecheck
-      - astro-check
-      - test-unit
-      - test-browser
-      - lighthouse
-
+    needs: [static-checks, test-unit, build-artifact, test-browser, lighthouse]
+    if: always()
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
+    permissions: {}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Build project
-        run: npm run build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-      - name: Validate production artifacts
-        run: npm run validate:build 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: site-build
-          path: ./dist
-          if-no-files-found: error
-
-      - name: Upload GitHub Pages artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
-        with:
-          path: ./dist
-
-  lint-generated-markdown:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-
-      - name: Setup project
-        uses: $/.github/actions/setup-project
-
-      - name: Download build artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: site-build
-          path: ./dist
-
-      - name: Lint generated resume Markdown
-        run: npm run lint:resume:markdown 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Require every pre-deployment check to pass
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
+        run: |
+          if ! jq --exit-status 'to_entries | all(.value.result == "success")' <<< "$CHECK_RESULTS"; then
+            echo '::error title=Site validation failed::Every pre-deployment check must succeed; skipped or cancelled checks do not pass.'
+            exit 1
+          fi
 
   deploy:
-    needs:
-      - build
-      - lint-generated-markdown
+    needs: build
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 

@@ -36,8 +36,8 @@ npm run preview
 | `npm run build`          | Generate the static site in `dist/`                |
 | `npm run validate:build` | Smoke-check required production artifacts          |
 | `npm run preview`        | Serve the generated production build               |
-| `npm run typecheck`      | Check TypeScript types                             |
-| `npm run astro:check`    | Run Astro diagnostics                              |
+| `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
+| `npm run astro:check`    | Alias for the same Astro diagnostics               |
 | `npm run format`         | Check formatting                                   |
 | `npm run format:fix`     | Apply formatting                                   |
 | `npm run lint:all`       | Lint code, CSS, and Markdown                       |
@@ -252,9 +252,9 @@ create issues or comments. This weekly automated scan complements the broader ma
 [issue #9](https://github.com/rahul0705/rahul0705.github.io/issues/9). The schedule becomes active after merge to `main`;
 the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
 
-The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
-production build with artifact validation. A push to `main` deploys the generated `dist/` artifact to GitHub Pages
-after required checks pass.
+The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
+Browser tests and Lighthouse consume that validated artifact in parallel. The required `build` check aggregates their
+results before a push to `main` can deploy the same output to GitHub Pages.
 
 Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
@@ -292,5 +292,5 @@ starting a local server. It checks homepage, resume, and article content, canoni
 retain evidence for 14 days. A failure marks the workflow failed after publishing; it does not roll back the deployment.
 
 Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or
-`npm run test:smoke` to check the local production preview. These checks also run before deployment as part of the
-regular browser suite.
+`npm run test:smoke` to check the local production preview. The smoke suite has a separate Playwright configuration;
+the regular browser suite exercises the full behavior without repeating these smaller deployment checks.
