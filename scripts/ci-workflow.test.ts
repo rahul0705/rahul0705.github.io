@@ -24,7 +24,7 @@ const { scripts } = JSON.parse(readFileSync(new URL('../package.json', import.me
 const sourceJobs = [
   'format',
   'lint-code',
-  'lint-css',
+  'lint-styles',
   'lint-markdown',
   'spellcheck',
   'audit-unused',
@@ -68,8 +68,8 @@ describe('website CI dependency and artifact contract', () => {
   });
 
   it('builds only after source checks and unit tests pass', () => {
-    expect(ancestors('build-artifact')).toEqual(expect.arrayContaining(sourceJobs));
-    const commands = steps('build-artifact').map((step) => step.run);
+    expect(ancestors('build')).toEqual(expect.arrayContaining(sourceJobs));
+    const commands = steps('build').map((step) => step.run);
     expect(commands.indexOf('npm run build')).toBeLessThan(commands.indexOf('npm run validate:build'));
     expect(commands).not.toContain('npm run lint:resume:markdown');
     expect(
@@ -81,28 +81,28 @@ describe('website CI dependency and artifact contract', () => {
 
   it('tests and packages the same build instead of rebuilding downstream', () => {
     for (const consumer of ['test-browser', 'lighthouse', 'lint-generated-markdown']) {
-      expect(dependencies(jobs[consumer])).toEqual(['build-artifact']);
+      expect(dependencies(jobs[consumer])).toEqual(['build']);
       expect(steps(consumer).find((step) => step.uses?.startsWith('actions/download-artifact@'))?.with).toMatchObject({
         name: 'site-build',
         path: './dist',
       });
       expect(steps(consumer).some((step) => step.run && expand(step.run).includes('astro build'))).toBe(false);
     }
-    const uploads = steps('build-artifact').filter((step) => step.uses?.startsWith('actions/upload-'));
+    const uploads = steps('build').filter((step) => step.uses?.startsWith('actions/upload-'));
     expect(uploads).toHaveLength(2);
     for (const upload of uploads) expect(upload.with?.path).toBe('./dist');
   });
 
   it('requires every check directly before deployment and verifies the live result afterward', () => {
     expect(dependencies(jobs.deploy).sort()).toEqual(
-      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse', 'lint-generated-markdown'].sort(),
+      [...sourceJobs, 'build', 'test-browser', 'lighthouse', 'lint-generated-markdown'].sort(),
     );
     expect(jobs.deploy.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/main'");
     expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
     expect(Object.keys(jobs).sort()).toEqual(
       [
         ...sourceJobs,
-        'build-artifact',
+        'build',
         'test-browser',
         'lighthouse',
         'lint-generated-markdown',

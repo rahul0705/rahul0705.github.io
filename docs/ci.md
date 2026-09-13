@@ -28,13 +28,13 @@ flowchart TD
 | ------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | `format`                  | Check formatting                                                   | Source checkout; independent job                                 |
 | `lint-code`               | Lint code                                                          | Source checkout; independent job                                 |
-| `lint-css`                | Lint styles                                                        | Source checkout; independent job                                 |
+| `lint-styles`             | Lint styles                                                        | Source checkout; independent job                                 |
 | `lint-markdown`           | Lint source Markdown                                               | Source checkout; independent job                                 |
 | `spellcheck`              | Spellcheck source                                                  | Source checkout; independent job                                 |
 | `audit-unused`            | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
 | `typecheck`               | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
 | `test-unit`               | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
-| `build-artifact`          | One Astro build and output validation                              | Requires all source checks and unit tests                        |
+| `build`                   | One Astro build and output validation                              | Requires all source checks and unit tests                        |
 | `test-browser`            | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
 | `lint-generated-markdown` | Lint generated resume Markdown                                     | Downloads `site-build`; parallel with browsers and Lighthouse    |
 | `lighthouse`              | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
@@ -62,9 +62,9 @@ Deployment directly depends on every source check, unit tests, artifact validati
 Lighthouse. GitHub's default success condition prevents deployment if any prerequisite fails or is skipped;
 there is no aggregate job. Deployment and live smoke checks are intentionally skipped on PRs.
 
-When adopting this workflow, replace the repository ruleset's old required `build` context with all twelve
-pre-deployment checks: `format`, `lint-code`, `lint-css`, `lint-markdown`, `spellcheck`, `audit-unused`,
-`typecheck`, `test-unit`, `build-artifact`, `test-browser`, `lighthouse`, and `lint-generated-markdown`.
+When adopting this workflow, retain the repository ruleset's required `build` context and require all twelve
+pre-deployment checks: `format`, `lint-code`, `lint-styles`, `lint-markdown`, `spellcheck`, `audit-unused`,
+`typecheck`, `test-unit`, `build`, `test-browser`, `lighthouse`, and `lint-generated-markdown`.
 Requiring every check prevents
 a skipped downstream job from hiding a source failure. Browser checks alone do not cover Lighthouse failures.
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its

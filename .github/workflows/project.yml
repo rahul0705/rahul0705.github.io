@@ -56,7 +56,7 @@ jobs:
       - name: Lint code
         run: npm run lint:code
 
-  lint-css:
+  lint-styles:
     runs-on: ubuntu-latest
 
     permissions:
@@ -164,8 +164,8 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
 
-  build-artifact:
-    needs: [format, lint-code, lint-css, lint-markdown, spellcheck, audit-unused, typecheck, test-unit]
+  build:
+    needs: [format, lint-code, lint-styles, lint-markdown, spellcheck, audit-unused, typecheck, test-unit]
     runs-on: ubuntu-latest
 
     permissions:
@@ -201,7 +201,7 @@ jobs:
           path: ./dist
 
   test-browser:
-    needs: build-artifact
+    needs: build
     runs-on: ubuntu-latest
 
     permissions:
@@ -240,7 +240,7 @@ jobs:
           if-no-files-found: ignore
 
   lint-generated-markdown:
-    needs: build-artifact
+    needs: build
     runs-on: ubuntu-latest
 
     permissions:
@@ -265,7 +265,7 @@ jobs:
         run: npm run lint:resume:markdown
 
   lighthouse:
-    needs: build-artifact
+    needs: build
     runs-on: ubuntu-latest
 
     permissions:
@@ -304,13 +304,13 @@ jobs:
       [
         format,
         lint-code,
-        lint-css,
+        lint-styles,
         lint-markdown,
         spellcheck,
         audit-unused,
         typecheck,
         test-unit,
-        build-artifact,
+        build,
         test-browser,
         lighthouse,
         lint-generated-markdown,
