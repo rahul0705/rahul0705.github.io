@@ -165,7 +165,15 @@ jobs:
         run: npm run test:unit
 
   build:
-    needs: [format, lint-code, lint-styles, lint-markdown, spellcheck, audit-unused, typecheck, test-unit]
+    needs:
+      - format
+      - lint-code
+      - lint-styles
+      - lint-markdown
+      - spellcheck
+      - audit-unused
+      - typecheck
+      - test-unit
     runs-on: ubuntu-latest
 
     permissions:
@@ -198,7 +206,8 @@ jobs:
           path: ./dist
 
   test-browser:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
 
     permissions:
@@ -237,7 +246,8 @@ jobs:
           if-no-files-found: ignore
 
   validate-build:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
 
     permissions:
@@ -262,7 +272,8 @@ jobs:
         run: npm run validate:build
 
   lint-generated-markdown:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
 
     permissions:
@@ -287,7 +298,8 @@ jobs:
         run: npm run lint:resume:markdown
 
   lighthouse:
-    needs: build
+    needs:
+      - build
     runs-on: ubuntu-latest
 
     permissions:
@@ -309,7 +321,7 @@ jobs:
           path: ./dist
 
       - name: Run Lighthouse CI
-        run: npm run lighthouse:ci 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+        run: npm run lighthouse:ci
 
       - name: Upload Lighthouse reports
         if: always()
@@ -323,21 +335,19 @@ jobs:
 
   deploy:
     needs:
-      [
-        format,
-        lint-code,
-        lint-styles,
-        lint-markdown,
-        spellcheck,
-        audit-unused,
-        typecheck,
-        test-unit,
-        build,
-        test-browser,
-        lighthouse,
-        lint-generated-markdown,
-        validate-build,
-      ]
+      - format
+      - lint-code
+      - lint-styles
+      - lint-markdown
+      - spellcheck
+      - audit-unused
+      - typecheck
+      - test-unit
+      - build
+      - test-browser
+      - lighthouse
+      - lint-generated-markdown
+      - validate-build
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
@@ -361,7 +371,8 @@ jobs:
 
   smoke-deployed:
     name: Verify deployed website
-    needs: deploy
+    needs:
+      - deploy
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
