@@ -37,7 +37,6 @@ npm run preview
 | `npm run validate:build` | Smoke-check required production artifacts          |
 | `npm run preview`        | Serve the generated production build               |
 | `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
-| `npm run astro:check`    | Alias for the same Astro diagnostics               |
 | `npm run format`         | Check formatting                                   |
 | `npm run format:fix`     | Apply formatting                                   |
 | `npm run lint:all`       | Lint code, CSS, and Markdown                       |
@@ -46,6 +45,26 @@ npm run preview
 | `npm run test:coverage`  | Generate unit-test coverage                        |
 | `npm run quality`        | Run the complete local quality pipeline            |
 | `npm run audit:unused`   | Report unused files, exports, and dependencies     |
+
+Each remaining script has a separate purpose. In addition to the common commands above:
+
+| Command                                       | Purpose                                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------------------ |
+| `npm run lint:code` / `lint:code:fix`         | Check or fix source code                                                       |
+| `npm run lint:styles` / `lint:styles:fix`     | Check or fix CSS                                                               |
+| `npm run lint:markdown` / `lint:markdown:fix` | Check or fix source Markdown                                                   |
+| `npm run lint:resume:markdown`                | Check generated `dist/resume.md`; requires a build                             |
+| `npm run spellcheck`                          | Check spelling independently of syntax/style lint                              |
+| `npm run audit`                               | Inspect dependency security advisories under the existing high-severity policy |
+| `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
+| `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
+| `npm run preview:test`                        | Internal Playwright server with controlled host, port, and process lifetime    |
+
+`lint:all` groups source linters for local use; `quality` composes the full local validation sequence.
+CI calls individual checks so they report independently. `test:coverage` runs the unit suite with coverage
+instrumentation; use it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files.
+`preview` is the interactive server; `preview:test` is owned by Playwright. For other Astro CLI operations,
+use `npx astro <command>`. `typecheck` is the sole script for Astro and TypeScript diagnostics.
 
 Install the Playwright browser before running browser tests for the first time:
 
@@ -114,7 +133,7 @@ The public resume routes are:
 When changing resume generation, run:
 
 ```sh
-npm run verify:resume:markdown
+npm run build && npm run lint:resume:markdown
 ```
 
 ## Buttons and color

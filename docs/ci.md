@@ -79,7 +79,7 @@ verification when another commit arrives.
   rules.
 - `npm run typecheck` runs `astro check`, which checks TypeScript and Astro files through the project
   configuration.
-  `astro:check` is retained as a manual alias, but CI and `quality` do not invoke both. A temporary
+  There is no duplicate `astro:check` alias. A temporary
   TypeScript error in a
   standalone script was confirmed to fail Astro checking before removing the redundant `tsc` invocation.
 - Source Markdown lint excludes `dist/`; generated resume Markdown is checked once after generation.

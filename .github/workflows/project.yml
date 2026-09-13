@@ -72,7 +72,7 @@ jobs:
         uses: $/.github/actions/setup-project
 
       - name: Lint styles
-        run: npm run lint:css
+        run: npm run lint:styles
 
   lint-markdown:
     runs-on: ubuntu-latest
