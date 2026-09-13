@@ -71,12 +71,17 @@ describe('website CI dependency and artifact contract', () => {
     expect(ancestors('build-artifact')).toEqual(expect.arrayContaining(sourceJobs));
     const commands = steps('build-artifact').map((step) => step.run);
     expect(commands.indexOf('npm run build')).toBeLessThan(commands.indexOf('npm run validate:build'));
-    expect(commands.indexOf('npm run validate:build')).toBeLessThan(commands.indexOf('npm run lint:resume:markdown'));
+    expect(commands).not.toContain('npm run lint:resume:markdown');
+    expect(
+      steps('lint-generated-markdown')
+        .filter((step) => step.run)
+        .map((step) => step.run),
+    ).toEqual(['npm run lint:resume:markdown']);
   });
 
   it('tests and packages the same build instead of rebuilding downstream', () => {
-    for (const consumer of ['test-browser', 'lighthouse']) {
-      expect(ancestors(consumer)).toContain('build-artifact');
+    for (const consumer of ['test-browser', 'lighthouse', 'lint-generated-markdown']) {
+      expect(dependencies(jobs[consumer])).toEqual(['build-artifact']);
       expect(steps(consumer).find((step) => step.uses?.startsWith('actions/download-artifact@'))?.with).toMatchObject({
         name: 'site-build',
         path: './dist',
@@ -90,12 +95,20 @@ describe('website CI dependency and artifact contract', () => {
 
   it('requires every check directly before deployment and verifies the live result afterward', () => {
     expect(dependencies(jobs.deploy).sort()).toEqual(
-      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse'].sort(),
+      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse', 'lint-generated-markdown'].sort(),
     );
     expect(jobs.deploy.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/main'");
     expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
     expect(Object.keys(jobs).sort()).toEqual(
-      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse', 'deploy', 'smoke-deployed'].sort(),
+      [
+        ...sourceJobs,
+        'build-artifact',
+        'test-browser',
+        'lighthouse',
+        'lint-generated-markdown',
+        'deploy',
+        'smoke-deployed',
+      ].sort(),
     );
   });
 });

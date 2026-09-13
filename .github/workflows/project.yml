@@ -186,9 +186,6 @@ jobs:
       - name: Validate production artifacts
         run: npm run validate:build
 
-      - name: Lint generated resume Markdown
-        run: npm run lint:resume:markdown
-
       - name: Upload validated build
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
@@ -242,6 +239,31 @@ jobs:
           retention-days: 14
           if-no-files-found: ignore
 
+  lint-generated-markdown:
+    needs: build-artifact
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
+
+      - name: Download validated build
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: site-build
+          path: ./dist
+
+      - name: Lint generated resume Markdown
+        run: npm run lint:resume:markdown
+
   lighthouse:
     needs: build-artifact
     runs-on: ubuntu-latest
@@ -291,6 +313,7 @@ jobs:
         build-artifact,
         test-browser,
         lighthouse,
+        lint-generated-markdown,
       ]
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

@@ -14,29 +14,32 @@ flowchart TD
   U[Unit tests] --> B
   B --> P[Chromium, Firefox, WebKit]
   B --> L[Lighthouse]
+  B --> R[Generated Markdown lint]
   S --> D[Deploy on main]
   U --> D
   B --> D
   P --> D
   L --> D
+  R --> D
   D --> M[Live Chromium smoke checks]
 ```
 
-| Job              | Work it owns                                                       | Input and dependencies                                           |
-| ---------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| `format`         | Check formatting                                                   | Source checkout; independent job                                 |
-| `lint-code`      | Lint code                                                          | Source checkout; independent job                                 |
-| `lint-css`       | Lint styles                                                        | Source checkout; independent job                                 |
-| `lint-markdown`  | Lint source Markdown                                               | Source checkout; independent job                                 |
-| `spellcheck`     | Spellcheck source                                                  | Source checkout; independent job                                 |
-| `audit-unused`   | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
-| `typecheck`      | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
-| `test-unit`      | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
-| `build-artifact` | One Astro build, output validation, generated resume Markdown lint | Requires all source checks and unit tests                        |
-| `test-browser`   | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
-| `lighthouse`     | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
-| `deploy`         | Publish the packaged output                                        | Requires every pre-deployment job; only runs on pushes to `main` |
-| `smoke-deployed` | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment                   |
+| Job                       | Work it owns                                                       | Input and dependencies                                           |
+| ------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| `format`                  | Check formatting                                                   | Source checkout; independent job                                 |
+| `lint-code`               | Lint code                                                          | Source checkout; independent job                                 |
+| `lint-css`                | Lint styles                                                        | Source checkout; independent job                                 |
+| `lint-markdown`           | Lint source Markdown                                               | Source checkout; independent job                                 |
+| `spellcheck`              | Spellcheck source                                                  | Source checkout; independent job                                 |
+| `audit-unused`            | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
+| `typecheck`               | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
+| `test-unit`               | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
+| `build-artifact`          | One Astro build and output validation                              | Requires all source checks and unit tests                        |
+| `test-browser`            | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
+| `lint-generated-markdown` | Lint generated resume Markdown                                     | Downloads `site-build`; parallel with browsers and Lighthouse    |
+| `lighthouse`              | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
+| `deploy`                  | Publish the packaged output                                        | Requires every pre-deployment job; only runs on pushes to `main` |
+| `smoke-deployed`          | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment                   |
 
 Source checks and unit tests run in independent jobs so they execute concurrently and report all failures.
 Each job owns one check and installs its dependencies separately. Any failed check prevents the build. Browser
@@ -45,7 +48,8 @@ and Lighthouse run in separate jobs after the build; their independence avoids b
 affecting
 Lighthouse measurements.
 
-The build job validates its output and lints `dist/resume.md` before uploading `site-build`. On `main`, it
+The build job validates its output before uploading `site-build`. A separate job lints `dist/resume.md`
+from that artifact alongside browser tests and Lighthouse. On `main`, it
 also packages
 those same files for GitHub Pages. Packaging does not publish them. The test jobs download `site-build` from
 this run,
@@ -58,9 +62,10 @@ Deployment directly depends on every source check, unit tests, artifact validati
 Lighthouse. GitHub's default success condition prevents deployment if any prerequisite fails or is skipped;
 there is no aggregate job. Deployment and live smoke checks are intentionally skipped on PRs.
 
-When adopting this workflow, replace the repository ruleset's old required `build` context with all eleven
+When adopting this workflow, replace the repository ruleset's old required `build` context with all twelve
 pre-deployment checks: `format`, `lint-code`, `lint-css`, `lint-markdown`, `spellcheck`, `audit-unused`,
-`typecheck`, `test-unit`, `build-artifact`, `test-browser`, and `lighthouse`. Requiring every check prevents
+`typecheck`, `test-unit`, `build-artifact`, `test-browser`, `lighthouse`, and `lint-generated-markdown`.
+Requiring every check prevents
 a skipped downstream job from hiding a source failure. Browser checks alone do not cover Lighthouse failures.
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its
 verification when another commit arrives.
