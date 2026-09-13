@@ -14,31 +14,29 @@ flowchart TD
   U[Unit tests] --> B
   B --> P[Chromium, Firefox, WebKit]
   B --> L[Lighthouse]
-  S --> G[Required validate gate]
-  U --> G
-  B --> G
-  P --> G
-  L --> G
-  G --> D[Deploy on main]
+  S --> D[Deploy on main]
+  U --> D
+  B --> D
+  P --> D
+  L --> D
   D --> M[Live Chromium smoke checks]
 ```
 
-| Job              | Work it owns                                                       | Input and dependencies                             |
-| ---------------- | ------------------------------------------------------------------ | -------------------------------------------------- |
-| `format`         | Check formatting                                                   | Source checkout; independent job                   |
-| `lint-code`      | Lint code                                                          | Source checkout; independent job                   |
-| `lint-css`       | Lint styles                                                        | Source checkout; independent job                   |
-| `lint-markdown`  | Lint source Markdown                                               | Source checkout; independent job                   |
-| `spellcheck`     | Spellcheck source                                                  | Source checkout; independent job                   |
-| `audit-unused`   | Audit unused code and dependencies                                 | Source checkout; independent job                   |
-| `typecheck`      | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                   |
-| `test-unit`      | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks       |
-| `build-artifact` | One Astro build, output validation, generated resume Markdown lint | Requires all source checks and unit tests          |
-| `test-browser`   | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds               |
-| `lighthouse`     | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds               |
-| `validate`       | Aggregate required result; no tool checks are rerun                | Every prerequisite must succeed                    |
-| `deploy`         | Publish the packaged output                                        | Requires `validate`; only runs on pushes to `main` |
-| `smoke-deployed` | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment     |
+| Job              | Work it owns                                                       | Input and dependencies                                           |
+| ---------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| `format`         | Check formatting                                                   | Source checkout; independent job                                 |
+| `lint-code`      | Lint code                                                          | Source checkout; independent job                                 |
+| `lint-css`       | Lint styles                                                        | Source checkout; independent job                                 |
+| `lint-markdown`  | Lint source Markdown                                               | Source checkout; independent job                                 |
+| `spellcheck`     | Spellcheck source                                                  | Source checkout; independent job                                 |
+| `audit-unused`   | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
+| `typecheck`      | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
+| `test-unit`      | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
+| `build-artifact` | One Astro build, output validation, generated resume Markdown lint | Requires all source checks and unit tests                        |
+| `test-browser`   | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
+| `lighthouse`     | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
+| `deploy`         | Publish the packaged output                                        | Requires every pre-deployment job; only runs on pushes to `main` |
+| `smoke-deployed` | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment                   |
 
 Source checks and unit tests run in independent jobs so they execute concurrently and report all failures.
 Each job owns one check and installs its dependencies separately. Any failed check prevents the build. Browser
@@ -51,15 +49,19 @@ The build job validates its output and lints `dist/resume.md` before uploading `
 also packages
 those same files for GitHub Pages. Packaging does not publish them. The test jobs download `site-build` from
 this run,
-and only a successful required gate allows deployment. There are no downstream rebuilds or artifact mutations.
+and only successful prerequisites allow deployment. There are no downstream rebuilds or artifact mutations.
 This matters because financial-scope values can refresh during a build: separately rebuilding for tests and
 deployment
 could validate different content even at the same source revision.
 
-The `validate` aggregate rejects failed, cancelled, and skipped prerequisites. It includes both browser
-and Lighthouse results, so neither can be used alone as the deployment gate. The repository ruleset must
-require `validate` instead of the previous `build` status when adopting this workflow. Deployment and live
-smoke checks are intentionally skipped on PRs.
+Deployment directly depends on every source check, unit tests, artifact validation, browser tests, and
+Lighthouse. GitHub's default success condition prevents deployment if any prerequisite fails or is skipped;
+there is no aggregate job. Deployment and live smoke checks are intentionally skipped on PRs.
+
+When adopting this workflow, replace the repository ruleset's old required `build` context with all eleven
+pre-deployment checks: `format`, `lint-code`, `lint-css`, `lint-markdown`, `spellcheck`, `audit-unused`,
+`typecheck`, `test-unit`, `build-artifact`, `test-browser`, and `lighthouse`. Requiring every check prevents
+a skipped downstream job from hiding a source failure. Browser checks alone do not cover Lighthouse failures.
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its
 verification when another commit arrives.
 
@@ -73,7 +75,7 @@ verification when another commit arrives.
   TypeScript error in a
   standalone script was confirmed to fail Astro checking before removing the redundant `tsc` invocation.
 - Source Markdown lint excludes `dist/`; generated resume Markdown is checked once after generation.
-- Unit tests run once (the workflow contract tests use Bash and jq, also present on the CI runner). Coverage
+- Unit tests run once. Workflow contract tests verify independent checks and deployment dependencies. Coverage
   reports and runtime compatibility matrices are separate policy work, not duplicate
   unit-test runs added here.
 - Browser accessibility tests inspect behavior and WCAG rules. Lighthouse measures performance and
@@ -150,6 +152,6 @@ package/generator/template
 compatibility checks can have distinct reasons to repeat work across supported environments.
 
 A useful upstream proposal is to give the website independent source checks and one validated artifact, make browser and
-Lighthouse consumers depend on it, keep an aggregate required result, and retain a small post-deployment
+Lighthouse consumers depend on it, require each check for merging and deployment, and retain a small post-deployment
 check.
 Apply this selectively rather than copying this site's route list, resume policy, or performance thresholds.

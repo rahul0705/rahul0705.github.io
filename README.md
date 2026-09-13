@@ -253,8 +253,7 @@ create issues or comments. This weekly automated scan complements the broader ma
 the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
 
 The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
-Browser tests and Lighthouse consume that validated artifact in parallel. The required `validate` check aggregates their
-results before a push to `main` can deploy the same output to GitHub Pages.
+Browser tests and Lighthouse consume that validated artifact in parallel. Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
 Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.

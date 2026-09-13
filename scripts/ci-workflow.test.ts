@@ -1,4 +1,3 @@
-import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
@@ -89,24 +88,14 @@ describe('website CI dependency and artifact contract', () => {
     for (const upload of uploads) expect(upload.with?.path).toBe('./dist');
   });
 
-  it('keeps the required validation gate ahead of deployment and smoke checks after it', () => {
-    expect(ancestors('validate')).toEqual(
-      expect.arrayContaining([...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse']),
+  it('requires every check directly before deployment and verifies the live result afterward', () => {
+    expect(dependencies(jobs.deploy).sort()).toEqual(
+      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse'].sort(),
     );
-    expect(dependencies(jobs.deploy)).toContain('validate');
+    expect(jobs.deploy.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/main'");
     expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
-    expect(jobs.validate.if).toBe('always()');
-  });
-
-  it('fails the aggregate gate on failure, cancellation, or a skipped prerequisite', () => {
-    const command = steps('validate').find((step) => step.env?.CHECK_RESULTS)?.run;
-    expect(command).toBeTruthy();
-    const run = (result: string) =>
-      execFileSync('bash', ['-c', command!], {
-        env: { ...process.env, CHECK_RESULTS: JSON.stringify({ check: { result } }) },
-        stdio: 'pipe',
-      });
-    expect(() => run('success')).not.toThrow();
-    for (const result of ['failure', 'cancelled', 'skipped']) expect(() => run(result), result).toThrow();
+    expect(Object.keys(jobs).sort()).toEqual(
+      [...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse', 'deploy', 'smoke-deployed'].sort(),
+    );
   });
 });

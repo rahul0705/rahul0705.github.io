@@ -277,8 +277,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
 
-  # Aggregate results without rerunning checks.
-  validate:
+  deploy:
     needs:
       [
         format,
@@ -293,21 +292,6 @@ jobs:
         test-browser,
         lighthouse,
       ]
-    if: always()
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - name: Require every pre-deployment check to pass
-        env:
-          CHECK_RESULTS: ${{ toJSON(needs) }}
-        run: |
-          if ! jq --exit-status 'to_entries | all(.value.result == "success")' <<< "$CHECK_RESULTS"; then
-            echo '::error title=Site validation failed::Every pre-deployment check must succeed; skipped or cancelled checks do not pass.'
-            exit 1
-          fi
-
-  deploy:
-    needs: validate
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
