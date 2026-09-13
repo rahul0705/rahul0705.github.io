@@ -36,8 +36,7 @@ npm run preview
 | `npm run build`          | Generate the static site in `dist/`                |
 | `npm run validate:build` | Smoke-check required production artifacts          |
 | `npm run preview`        | Serve the generated production build               |
-| `npm run typecheck`      | Check TypeScript types                             |
-| `npm run astro:check`    | Run Astro diagnostics                              |
+| `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
 | `npm run format`         | Check formatting                                   |
 | `npm run format:fix`     | Apply formatting                                   |
 | `npm run lint:all`       | Lint code, CSS, and Markdown                       |
@@ -46,6 +45,26 @@ npm run preview
 | `npm run test:coverage`  | Generate unit-test coverage                        |
 | `npm run quality`        | Run the complete local quality pipeline            |
 | `npm run audit:unused`   | Report unused files, exports, and dependencies     |
+
+Each remaining script has a separate purpose. In addition to the common commands above:
+
+| Command                                       | Purpose                                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------------------ |
+| `npm run lint:code` / `lint:code:fix`         | Check or fix source code                                                       |
+| `npm run lint:styles` / `lint:styles:fix`     | Check or fix CSS                                                               |
+| `npm run lint:markdown` / `lint:markdown:fix` | Check or fix source Markdown                                                   |
+| `npm run lint:resume:markdown`                | Check generated `dist/resume.md`; requires a build                             |
+| `npm run spellcheck`                          | Check spelling independently of syntax/style lint                              |
+| `npm run audit`                               | Inspect dependency security advisories under the existing high-severity policy |
+| `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
+| `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
+| `npm run preview:test`                        | Internal Playwright server with controlled host, port, and process lifetime    |
+
+`lint:all` groups source linters for local use; `quality` composes the full local validation sequence.
+CI calls individual checks so they report independently. `test:coverage` runs the unit suite with coverage
+instrumentation; use it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files.
+`preview` is the interactive server; `preview:test` is owned by Playwright. For other Astro CLI operations,
+use `npx astro <command>`. `typecheck` is the sole script for Astro and TypeScript diagnostics.
 
 Install the Playwright browser before running browser tests for the first time:
 
@@ -114,7 +133,7 @@ The public resume routes are:
 When changing resume generation, run:
 
 ```sh
-npm run verify:resume:markdown
+npm run build && npm run lint:resume:markdown
 ```
 
 ## Buttons and color
@@ -252,9 +271,9 @@ create issues or comments. This weekly automated scan complements the broader ma
 [issue #9](https://github.com/rahul0705/rahul0705.github.io/issues/9). The schedule becomes active after merge to `main`;
 the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
 
-The CI workflow runs formatting, linting, type checks, Astro diagnostics, unit tests, browser tests, Lighthouse, and a
-production build with artifact validation. A push to `main` deploys the generated `dist/` artifact to GitHub Pages
-after required checks pass.
+The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
+Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
+Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
 Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
@@ -276,7 +295,7 @@ The TypeScript scripts run with Node’s built-in type stripping; no additional 
 Playwright checks metadata, internal references, feeds, crawl policy, analytics,
 CMS behavior, and resume exports against the generated site. Failures identify the artifact or page involved.
 
-CI validates the final build before uploading deployment artifacts. Deployment also depends on the browser suite,
+CI validates the uploaded build before deployment. Deployment also depends on the browser suite,
 which checks every sitemap page and the 404 page for horizontal overflow at 320, 375, 390, 640, 768, 820, and 1024 CSS pixels.
 Open navigation and resume export menus and expanded resume skills are checked at those widths as well.
 These automated checks catch layout regressions; visual review on real mobile devices remains useful for issues
@@ -292,5 +311,5 @@ starting a local server. It checks homepage, resume, and article content, canoni
 retain evidence for 14 days. A failure marks the workflow failed after publishing; it does not roll back the deployment.
 
 Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or
-`npm run test:smoke` to check the local production preview. These checks also run before deployment as part of the
-regular browser suite.
+`npm run test:smoke` to check the local production preview. The smoke suite has a separate Playwright configuration;
+the regular browser suite exercises the full behavior without repeating these smaller deployment checks.

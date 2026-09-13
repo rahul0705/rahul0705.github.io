@@ -10,6 +10,7 @@ const baseURL = deploymentURL ?? `http://127.0.0.1:${port}`;
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
+  testIgnore: ['**/deployment.spec.ts'],
   ...(deploymentURL ? { testMatch: '**/deployment.spec.ts', retries: 2, workers: 1 } : {}),
   reporter: process.env.GITHUB_ACTIONS === 'true' ? [['dot'], ['github'], ['html', { open: 'never' }]] : 'list',
   use: {
