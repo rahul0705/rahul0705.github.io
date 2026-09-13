@@ -20,7 +20,7 @@ defaults:
     shell: bash
 
 jobs:
-  static-checks:
+  format:
     runs-on: ubuntu-latest
 
     permissions:
@@ -38,20 +38,110 @@ jobs:
       - name: Check formatting
         run: npm run format
 
+  lint-code:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
+
       - name: Lint code
         run: npm run lint:code
+
+  lint-css:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
 
       - name: Lint styles
         run: npm run lint:css
 
+  lint-markdown:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
+
       - name: Lint source Markdown
         run: npm run lint:markdown
+
+  spellcheck:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
 
       - name: Spellcheck source
         run: npm run spellcheck
 
+  audit-unused:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
+
       - name: Audit unused code and dependencies
         run: npm run audit:unused
+
+  typecheck:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup project
+        uses: $/.github/actions/setup-project
 
       - name: Check TypeScript and Astro diagnostics
         run: npm run typecheck
@@ -75,7 +165,7 @@ jobs:
         run: npm run test:unit
 
   build-artifact:
-    needs: [static-checks, test-unit]
+    needs: [format, lint-code, lint-css, lint-markdown, spellcheck, audit-unused, typecheck, test-unit]
     runs-on: ubuntu-latest
 
     permissions:
@@ -187,9 +277,22 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
 
-  # Preserve the existing required status-check name. This job only aggregates results.
-  build:
-    needs: [static-checks, test-unit, build-artifact, test-browser, lighthouse]
+  # Aggregate results without rerunning checks.
+  validate:
+    needs:
+      [
+        format,
+        lint-code,
+        lint-css,
+        lint-markdown,
+        spellcheck,
+        audit-unused,
+        typecheck,
+        test-unit,
+        build-artifact,
+        test-browser,
+        lighthouse,
+      ]
     if: always()
     runs-on: ubuntu-latest
     permissions: {}
@@ -204,7 +307,7 @@ jobs:
           fi
 
   deploy:
-    needs: build
+    needs: validate
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 

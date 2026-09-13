@@ -22,6 +22,16 @@ const { jobs } = parse(readFileSync(new URL('../.github/workflows/project.yml', 
 const { scripts } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as {
   scripts: Record<string, string>;
 };
+const sourceJobs = [
+  'format',
+  'lint-code',
+  'lint-css',
+  'lint-markdown',
+  'spellcheck',
+  'audit-unused',
+  'typecheck',
+  'test-unit',
+];
 const dependencies = (job: Job): string[] => (Array.isArray(job.needs) ? job.needs : job.needs ? [job.needs] : []);
 const ancestors = (name: string): string[] =>
   dependencies(jobs[name]).flatMap((parent) => [parent, ...ancestors(parent)]);
@@ -51,8 +61,15 @@ describe('website CI dependency and artifact contract', () => {
     expect(preDeployCommands).not.toContain('tsc --noEmit');
   });
 
+  it('runs source checks independently so all failures can report', () => {
+    for (const name of sourceJobs) {
+      expect(dependencies(jobs[name])).toEqual([]);
+      expect(steps(name).filter((step) => step.run)).toHaveLength(1);
+    }
+  });
+
   it('builds only after source checks and unit tests pass', () => {
-    expect(ancestors('build-artifact')).toEqual(expect.arrayContaining(['static-checks', 'test-unit']));
+    expect(ancestors('build-artifact')).toEqual(expect.arrayContaining(sourceJobs));
     const commands = steps('build-artifact').map((step) => step.run);
     expect(commands.indexOf('npm run build')).toBeLessThan(commands.indexOf('npm run validate:build'));
     expect(commands.indexOf('npm run validate:build')).toBeLessThan(commands.indexOf('npm run lint:resume:markdown'));
@@ -72,17 +89,17 @@ describe('website CI dependency and artifact contract', () => {
     for (const upload of uploads) expect(upload.with?.path).toBe('./dist');
   });
 
-  it('keeps the required build gate ahead of deployment and smoke checks after it', () => {
-    expect(ancestors('build')).toEqual(
-      expect.arrayContaining(['static-checks', 'test-unit', 'build-artifact', 'test-browser', 'lighthouse']),
+  it('keeps the required validation gate ahead of deployment and smoke checks after it', () => {
+    expect(ancestors('validate')).toEqual(
+      expect.arrayContaining([...sourceJobs, 'build-artifact', 'test-browser', 'lighthouse']),
     );
-    expect(dependencies(jobs.deploy)).toContain('build');
+    expect(dependencies(jobs.deploy)).toContain('validate');
     expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
-    expect(jobs.build.if).toBe('always()');
+    expect(jobs.validate.if).toBe('always()');
   });
 
   it('fails the aggregate gate on failure, cancellation, or a skipped prerequisite', () => {
-    const command = steps('build').find((step) => step.env?.CHECK_RESULTS)?.run;
+    const command = steps('validate').find((step) => step.env?.CHECK_RESULTS)?.run;
     expect(command).toBeTruthy();
     const run = (result: string) =>
       execFileSync('bash', ['-c', command!], {

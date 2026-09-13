@@ -14,7 +14,7 @@ flowchart TD
   U[Unit tests] --> B
   B --> P[Chromium, Firefox, WebKit]
   B --> L[Lighthouse]
-  S --> G[Required build gate]
+  S --> G[Required validate gate]
   U --> G
   B --> G
   P --> G
@@ -23,20 +23,25 @@ flowchart TD
   D --> M[Live Chromium smoke checks]
 ```
 
-| Job              | Work it owns                                                                            | Input and dependencies                          |
-| ---------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| `static-checks`  | Formatting, code/CSS/source Markdown lint, spelling, Knip, TypeScript/Astro diagnostics | Source checkout                                 |
-| `test-unit`      | Unit tests, including CI dependency and failure-policy tests                            | Source checkout; parallel with static checks    |
-| `build-artifact` | One Astro build, output validation, generated resume Markdown lint                      | Requires both source jobs                       |
-| `test-browser`   | Full behavior, accessibility, and mobile coverage in three engines                      | Downloads `site-build`; never builds            |
-| `lighthouse`     | Performance, accessibility, best-practice, and SEO budgets                              | Downloads `site-build`; never builds            |
-| `build`          | Aggregate required result; no tool checks are rerun                                     | Every prerequisite must succeed                 |
-| `deploy`         | Publish the packaged output                                                             | Requires `build`; only runs on pushes to `main` |
-| `smoke-deployed` | Live route/content/asset/mobile checks                                                  | Uses the URL returned by successful deployment  |
+| Job              | Work it owns                                                       | Input and dependencies                             |
+| ---------------- | ------------------------------------------------------------------ | -------------------------------------------------- |
+| `format`         | Check formatting                                                   | Source checkout; independent job                   |
+| `lint-code`      | Lint code                                                          | Source checkout; independent job                   |
+| `lint-css`       | Lint styles                                                        | Source checkout; independent job                   |
+| `lint-markdown`  | Lint source Markdown                                               | Source checkout; independent job                   |
+| `spellcheck`     | Spellcheck source                                                  | Source checkout; independent job                   |
+| `audit-unused`   | Audit unused code and dependencies                                 | Source checkout; independent job                   |
+| `typecheck`      | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                   |
+| `test-unit`      | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks       |
+| `build-artifact` | One Astro build, output validation, generated resume Markdown lint | Requires all source checks and unit tests          |
+| `test-browser`   | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds               |
+| `lighthouse`     | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds               |
+| `validate`       | Aggregate required result; no tool checks are rerun                | Every prerequisite must succeed                    |
+| `deploy`         | Publish the packaged output                                        | Requires `validate`; only runs on pushes to `main` |
+| `smoke-deployed` | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment     |
 
-Source checks share one dependency installation with individually named steps. Unit tests run in parallel
-because
-both inspect source and neither needs a production artifact. A failure in either prevents the build. Browser
+Source checks and unit tests run in independent jobs so they execute concurrently and report all failures.
+Each job owns one check and installs its dependencies separately. Any failed check prevents the build. Browser
 tests
 and Lighthouse run in separate jobs after the build; their independence avoids browser resource contention
 affecting
@@ -51,11 +56,10 @@ This matters because financial-scope values can refresh during a build: separate
 deployment
 could validate different content even at the same source revision.
 
-The required status-check name remains `build`, matching the repository ruleset. Its `always()` aggregate
-rejects
-failed, cancelled, and skipped prerequisites; skipped browser jobs cannot accidentally produce a green merge
-gate.
-No ruleset changes are needed. Deployment and live smoke checks are intentionally skipped on PRs.
+The `validate` aggregate rejects failed, cancelled, and skipped prerequisites. It includes both browser
+and Lighthouse results, so neither can be used alone as the deployment gate. The repository ruleset must
+require `validate` instead of the previous `build` status when adopting this workflow. Deployment and live
+smoke checks are intentionally skipped on PRs.
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its
 verification when another commit arrives.
 
@@ -92,7 +96,7 @@ host constant.
 
 ## Required unused-code policy (issue #12)
 
-Knip is a required step in `static-checks` and in the local `quality` command. Findings block compilation
+Knip runs in the required `audit-unused` job and in the local `quality` command. Findings block compilation
 and deployment.
 The current entry points are recognized without a broad ignore list:
 
@@ -145,7 +149,7 @@ both invoke type checking. Those are candidates for consolidation for the websit
 package/generator/template
 compatibility checks can have distinct reasons to repeat work across supported environments.
 
-A useful upstream proposal is to give the website one source gate and one validated artifact, make browser and
+A useful upstream proposal is to give the website independent source checks and one validated artifact, make browser and
 Lighthouse consumers depend on it, keep an aggregate required result, and retain a small post-deployment
 check.
 Apply this selectively rather than copying this site's route list, resume policy, or performance thresholds.
