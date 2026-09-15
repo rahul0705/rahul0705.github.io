@@ -1,6 +1,8 @@
 # Article cover images
 
-These generic article covers are downloaded from Unsplash and are used under the
+<!-- cSpell:ignore dont Preez -->
+
+These article covers are downloaded from Unsplash and are used under the
 [Unsplash License](https://unsplash.com/license).
 
 - `network.jpg`: <https://images.unsplash.com/photo-1558494949-ef010cbdcc31>
@@ -10,3 +12,5 @@ These generic article covers are downloaded from Unsplash and are used under the
 - `git.jpg`: <https://images.unsplash.com/photo-1515879218367-8466d910aaa4>
 - `duplication-vs-coupling.jpg`: <https://unsplash.com/photos/XbWtzkRA9S8>
 - `did-you-fix-the-bug.jpg`: <https://unsplash.com/photos/BfrQnKBulYQ>
+- `the-best-code-you-dont-write.jpg`: Photo by [Priscilla Du Preez](https://unsplash.com/@priscilladupreez)
+  on [Unsplash](https://unsplash.com/photos/Fcpkcee77Pw).
