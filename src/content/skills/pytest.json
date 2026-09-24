@@ -1,5 +1,6 @@
 {
   "name": "pytest",
+  "category": "testing-quality",
   "description": "Python testing framework.",
   "href": "https://pytest.org/",
   "trackExperienceCoverage": true

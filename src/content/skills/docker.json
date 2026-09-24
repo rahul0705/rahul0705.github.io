@@ -1,5 +1,6 @@
 {
   "name": "Docker",
+  "category": "cloud-infrastructure",
   "description": "Container build and runtime platform.",
   "href": "https://www.docker.com/",
   "trackExperienceCoverage": true

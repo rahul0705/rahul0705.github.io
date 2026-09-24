@@ -1,5 +1,6 @@
 {
   "name": "Amazon OpenSearch Service",
+  "category": "data-messaging",
   "description": "AWS managed search and analytics service.",
   "href": "https://aws.amazon.com/opensearch-service/",
   "trackExperienceCoverage": true

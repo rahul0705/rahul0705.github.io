@@ -1,5 +1,6 @@
 {
   "name": "React",
+  "category": "languages-frameworks",
   "description": "JavaScript Library",
   "href": "https://react.dev/",
   "trackExperienceCoverage": true

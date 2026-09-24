@@ -1,5 +1,6 @@
 {
   "name": "Perl",
+  "category": "languages-frameworks",
   "description": "Programming Language",
   "href": "https://www.perl.org/",
   "trackExperienceCoverage": true

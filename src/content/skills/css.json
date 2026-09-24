@@ -1,5 +1,6 @@
 {
   "name": "CSS",
+  "category": "languages-frameworks",
   "description": "Style sheet language for web interfaces.",
   "href": "https://www.w3.org/Style/CSS/",
   "trackExperienceCoverage": true
