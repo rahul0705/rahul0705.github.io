@@ -1,5 +1,6 @@
 {
   "name": "Computer Science",
+  "category": "engineering-practices",
   "description": "Study of computation, algorithms, and software systems.",
   "href": "https://www.cs.purdue.edu/"
 }

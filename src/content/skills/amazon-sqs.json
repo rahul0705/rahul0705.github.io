@@ -1,5 +1,6 @@
 {
   "name": "Amazon SQS",
+  "category": "data-messaging",
   "description": "AWS managed message queue service.",
   "href": "https://aws.amazon.com/sqs/",
   "trackExperienceCoverage": true

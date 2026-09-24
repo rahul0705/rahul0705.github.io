@@ -1,5 +1,6 @@
 {
   "name": "AWS Lambda",
+  "category": "cloud-infrastructure",
   "description": "AWS serverless compute service.",
   "href": "https://aws.amazon.com/lambda/",
   "trackExperienceCoverage": true

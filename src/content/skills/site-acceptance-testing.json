@@ -1,4 +1,5 @@
 {
   "name": "Site Acceptance Testing",
+  "category": "testing-quality",
   "description": "Formal verification of a system in its operational environment."
 }

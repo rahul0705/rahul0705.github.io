@@ -1,4 +1,5 @@
 {
   "name": "Network Testing",
+  "category": "testing-quality",
   "description": "Validation of network behavior and reliability."
 }

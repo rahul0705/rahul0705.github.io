@@ -1,5 +1,6 @@
 {
   "name": "AWS IAM",
+  "category": "security-compliance",
   "description": "AWS identity and access management service.",
   "href": "https://aws.amazon.com/iam/",
   "trackExperienceCoverage": true

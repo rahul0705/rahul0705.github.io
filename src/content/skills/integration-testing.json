@@ -1,4 +1,5 @@
 {
   "name": "Integration Testing",
+  "category": "testing-quality",
   "description": "Validation of interactions between system components."
 }

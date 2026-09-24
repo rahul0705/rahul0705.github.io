@@ -1,4 +1,5 @@
 {
   "name": "Distributed Systems",
+  "category": "engineering-practices",
   "description": "Systems that coordinate work across multiple machines."
 }

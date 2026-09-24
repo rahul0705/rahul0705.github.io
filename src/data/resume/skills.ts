@@ -1,5 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+import { skillCategories } from '../../config/skill-categories';
+
 export type SkillCatalogEntry = CollectionEntry<'skills'>['data'];
 export type SkillId = CollectionEntry<'skills'>['id'];
 
@@ -8,6 +10,11 @@ const skillEntries = await getCollection('skills');
 export const skillCatalog: Record<SkillId, SkillCatalogEntry> = Object.fromEntries(
   skillEntries.map((entry) => [entry.id, entry.data]),
 );
+
+export const categorizedSkills = skillCategories.map((category) => ({
+  ...category,
+  skills: skillEntries.filter((entry) => entry.data.category === category.value),
+}));
 
 export const validateSkillIds = (ids: Iterable<string>, context: string): void => {
   const invalidIds = [...ids].filter((id) => !(id in skillCatalog));

@@ -1,5 +1,6 @@
 {
   "name": "Mockito",
+  "category": "testing-quality",
   "description": "Java mocking framework.",
   "href": "https://site.mockito.org/",
   "trackExperienceCoverage": true

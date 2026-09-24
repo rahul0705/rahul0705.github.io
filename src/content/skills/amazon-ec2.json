@@ -1,5 +1,6 @@
 {
   "name": "Amazon EC2",
+  "category": "cloud-infrastructure",
   "description": "AWS virtual compute service.",
   "href": "https://aws.amazon.com/ec2/",
   "trackExperienceCoverage": true

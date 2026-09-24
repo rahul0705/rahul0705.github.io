@@ -1,5 +1,6 @@
 {
   "name": "STIGs",
+  "category": "security-compliance",
   "description": "Security Technical Implementation Guides for system hardening and compliance.",
   "href": "https://public.cyber.mil/stigs/"
 }

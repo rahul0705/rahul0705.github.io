@@ -1,4 +1,5 @@
 {
   "name": "System Hardening",
+  "category": "security-compliance",
   "description": "Reduction of system attack surface through secure configuration."
 }

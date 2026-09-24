@@ -1,4 +1,5 @@
 {
   "name": "System Architecture",
+  "category": "engineering-practices",
   "description": "Design of software components, interfaces, and deployment topology."
 }

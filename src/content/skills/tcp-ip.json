@@ -1,4 +1,5 @@
 {
   "name": "TCP/IP",
+  "category": "cloud-infrastructure",
   "description": "Internet protocol suite."
 }

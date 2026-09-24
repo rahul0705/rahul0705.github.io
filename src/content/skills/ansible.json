@@ -1,5 +1,6 @@
 {
   "name": "Ansible",
+  "category": "delivery-automation",
   "description": "Automation Tool",
   "href": "https://www.ansible.com/",
   "trackExperienceCoverage": true
