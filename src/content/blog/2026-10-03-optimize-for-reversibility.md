@@ -1,9 +1,7 @@
 ---
 title: Optimize for Reversibility
-description: We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and recover without rebuilding everything around us.
 draft: true
-coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
-coverImageAlt: TBD
+description: We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and recover without rebuilding everything around us.
 tableOfContents: false
 section: Process
 tags:
@@ -11,12 +9,16 @@ tags:
   - development
   - design
   - architecture
+coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
+coverImageAlt: TBD
 ---
 
-During my time at AWS, I heard decisions described as _one-way doors_ and _two-way doors_. The idea comes from Amazon's
-way of distinguishing consequential, difficult-to-reverse decisions from decisions that are easier to change.
+During my time at AWS, I heard decisions described as _one-way doors_ and _two-way doors_. It's an idea closely tied to
+Amazon's broader
+["Day 1" culture](https://aws.amazon.com/executive-insights/content/how-amazon-defines-and-operationalizes-a-day-1-culture/):
+move quickly, stay willing to experiment, and recognize that not every decision needs to be treated as permanent.
 
-Jeff Bezos described them as Type 1 and Type 2 decisions in his
+Jeff Bezos described the distinction as Type 1 and Type 2 decisions in his
 [2015 letter to Amazon shareholders](https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm).
 
 A two-way door is a decision you can walk back through. If you're wrong, you learn something, reverse course, and try
@@ -93,11 +95,11 @@ That's not the goal.
 Reversibility isn't about preparing for every possible future. It's about paying attention to the decisions where being
 wrong would be unusually expensive.
 
-| Easier to reverse                                | Harder to reverse                                        |
-| ------------------------------------------------ | -------------------------------------------------------- |
-| A small internal function                        | A data format written into millions of persisted records |
-| A library used behind one interface              | A library whose types appear throughout the codebase     |
-| An internal API that can evolve with its callers | A public API used by people you don't control            |
+| Easier to reverse | Harder to reverse |
+| --- | --- |
+| A small internal function | A data format written into millions of persisted records |
+| A library used behind one interface | A library whose types appear throughout the codebase |
+| An internal API that can evolve with its callers | A public API used by people you don't control |
 
 The important question isn't _"Could this ever change?"_ Almost everything could.
 
