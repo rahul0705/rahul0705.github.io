@@ -1,4 +1,5 @@
 {
   "name": "Factory Acceptance Testing",
+  "category": "testing-quality",
   "description": "Formal verification that a system meets requirements before delivery."
 }

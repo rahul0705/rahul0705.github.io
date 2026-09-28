@@ -1,5 +1,6 @@
 {
   "name": "Oracle Coherence",
+  "category": "data-messaging",
   "description": "In-memory Data Grid",
   "href": "https://www.oracle.com/middleware/technologies/coherence.html",
   "trackExperienceCoverage": true

@@ -1,8 +1,10 @@
+import type { SkillCategory } from '../../config/skill-categories';
 import type { ExperienceOrganization, ExperienceRole } from './experience';
 import { skillCatalog, type SkillId } from './skills';
 
 export interface SkillExperienceCoverage {
   name: string;
+  category: SkillCategory;
   months: number;
   percentage: number;
 }
@@ -74,7 +76,12 @@ export const deriveSkillExperienceCoverage = (
   return [...intervalsBySkill.entries()]
     .map(([skillId, intervals]) => {
       const months = uniqueMonths(intervals);
-      return { name: skillCatalog[skillId].name, months, percentage: Math.round((months / careerMonths) * 100) };
+      return {
+        name: skillCatalog[skillId].name,
+        category: skillCatalog[skillId].category as SkillCategory,
+        months,
+        percentage: Math.round((months / careerMonths) * 100),
+      };
     })
     .sort((a, b) => b.months - a.months || a.name.localeCompare(b.name));
 };

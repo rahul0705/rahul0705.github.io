@@ -1,4 +1,5 @@
 {
   "name": "Code Coverage",
+  "category": "testing-quality",
   "description": "Measurement of code exercised by automated tests."
 }

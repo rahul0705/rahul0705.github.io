@@ -1,4 +1,5 @@
 {
   "name": "Performance Optimization",
+  "category": "engineering-practices",
   "description": "Measurement and improvement of software resource utilization and throughput."
 }

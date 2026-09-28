@@ -1,11 +1,20 @@
 import { describe, expect, it } from 'vitest';
 
+import { skillCategories } from '../../config/skill-categories';
 import { education } from './education';
 import { experienceEntries } from './experience';
 import { createExperienceSlug } from './experience-slug';
-import { skillCatalog, type SkillId, validateSkillIds } from './skills';
+import { categorizedSkills, skillCatalog, type SkillId, validateSkillIds } from './skills';
 
 describe('experience content', () => {
+  it('places every catalog skill in exactly one configured category', () => {
+    expect(categorizedSkills.map(({ value, label }) => ({ value, label }))).toEqual(skillCategories);
+    expect(categorizedSkills.every(({ skills }) => skills.length > 0)).toBe(true);
+    expect(categorizedSkills.flatMap(({ skills }) => skills.map(({ id }) => id)).sort()).toEqual(
+      Object.keys(skillCatalog).sort(),
+    );
+  });
+
   it('uses the start-date-organization-project-role filename schema', () => {
     experienceEntries.forEach((entry) => {
       expect(entry.id).toBe(createExperienceSlug(entry.data));

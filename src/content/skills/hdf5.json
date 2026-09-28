@@ -1,5 +1,6 @@
 {
   "name": "HDF5",
+  "category": "data-messaging",
   "description": "Hierarchical data format for large scientific datasets.",
   "href": "https://www.hdfgroup.org/solutions/hdf5/",
   "trackExperienceCoverage": true

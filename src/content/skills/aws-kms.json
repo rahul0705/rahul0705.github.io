@@ -1,5 +1,6 @@
 {
   "name": "AWS KMS",
+  "category": "security-compliance",
   "description": "AWS managed encryption-key service.",
   "href": "https://aws.amazon.com/kms/",
   "trackExperienceCoverage": true

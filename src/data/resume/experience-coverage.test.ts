@@ -63,8 +63,8 @@ describe('experience coverage', () => {
         new Date('2024-06-15T00:00:00Z'),
       ),
     ).toEqual([
-      { name: 'TypeScript', months: 30, percentage: 100 },
-      { name: 'Python', months: 24, percentage: 80 },
+      { name: 'TypeScript', category: 'languages-frameworks', months: 30, percentage: 100 },
+      { name: 'Python', category: 'languages-frameworks', months: 24, percentage: 80 },
     ]);
   });
   it('maps coverage to five levels', () => {

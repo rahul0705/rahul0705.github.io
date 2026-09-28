@@ -1,5 +1,6 @@
 {
   "name": "Bash",
+  "category": "languages-frameworks",
   "description": "Unix shell and scripting language.",
   "href": "https://www.gnu.org/software/bash/",
   "trackExperienceCoverage": true

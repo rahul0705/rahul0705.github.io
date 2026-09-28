@@ -1,4 +1,5 @@
 {
   "name": "Continuous Integration",
+  "category": "delivery-automation",
   "description": "Automated build, test, and delivery workflows."
 }

@@ -1,4 +1,5 @@
 {
   "name": "Code Reviews",
+  "category": "testing-quality",
   "description": "Collaborative source-code quality review."
 }

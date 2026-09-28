@@ -1,5 +1,6 @@
 {
   "name": "Git",
+  "category": "delivery-automation",
   "description": "Software Configuration Management",
   "href": "https://git-scm.com/",
   "trackExperienceCoverage": true
