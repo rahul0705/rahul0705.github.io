@@ -7,6 +7,7 @@ export default defineConfig({
     'affordances',
     'Arroz',
     'autorun',
+    'Bezos',
     'Catppuccin',
     'cookieless',
     'daisyui',
