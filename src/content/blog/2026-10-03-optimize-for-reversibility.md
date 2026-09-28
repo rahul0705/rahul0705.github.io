@@ -95,11 +95,11 @@ That's not the goal.
 Reversibility isn't about preparing for every possible future. It's about paying attention to the decisions where being
 wrong would be unusually expensive.
 
-| Easier to reverse | Harder to reverse |
-| --- | --- |
-| A small internal function | A data format written into millions of persisted records |
-| A library used behind one interface | A library whose types appear throughout the codebase |
-| An internal API that can evolve with its callers | A public API used by people you don't control |
+| Easier to reverse                                | Harder to reverse                                        |
+| ------------------------------------------------ | -------------------------------------------------------- |
+| A small internal function                        | A data format written into millions of persisted records |
+| A library used behind one interface              | A library whose types appear throughout the codebase     |
+| An internal API that can evolve with its callers | A public API used by people you don't control            |
 
 The important question isn't _"Could this ever change?"_ Almost everything could.
 
