@@ -12,5 +12,5 @@ These article covers are downloaded from Unsplash and are used under the
 - `git.jpg`: <https://images.unsplash.com/photo-1515879218367-8466d910aaa4>
 - `duplication-vs-coupling.jpg`: <https://unsplash.com/photos/XbWtzkRA9S8>
 - `did-you-fix-the-bug.jpg`: <https://unsplash.com/photos/BfrQnKBulYQ>
-- `the-best-code-you-dont-write.jpg`: Photo by [Priscilla Du Preez](https://unsplash.com/@priscilladupreez)
-  on [Unsplash](https://unsplash.com/photos/Fcpkcee77Pw).
+- `the-best-code-you-dont-write.jpg`: <https://unsplash.com/photos/Fcpkcee77Pw>
+- `make-the-wrong-thing-hard-to-do.jpg`: <https://unsplash.com/photos/qqPOevsRH94>
