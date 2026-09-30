@@ -1,11 +1,11 @@
 ---
-import { site } from '../../data/site';
+import { Picture } from 'astro:assets';
+import heroImage from '../../assets/covers/home-workspace.png';
 import { siteConfig } from '../../config/site';
+import { site } from '../../data/site';
 import type { SocialNetwork } from '../../lib/social-networks';
 import Container from '../ui/Container.astro';
 import SocialIcon from '../ui/SocialIcon.astro';
-import { Image } from 'astro:assets';
-import heroImage from '../../assets/covers/code.jpg';
 
 interface Props {
   eyebrow?: string;
@@ -79,7 +79,7 @@ const {
       </div>
       </div>
       <div class="w-full max-w-xl lg:w-1/2">
-        <Image src={heroImage} alt="" width={900} height={600} class="aspect-3/2 w-full rounded-xl object-cover shadow-md" loading="eager" fetchpriority="high" />
+        <Picture src={heroImage} alt="Illustrated developer workspace overlooking a mountain landscape with cloud infrastructure and a satellite overhead" formats={['avif', 'webp']} width={900} height={600} class="aspect-3/2 w-full rounded-xl object-cover shadow-md" loading="eager" fetchpriority="high" />
       </div>
       </div>
     </Container>
