@@ -1,4 +1,4 @@
-import defaultSocialImage from '../assets/covers/code.jpg';
+import defaultSocialImage from '../assets/covers/home-workspace.png';
 import { siteConfig, socialLinks } from '../config/site';
 import { getPublishedPosts } from '../lib/blog';
 import { resume } from './resume';
