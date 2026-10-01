@@ -1,7 +1,8 @@
 ---
 title: Make the Wrong Thing Hard to Do
-draft: false
 description: Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to break in the first place.
+coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
+coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
 tableOfContents: false
 section: Process
 tags:
@@ -9,8 +10,8 @@ tags:
   - development
   - design
   - architecture
-coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
-coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
+
+# cSpell:ignore dataclass mypy
 ---
 
 Most software has rules that aren't written in code. At work, we call this _tribal knowledge_: the things everyone on
@@ -95,14 +96,14 @@ class JobConfig:
 
 This model can represent all sorts of states, and only some of them make sense:
 
-| Fields set | Valid? |
-| --- | --- |
-| `api_key` only | Valid |
-| `username` + `password` | Valid |
-| `username` only | Invalid |
-| `password` only | Invalid |
+| Fields set                          | Valid?           |
+| ----------------------------------- | ---------------- |
+| `api_key` only                      | Valid            |
+| `username` + `password`             | Valid            |
+| `username` only                     | Invalid          |
+| `password` only                     | Invalid          |
 | `api_key` + `username` + `password` | Probably invalid |
-| Nothing | Invalid |
+| Nothing                             | Invalid          |
 
 The type technically works, but it pushes the rules somewhere else. Now every consumer needs to know which combinations
 are valid, or every entry point has to remember to call validation.
