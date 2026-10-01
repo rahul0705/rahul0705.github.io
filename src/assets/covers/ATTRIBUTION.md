@@ -14,3 +14,4 @@ These article covers are downloaded from Unsplash and are used under the
 - `did-you-fix-the-bug.jpg`: <https://unsplash.com/photos/BfrQnKBulYQ>
 - `the-best-code-you-dont-write.jpg`: <https://unsplash.com/photos/Fcpkcee77Pw>
 - `make-the-wrong-thing-hard-to-do.jpg`: <https://unsplash.com/photos/qqPOevsRH94>
+- `optimize-for-reversibility.jpg`: <https://unsplash.com/photos/9gcWxj_4Nso>
