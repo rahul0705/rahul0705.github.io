@@ -8,6 +8,7 @@ export default defineConfig({
     'Airbender',
     'DEKA',
     'Drexel',
+    'domcontentloaded',
     'HYROX',
     'Lich',
     'lede',
