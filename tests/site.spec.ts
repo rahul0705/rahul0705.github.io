@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 import { siteConfig } from '../src/config/site';
 import { siteTheme, siteThemeColor } from '../src/themes/site-theme';
 
-const routes = ['/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/', '/privacy/'];
+const routes = ['/', '/about/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/', '/privacy/'];
 
 const sitemapLocations = (xml: string) =>
   Array.from(xml.matchAll(/<loc>(.*?)<\/loc>/g), ([, location]) => location.replaceAll('&amp;', '&'));
@@ -454,5 +454,41 @@ test('long inline code wraps within the article column on narrow phones', async 
   for (const fragment of bounds.fragments) {
     expect(fragment.left).toBeGreaterThanOrEqual(bounds.left);
     expect(fragment.right).toBeLessThanOrEqual(bounds.right);
+  }
+});
+
+test('About mobile hero appears before the lede and reserves space while its image loads', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  let releaseImage!: () => void;
+  const imageReady = new Promise<void>((resolve) => {
+    releaseImage = resolve;
+  });
+  await page.route('**/_astro/rahul-and-luna*', async (route) => {
+    await imageReady;
+    await route.continue();
+  });
+  try {
+    await page.goto('/about/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() =>
+      Promise.all([
+        document.fonts.load('400 18px "Fira Sans"'),
+        document.fonts.load('500 20px "Fira Sans"'),
+        document.fonts.load('700 48px "Fira Sans"'),
+      ]),
+    );
+    const heading = await page.getByRole('heading', { level: 1 }).boundingBox();
+    const image = await page.getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.').boundingBox();
+    const lede = page.locator('.hero-lede');
+    const before = await lede.boundingBox();
+    expect(heading!.y + heading!.height).toBeLessThan(image!.y);
+    expect(image!.y + image!.height).toBeLessThan(844);
+    expect(image!.y + image!.height).toBeLessThanOrEqual(before!.y);
+    releaseImage();
+    await page
+      .getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.')
+      .evaluate((image) => (image as HTMLImageElement).decode());
+    expect((await lede.boundingBox())!.y).toBeCloseTo(before!.y, 1);
+  } finally {
+    releaseImage();
   }
 });
