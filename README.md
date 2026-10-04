@@ -214,8 +214,8 @@ decisions:
   `robotsDisallowPaths` controls crawling separately from sitemap exclusions: crawlers can access `/admin/` so its HTML
   `noindex` directive can be read, while raw resume exports remain disallowed.
 - Omit a web app manifest for now. This portfolio has no installation or app-specific experience that warrants one.
-- Retain the existing fallback social image, `src/assets/covers/code.jpg`, used by `SeoHead` when a page supplies no
-  image. Article covers continue to override it; a second fallback asset would duplicate an existing capability.
+- Retain the existing fallback social image, `src/assets/covers/home-workspace.png`, used by `SeoHead` when a page
+  supplies no image. Article covers continue to override it; a second fallback asset would duplicate an existing capability.
 - Keep the article index unpaginated while its seven articles remain easy to browse together. Revisit pagination when
   the collection becomes cumbersome to scan or materially affects page performance.
 - Keep About content on the homepage, with the resume providing career detail. Add a separate About route only when
