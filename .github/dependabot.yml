@@ -4,6 +4,8 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    assignees:
+      - rahul0705
 
     schedule:
       interval: weekly
@@ -30,6 +32,8 @@ updates:
 
   - package-ecosystem: npm
     directory: /
+    assignees:
+      - rahul0705
 
     schedule:
       interval: weekly
