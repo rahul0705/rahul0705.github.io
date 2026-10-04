@@ -55,6 +55,7 @@ export const siteConfig = {
   },
   navigation: {
     primary: [
+      { label: 'About', href: '/about/', external: false },
       { label: 'Articles', href: '/blog', external: false },
       { label: 'Resume', href: '/resume', external: false },
     ],

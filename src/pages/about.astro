@@ -1,0 +1,190 @@
+---
+import { Picture } from 'astro:assets';
+import heroPhoto from '../assets/about/rahul-and-luna.jpeg';
+
+import Container from '../components/ui/Container.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { articleContentClasses } from '../styles/article-classes';
+---
+
+<BaseLayout title="About" description="The curiosity, people, and lessons behind how I build software and live outside the terminal." canonicalPath="/about/">
+<Container>
+<article class="pb-24 pt-16 sm:pb-32 sm:pt-24">
+<header class="about-hero mb-24 grid items-center gap-8 lg:mb-32 lg:grid-cols-[1.3fr_1fr] lg:gap-x-16">
+<div class="hero-heading lg:col-start-1 lg:row-start-1 lg:self-end">
+<p class="mb-4 text-sm font-semibold uppercase tracking-widest text-base-content">About</p>
+<h1 class="text-5xl font-bold tracking-tight sm:text-6xl xl:text-7xl">Hi, I'm Rahul.</h1>
+</div>
+<div class="hero-frame relative overflow-hidden aspect-[4/3] rounded-lg lg:aspect-[5/4] lg:col-start-2 lg:row-span-2 lg:row-start-1">
+<Picture
+  src={heroPhoto}
+  alt="Rahul relaxing on the couch with Luna, his Border Collie."
+  formats={['avif', 'webp']}
+  width={1536}
+  height={2048}
+  widths={[480, 768, 1024, 1536]}
+  sizes="(min-width: 1200px) 500px, (min-width: 1024px) calc((100vw - 112px) * 0.48), calc((100vw - 48px) * 1.1)"
+  class="hero-photo w-full h-full object-cover object-[100%_55%] scale-110 origin-[100%_50%]"
+  loading="eager"
+  fetchpriority="high"
+/>
+</div>
+<div class="hero-lede text-xl leading-9 text-base-content lg:col-start-1 lg:row-start-2 lg:self-start">
+<p>I'm a software engineer who likes understanding how things work, taking them apart (sometimes more successfully than others), and figuring out how to make them better. These days, a lot of that energy goes into developer experience: building tooling that removes friction and lets developers spend more time on the problem they actually came to solve.</p>
+</div>
+</header>
+<div class:list={[articleContentClasses.replace('max-w-none', '').replace('prose-p:text-base-content/80', 'prose-p:text-base-content').replace('prose-a:text-primary', 'prose-a:text-base-content').replace('prose-a:no-underline', 'prose-a:underline'), 'about-story mx-auto max-w-3xl prose-p:text-base-content prose-h2:mt-0 prose-h2:mb-5 prose-h3:mt-10 prose-h3:text-[1.375rem] prose-a:text-base-content prose-a:underline prose-a:underline-offset-[0.2em] prose-blockquote:my-10 prose-blockquote:border-l-4 prose-blockquote:pl-6 prose-blockquote:not-italic [&_blockquote_p]:before:content-none [&_blockquote_p]:after:content-none [&>section+section]:mt-20 [&>section:last-child]:pb-12']}>
+<section aria-labelledby="where-it-started">
+<h2 id="where-it-started">Where it started</h2>
+<p>I grew up in Florida, in a family where education was always important.</p>
+<p>My dad was born in Panama and was the first person in his family to attend college, earning degrees in industrial engineering and business. My mom grew up in Peru, studied there, and continued her education in the United States. Her father, my grandfather, was a chemical engineer.</p>
+<p>Education mattered in our house, but so did curiosity. If I wanted to learn something or try something, my parents found a way to support it. They didn't need to understand my interest to give me the chance to explore it.</p>
+<p>They also expected me to do something with those opportunities. I was taught to work hard, apply myself, follow through on things, and own it when I fell short. I wasn't always good at all of that growing up, but the expectation was always there.</p>
+<p>My dad and I think a lot alike. We're both analytical, and as I've gotten older, that's become one of the ways we connect. I value how he thinks through a problem, and a lot of the life I'm able to live now traces back to his advice.</p>
+<p>My mom's version of support is more hands-on. When I've moved from place to place, she's flown in to help me pack up one home and unpack the next.</p>
+<p>Looking back, my parents gave me every advantage they possibly could, and then some. In a lot of ways, they still do. I'm an adult now, but that hasn't stopped them from constantly looking for ways to help.</p>
+<p>They're the people I run big decisions past, the first people I want to share good news with, and the people I know I can turn to when things aren't going well.</p>
+<p>The kind of support has changed as I've gotten older. Their instinct to provide it hasn't.</p>
+</section>
+<section aria-labelledby="summers-in-peru">
+<h2 id="summers-in-peru">Summers in Peru</h2>
+<p>I spent a lot of my childhood summers in Peru, usually bouncing between time with my cousins and time with my grandparents.</p>
+<p>Because Peru is in the Southern Hemisphere, my summer vacation happened during their school year. My grandparents would enroll me in school while I was there, where I mostly focused on math. My grandfather could always help when I got stuck.</p>
+<p>He was also extremely strict and very old school.</p>
+<p>If my cousins or I got in trouble, we were sent to <em>el rincón</em>, "the corner," where we had to stand facing the wall in silence for some predetermined amount of time. One of my cousins and I had a remarkable ability to make our sentences longer by blaming each other for why we were there instead of staying quiet.</p>
+<p>My grandfather also had far more patience with me than I probably appreciated. At some point, I decided I was going to have a Pokémon party and invited my entire class.</p>
+<p>I neglected to run this plan by the adults.</p>
+<p>My grandfather came home from work to a house full of children and, somehow, survived another one of my ideas.</p>
+<p>I was too young to really appreciate how much he knew while he was alive. I can see now how much of what he valued made its way to me. He cared about education, discipline, doing what you said you would do, and doing the right thing even when nobody was making you do it.</p>
+<p>Some of those lessons came through math homework.</p>
+<p>Others required multiple visits to <em>el rincón</em>.</p>
+</section>
+<section aria-labelledby="taking-things-apart">
+<h2 id="taking-things-apart">Taking things apart</h2>
+<p>My relationship with computers started early.</p>
+<p>My dad wanted me to read more when I was a kid, so we'd spend time at Barnes &amp; Noble and he'd let me pick out whatever I wanted. More often than not, I'd come home with something about computers. I'm not sure that was exactly the reading habit he had in mind, but he never seemed to mind.</p>
+<p>In kindergarten, my parents enrolled me in a computer class. I remember being taught to open a file by double-clicking the tiny icon next to its name, not the text itself.</p>
+<p class="!my-8">Naturally, I tried the text.</p>
+<p class="!my-8">It worked.</p>
+<p>It's an insignificant discovery, but I think it captures something that has followed me ever since: being told how something works tends to make me want to find out how it <em>actually</em> works.</p>
+<p>By second grade, experimentation had become a little more destructive. We had an old family PC that wasn't being used anymore, so I took it apart without telling my parents.</p>
+<p>Taking it apart turned out to be considerably easier than putting it back together.</p>
+<p>What remained of it spent several years in a garbage bag in my closet before everyone accepted that it probably wasn't coming back.</p>
+</section>
+<section aria-labelledby="getting-connected">
+<h2 id="getting-connected">Getting connected</h2>
+<p>Computers became a much bigger part of my life when I started seventh grade at Palmer Trinity School. Every student was required to have a laptop. It was part of attending the school, and technology was woven into everyday classes. Homework was posted online, grades were available online, and having reliable internet at home suddenly mattered.</p>
+<p>Our dial-up became DSL and eventually cable. We added Wi-Fi. My dad handled most of the technology in our house at first, but I gradually started understanding more of it myself.</p>
+<p>Not all of that knowledge was put to particularly noble use.</p>
+<p>At some point, I realized that if I knew a bad grade was coming, I could block the school's grade website on my dad's computer. As far as he could tell, the site wasn't working. As far as I was concerned, I'd bought myself more time to ignore the homework I should have been doing and play video games instead.</p>
+<p>It wasn't exactly responsible systems administration, but it was systems administration.</p>
+<p>Then came World of Warcraft.</p>
+</section>
+<section aria-labelledby="two-buttons">
+<h2 id="two-buttons">Two buttons</h2>
+<p>World of Warcraft introduced me to macros: small scripts that could shortcut interactions or combine several of them together.</p>
+<p>At first, I copied things other people had written. Then I tried to understand them. Eventually, I started changing them myself.</p>
+<p>By the time <em>Wrath of the Lich King</em> came around, I was playing a Death Knight whose combat rotation I'd condensed largely into two buttons: one for a single target and another for an area of effect.</p>
+<p>It wasn't exactly software engineering, but the process was familiar: understand the pieces, combine them, see what happens, and find a better way to do it.</p>
+<p>Programming classes followed in high school, and computing gradually went from something I enjoyed to something I could imagine building a career around.</p>
+</section>
+<section aria-labelledby="purdue">
+<h2 id="purdue">Purdue</h2>
+<p>Going into my junior year of high school, my dad took me on a college tour to get me excited about what I was working toward. I initially fell in love with the entrepreneurship program at Drexel University.</p>
+<p>A year later, when it was time to apply, Purdue University had won me over. I applied directly to its Computer Science program and chose Purdue.</p>
+<p>Purdue introduced me properly to Linux. Computer Science students had their own Gentoo-based lab, and Linux quickly became another rabbit hole. I taught myself to install Arch Linux (back when the process involved far more manual work than it does today).</p>
+<p>I could lose entire weekends reinstalling it in pursuit of the perfectly clean setup, only to decide I could do it better and start again.</p>
+<p>My long-standing fascination with security became something more substantive there, too. I became involved with Purdue ACM, serving as president of SIG Security and secretary of SIG OS. Those groups gave me a community of people who wanted to go deeper into the same things I did, along with opportunities to learn from professors, recruiters, and each other.</p>
+<p>Those leadership roles also gave younger me more confidence, and more ego, than was probably warranted. I knew a lot, people started to know me for knowing a lot, and for a while I let those two things reinforce each other too much.</p>
+<p>Learning that being knowledgeable doesn't mean you have nothing left to learn was an important correction.</p>
+<p>By senior year, my security interests had taken me into reverse engineering. I worked on a research project using IDA Pro to identify known algorithms inside compiled binaries, implementing a generic technique based on Small Primes Product. With guidance from the National Security Agency and Purdue professor Eugene Spafford, I was getting to work on exactly the kind of problem I enjoyed: looking beneath an abstraction and figuring out what a system was actually doing.</p>
+<p>I later <a href="/blog/2013-05-01-algorithm-detection-in-assembly/">wrote about the project</a> on this site.</p>
+</section>
+<section aria-labelledby="from-curiosity-to-a-career">
+<h2 id="from-curiosity-to-a-career">From curiosity to a career</h2>
+<p>I graduated from Purdue in 2013 and started at Harris Corporation that July, initially working in internal research and development prototyping software around radar-processing systems before moving into environmental satellite systems.</p>
+<p>My career kept following a pattern that had already been there for years. Working on the application made me interested in how we built it. That led to how we deployed it, what it ran on, how we configured the infrastructure, what we could automate, and eventually why developers had to deal with some frustrating part of that process at all.</p>
+<p>I moved on to other work and, years later, returned to what had by then become L3Harris.</p>
+</section>
+<section aria-labelledby="what-work-taught-me">
+<h2 id="what-work-taught-me">What work taught me</h2>
+<p>Some of the most important lessons of my career had less to do with technology.</p>
+<h3>Raise the standard</h3>
+<p>While I was on the WxConnect team, I worked with an engineer who eventually became my lead. We weren't close before that. He was direct. He said what he meant and meant what he said. Several of us (myself included) had a habit of reading more into that directness than was actually there.</p>
+<p>Then one day he sat me down.</p>
+<p>He told me that part of the reason I was on that team was the historical and tribal knowledge I carried, and that I wasn't living up to that responsibility. The way I remember the rest of it was roughly:</p>
+<blockquote><p>"Get your shit together. This is the end game. There isn't anything after this. Middle school led to high school, high school led to college, and college led here. This is your career."</p></blockquote>
+<p>It was blunt. It was also exactly what I needed to hear.</p>
+<p>So I did.</p>
+<p>Over time, he became one of my best friends. Working with him changed the standard I held myself to. He had a relentless drive to do things well: pay attention to the details, finish what you start, don't leave loose ends for somebody else, and take responsibility for the quality of what you put into the world.</p>
+<p>My parents had taught me to work hard and apply myself. He helped me understand what that looked like when the work was no longer homework and the consequences weren't just mine.</p>
+<p>He is still one of the people I trust when I need advice today.</p>
+<h3>Excellence isn't self-sacrifice</h3>
+<p>Later in my career, I learned a lesson that pulled in the opposite direction.</p>
+<p>I inherited a project from a developer who had moved on. It had been pitched as important and high-value, there was a schedule to meet, and I was determined to meet it. I canceled a vacation, pulled several all-nighters, and pushed myself to get it finished on time.</p>
+<p class="!my-8">And I did.</p>
+<p>Then we learned the project was neither as important nor as valuable as we'd believed. The software worked, but we'd built the wrong thing, and the project was abandoned.</p>
+<p>What stayed with me wasn't the lost vacation. It was how little of my effort had gone into asking whether the work was worth doing in the first place. Afterward, we added processes to better understand the value of a feature before committing to build it.</p>
+<p>I still believe deeply in working hard, delivering results, and holding myself to a high standard. The push I got early in my career was exactly what I needed at the time.</p>
+<p>But working harder isn't always the answer.</p>
+<p>Effort pointed at the wrong target is just expensive. Doing excellent work doesn't mean treating every deadline as equally important or every project as worth sacrificing everything else to deliver. Urgency has a cost, and part of becoming a better engineer has been learning when that cost is justified, and asking, before the work starts, whether it's worth doing at all.</p>
+</section>
+<section aria-labelledby="making-the-easy-thing-the-right-thing">
+<h2 id="making-the-easy-thing-the-right-thing">Making the easy thing the right thing</h2>
+<p>Effort should go where it matters. I've become interested in making it easier for other engineers to spend theirs there, too.</p>
+<p>Good tooling shouldn't require every developer to understand every piece of machinery underneath it. Someone should understand that machinery deeply. I still want to, but the person trying to ship a feature shouldn't have to fight it.</p>
+<p>I like automation. Sometimes I automate something simply because figuring out how to automate it is fun. But the result should leave us somewhere better than where we started. Saving thirty seconds isn't particularly useful if we've replaced it with something nobody understands or can maintain.</p>
+<p>The same goes for abstractions. I like them when they make systems easier to reason about, not when they merely hide complexity. And I gravitate toward tools that let us express intent clearly and catch mistakes early. That's one of the reasons I've come to enjoy languages like TypeScript.</p>
+<p>For me, good developer experience isn't about lowering the standard. It's about designing systems where meeting a high standard doesn't require unnecessary friction.</p>
+<p class="!my-12 text-[1.375rem] pl-4 border-l-2 border-primary text-base-content font-medium">Make the easy thing the right thing.</p>
+</section>
+<section aria-labelledby="building-the-things-i-want-to-exist">
+<h2 id="building-the-things-i-want-to-exist">Building the things I want to exist</h2>
+<p>That instinct became <a href="https://www.rm-industries.com/">RM Industries</a>, my independent software company.</p>
+<p>The premise is simple: find the everyday friction that gets in people's way and build focused software to make it better.</p>
+<p>Its current projects are <strong><a href="https://www.rm-industries.com/forge/">Forge</a></strong>, an opinionated Astro starter with Git-backed content management and production-ready GitHub automation, and <strong><a href="https://www.rm-industries.com/etch/">Etch</a></strong>, a portable, declarative environment manager for keeping the tools and settings that shape your workspace consistent.</p>
+<p>Both came from problems I wanted solved for myself. Forge grew out of wanting a better foundation for building and maintaining sites without repeatedly assembling the same pieces. Etch came from wanting my development environment to feel like mine on any machine, without the setup becoming another project.</p>
+<p>They're a more organized version of something I've been doing for most of my life: notice a problem, understand it, and see if I can build something useful.</p>
+</section>
+<section aria-labelledby="beyond-the-terminal" class="personal-transition !mt-24 pt-12 border-t border-base-300">
+<h2 id="beyond-the-terminal">Beyond the terminal</h2>
+<p>Work took me from Florida to Texas, and that's where some of the lessons I'd been learning about overwork became more personal.</p>
+<p>Professionally, things were going well. I'd become the person people came to for practically everything, and I took a lot of pride in that. But I'd gotten very good at optimizing one part of my life at the expense of the rest of it.</p>
+<p>By the height of COVID, I was the heaviest I'd ever been. Basic things were exhausting. I was remote, and much of the day was spent working from bed because, at that weight, it was simply the most comfortable place to be.</p>
+<p>Eventually, something clicked.</p>
+<p>I'd spent years learning that when I didn't know how to solve a problem, I should use the resources around me and learn from people who did. It took me a while to realize that could apply outside of computers.</p>
+<p>One of my cousins owned a gym in Georgia. We'd spent our childhood summers together (including what felt like a significant portion of them in <em>el rincón</em>), but we hadn't stayed particularly close through high school and college.</p>
+<p>I called him and asked if I could come to Georgia so he could help me get into shape.</p>
+<p>My plan was pretty simple: rent an extended-stay hotel for a month, work remotely, train with him, and go back to Texas with enough momentum to keep going.</p>
+<p>Instead, he invited me to stay at his house.</p>
+<p>Two months later, I finally went back to Texas.</p>
+<p>During those two months, I did my best to follow whatever he prescribed. He had a talent for turning any missed goal into a new and increasingly creative form of exercise.</p>
+<p>Didn't hit the strain target on my WHOOP fitness tracker?</p>
+<p>Apparently I'm pushing his truck uphill while he sits inside filming and laughing.</p>
+<p>Still not enough?</p>
+<p>Here's an impromptu 5K.</p>
+<p>At various points there were tires being flipped up his driveway and other activities that I'm fairly certain were much more fun for him to invent than they were for me to complete.</p>
+<p>Unfortunately for him (and occasionally for me), I don't like backing down from a challenge.</p>
+<p class="!my-12 text-[1.375rem] pl-4 border-l-2 border-primary text-base-content font-medium">His motto was, and still is, <strong>"Do hard things."</strong></p>
+<p>He originally meant it in the context of fitness. He likes to use it whenever he thinks I'm avoiding something unpleasant. Over time, though, I adopted it more broadly.</p>
+<p>Those two months kick-started something much bigger than I expected. He's the reason I signed up for my first half marathon. Training became routine. And although I went back to Texas when those two months were over, Georgia eventually became home.</p>
+<p>So far, "do hard things" has included four HYROX races, a half marathon, a Spartan obstacle race, and several DEKA STRONG events.</p>
+<p>More importantly, fitness gave me something I hadn't been very good at protecting before: a life outside work.</p>
+<p>I didn't become less ambitious when I started making room for things outside my career. I just found more places to put that energy. Working hard and showing up can mean training for a race, learning something new, building something because I think it should exist, or showing up for the people around me.</p>
+<p>I'm still a nerd, too. I play Magic: The Gathering, I'm a huge <em>Dragon Ball Z</em> and <em>Avatar: The Last Airbender</em> fan, and my version of work-life balance can involve writing code (just not always for work).</p>
+<p>Luna, my Border Collie, has been with me for essentially my entire professional life. I grew up with another Border Collie, Lucky, who passed away while I was in college. I got Luna the same week I started at Harris, and she's been by my side ever since.</p>
+<p>She's seen the all-nighters, midnight deployments, late-night gaming sessions, moves from one state to another, and everything in between. She doesn't particularly care whether the thing keeping me awake is important, whether the deployment worked, or whether we made as much progress in a raid as we'd hoped. Whatever kind of day I've had, she's just excited to see me.</p>
+<p>There aren't many constants that stretch across my entire adult life. Luna is one of them.</p>
+</section>
+<section aria-labelledby="why-this-site-exists">
+<h2 id="why-this-site-exists">Why this site exists</h2>
+<p>This site is my little corner of the internet: a place to document things I've learned, explore ideas I'm figuring out, share what I'm building, and occasionally form an opinion about how we build software.</p>
+<p>It's built with Forge, too. I tend to trust tools a little more when their creators have to live with them.</p>
+<p>Some of what I write is practical. Some of it is opinionated. And some of it exists because explaining something is one of the best tests I've found for whether I actually understand it.</p>
+<p class="!mt-14 text-xl text-base-content font-medium">I'm still curious. I'm still taking things apart.</p>
+<p class="!mt-6 text-2xl text-base-content font-medium">I'm just considerably better at putting them back together now.</p>
+</section>
+</div>
+</article>
+</Container>
+</BaseLayout>

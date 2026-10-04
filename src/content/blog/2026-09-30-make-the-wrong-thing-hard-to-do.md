@@ -1,7 +1,6 @@
 ---
 title: Make the Wrong Thing Hard to Do
 description: Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to break in the first place.
-draft: true
 coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
 coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
 tableOfContents: false
