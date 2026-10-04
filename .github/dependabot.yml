@@ -53,6 +53,10 @@ updates:
       - npm
 
     groups:
+      vitest:
+        patterns:
+          - vitest
+          - '@vitest/*'
       content-platform:
         applies-to: version-updates
         patterns:
