@@ -1,5 +1,6 @@
 {
   "name": "Amazon DynamoDB",
+  "category": "data-messaging",
   "description": "AWS managed NoSQL database service.",
   "href": "https://aws.amazon.com/dynamodb/",
   "trackExperienceCoverage": true

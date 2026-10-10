@@ -6,6 +6,7 @@ import { financialScopeContentModel } from '../../config/content-models/financia
 import { contentModels } from '../../config/content-models/registry';
 import { skillContentModel } from '../../config/content-models/skills';
 import { siteConfig } from '../../config/site';
+import { skillCategories } from '../../config/skill-categories';
 import { sveltiaConfig } from './config';
 
 describe('Sveltia CMS configuration', () => {
@@ -153,6 +154,11 @@ describe('Sveltia CMS configuration', () => {
       });
     }
     expect(skills.folder).toBe('src/content/skills');
+    expect(skills.fields.find((field) => field.name === 'category')).toMatchObject({
+      widget: 'select',
+      required: true,
+      options: skillCategories,
+    });
     expect(financialScopes.folder).toBe('src/content/financial-scopes');
   });
 });

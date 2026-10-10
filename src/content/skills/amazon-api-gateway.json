@@ -1,5 +1,6 @@
 {
   "name": "Amazon API Gateway",
+  "category": "cloud-infrastructure",
   "description": "AWS managed service for creating, publishing, and securing APIs.",
   "href": "https://aws.amazon.com/api-gateway/",
   "trackExperienceCoverage": true

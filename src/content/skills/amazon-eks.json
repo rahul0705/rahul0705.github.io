@@ -1,5 +1,6 @@
 {
   "name": "Amazon EKS",
+  "category": "cloud-infrastructure",
   "description": "AWS managed Kubernetes service.",
   "href": "https://aws.amazon.com/eks/",
   "trackExperienceCoverage": true

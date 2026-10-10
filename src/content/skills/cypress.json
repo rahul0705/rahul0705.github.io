@@ -1,5 +1,6 @@
 {
   "name": "Cypress",
+  "category": "testing-quality",
   "description": "JavaScript End-to-End Testing Library",
   "href": "https://www.cypress.io/",
   "trackExperienceCoverage": true

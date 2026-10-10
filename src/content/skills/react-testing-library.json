@@ -1,5 +1,6 @@
 {
   "name": "React Testing Library",
+  "category": "testing-quality",
   "description": "Testing utilities for React user interfaces.",
   "href": "https://testing-library.com/docs/react-testing-library/intro/",
   "trackExperienceCoverage": true

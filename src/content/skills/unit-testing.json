@@ -1,4 +1,5 @@
 {
   "name": "Unit Testing",
+  "category": "testing-quality",
   "description": "Automated validation of individual software units."
 }

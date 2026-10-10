@@ -1,5 +1,6 @@
 {
   "name": "Amazon EventBridge",
+  "category": "data-messaging",
   "description": "AWS managed event bus service.",
   "href": "https://aws.amazon.com/eventbridge/",
   "trackExperienceCoverage": true

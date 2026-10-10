@@ -1,5 +1,6 @@
 {
   "name": "TypeScript",
+  "category": "languages-frameworks",
   "description": "Programming Language",
   "href": "https://www.typescriptlang.org/",
   "trackExperienceCoverage": true

@@ -1,5 +1,7 @@
 import { defineModel } from '@rm-industries/content-model';
 
+import { skillCategories } from '../skill-categories';
+
 export const skillContentModel = defineModel({
   name: 'skills',
   label: 'Skills',
@@ -12,6 +14,12 @@ export const skillContentModel = defineModel({
   sort: { fields: ['name'], default: { field: 'name', direction: 'ascending' } },
   fields: {
     name: { kind: 'string', required: true, label: 'Name' },
+    category: {
+      kind: 'string',
+      required: true,
+      options: skillCategories,
+      label: 'Category',
+    },
     description: {
       kind: 'string',
       required: true,

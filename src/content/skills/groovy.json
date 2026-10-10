@@ -1,5 +1,6 @@
 {
   "name": "Groovy",
+  "category": "languages-frameworks",
   "description": "Programming Language",
   "href": "https://groovy-lang.org/",
   "trackExperienceCoverage": true
