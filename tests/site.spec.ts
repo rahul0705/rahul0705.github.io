@@ -228,6 +228,12 @@ test('featured skills and role anchors work at mobile and desktop widths', async
 
     await page.goto('/resume/');
     await expect(page.getByRole('meter')).toHaveCount(0);
+    const featuredSkills = page.getByRole('list', { name: 'Selected technical skills' });
+    await expect(featuredSkills.locator('li')).toHaveCount(6);
+    await expect(featuredSkills.getByText('Kubernetes')).toBeVisible();
+    const supportingRole = await featuredSkills.getByRole('link').first().getAttribute('href');
+    expect(supportingRole).toMatch(/^#experience-/);
+    await expect(page.locator(supportingRole!)).toHaveCount(1);
     const roleAnchors = await page
       .locator('article[id^="experience-"]')
       .evaluateAll((items) => items.map((item) => item.id));
