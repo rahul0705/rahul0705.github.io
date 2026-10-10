@@ -2,19 +2,25 @@ import type { SkillCategory } from '../../config/skill-categories';
 import type { ExperienceOrganization, ExperienceRole } from './experience';
 import { skillCatalog, type SkillId } from './skills';
 
-export interface SkillExperienceCoverage {
+interface SkillRoleEvidence {
+  id: string;
+  title: string;
+  organization: string;
+  project: string;
+  startDate?: string;
+  endDate?: string;
+  href: string;
+}
+
+export interface SkillEvidence {
+  id: SkillId;
   name: string;
   category: SkillCategory;
-  months: number;
-  percentage: number;
+  roles: SkillRoleEvidence[];
+  latestUse?: string;
 }
 
-interface SkillInterval {
-  start: number;
-  end: number;
-}
-
-export const monthIndex = (date: string) => {
+const monthIndex = (date: string) => {
   const [year, month] = date.split('-').map(Number);
   return year * 12 + month - 1;
 };
@@ -30,58 +36,46 @@ export const yearsOfExperience = (experience: ExperienceOrganization[], currentD
   return Math.floor((currentMonth - firstMonth + 1) / 12);
 };
 
-export const orderRolesNewestFirst = (roles: ExperienceRole[]) =>
-  [...roles].sort((a, b) => (b.startDate ?? '').localeCompare(a.startDate ?? ''));
+export const deriveSkillEvidence = (experience: ExperienceOrganization[]): SkillEvidence[] => {
+  const roles = experience.flatMap((organization) =>
+    organization.projects.flatMap((project) =>
+      project.roles.map((role) => ({ role, organization: organization.name, project: project.name })),
+    ),
+  );
 
-export const uniqueMonths = (intervals: SkillInterval[]) => {
-  const sorted = intervals.map((interval) => ({ ...interval })).sort((a, b) => a.start - b.start);
-  if (sorted.length === 0) return 0;
-  let total = 0;
-  let active = sorted[0]!;
-  for (const interval of sorted.slice(1)) {
-    if (interval.start <= active.end + 1) active.end = Math.max(active.end, interval.end);
-    else {
-      total += active.end - active.start + 1;
-      active = interval;
-    }
-  }
-  return total + active.end - active.start + 1;
-};
+  return Object.entries(skillCatalog)
+    .map(([id, skill]) => {
+      const matchingRoles = roles
+        .filter(({ role }) => role.skills?.includes(id))
+        .map(({ role, organization, project }) => ({
+          id: role.id,
+          title: role.title,
+          organization,
+          project,
+          startDate: role.startDate,
+          endDate: role.endDate,
+          href: `#experience-${role.id}`,
+        }))
+        .sort(
+          (a, b) =>
+            (b.endDate ?? (b.startDate ? '9999-12' : '')).localeCompare(a.endDate ?? (a.startDate ? '9999-12' : '')) ||
+            (b.startDate ?? '').localeCompare(a.startDate ?? '') ||
+            a.id.localeCompare(b.id),
+        );
+      const latestUse = matchingRoles.some((role) => role.startDate && !role.endDate)
+        ? 'Present'
+        : matchingRoles.reduce<string | undefined>(
+            (latest, role) => (role.endDate && (!latest || role.endDate > latest) ? role.endDate : latest),
+            undefined,
+          );
 
-export const skillLevel = (percentage: number) => Math.min(5, Math.max(1, Math.ceil(percentage / 20)));
-
-export const deriveSkillExperienceCoverage = (
-  experience: ExperienceOrganization[],
-  trackedSkills: ReadonlySet<SkillId>,
-  currentDate = new Date(),
-): SkillExperienceCoverage[] => {
-  const currentMonth = currentDate.getUTCFullYear() * 12 + currentDate.getUTCMonth();
-  const roles = flattenExperienceRoles(experience).filter((role) => role.startDate);
-  if (roles.length === 0) return [];
-  const careerStart = Math.min(...roles.map((role) => monthIndex(role.startDate!)));
-  const careerEnd = Math.max(...roles.map((role) => (role.endDate ? monthIndex(role.endDate) : currentMonth)));
-  const careerMonths = careerEnd - careerStart + 1;
-  const intervalsBySkill = new Map<SkillId, SkillInterval[]>();
-  roles.forEach((role) => {
-    const interval = {
-      start: monthIndex(role.startDate!),
-      end: role.endDate ? monthIndex(role.endDate) : currentMonth,
-    };
-    role.skills
-      ?.filter((skill) => trackedSkills.has(skill))
-      .forEach((skill) => {
-        intervalsBySkill.set(skill, [...(intervalsBySkill.get(skill) ?? []), interval]);
-      });
-  });
-  return [...intervalsBySkill.entries()]
-    .map(([skillId, intervals]) => {
-      const months = uniqueMonths(intervals);
       return {
-        name: skillCatalog[skillId].name,
-        category: skillCatalog[skillId].category as SkillCategory,
-        months,
-        percentage: Math.round((months / careerMonths) * 100),
+        id: id as SkillId,
+        name: skill.name,
+        category: skill.category as SkillCategory,
+        roles: matchingRoles,
+        latestUse,
       };
     })
-    .sort((a, b) => b.months - a.months || a.name.localeCompare(b.name));
+    .sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
 };

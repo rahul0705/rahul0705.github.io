@@ -2,6 +2,5 @@
   "name": "Amazon SNS",
   "category": "data-messaging",
   "description": "AWS managed publish-and-subscribe messaging service.",
-  "href": "https://aws.amazon.com/sns/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/sns/"
 }

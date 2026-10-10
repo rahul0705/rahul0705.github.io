@@ -5,6 +5,7 @@ import type { ContentLink } from '../../lib/content-link';
 import TimelineItemContent from './TimelineItemContent.astro';
 
 interface TimelineItem {
+  id?: string;
   title: string;
   href?: string;
   subtitle?: string;
@@ -46,7 +47,7 @@ const formatPeriod = (item: TimelineItem) => {
           <MarkerIcon class="size-4" aria-hidden="true" />
         </span>
       </div>
-      <article class:list={['timeline-box', 'bg-base-100', 'shadow-sm', index % 2 === 0 ? 'timeline-start' : 'timeline-end']}>
+      <article id={item.id} class:list={['timeline-box', 'bg-base-100', 'shadow-sm', index % 2 === 0 ? 'timeline-start' : 'timeline-end']}>
         <TimelineItemContent {...item} period={formatPeriod(item)} />
       </article>
       {index < items.length - 1 && <hr />}

@@ -2,6 +2,5 @@
   "name": "AWS WAF",
   "category": "security-compliance",
   "description": "AWS web application firewall service.",
-  "href": "https://aws.amazon.com/waf/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/waf/"
 }

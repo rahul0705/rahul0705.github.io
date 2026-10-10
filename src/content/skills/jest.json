@@ -2,6 +2,5 @@
   "name": "Jest",
   "category": "testing-quality",
   "description": "JavaScript testing framework.",
-  "href": "https://jestjs.io/",
-  "trackExperienceCoverage": true
+  "href": "https://jestjs.io/"
 }

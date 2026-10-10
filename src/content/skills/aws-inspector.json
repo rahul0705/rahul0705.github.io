@@ -2,6 +2,5 @@
   "name": "Amazon Inspector",
   "category": "security-compliance",
   "description": "AWS vulnerability management service.",
-  "href": "https://aws.amazon.com/inspector/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/inspector/"
 }

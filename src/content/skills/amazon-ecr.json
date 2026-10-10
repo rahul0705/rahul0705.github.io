@@ -2,6 +2,5 @@
   "name": "Amazon ECR",
   "category": "cloud-infrastructure",
   "description": "AWS managed container registry.",
-  "href": "https://aws.amazon.com/ecr/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/ecr/"
 }

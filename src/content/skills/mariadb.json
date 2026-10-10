@@ -2,6 +2,5 @@
   "name": "MariaDB",
   "category": "data-messaging",
   "description": "Open-source relational database.",
-  "href": "https://mariadb.org/",
-  "trackExperienceCoverage": true
+  "href": "https://mariadb.org/"
 }

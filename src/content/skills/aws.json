@@ -2,6 +2,5 @@
   "name": "AWS",
   "category": "cloud-infrastructure",
   "description": "Cloud Service Provider",
-  "href": "https://aws.amazon.com/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/"
 }

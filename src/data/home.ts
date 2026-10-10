@@ -1,6 +1,6 @@
-import { experienceSkillCoverage } from './resume';
+import { featuredSkillIds, skillCatalog } from './resume/skills';
 
-const toolkitSkills = experienceSkillCoverage.slice(0, 6).map((skill) => skill.name);
+const toolkitSkills = featuredSkillIds.map((id) => skillCatalog[id].name);
 
 export const home = {
   hero: {
@@ -31,7 +31,7 @@ export const home = {
   },
   toolkit: {
     title: 'Technical Toolkit',
-    description: 'Tools I use to build things and keep them running.',
+    description: 'Technologies and practices behind my engineering work.',
     items: toolkitSkills,
   },
 };

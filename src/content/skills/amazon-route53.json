@@ -2,6 +2,5 @@
   "name": "Amazon Route 53",
   "category": "cloud-infrastructure",
   "description": "AWS managed Domain Name System and traffic-routing service.",
-  "href": "https://aws.amazon.com/route53/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/route53/"
 }

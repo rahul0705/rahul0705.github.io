@@ -2,6 +2,5 @@
   "name": "Mocha",
   "category": "testing-quality",
   "description": "JavaScript testing framework.",
-  "href": "https://mochajs.org/",
-  "trackExperienceCoverage": true
+  "href": "https://mochajs.org/"
 }

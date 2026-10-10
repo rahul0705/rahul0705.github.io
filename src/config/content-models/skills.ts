@@ -27,11 +27,5 @@ export const skillContentModel = defineModel({
       multiline: true,
     },
     href: { kind: 'string', label: 'URL' },
-    trackExperienceCoverage: {
-      kind: 'boolean',
-      default: false,
-      label: 'Track experience coverage',
-      help: 'Include this skill in the duration-based experience coverage summary.',
-    },
   },
 });

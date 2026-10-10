@@ -218,6 +218,30 @@ test('the resume has a compact print presentation', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Skills', exact: true })).toBeVisible();
 });
 
+test('featured skills and role anchors work at mobile and desktop widths', async ({ page }) => {
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    const toolkit = page.getByRole('list', { name: 'Technical toolkit' });
+    await expect(toolkit.locator('li')).toHaveCount(6);
+    await expect(toolkit.getByText('Kubernetes')).toBeVisible();
+
+    await page.goto('/resume/');
+    await expect(page.getByRole('meter')).toHaveCount(0);
+    const featuredSkills = page.getByRole('list', { name: 'Selected technical skills' });
+    await expect(featuredSkills.locator('li')).toHaveCount(6);
+    await expect(featuredSkills.getByText('Kubernetes')).toBeVisible();
+    const supportingRole = await featuredSkills.getByRole('link').first().getAttribute('href');
+    expect(supportingRole).toMatch(/^#experience-/);
+    await expect(page.locator(supportingRole!)).toHaveCount(1);
+    const roleAnchors = await page
+      .locator('article[id^="experience-"]')
+      .evaluateAll((items) => items.map((item) => item.id));
+    expect(roleAnchors.length).toBeGreaterThan(0);
+    expect(new Set(roleAnchors).size).toBe(roleAnchors.length);
+  }
+});
+
 test('resume text endpoints provide plain text and Markdown', async ({ request }) => {
   const plainText = await request.get('/resume.txt');
   const markdown = await request.get('/resume.md');

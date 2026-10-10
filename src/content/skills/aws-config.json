@@ -2,6 +2,5 @@
   "name": "AWS Config",
   "category": "security-compliance",
   "description": "AWS resource configuration, inventory, and compliance service.",
-  "href": "https://aws.amazon.com/config/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/config/"
 }

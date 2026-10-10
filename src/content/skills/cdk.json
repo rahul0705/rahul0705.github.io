@@ -2,6 +2,5 @@
   "name": "CDK",
   "category": "cloud-infrastructure",
   "description": "Infrastructure as Code Tool",
-  "href": "https://aws.amazon.com/cdk/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/cdk/"
 }

@@ -2,6 +2,5 @@
   "name": "AWS Backup",
   "category": "cloud-infrastructure",
   "description": "AWS centralized data-protection and backup service.",
-  "href": "https://aws.amazon.com/backup/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/backup/"
 }
