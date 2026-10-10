@@ -2,6 +2,5 @@
   "name": "AWS CodeBuild",
   "category": "delivery-automation",
   "description": "AWS managed build and test service.",
-  "href": "https://aws.amazon.com/codebuild/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/codebuild/"
 }

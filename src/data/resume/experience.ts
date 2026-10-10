@@ -5,6 +5,7 @@ import { type FinancialScopeId, validateFinancialScopeIds } from './financial-sc
 import { type SkillId, validateSkillIds } from './skills';
 
 export interface ExperienceRole {
+  id: string;
   title: string;
   startDate?: string;
   endDate?: string;
@@ -35,6 +36,7 @@ const roleFromEntry = (entry: ExperienceEntry): ExperienceRole => {
   validateSkillIds(entry.data.skills, entry.id);
 
   return {
+    id: entry.id,
     title: entry.data.title,
     startDate: toResumeMonth(entry.data.startDate),
     endDate: entry.data.endDate ? toResumeMonth(entry.data.endDate) : undefined,

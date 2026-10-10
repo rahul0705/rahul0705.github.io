@@ -3,14 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ResumeAwards from '../../components/resume/ResumeAwards.astro';
 import ResumeActions from '../../components/resume/ResumeActions.astro';
 import ResumeSkillGroups from '../../components/resume/ResumeSkillGroups.astro';
-import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
 import ResumeTimeline from '../../components/resume/ResumeTimeline.astro';
 import ExperienceTimeline from '../../components/resume/ExperienceTimeline.astro';
 import ResumePrintView from '../../components/resume/ResumePrintView.astro';
 import Container from '../../components/ui/Container.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import SocialIcon from '../../components/ui/SocialIcon.astro';
-import { experienceSkillCoverage, resume } from '../../data/resume';
+import { resume } from '../../data/resume';
 import { Mail } from '@lucide/astro';
 
 const profiles = resume.basics.profiles.filter((profile) => profile.network && profile.url);
@@ -72,7 +71,6 @@ const hasContactDetails = Boolean(resume.basics.email || profiles.length > 0);
 
       <div class="grid gap-16">
         <ExperienceTimeline title="Experience" companies={resume.experience} />
-        <ExperienceSkillCoverage skills={experienceSkillCoverage} />
         <ResumeSkillGroups groups={resume.skills} />
         <ResumeSkillGroups title="Interests" groups={resume.interests} />
         <ResumeTimeline title="Education" items={resume.education} type="education" />

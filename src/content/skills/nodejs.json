@@ -2,6 +2,5 @@
   "name": "Node.js",
   "category": "languages-frameworks",
   "description": "JavaScript Runtime",
-  "href": "https://nodejs.org/",
-  "trackExperienceCoverage": true
+  "href": "https://nodejs.org/"
 }

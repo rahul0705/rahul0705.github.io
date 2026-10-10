@@ -2,7 +2,7 @@ import type { Recognition } from './awards';
 import type { ResumeBasics } from './basics';
 import type { EducationEntry } from './education';
 import type { ExperienceOrganization } from './experience';
-import type { SkillExperienceCoverage } from './experience-coverage';
+import type { SkillEvidence } from './experience-coverage';
 import type { SkillGroup } from './index';
 import type { ResumeInterest } from './interests';
 import { skillCatalog } from './skills';
@@ -13,7 +13,7 @@ interface ResumeJsonInput {
   education: EducationEntry[];
   skillGroups: SkillGroup[];
   recognitions: Recognition[];
-  experienceSkillCoverage: SkillExperienceCoverage[];
+  skillEvidence: SkillEvidence[];
   interests: ResumeInterest[];
 }
 
@@ -23,7 +23,7 @@ export const toResumeJson = ({
   education,
   skillGroups,
   recognitions,
-  experienceSkillCoverage,
+  skillEvidence,
   interests,
 }: ResumeJsonInput) => ({
   basics: {
@@ -54,7 +54,10 @@ export const toResumeJson = ({
     endDate: entry.endDate,
   })),
   skills: [
-    { name: 'Programming and tooling', keywords: experienceSkillCoverage.map((skill) => skill.name) },
+    {
+      name: 'Programming and tooling',
+      keywords: skillEvidence.filter((skill) => skill.roles.length > 0).map((skill) => skill.name),
+    },
     ...skillGroups.map((group) => ({ name: group.name, keywords: group.keywords })),
   ],
   awards: recognitions.map((recognition) => ({

@@ -2,6 +2,5 @@
   "name": "Helm",
   "category": "cloud-infrastructure",
   "description": "Package manager for Kubernetes applications.",
-  "href": "https://helm.sh/",
-  "trackExperienceCoverage": true
+  "href": "https://helm.sh/"
 }

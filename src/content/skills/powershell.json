@@ -2,6 +2,5 @@
   "name": "PowerShell",
   "category": "languages-frameworks",
   "description": "Cross-platform command shell and scripting language.",
-  "href": "https://learn.microsoft.com/powershell/",
-  "trackExperienceCoverage": true
+  "href": "https://learn.microsoft.com/powershell/"
 }

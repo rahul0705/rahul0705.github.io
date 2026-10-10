@@ -2,10 +2,10 @@ import { awards } from './awards';
 import { basics } from './basics';
 import { education } from './education';
 import { experience } from './experience';
-import { deriveSkillExperienceCoverage, type SkillExperienceCoverage } from './experience-coverage';
+import { deriveSkillEvidence, type SkillEvidence } from './experience-coverage';
 import { interests } from './interests';
 import { toResumeJson } from './json';
-import { skillCatalog, type SkillCatalogEntry, type SkillId, validateSkillIds } from './skills';
+import { validateSkillIds } from './skills';
 import { toResumeMarkdown, toResumeText } from './text';
 
 export interface SkillGroup {
@@ -43,16 +43,7 @@ export const resume = { basics, experience, education, skills: skillGroups, awar
 
 for (const entry of education) validateSkillIds(entry.skills ?? [], `education entry ${entry.title}`);
 
-const trackedSkills = new Set<SkillId>(
-  Object.entries(skillCatalog)
-    .filter(([, skill]) => (skill as SkillCatalogEntry).trackExperienceCoverage)
-    .map(([skillId]) => skillId as SkillId),
-);
-
-export const experienceSkillCoverage: SkillExperienceCoverage[] = deriveSkillExperienceCoverage(
-  resume.experience,
-  trackedSkills,
-);
+export const skillEvidence: SkillEvidence[] = deriveSkillEvidence(resume.experience);
 
 export const resumeJson = toResumeJson({
   basics,
@@ -60,7 +51,7 @@ export const resumeJson = toResumeJson({
   education,
   skillGroups,
   recognitions: awards,
-  experienceSkillCoverage,
+  skillEvidence,
   interests,
 });
 

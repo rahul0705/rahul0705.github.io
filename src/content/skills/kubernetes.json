@@ -2,6 +2,5 @@
   "name": "Kubernetes",
   "category": "cloud-infrastructure",
   "description": "Container orchestration platform.",
-  "href": "https://kubernetes.io/",
-  "trackExperienceCoverage": true
+  "href": "https://kubernetes.io/"
 }

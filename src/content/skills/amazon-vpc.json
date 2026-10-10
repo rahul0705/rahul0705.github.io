@@ -2,6 +2,5 @@
   "name": "Amazon VPC",
   "category": "cloud-infrastructure",
   "description": "AWS service for isolated virtual networks.",
-  "href": "https://aws.amazon.com/vpc/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/vpc/"
 }

@@ -2,6 +2,5 @@
   "name": "C",
   "category": "languages-frameworks",
   "description": "Programming Language",
-  "href": "https://www.open-std.org/jtc1/sc22/wg14/",
-  "trackExperienceCoverage": true
+  "href": "https://www.open-std.org/jtc1/sc22/wg14/"
 }

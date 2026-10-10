@@ -4,9 +4,17 @@ import { skillCategories } from '../../config/skill-categories';
 import { education } from './education';
 import { experienceEntries } from './experience';
 import { createExperienceSlug } from './experience-slug';
-import { categorizedSkills, skillCatalog, type SkillId, validateSkillIds } from './skills';
+import { skillEvidence } from './index';
+import { categorizedSkills, featuredSkillIds, skillCatalog, type SkillId, validateSkillIds } from './skills';
 
 describe('experience content', () => {
+  it('features distinct skills with recorded role evidence', () => {
+    expect(new Set(featuredSkillIds).size).toBe(featuredSkillIds.length);
+    featuredSkillIds.forEach((id) =>
+      expect(skillEvidence.find((skill) => skill.id === id)?.roles.length).toBeGreaterThan(0),
+    );
+  });
+
   it('places every catalog skill in exactly one configured category', () => {
     expect(categorizedSkills.map(({ value, label }) => ({ value, label }))).toEqual(skillCategories);
     expect(categorizedSkills.every(({ skills }) => skills.length > 0)).toBe(true);
