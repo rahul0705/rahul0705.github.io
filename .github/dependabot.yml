@@ -26,7 +26,12 @@ updates:
       - github-actions
 
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
       github-actions:
+        applies-to: version-updates
         patterns:
           - '*'
 
@@ -57,7 +62,12 @@ updates:
       - npm
 
     groups:
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
       vitest:
+        applies-to: version-updates
         patterns:
           - vitest
           - '@vitest/*'
