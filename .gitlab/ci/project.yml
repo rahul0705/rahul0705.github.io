@@ -1,0 +1,190 @@
+# Configure Pages and the site URL before replacing deployment never rules.
+format:
+  stage: validate
+  needs: []
+  script:
+    - npm run format
+lint-code:
+  stage: validate
+  needs: []
+  script:
+    - mkdir -p test-results
+    - npm run lint:code --silent -- --format gitlab > test-results/code-quality.json
+  artifacts:
+    paths:
+      - test-results/code-quality.json
+    when: always
+    expire_in: 14 days
+    reports:
+      codequality: test-results/code-quality.json
+lint-styles:
+  stage: validate
+  needs: []
+  script:
+    - npm run lint:styles
+lint-markdown:
+  stage: validate
+  needs: []
+  script:
+    - npm run lint:markdown
+spellcheck:
+  stage: validate
+  needs: []
+  script:
+    - npm run spellcheck
+audit-unused:
+  stage: validate
+  needs: []
+  script:
+    - npm run audit:unused
+typecheck:
+  stage: validate
+  needs: []
+  script:
+    - npm run typecheck
+test-unit:
+  stage: validate
+  needs: []
+  script:
+    - npm run test:unit
+  artifacts:
+    paths:
+      - test-results/unit.xml
+    when: always
+    expire_in: 14 days
+    reports:
+      junit: test-results/unit.xml
+build:
+  stage: build
+  needs:
+    - job: format
+      artifacts: false
+    - job: lint-code
+      artifacts: false
+    - job: lint-styles
+      artifacts: false
+    - job: lint-markdown
+      artifacts: false
+    - job: spellcheck
+      artifacts: false
+    - job: audit-unused
+      artifacts: false
+    - job: typecheck
+      artifacts: false
+    - job: test-unit
+      artifacts: false
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+    when: on_success
+    expire_in: 14 days
+test-browser:
+  stage: verify
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - npx playwright install --with-deps chromium firefox webkit
+    - npm run test:e2e
+  artifacts:
+    paths:
+      - playwright-report
+      - test-results
+    when: always
+    expire_in: 14 days
+    reports:
+      junit: test-results/browser.xml
+validate-build:
+  stage: verify
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - npm run validate:build
+lint-generated-markdown:
+  stage: verify
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - npm run lint:resume:markdown
+lighthouse:
+  stage: verify
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - npx playwright install --with-deps chromium
+    - export CHROME_PATH="$(node --input-type=module -e 'import { chromium } from "@playwright/test"; process.stdout.write(chromium.executablePath());')"
+    - npm run lighthouse:ci
+  artifacts:
+    paths:
+      - .lighthouseci
+    when: always
+    expire_in: 14 days
+deploy:
+  stage: deploy
+  needs:
+    - job: format
+      artifacts: false
+    - job: lint-code
+      artifacts: false
+    - job: lint-styles
+      artifacts: false
+    - job: lint-markdown
+      artifacts: false
+    - job: spellcheck
+      artifacts: false
+    - job: audit-unused
+      artifacts: false
+    - job: typecheck
+      artifacts: false
+    - job: test-unit
+      artifacts: false
+    - job: build
+      artifacts: true
+    - job: test-browser
+      artifacts: false
+    - job: lighthouse
+      artifacts: false
+    - job: lint-generated-markdown
+      artifacts: false
+    - job: validate-build
+      artifacts: false
+  script:
+    - test -f dist/index.html
+  rules:
+    - when: never
+  before_script: []
+  pages:
+    publish: dist
+  environment:
+    name: gitlab-pages
+    url: $CI_PAGES_URL
+  artifacts:
+    paths:
+      - dist
+    when: on_success
+    expire_in: 14 days
+smoke-deployed:
+  stage: smoke
+  needs:
+    - job: deploy
+      artifacts: false
+  script:
+    - test -n "$CI_PAGES_URL"
+    - npx playwright install --with-deps chromium
+    - DEPLOYMENT_URL="$CI_PAGES_URL" npm run test:smoke
+  rules:
+    - when: never
+  timeout: 10m
+  artifacts:
+    paths:
+      - playwright-report
+      - test-results
+    when: always
+    expire_in: 14 days
+    reports:
+      junit: test-results/smoke.xml
