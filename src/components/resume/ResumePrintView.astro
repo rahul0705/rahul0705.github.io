@@ -1,5 +1,5 @@
 ---
-import { resume } from '../../data/resume';
+import { curatedSkillGroups, resume } from '../../data/resume';
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
 import { getFinancialScopeCatalog } from '../../data/resume/financial-scopes';
@@ -106,10 +106,16 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
     </section>
   )}
 
-  {resume.skills.length > 0 && (
+  {curatedSkillGroups.length > 0 && (
     <section aria-labelledby="print-skills-heading" class="print-avoid-break">
     <h2 id="print-skills-heading">Skills</h2>
     <dl class="resume-print-skills">
+      {curatedSkillGroups.map((group) => (
+        <div>
+          <dt>{group.label}</dt>
+          <dd>{group.skills.map((skill) => skill.name).join(', ')}</dd>
+        </div>
+      ))}
       {resume.skills.map((group) => (
         <div>
           <dt>{group.name}</dt>

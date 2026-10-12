@@ -11,14 +11,33 @@ export const skillCatalog: Record<SkillId, SkillCatalogEntry> = Object.fromEntri
   skillEntries.map((entry) => [entry.id, entry.data]),
 );
 
-export const featuredSkillIds: SkillId[] = [
+export const curatedSkillIds: SkillId[] = [
   'aws',
   'kubernetes',
   'python',
   'postgresql',
   'system-architecture',
   'typescript',
+  'react',
+  'nodejs',
+  'cdk',
+  'docker',
+  'amazon-s3',
+  'amazon-event-bridge',
+  'git',
+  'ansible',
+  'continuous-integration',
+  'unit-testing',
+  'jest',
+  'cypress',
+  'aws-iam',
+  'stigs',
+  'system-hardening',
+  'agile-scrum',
+  'ui-ux',
 ];
+
+export const featuredSkillIds = curatedSkillIds.slice(0, 6);
 
 export const categorizedSkills = skillCategories.map((category) => ({
   ...category,
@@ -30,4 +49,4 @@ export const validateSkillIds = (ids: Iterable<string>, context: string): void =
   if (invalidIds.length > 0) throw new Error(`Unknown skill ID in ${context}: ${[...new Set(invalidIds)].join(', ')}`);
 };
 
-validateSkillIds(featuredSkillIds, 'featured skills');
+validateSkillIds(curatedSkillIds, 'curated skills');

@@ -1,3 +1,4 @@
+import { skillCategories } from '../../config/skill-categories';
 import { awards } from './awards';
 import { basics } from './basics';
 import { education } from './education';
@@ -5,7 +6,7 @@ import { experience } from './experience';
 import { deriveSkillEvidence, type SkillEvidence } from './experience-coverage';
 import { interests } from './interests';
 import { toResumeJson } from './json';
-import { validateSkillIds } from './skills';
+import { curatedSkillIds, validateSkillIds } from './skills';
 import { toResumeMarkdown, toResumeText } from './text';
 
 export interface SkillGroup {
@@ -44,6 +45,12 @@ export const resume = { basics, experience, education, skills: skillGroups, awar
 for (const entry of education) validateSkillIds(entry.skills ?? [], `education entry ${entry.title}`);
 
 export const skillEvidence: SkillEvidence[] = deriveSkillEvidence(resume.experience);
+export const curatedSkillGroups = skillCategories.map((category) => ({
+  ...category,
+  skills: curatedSkillIds
+    .map((id) => skillEvidence.find((skill) => skill.id === id)!)
+    .filter((skill) => skill.category === category.value),
+}));
 
 export const resumeJson = toResumeJson({
   basics,

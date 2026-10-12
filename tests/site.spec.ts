@@ -216,9 +216,10 @@ test('the resume has a compact print presentation', async ({ page }) => {
   await expect(page.locator('.resume-print-entry')).toHaveCount(printEntryCount);
   await expect(page.getByRole('heading', { name: 'Experience', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Skills', exact: true })).toBeVisible();
+  await expect(page.locator('.resume-print-skills')).toContainText('Cloud and infrastructure');
 });
 
-test('featured skills and role anchors work at mobile and desktop widths', async ({ page }) => {
+test('categorized skills and role anchors work at mobile and desktop widths', async ({ page }) => {
   for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/');
@@ -228,10 +229,11 @@ test('featured skills and role anchors work at mobile and desktop widths', async
 
     await page.goto('/resume/');
     await expect(page.getByRole('meter')).toHaveCount(0);
-    const featuredSkills = page.getByRole('list', { name: 'Selected technical skills' });
-    await expect(featuredSkills.locator('li')).toHaveCount(6);
-    await expect(featuredSkills.getByText('Kubernetes')).toBeVisible();
-    const supportingRole = await featuredSkills.getByRole('link').first().getAttribute('href');
+    const skills = page.getByRole('region', { name: 'Technical skills' });
+    await expect(skills.locator('section')).toHaveCount(7);
+    await expect(skills.getByRole('link', { name: 'Kubernetes' })).toBeVisible();
+    await expect(skills.getByText('Last recorded 2024').first()).toBeVisible();
+    const supportingRole = await skills.getByRole('link').first().getAttribute('href');
     expect(supportingRole).toMatch(/^#experience-/);
     await expect(page.locator(supportingRole!)).toHaveCount(1);
     const roleAnchors = await page

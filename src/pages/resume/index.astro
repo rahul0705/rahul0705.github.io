@@ -9,14 +9,11 @@ import ResumePrintView from '../../components/resume/ResumePrintView.astro';
 import Container from '../../components/ui/Container.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import SocialIcon from '../../components/ui/SocialIcon.astro';
-import { skillCategories } from '../../config/skill-categories';
-import { resume, skillEvidence } from '../../data/resume';
-import { featuredSkillIds } from '../../data/resume/skills';
+import { curatedSkillGroups, resume } from '../../data/resume';
 import { Mail } from '@lucide/astro';
 
 const profiles = resume.basics.profiles.filter((profile) => profile.network && profile.url);
 const hasContactDetails = Boolean(resume.basics.email || profiles.length > 0);
-const featuredSkills = featuredSkillIds.map((id) => skillEvidence.find((skill) => skill.id === id)!);
 ---
 
 <BaseLayout
@@ -73,26 +70,30 @@ const featuredSkills = featuredSkillIds.map((id) => skillEvidence.find((skill) =
       )}
 
       <div class="grid gap-16">
-        <ExperienceTimeline title="Experience" companies={resume.experience} />
         <section aria-labelledby="technical-skills-heading" class="print-avoid-break">
           <h2 id="technical-skills-heading" class="text-2xl font-bold tracking-tight">Technical skills</h2>
-          <p class="mt-2 text-base-content/70">Selected skills from my work experience.</p>
-          <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Selected technical skills">
-            {featuredSkills.map((skill) => (
-              <li class="rounded-box border border-base-300 bg-base-100 p-4">
-                <h3 class="font-semibold">{skill.name}</h3>
-                <p class="text-sm text-base-content/70">
-                  {skillCategories.find((category) => category.value === skill.category)?.label}
-                </p>
-                {skill.roles[0] && (
-                  <a class="link link-primary mt-2 inline-block text-sm" href={skill.roles[0].href}>
-                    {skill.roles[0].title}
-                  </a>
-                )}
-              </li>
+          <p class="mt-2 text-base-content/70">Selected for relevance, with links to supporting roles. Last recorded use shows recency, not proficiency.</p>
+          <div class="mt-6 grid gap-4 md:grid-cols-2">
+            {curatedSkillGroups.map((group) => (
+              <section class="rounded-box border border-base-300 bg-base-100 p-5" aria-labelledby={`skills-${group.value}`}>
+                <h3 id={`skills-${group.value}`} class="font-semibold">{group.label}</h3>
+                <ul class="mt-3 space-y-2" aria-label={group.label}>
+                  {group.skills.map((skill) => (
+                    <li class="flex flex-wrap items-baseline justify-between gap-x-3 text-sm">
+                      <a class="link link-primary" href={skill.roles[0]?.href}>{skill.name}</a>
+                      {skill.latestUse && (
+                        <span class="text-base-content/60">
+                          {skill.latestUse === 'Present' ? 'Current role' : `Last recorded ${skill.latestUse.slice(0, 4)}`}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ))}
-          </ul>
+          </div>
         </section>
+        <ExperienceTimeline title="Experience" companies={resume.experience} />
         <ResumeSkillGroups title="Other qualifications" groups={resume.skills} />
         <ResumeSkillGroups title="Interests" groups={resume.interests} />
         <ResumeTimeline title="Education" items={resume.education} type="education" />
