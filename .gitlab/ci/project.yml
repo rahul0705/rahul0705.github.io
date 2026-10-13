@@ -124,6 +124,9 @@ lighthouse:
       - .lighthouseci
     when: always
     expire_in: 14 days
+  # Node containers run Chrome as root.
+  variables:
+    LHCI_COLLECT__SETTINGS__CHROME_FLAGS: --no-sandbox
 deploy:
   stage: deploy
   needs:
