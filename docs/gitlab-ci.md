@@ -16,3 +16,7 @@ GitHub deployment. GitHub security and repository automation remain on GitHub.
 
 Use Linux container runners with Node images. Validate this configuration using
 GitLab CI Lint and a real runner before relying on the GitLab mirror.
+
+Lighthouse jobs set `LHCI_COLLECT__SETTINGS__CHROME_FLAGS=--no-sandbox`
+because the Node containers run Chrome as root. This setting is scoped to the
+GitLab audit jobs; Chromium is selected through `CHROME_PATH`.
