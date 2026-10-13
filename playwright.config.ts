@@ -12,7 +12,15 @@ export default defineConfig({
   fullyParallel: true,
   testIgnore: ['**/deployment.spec.ts'],
   ...(deploymentURL ? { testMatch: '**/deployment.spec.ts', retries: 2, workers: 1 } : {}),
-  reporter: process.env.GITHUB_ACTIONS === 'true' ? [['dot'], ['github'], ['html', { open: 'never' }]] : 'list',
+  reporter: process.env.GITLAB_CI
+    ? [
+        ['list'],
+        ['junit', { outputFile: 'test-results/browser.xml', includeProjectInTestName: true }],
+        ['html', { open: 'never' }],
+      ]
+    : process.env.GITHUB_ACTIONS === 'true'
+      ? [['dot'], ['github'], ['html', { open: 'never' }]]
+      : 'list',
   use: {
     baseURL,
     trace: 'retain-on-failure',

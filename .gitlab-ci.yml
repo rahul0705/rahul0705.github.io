@@ -1,0 +1,20 @@
+# GitHub is primary; GitLab mirrors project validation.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
+default:
+  image: node:lts
+  interruptible: true
+  before_script:
+    - npm ci
+stages:
+  - validate
+  - build
+  - verify
+  - deploy
+  - smoke
+include:
+  - local: .gitlab/ci/project.yml
