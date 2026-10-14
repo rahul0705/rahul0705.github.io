@@ -58,29 +58,3 @@ jobs:
 
       - name: Validate workflows
         uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2
-
-  automation:
-    name: Automation
-    needs: [security, syntax]
-    if: always()
-    runs-on: ubuntu-latest
-    permissions: {}
-    steps:
-      - name: Summarize automation checks
-        env:
-          SECURITY_RESULT: ${{ needs.security.result }}
-          SYNTAX_RESULT: ${{ needs.syntax.result }}
-        run: |
-          {
-            echo '## Automation validation'
-            echo
-            echo "- Workflow security: $SECURITY_RESULT"
-            echo "- Workflow syntax: $SYNTAX_RESULT"
-            echo
-            echo 'Inspect failed job logs and the repository Security tab for details.'
-            echo 'Security findings are advisory; this result does not gate the site build.'
-          } >> "$GITHUB_STEP_SUMMARY"
-          if [[ "$SECURITY_RESULT" != 'success' || "$SYNTAX_RESULT" != 'success' ]]; then
-            echo '::error title=Automation validation failed::Workflow security and syntax checks must both pass.'
-            exit 1
-          fi
