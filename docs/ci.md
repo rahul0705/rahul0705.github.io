@@ -163,3 +163,10 @@ A useful upstream proposal is to give the website independent source checks and 
 Lighthouse consumers depend on it, require each check for merging and deployment, and retain a small post-deployment
 check.
 Apply this selectively rather than copying this site's route list, resume policy, or performance thresholds.
+
+## Automation checks
+
+Workflow security and syntax report independently; there is no automation aggregate job.
+Run them manually from the Actions page or through their existing GitHub-path events and
+weekly schedule. These checks remain GitHub-local and do not gate the site deployment graph.
+The Main ruleset does not require the removed aggregate; no protection settings were changed.
