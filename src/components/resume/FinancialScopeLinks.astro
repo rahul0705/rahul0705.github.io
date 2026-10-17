@@ -22,10 +22,10 @@ const { scopes, separator = ' · ', print = false } = Astro.props;
         {index > 0 && <span aria-hidden="true">{separator}</span>}
         {financialScopeSourceUrl(scope) ? (
           <a href={financialScopeSourceUrl(scope)} class:list={{ 'link link-hover': !print }}>
-            {scope.name} — {formatFinancialScopeDetail(scope)}
+            {scope.name} ({formatFinancialScopeDetail(scope)})
           </a>
         ) : (
-          <span>{scope.name} — {formatFinancialScopeDetail(scope)}</span>
+          <span>{scope.name} ({formatFinancialScopeDetail(scope)})</span>
         )}
       </>
     ))}

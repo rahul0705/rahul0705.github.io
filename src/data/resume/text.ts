@@ -91,7 +91,7 @@ const roleText = (organization: ExperienceOrganization, project: string, role: E
       ? `Skills: ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`
       : undefined,
     projectData?.additionalInformation.length
-      ? `Additional information: ${projectData.additionalInformation.map((output) => `${output.label} — ${output.url}`).join(', ')}`
+      ? `Additional information: ${projectData.additionalInformation.map((output) => `${output.label} (${output.url})`).join(', ')}`
       : undefined,
   ]
     .filter(Boolean)
@@ -102,7 +102,7 @@ const roleMarkdown = (organization: ExperienceOrganization, project: string, rol
   const projectData = organization.projects.find((candidate) => candidate.name === project);
 
   return [
-    `### ${role.title} — ${
+    `### ${role.title}: ${
       projectData?.href ? `[${project}](${projectData.href})` : project
     }${formatYearPeriod(role) ? ` (${formatYearPeriod(role)})` : ''}`,
     `Organization: **${organization.name}**`,

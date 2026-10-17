@@ -22,7 +22,7 @@ questions to ask.
 The ideas below are prompts, not gates that every change must pass. Different systems, teams, and situations call for
 different tradeoffs. A small documentation fix does not need the same scrutiny as an authentication change, and a
 prototype should not be held to every standard of a safety-critical production service. The purpose of a review is to
-apply engineering judgment, share context, and make the change better—not to enforce personal preferences.
+apply engineering judgment, share context, and make the change better, rather than enforce personal preferences.
 
 This guide covers both sides of that conversation:
 
@@ -129,7 +129,7 @@ misleading:
 time.sleep(exponential_backoff(attempt))
 ```
 
-A useful comment explains the reason for the delay—a constraint that is less likely to change with the implementation:
+A useful comment explains the reason for the delay (a constraint that is less likely to change with the implementation):
 
 ```python
 # Spread retries out so synchronized clients do not overwhelm a recovering dependency.
@@ -142,7 +142,8 @@ reason is already clear from the surrounding code and domain language, no commen
 #### Do names make the computation understandable?
 
 Names are part of the design. A function name should describe the operation or outcome at the caller's level, while a
-variable name should identify what a value represents—not merely its type or where it came from. Predicates often read
+variable name should identify what a value represents, rather than merely its type or where it came from. Predicates
+often read
 clearly as questions such as `is_expired`, `has_permission`, or `can_retry`.
 
 Intermediate variables can turn a dense expression into a sequence of named decisions. For example:
@@ -252,7 +253,8 @@ as the same value. It could also couple unrelated concepts: a shipping address m
 while a billing address may need tax jurisdiction or verification status.
 
 Repeating a small model, function, or block of code can be a deliberate way to preserve independence. Consider sharing
-code when the concepts follow the same business rule and should change together—not only because their current shapes
+code when the concepts follow the same business rule and should change together, rather than only because their
+current shapes
 match. Duplication is a cost, but coupling is also a cost.
 
 For a deeper discussion of this tradeoff, see
@@ -524,7 +526,7 @@ requested change focused makes it easier to review, test, and deliver.
 Do not approve a consequential change merely because nothing obviously looks wrong. If an important behavior,
 security boundary, migration, or operational decision is outside your understanding, ask for context or involve a
 reviewer with the relevant domain expertise. Identifying where another perspective is needed is a useful review
-outcome—not a failure to review.
+outcome, not a failure to review.
 
 ### Completing the review cycle
 
@@ -608,7 +610,7 @@ Where practical, write a failing test or repeatable measurement before reducing 
 signal for comparing A, B, and C instead of relying on memory or a one-time observation.
 
 For a closer look at this reduction process, see
-[_Did You Fix the Bug—or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
+[_Did You Fix the Bug or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
 
 ### Run the automated checks
 
@@ -620,7 +622,7 @@ the decisions that require human context.
 
 Generated and AI-assisted code has the same standard of ownership as code written manually. Authors should understand
 what they submit, verify that it fits the repository and its constraints, and test its behavior. When provenance or
-licensing could be relevant—such as generated code that closely follows an external implementation—confirm that the
+licensing could be relevant (such as generated code that closely follows an external implementation), confirm that the
 material can be used and attributed appropriately. A tool producing plausible code is not evidence that the code is
 correct, secure, or maintainable.
 

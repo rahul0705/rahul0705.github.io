@@ -77,7 +77,7 @@ describe('Sveltia experience preview', () => {
       props: { className: expect.stringContaining('bg-base-200') },
     });
     expect(rendered).toContain('L3Harris Technologies · WxConnect');
-    expect(rendered).toContain('Jan 2014 — Apr 2016');
+    expect(rendered).toContain('Jan 2014 to Apr 2016');
     expect(rendered).toContain('Recovered GOES data.');
     expect(rendered).toContain('Flask');
     expect(rendered).toContain('RFIMS Development');

@@ -1,6 +1,6 @@
 ---
 title: The Best Code Is Sometimes the Code You Don't Write
-description: Code has a cost long after it's written. Good engineering isn't just knowing how to build a solution—it's knowing when not to build one.
+description: Code has a cost long after it's written. Good engineering includes knowing how to build a solution and when not to build one.
 coverImage: ../../assets/covers/the-best-code-you-dont-write.jpg
 coverImageAlt: Tattooed hands pruning a bonsai tree with small scissors
 tableOfContents: false
@@ -22,8 +22,8 @@ But there's another question worth asking before you call it done:
 
 **Did this problem actually need more code?**
 
-We tend to measure engineering progress by what we add — new features, new services, new abstractions, new
-configuration, new dependencies. Sometimes the better decision is to remove something, or never build it in the
+We tend to measure engineering progress by what we add (new features, new services, new abstractions, new
+configuration, new dependencies). Sometimes the better decision is to remove something, or never build it in the
 first place.
 
 ## Every Line Has a Cost
@@ -37,7 +37,7 @@ validation needs error handling. Someone has to document how it all works.
 Then, six months later, another engineer runs into it while trying to fix something completely unrelated. They still
 have to make sense of it, even if the original problem is long forgotten.
 
-None of those additions are necessarily bad — complexity is often unavoidable. But complexity should be something
+None of those additions are necessarily bad. Complexity is often unavoidable. But complexity should be something
 we _spend deliberately_, not something we accumulate by default.
 
 ## Before You Build the Solution, Challenge the Problem
@@ -77,7 +77,7 @@ def get_timeout(config: TimeoutConfig, is_special_workflow: bool) -> int:
     return config.timeout_ms
 ```
 
-Problem solved — except now there are two values to configure, another branch to test, and a new distinction every
+Problem solved. Except now there are two values to configure, another branch to test, and a new distinction every
 engineer touching this code has to understand.
 
 The expensive part isn't the extra lines. The system now owns a new concept: a "special workflow timeout." From
@@ -105,7 +105,7 @@ That second question gives us room to reconsider the request before the implemen
 ## Deleting Code Is a Feature
 
 There's a reason removing code feels uncomfortable. A pull request that adds 500 lines looks substantial. One that
-removes 500 lines can look suspiciously easy. But the two changes don't carry equal long-term cost — if both solve
+removes 500 lines can look suspiciously easy. But the two changes don't carry equal long-term cost. If both solve
 the same problem, the version that leaves less behind is usually the better trade.
 
 - Removing an obsolete compatibility layer means nobody has to understand it anymore.
@@ -114,7 +114,7 @@ the same problem, the version that leaves less behind is usually the better trad
 - Removing a dependency means one fewer thing that can break underneath you.
 - Retiring an unused feature removes a support obligation once its users have migrated.
 
-Deletion doesn't just shrink a repository. It reduces the number of things the system can do — and sometimes that's
+Deletion doesn't just shrink a repository. It reduces the number of things the system can do, and sometimes that's
 exactly what makes it better.
 
 ## Don't Build for Imaginary Futures
@@ -124,7 +124,7 @@ implementation later; this could eventually support multiple providers; we shoul
 someone needs to change it._
 
 Maybe. But possible requirements branch in too many directions for us to design for all of them. Worse, the
-abstraction we build today is based on our guess about tomorrow's requirements — and when those requirements
+abstraction we build today is based on our guess about tomorrow's requirements. When those requirements
 actually arrive, they're usually different. Now, instead of designing the right abstraction around two real
 examples, we're bending a speculative one around a problem it was never built to solve.
 
@@ -150,7 +150,7 @@ When reviewing a change, I like to ask one question before getting into implemen
 
 **What disappears if we merge this?**
 
-Not every change needs a good answer — a new capability may genuinely add something to the system. But the question
+Not every change needs a good answer. A new capability may genuinely add something to the system. But the question
 changes how you think about the change:
 
 - Does a new abstraction replace several special cases?
@@ -165,16 +165,16 @@ gets simpler, it's worth asking whether we're solving the right problem.
 
 ## Code Is a Liability With a Purpose
 
-We usually talk about code as an asset — it's what we've built, our intellectual property, evidence of progress.
+We usually talk about code as an asset. It's what we've built, our intellectual property, evidence of progress.
 Operationally, though, it behaves more like a liability: it needs maintenance, accumulates dependencies, contains
 bugs, creates attack surface, and consumes attention.
 
 We accept those costs because the code provides something valuable in return. That's the trade.
 
-I still like building things. I just want the code — and the complexity — we choose to own to earn its keep.
+I still like building things. I just want the code (and the complexity) we choose to own to earn its keep.
 
 The best engineers I've worked with aren't necessarily the ones who can build the most elaborate solution. They're
-the ones willing to ask whether the elaborate solution needs to exist at all — because sometimes the cleanest
+the ones willing to ask whether the elaborate solution needs to exist at all, because sometimes the cleanest
 abstraction is no abstraction, the best configuration option is a sensible default, and the best dependency is the
 one you remove.
 

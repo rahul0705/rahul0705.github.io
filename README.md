@@ -128,10 +128,10 @@ them with the structured data in `src/data/resume/`, and renders the resume and 
 
 The public resume routes are:
 
-- `/resume/` — HTML resume with print support
-- `/resume.json` — JSON Resume-compatible data
-- `/resume.txt` — plain-text resume
-- `/resume.md` — Markdown resume
+- `/resume/`: HTML resume with print support
+- `/resume.json`: JSON Resume-compatible data
+- `/resume.txt`: plain-text resume
+- `/resume.md`: Markdown resume
 
 When changing resume generation, run:
 

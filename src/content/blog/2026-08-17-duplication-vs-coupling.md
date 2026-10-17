@@ -14,7 +14,7 @@ tags:
 ---
 
 It's satisfying to find two pieces of code that look alike and turn them into one. Fewer lines, one place to make a
-change. Don't repeat yourself—DRY—seems like straightforward advice. The part worth slowing down for is whether those
+change. "Don't repeat yourself" (DRY) seems like straightforward advice. The part worth slowing down for is whether those
 two pieces actually represent the same knowledge.
 
 Two pieces of code can look alike without representing the same idea. Combining them removes visible duplication, but
@@ -153,7 +153,7 @@ def send_marketing_update(user, message):
 ```
 
 The repeated line is cheaper than coupling security policy to marketing preferences. If a stable lower-level concept
-emerges—such as reliable email delivery—it can still be extracted without combining the two workflows.
+emerges (such as reliable email delivery), it can still be extracted without combining the two workflows.
 
 ## An abstraction is a coupling decision
 

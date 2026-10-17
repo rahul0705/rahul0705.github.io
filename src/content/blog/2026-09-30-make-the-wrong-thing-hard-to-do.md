@@ -149,7 +149,7 @@ That's often more valuable than another paragraph explaining it.
 This principle isn't limited to APIs and types. Code review is a good example.
 
 I've spent enough time on both sides of code reviews to know how easy it is for mechanical feedback to consume the
-conversation. Formatting, imports, generated files, naming conventions — individually they're small things, but
+conversation. Formatting, imports, generated files, and naming conventions are individually small things, but
 collectively they take attention away from the parts of a change that actually need a human.
 
 Those are expensive uses of human attention, and most of them don't need a human at all:
@@ -293,7 +293,7 @@ The goal isn't to stop engineers from making decisions. It's to stop asking them
 already knows the answer to.
 
 Documentation still matters. Comments still matter. Runbooks still matter. There will always be context worth preserving
-that can't — and shouldn't — be encoded into an interface.
+that can't (and shouldn't) be encoded into an interface.
 
 But when a rule is important, stable, and enforceable, it's worth asking whether explaining it is enough.
 
