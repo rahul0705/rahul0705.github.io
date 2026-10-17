@@ -106,6 +106,9 @@ under `src/assets/`. The date prefix in the article filename is the authoritativ
 position in newest-first article lists. The homepage Recent Articles section automatically uses the three newest
 published articles; there is no separate editorial featured state.
 
+Drafts may omit the cover image and alt text. Sveltia permits saving these incomplete drafts; Astro requires
+both cover fields when `draft` is false or omitted. Add a cover and descriptive alt text before publishing.
+
 Before publishing an article:
 
 1. Confirm the title is unique and the description is a concise search and social summary.
@@ -216,13 +219,21 @@ decisions:
 - Omit a web app manifest for now. This portfolio has no installation or app-specific experience that warrants one.
 - Retain the existing fallback social image, `src/assets/covers/home-workspace.png`, used by `SeoHead` when a page
   supplies no image. Article covers continue to override it; a second fallback asset would duplicate an existing capability.
-- Keep the article index unpaginated while its seven articles remain easy to browse together. Revisit pagination when
+- Keep the article index unpaginated while the archive remains easy to browse together. Revisit pagination when
   the collection becomes cumbersome to scan or materially affects page performance.
 - Keep About content on the homepage, with the resume providing career detail. Add a separate About route only when
   there is distinct content that benefits from its own page.
 
 The browser suite checks the generated crawl policy, sitemap exclusions, sharing metadata, and accessibility of the
 existing public pages.
+
+### Retired content
+
+Legacy Projects, Process, category and tag pages, analytics integrations, and inactive social profiles remain
+retired. Before restoring a route, asset, integration, or profile, document its current value to visitors,
+provide current content, identify a maintenance owner, and obtain Rahul Mohandas's approval. Historical
+presence alone is not a reason to restore it. Approval applies to the specific proposal: the approved
+Dotfiles addition does not authorize restoring other legacy material.
 
 ## Deployment
 
@@ -261,15 +272,13 @@ for grouping and cooldown semantics.
 
 Repository Automation Validation runs on `.github/**` changes, every Monday at 05:43 UTC, and on manual dispatch.
 Zizmor scans all supported automation inputs and uploads advisory findings to the Security tab. Findings do not gate
-the site build. The stable `Automation` check succeeds when the security scan and syntax jobs complete successfully;
-failures, cancellations, and skipped checks do not count as success. Each run includes a summary linking the results
-to the job logs and Security tab.
+the site build. Workflow security and syntax report as independent checks, with no aggregate or summary job.
 
 For scheduled failures, inspect the failed run, review the finding, and submit a focused correction or documented
 exception. Use GitHub Actions notification preferences to receive failed-run notifications. Successful runs do not
-create issues or comments. This weekly automated scan complements the broader manual review cadence in
-[issue #9](https://github.com/rahul0705/rahul0705.github.io/issues/9). The schedule becomes active after merge to `main`;
-the site build has no dependency on `Automation`. Keep security findings advisory when configuring branch protection.
+create issues or comments. This weekly automated scan complements the
+[quarterly security review](docs/security-review.md). The site build has no dependency on these automation jobs.
+Keep security findings advisory when configuring branch protection.
 
 The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
 Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
