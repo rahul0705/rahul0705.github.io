@@ -35,7 +35,7 @@
     "@fontsource/fira-sans": "^5.3.0",
     "@lucide/astro": "^1.48.0",
     "@rm-industries/content-model": "1.1.5",
-    "@sveltia/cms": "0.228.0"
+    "@sveltia/cms": "0.229.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -50,7 +50,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.1",
     "@vitest/coverage-v8": "^5.0.0",
-    "astro": "^7.3.5",
+    "astro": "^7.3.8",
     "cspell": "^10.3.6",
     "daisyui": "^5.7.47",
     "knip": "^6.38.0",
