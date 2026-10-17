@@ -269,11 +269,11 @@ test('public pages provide accurate sharing metadata', async ({ page }) => {
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
   await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
     'content',
-    'Source code displayed on a laptop screen',
+    'Close-up of syntax-highlighted Python code on a dark screen',
   );
   await expect(page.locator('meta[name="twitter:image:alt"]')).toHaveAttribute(
     'content',
-    'Source code displayed on a laptop screen',
+    'Close-up of syntax-highlighted Python code on a dark screen',
   );
   await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute(
     'content',

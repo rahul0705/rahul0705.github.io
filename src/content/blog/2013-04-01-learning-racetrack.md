@@ -1,7 +1,7 @@
 ---
 title: Learning Racetrack
 tableOfContents: true
-description: Rebuilding an interactive racetrack to help middle-school students learn through hands-on play.
+description: Rebuilding a classroom racetrack with Raspberry Pi and Android devices so students advance cars by answering questions.
 coverImage: ../../assets/covers/circuit.jpg
 coverImageAlt: Close-up of a circuit board and its electronic components
 section: Projects
