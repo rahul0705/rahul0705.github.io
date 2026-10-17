@@ -9,6 +9,7 @@ export const requiredOutputPaths = [
   '404.html',
   'blog/index.html',
   'about/index.html',
+  'dotfiles/index.html',
   'privacy/index.html',
   'admin/index.html',
   'resume/index.html',

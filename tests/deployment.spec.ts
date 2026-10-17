@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { siteConfig } from '../src/config/site';
 
-for (const path of ['/', '/resume/', '/blog/2018-10-08-peer-reviews/']) {
+for (const path of ['/', '/resume/', '/dotfiles/', '/blog/2018-10-08-peer-reviews/']) {
   test(`deployed ${path} serves content and fits a phone viewport`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     const failedAssets: string[] = [];

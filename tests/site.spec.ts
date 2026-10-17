@@ -4,7 +4,15 @@ import { expect, test } from '@playwright/test';
 import { siteConfig } from '../src/config/site';
 import { siteTheme, siteThemeColor } from '../src/themes/site-theme';
 
-const routes = ['/', '/about/', '/blog/', '/blog/2019-05-16-how-to-use-git-effectively/', '/resume/', '/privacy/'];
+const routes = [
+  '/',
+  '/about/',
+  '/blog/',
+  '/blog/2019-05-16-how-to-use-git-effectively/',
+  '/resume/',
+  '/privacy/',
+  '/dotfiles/',
+];
 
 const sitemapLocations = (xml: string) =>
   Array.from(xml.matchAll(/<loc>(.*?)<\/loc>/g), ([, location]) => location.replaceAll('&amp;', '&'));
