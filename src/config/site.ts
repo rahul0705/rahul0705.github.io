@@ -31,7 +31,6 @@ interface SiteConfig {
   rss: {
     path: string;
     title: string;
-    description: string;
   };
   analytics: {
     measurementId: string;
@@ -73,8 +72,6 @@ export const siteConfig = {
   rss: {
     path: '/rss.xml',
     title: 'Rahul Mohandas Articles',
-    description:
-      'Writing about software engineering, distributed systems, cloud infrastructure, and developer tooling.',
   },
   analytics: {
     measurementId: 'G-K6P860TJ0W',

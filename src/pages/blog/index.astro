@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogCard from '../../components/blog/BlogCard.astro';
 import Container from '../../components/ui/Container.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
+import { articles } from '../../data/articles';
 
 import { getPublishedAt, getPublishedPosts } from '../../lib/blog';
 
@@ -13,7 +14,7 @@ const latestArticleDate = posts.reduce<Date | undefined>((latest, post) => {
   const articleDate = post.data.updatedDate ?? getPublishedAt(post);
   return articleDate && (!latest || articleDate > latest) ? articleDate : latest;
 }, undefined);
-const description = 'Writing about software engineering, distributed systems, cloud infrastructure, and developer tooling.';
+const { description } = articles;
 ---
 
 <BaseLayout title="Articles" {description} canonicalPath="/blog/">

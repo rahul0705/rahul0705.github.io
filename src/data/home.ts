@@ -3,13 +3,15 @@ import { experienceSkillCoverage } from './resume';
 const toolkitSkills = experienceSkillCoverage.slice(0, 6).map((skill) => skill.name);
 
 export const home = {
+  description:
+    'I build software, lead engineering teams, and like figuring out why something is harder than it needs to be.',
   hero: {
     supportingText:
-      "Curious by default. I build software, ask too many questions, and dig into how things work - especially when they don't.",
+      'Taking things apart to understand them has always come naturally. Putting them back together took some practice.',
   },
-  writing: {
+  recentArticles: {
     title: 'Recent Articles',
-    description: 'Things I have built, debugged, or learned the hard way.',
+    description: "Things I've built, debugged, or learned the hard way.",
   },
   contact: {
     eyebrow: 'Contact',
@@ -19,9 +21,9 @@ export const home = {
   },
   about: {
     title: 'About',
-    description: 'Somewhere between the architecture diagram and the debug logs.',
+    description: 'Curiosity has a habit of turning into a project.',
     intro:
-      "I lead engineering teams and build cloud platforms for operational systems. I like understanding why things work, not just getting them to pass a test. Give me a stubborn bug or a repetitive task and I'll probably come back with an explanation, a script, or both.",
+      'I lead engineering teams and build cloud platforms for operational systems. I tend to follow a problem past the application, into how we build it, deploy it, and keep it running. Somewhere along the way, I usually find something I want to automate.',
     highlights: [
       "Lead more than 30 engineers across infrastructure, observability, shared services, and security for NOAA's GEO Cloud Compute Subsystem.",
       'Developed a self-service marketing platform at Amazon Web Services, leading UI and UX improvements and integrating budget approvals and customer-segment selection.',
@@ -34,9 +36,9 @@ export const home = {
     description: 'Tools I use to build things and keep them running.',
     items: toolkitSkills,
   },
-  openSource: {
+  dotfiles: {
     title: 'Dotfiles',
-    description: 'My dotfiles for macOS, Linux, and Windows.',
+    description: 'My setup for macOS, Linux, and Windows. Because configuring it once ought to be enough.',
     setupHref: '/dotfiles/',
     repositoryHref: 'https://github.com/rahul0705/dotfiles',
   },

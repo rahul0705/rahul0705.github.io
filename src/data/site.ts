@@ -32,7 +32,7 @@ export const getSiteStats = async () => {
 export const site = {
   url: siteConfig.url,
   title: siteConfig.title,
-  description: currentRoleDescription || basics.label,
+  currentRoleSummary: currentRoleDescription || basics.label,
   defaultSocialImage: defaultSocialImage.src,
   github: socialLinks.GitHub.href,
   linkedin: socialLinks.LinkedIn.href,
