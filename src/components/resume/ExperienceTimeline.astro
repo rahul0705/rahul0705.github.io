@@ -22,6 +22,7 @@ const roles: TimelineRole[] = companies.flatMap((company) =>
 ).sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
 
 const timelineItems = roles.map(({ company, project, role }) => ({
+  id: `experience-${role.id}`,
   title: role.title,
   subtitle: company.name,
   subtitleHref: company.href,

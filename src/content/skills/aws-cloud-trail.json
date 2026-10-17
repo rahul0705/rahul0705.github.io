@@ -2,6 +2,5 @@
   "name": "AWS CloudTrail",
   "category": "security-compliance",
   "description": "AWS service for recording account activity and API events.",
-  "href": "https://aws.amazon.com/cloudtrail/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/cloudtrail/"
 }

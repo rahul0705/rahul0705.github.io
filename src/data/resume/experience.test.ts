@@ -4,9 +4,30 @@ import { skillCategories } from '../../config/skill-categories';
 import { education } from './education';
 import { experienceEntries } from './experience';
 import { createExperienceSlug } from './experience-slug';
-import { categorizedSkills, skillCatalog, type SkillId, validateSkillIds } from './skills';
+import { curatedSkillGroups, skillEvidence } from './index';
+import {
+  categorizedSkills,
+  curatedSkillIds,
+  featuredSkillIds,
+  skillCatalog,
+  type SkillId,
+  validateSkillIds,
+} from './skills';
 
 describe('experience content', () => {
+  it('curates distinct role-supported skills across every category', () => {
+    expect(featuredSkillIds).toEqual(curatedSkillIds.slice(0, 6));
+    expect(new Set(curatedSkillIds).size).toBe(curatedSkillIds.length);
+    curatedSkillIds.forEach((id) =>
+      expect(skillEvidence.find((skill) => skill.id === id)?.roles.length).toBeGreaterThan(0),
+    );
+    expect(curatedSkillGroups.map(({ value, label }) => ({ value, label }))).toEqual(skillCategories);
+    expect(curatedSkillGroups.every(({ skills }) => skills.length > 0)).toBe(true);
+    const groupedIds = curatedSkillGroups.flatMap(({ skills }) => skills.map(({ id }) => id));
+    expect(groupedIds).toHaveLength(curatedSkillIds.length);
+    expect(groupedIds).toEqual(expect.arrayContaining(curatedSkillIds));
+  });
+
   it('places every catalog skill in exactly one configured category', () => {
     expect(categorizedSkills.map(({ value, label }) => ({ value, label }))).toEqual(skillCategories);
     expect(categorizedSkills.every(({ skills }) => skills.length > 0)).toBe(true);

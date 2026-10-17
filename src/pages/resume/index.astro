@@ -3,14 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ResumeAwards from '../../components/resume/ResumeAwards.astro';
 import ResumeActions from '../../components/resume/ResumeActions.astro';
 import ResumeSkillGroups from '../../components/resume/ResumeSkillGroups.astro';
-import ExperienceSkillCoverage from '../../components/resume/ExperienceSkillCoverage.astro';
 import ResumeTimeline from '../../components/resume/ResumeTimeline.astro';
 import ExperienceTimeline from '../../components/resume/ExperienceTimeline.astro';
 import ResumePrintView from '../../components/resume/ResumePrintView.astro';
 import Container from '../../components/ui/Container.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import SocialIcon from '../../components/ui/SocialIcon.astro';
-import { experienceSkillCoverage, resume } from '../../data/resume';
+import { curatedSkillGroups, resume } from '../../data/resume';
 import { Mail } from '@lucide/astro';
 
 const profiles = resume.basics.profiles.filter((profile) => profile.network && profile.url);
@@ -71,9 +70,31 @@ const hasContactDetails = Boolean(resume.basics.email || profiles.length > 0);
       )}
 
       <div class="grid gap-16">
+        <section aria-labelledby="technical-skills-heading" class="print-avoid-break">
+          <h2 id="technical-skills-heading" class="text-2xl font-bold tracking-tight">Technical skills</h2>
+          <p class="mt-2 text-base-content/70">Selected for relevance, with links to supporting roles. Last recorded use shows recency, not proficiency.</p>
+          <div class="mt-6 grid gap-4 md:grid-cols-2">
+            {curatedSkillGroups.map((group) => (
+              <section class="rounded-box border border-base-300 bg-base-100 p-5" aria-labelledby={`skills-${group.value}`}>
+                <h3 id={`skills-${group.value}`} class="font-semibold">{group.label}</h3>
+                <ul class="mt-3 space-y-2" aria-label={group.label}>
+                  {group.skills.map((skill) => (
+                    <li class="flex flex-wrap items-baseline justify-between gap-x-3 text-sm">
+                      <a class="link link-primary" href={skill.roles[0]?.href}>{skill.name}</a>
+                      {skill.latestUse && (
+                        <span class="text-base-content/60">
+                          {skill.latestUse === 'Present' ? 'Current role' : `Last recorded ${skill.latestUse.slice(0, 4)}`}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </section>
         <ExperienceTimeline title="Experience" companies={resume.experience} />
-        <ExperienceSkillCoverage skills={experienceSkillCoverage} />
-        <ResumeSkillGroups groups={resume.skills} />
+        <ResumeSkillGroups title="Other qualifications" groups={resume.skills} />
         <ResumeSkillGroups title="Interests" groups={resume.interests} />
         <ResumeTimeline title="Education" items={resume.education} type="education" />
         <ResumeAwards awards={resume.awards} />

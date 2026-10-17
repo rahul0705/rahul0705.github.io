@@ -2,6 +2,5 @@
   "name": "Amazon CloudWatch",
   "category": "cloud-infrastructure",
   "description": "AWS observability service for metrics, logs, dashboards, and alarms.",
-  "href": "https://aws.amazon.com/cloudwatch/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/cloudwatch/"
 }
