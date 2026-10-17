@@ -1,5 +1,24 @@
 import { expect, test } from '@playwright/test';
 
+for (const width of [390, 768, 1280]) {
+  test(`navigation reaches dotfiles at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    const menu = page.getByRole('button', { name: 'Open navigation menu' });
+    if (await menu.isVisible()) await menu.click();
+    const link = page.locator('header').getByRole('link', { name: 'Dotfiles', exact: true });
+    await expect(link).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    const box = await link.boundingBox();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await link.click();
+    await expect(page).toHaveURL(/\/dotfiles\/$/);
+    await expect(page.getByRole('heading', { name: 'Dotfiles', exact: true })).toBeVisible();
+  });
+}
+
 test('dotfiles guide offers direct installers and review alternatives without executing them', async ({ page }) => {
   const installerRequests: string[] = [];
   page.on('request', (request) => {

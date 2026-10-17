@@ -58,6 +58,7 @@ export const siteConfig = {
       { label: 'About', href: '/about/', external: false },
       { label: 'Articles', href: '/blog', external: false },
       { label: 'Resume', href: '/resume', external: false },
+      { label: 'Dotfiles', href: '/dotfiles/', external: false },
     ],
     footer: [
       { label: 'RSS', href: '/rss.xml', external: false },
