@@ -38,9 +38,7 @@ six months of production traffic teaches us something the design document couldn
 I've found that some of the most painful engineering decisions aren't necessarily the ones that were wrong. They're the
 ones that became difficult to change before we had enough information to know whether they were right.
 
-The goal isn't to predict the future perfectly.
-
-It's to make sure being wrong doesn't have to be catastrophic.
+I don't expect us to predict all of that. I'd rather leave enough room to be wrong without making it catastrophic.
 
 ## Most Decisions Don't Need to Be Permanent
 
@@ -88,12 +86,10 @@ replace this API. Maybe we'll need another implementation someday. Follow that t
 building abstractions for futures that never arrive.
 
 I've fallen into that trap too. It's easy to justify another abstraction by imagining all the ways the system _could_
-change. Given enough imagination, almost anything can look like it needs an escape hatch.
+change. My imagination is quite capable of creating more work for me. Given enough of it, almost anything can look
+like it needs an escape hatch.
 
-That's not the goal.
-
-Reversibility isn't about preparing for every possible future. It's about paying attention to the decisions where being
-wrong would be unusually expensive.
+What helps is narrowing the question to the decisions where being wrong would be unusually expensive.
 
 | Easier to reverse                                | Harder to reverse                                        |
 | ------------------------------------------------ | -------------------------------------------------------- |
@@ -178,9 +174,8 @@ None of these techniques guarantee the experiment will work. That's the point. T
 I like experiments where failure leaves us with information instead of cleanup. If an idea doesn't work, we should be
 able to say, "Well, we learned something," rather than, "Now we have six months of migration work."
 
-A good experiment doesn't just make it possible to try something.
-
-It makes it possible to stop trying it.
+Being able to stop is part of what makes the experiment useful, especially when we're still learning whether the idea
+deserves a place in the system.
 
 ## Some Doors Really Are One-Way
 
@@ -202,9 +197,7 @@ There's an obvious trap here. If every decision needs an interface, adapter, fea
 compatibility shim, and fallback implementation, we've created another kind of problem: we've made the system
 complicated today to protect ourselves from every imaginable tomorrow.
 
-That's not reversibility.
-
-That's fear of commitment.
+At that point, keeping our options open has become a problem of its own. That's fear of commitment.
 
 An abstraction nobody needs has a maintenance cost. A feature flag nobody removes becomes another execution path. A
 compatibility layer can outlive the system it was supposed to help migrate.
@@ -232,7 +225,7 @@ gives us room to learn.
 I don't think those ideas compete with each other. They're answers to different levels of certainty. Encode what you
 know. Leave yourself room around what you don't.
 
-Good engineering requires knowing which situation you're in.
+Working out which situation we're in is the part I wouldn't expect an interface or a pattern to decide for us.
 
 ## Leave Yourself a Way Back
 

@@ -11,12 +11,12 @@ tags:
   - debugging
 ---
 
-The bug is gone, but you are not entirely sure why.
+The bug is gone. That's a relief. You're not entirely sure why, though.
 
 You changed three things while chasing it—a timeout, a cache, maybe a suspicious query—and somewhere in that sequence
 the failure stopped happening. The instinct is to clean up the diff and open it for review because the system now does
-what you wanted. That instinct is usually premature. A working system and an understood system are not the same thing.
-Treating the first as proof of the second is how unnecessary risk enters a codebase.
+what you wanted. It's an understandable place to want to stop. But there is still a gap between a system that works
+and one whose behavior you understand, and that gap can leave unnecessary risk in the codebase.
 
 Say you have a headache. You take an aspirin, drink a glass of water, and step out of a bright room. Ten minutes later,
 it is gone. You do not know which action helped—or whether the headache was already fading. That uncertainty is harmless
@@ -62,7 +62,7 @@ and then forgot to write down.
 
 The second is operational. Every change you keep — needed or not — carries its own risk surface. A cache you didn't need
 still needs invalidating correctly. A longer timeout you didn't need still changes how long a caller waits before the
-system reports a problem. Unneeded changes are not neutral; they are risk you didn't bother to notice.
+system reports a problem. Those changes still carry risk, even if they weren't responsible for fixing anything.
 
 The third cost is to you. Knowing that a set of changes makes the symptom go away is not the same as knowing why. The
 next time something in that area misbehaves — maybe with a slightly different trigger — a vague memory of "we changed
@@ -71,14 +71,14 @@ noise.
 
 ## Get a stable signal before changing anything else
 
-At this point, the problem is solved only in the sense that matters least: with all three changes applied, the system
-does not fail. Treat that as a snapshot—a known-good state, not yet a known-good _explanation_. Now move backward from
-it, piece by piece, to learn which edits are load-bearing.
+With all three changes applied, the system no longer fails. That's useful progress, even if we can't explain it yet.
+Treat it as a snapshot—a known-good state, not yet a known-good _explanation_. From there, we can work backward, piece
+by piece, to learn which edits are load-bearing.
 
 Doing that safely requires a repeatable signal: a failing test, a script, or a measurement you can rerun and trust. “It
 feels fine now” is not enough. Each step backward needs a result you can compare with the one before it.
 
-If the failure is deterministic, this is usually just a matter of writing the test you should have started with. If it
+If the failure is deterministic, a test that reproduces it usually gives you that signal. If it
 is intermittent, get a baseline reproduction rate instead — "fails roughly six times in ten under this load pattern" —
 so a change that shifts the rate to one in ten is visibly different from a change that eliminates it. Not every race
 condition can be made to fail on command, but almost every one can be characterized well enough to compare before and
@@ -203,7 +203,8 @@ production traffic is not something you can cleanly test in a loop before a revi
 In those cases, reduce as far as is practical and say so plainly rather than presenting a clean diff that implies more
 confidence than you have. "Removed the duplicated query, which is very likely the fix; kept the longer timeout as a
 hedge, since we could not reproduce the failure reliably enough to confirm it independently" tells a reviewer something
-true. A diff that quietly keeps all three changes because reverting them felt risky tells them something false.
+true. Quietly keeping all three changes because reverting them felt risky leaves the reviewer guessing about that
+uncertainty.
 
 ## What you keep besides the fix
 

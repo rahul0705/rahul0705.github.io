@@ -77,9 +77,7 @@ def create_resource() -> Resource:
 
 Now callers don't need to remember the rule.
 
-The documentation didn't get better.
-
-**The rule disappeared.**
+The documentation didn't need another warning. The caller no longer has a separate rule to remember.
 
 ## Make Invalid States Difficult to Represent
 
@@ -202,9 +200,8 @@ The unusual case is still supported:
 client = Client(retry_policy=custom_retry_policy)
 ```
 
-It's a small example, but the principle matters.
-
-Good defaults don't just save typing. They reduce the number of decisions people have to get right.
+That default saves a little typing, but the part I care about is that it removes a decision people otherwise have to
+get right every time.
 
 I've found that some of the easiest systems to work with aren't necessarily the ones with the most options. They're the
 ones where I rarely have to think about an option until I actually need to change it.
@@ -247,9 +244,8 @@ difficult.
 So the goal isn't to make everything rigid. It's to tell the difference between things that are genuinely invalid and
 things that are merely uncommon.
 
-That's harder than writing the validation.
-
-It takes judgment.
+I find that distinction harder than writing the validation. The code can enforce the rule once we've worked out
+what the rule should be.
 
 ## Look for Repeated Reminders
 
@@ -265,9 +261,7 @@ Watch for:
 - The same production issue: _"These two values got out of sync again."_
 - The same line in every runbook: _"Never perform this operation before checking that."_
 
-At some point, the problem may not be that people keep forgetting.
-
-The system may be asking them to remember too much.
+At some point, it's worth asking whether the system is asking people to remember too much.
 
 Repeated reminders are often a sign that tribal knowledge is doing work the system should be doing. That rule may belong
 somewhere other than a person's head: in a type, an API, a test, the build, or a default.
@@ -288,9 +282,7 @@ I've worked on systems with years of history behind them, and one thing that bec
 context can accumulate in the people rather than the code. That's manageable right up until those people change teams,
 leave the company, or simply forget why a decision was made.
 
-Tribal knowledge only works for the people already in the tribe.
-
-Nobody should need your entire history with a system to use it safely.
+That history is useful, but nobody should need to have lived through it with us to use the system safely.
 
 That's one reason good interfaces feel obvious. They don't expose every decision the implementation is capable of
 making. They expose the decisions the caller actually needs to make.

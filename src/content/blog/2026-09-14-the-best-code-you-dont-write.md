@@ -34,7 +34,8 @@ debug, and secure. That cost is easy to ignore because it doesn't arrive all at 
 A small helper becomes an abstraction. The abstraction gains configuration. The configuration needs validation. The
 validation needs error handling. Someone has to document how it all works.
 
-Then, six months later, another engineer runs into it while trying to fix something completely unrelated.
+Then, six months later, another engineer runs into it while trying to fix something completely unrelated. They still
+have to make sense of it, even if the original problem is long forgotten.
 
 None of those additions are necessarily bad — complexity is often unavoidable. But complexity should be something
 we _spend deliberately_, not something we accumulate by default.
@@ -99,7 +100,7 @@ The same pattern shows up everywhere:
 The question isn't just _how do we implement this?_ It's also: _what would have to be true for us not to implement
 this?_
 
-That second question can lead somewhere far more interesting.
+That second question gives us room to reconsider the request before the implementation makes it feel settled.
 
 ## Deleting Code Is a Feature
 
@@ -132,7 +133,7 @@ aren't contradictory goals.
 
 ## Simplicity Isn't the Same as Doing Less
 
-There's an important distinction between _simple_ and _incomplete_.
+This is where I want to be careful about what I mean by _simple_. It still has to be complete.
 
 Not writing code because a problem doesn't need it is good engineering. Not writing code because handling the hard
 cases is inconvenient isn't. You still need the authentication, validation, observability, tests, and failure
@@ -170,8 +171,7 @@ bugs, creates attack surface, and consumes attention.
 
 We accept those costs because the code provides something valuable in return. That's the trade.
 
-The goal was never to write as little code as possible. It's to make sure the code — and the complexity — we choose
-to own is earning its keep.
+I still like building things. I just want the code — and the complexity — we choose to own to earn its keep.
 
 The best engineers I've worked with aren't necessarily the ones who can build the most elaborate solution. They're
 the ones willing to ask whether the elaborate solution needs to exist at all — because sometimes the cleanest

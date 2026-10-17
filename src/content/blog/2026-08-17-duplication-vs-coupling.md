@@ -13,8 +13,9 @@ tags:
 # cSpell:ignore dataclass dataclasses
 ---
 
-Don't repeat yourself—DRY—is useful advice when repetition means the same knowledge is scattered across a system. It
-is less useful when applied as a rule that every similar-looking block of code must share an implementation.
+It's satisfying to find two pieces of code that look alike and turn them into one. Fewer lines, one place to make a
+change. Don't repeat yourself—DRY—seems like straightforward advice. The part worth slowing down for is whether those
+two pieces actually represent the same knowledge.
 
 Two pieces of code can look alike without representing the same idea. Combining them removes visible duplication, but
 it also creates a relationship: both callers must now depend on the same names, inputs, behavior, and release cycle.
@@ -37,9 +38,8 @@ Duplication has an obvious cost. A change may need to be made in more than one p
 is quieter: conditionals accumulate, parameters lose meaning, callers work around behavior they do not need, and a
 small change for one use case risks breaking another.
 
-The goal is not to prefer duplication. It is to decide which code should change together and which code should remain
-free to change independently. The governing question is not “Can these lines be combined?” It is “Should these concepts
-change together?”
+I find it more useful to ask which code should change together and which code needs room to change independently.
+Combining the lines is the easy part. Deciding whether the relationship belongs there takes more thought.
 
 ## DRY is about knowledge, not text
 
@@ -181,7 +181,7 @@ Replacing both with `Address` looks like an easy cleanup, but it also says the c
 may later need delivery instructions, while billing may need tax jurisdiction or verification status. Keeping both
 types costs a few repeated lines and preserves their ability to change separately.
 
-Every abstraction creates a contract. Before introducing one, ask:
+Every abstraction creates a contract. These are the questions I'd want answered before introducing one:
 
 - Do these callers share a business rule, or only an implementation shape?
 - If one caller changes, should the others change too?
@@ -236,8 +236,8 @@ If the evidence is still incomplete, wait for another example. A third use case 
 and which were accidental similarities between the first two. Waiting is not a refusal to design; it is using observed
 requirements instead of guessing at a general solution.
 
-When a wrong abstraction already exists, do not keep adding options to protect the appearance of reuse. A safer
-sequence is:
+When a wrong abstraction already exists, it can be tempting to keep adding options rather than undo the reuse.
+I'd rather work back toward the boundaries we actually need:
 
 1. Copy the behavior back into the callers.
 2. Simplify each copy around its own responsibility.

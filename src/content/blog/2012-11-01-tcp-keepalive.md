@@ -10,21 +10,21 @@ tags:
   - research
 ---
 
-This is a research project I had the opportunity to work on for sometime. This project involved analyzing the TCP
-Keep-Alive (Request for Comments Here) and how it is implemented across different operating systems.
+I worked on a research project looking at TCP keep-alive across operating systems. The question was fairly simple:
+what happens to a connection when the machine on the other end stops responding?
 
-For those who do not know what TCP Keep-Alive is, here is a Wikipedia summary:
+TCP keep-alive lets one end of a connection check whether the other end still responds. If those checks go unanswered,
+the connection may need to be closed. Knowing how that is supposed to work and seeing what happens when you pull a
+network cable are two slightly different ways of understanding it.
 
-> TCP keep-alive is a message sent by one device to another to check that the link between the two is operating, or to
-> prevent this link from being broken. This signal is often sent at predefined intervals, and plays an important role on
-> the Internet. After a signal is sent, if no reply is received the link is assumed to be down and the application can
-> decided whether to close the connection.
+We looked at the second one.
 
-I have included the source code so that you can test these for yourself. To test this you are required to have two
-machine, run the server code on run and the client on the other. Once a connection has been established and messages
-have been flowing from the client to the server unplug the network cable from the client and see what the server will
-respond and then do the same while unplugging the server. Through the research we found interesting results. If the
-server silently fails, the client will keep sending messages without causing socket failure. This is not how keep-alive
-should work. This issue has been persistent through many different Linux distributions.
+I've included the source code if you'd like to try the same tests. You'll need two machines: run the server on one and
+the client on the other. Once they're connected and exchanging messages, unplug the client's network cable and watch
+what the server does. Repeat the test by unplugging the server's cable instead.
+
+In our testing at the time, a silent server failure could leave the client sending messages without a socket failure.
+That wasn't the behavior we'd expected, and we observed it across multiple Linux distributions. These are notes from
+that research, rather than a claim about how every current system behaves.
 
 [Download the TCP keep-alive source code](https://github.com/rahul0705/tcpkeepalive) with its Makefile.

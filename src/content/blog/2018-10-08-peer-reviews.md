@@ -15,8 +15,9 @@ tags:
 # cSpell:ignore dataclass dataclasses gofmt mypy Pylint Clippy timedelta
 ---
 
-A practical guide for reviewing code and having your code reviewed. This is a living document, so expect it to change
-and evolve over time.
+Code review asks you to do two fairly different things: understand someone else's decisions, and make your own
+decisions understandable to someone else. This is my guide to both. I expect to keep changing it as I find better
+questions to ask.
 
 The ideas below are prompts, not gates that every change must pass. Different systems, teams, and situations call for
 different tradeoffs. A small documentation fix does not need the same scrutiny as an authentication change, and a
@@ -48,10 +49,9 @@ helpful than assuming the implementation is wrong.
 
 ## Reviewing code
 
-The order in which you review can matter. Start with behavior and architecture before spending time on naming or
-formatting. There is little value in polishing code that needs to be redesigned. Better yet, outsource formatting and
-other mechanical checks to tooling whenever possible so neither the author nor reviewer needs to spend time enforcing
-them manually.
+Start with behavior and architecture before spending time on naming or formatting. There is little value in polishing
+code that needs to be redesigned. Let tooling handle formatting and other mechanical checks where it can. Neither side
+of a review needs a second job counting spaces.
 
 ### Correctness and behavior
 
@@ -109,8 +109,9 @@ This is not a requirement to add layers; sometimes a direct implementation is th
 
 #### Is the code easy to follow?
 
-Try to read the change as someone who did not write it. Names should communicate intent, and the control flow should
-make the important behavior apparent. Comments are most valuable when they explain _why_ a decision was made, a
+Try to read the change as someone who did not write it. This gets harder when you're reviewing your own code; you
+already know what you meant. Names should communicate intent, and the control flow should make the important behavior
+apparent. Comments are most valuable when they explain _why_ a decision was made, a
 constraint exists, or an unusual approach is necessary. Comments that simply restate the code can become stale.
 
 For example, this comment adds no information beyond the next line:
@@ -513,9 +514,9 @@ For example:
 Explain the reason behind a comment when it is not obvious. "Rename this" gives the author less information than "A
 name that describes the retry limit would help distinguish this value from the request timeout below."
 
-It can also help to separate blocking concerns from optional improvements. Not every good idea needs to delay the
-current change. If a comment is a preference, say so. If it identifies a correctness or security issue, explain the
-impact clearly.
+Separate blocking concerns from optional improvements. Not every good idea needs to delay the current change. If a
+comment is a preference, say so. "I'd write this differently" and "this can lose a customer's data" ask very different
+things of the author. If there's a correctness or security issue, explain the impact clearly.
 
 Avoid using a review to redesign unrelated code. It is reasonable to mention nearby improvements, but keeping the
 requested change focused makes it easier to review, test, and deliver.
@@ -582,8 +583,8 @@ A useful self-review can include:
 ### Determine what actually solved the problem
 
 Development is often exploratory. You try change A and the problem remains. You add B and it improves but still fails.
-You add C and everything works. At that point, it is tempting to perform minor cleanup and submit A + B + C because the
-current state produces the desired result.
+You add C and everything works. At that point, the temptation to tidy up and submit A + B + C is understandable.
+Something finally works, and touching it again feels like inviting trouble.
 
 Getting something to work is not yet evidence that every accumulated change belongs in the solution. Before preparing
 the review, go back and determine what actually caused the result:
@@ -736,6 +737,6 @@ silently marking it resolved.
 
 ## Closing thought
 
-There is no universal checklist that makes a code review complete. These prompts are ways to explore a change and find
-the questions that matter for its context. A successful review leaves the code clearer, the risks better understood,
-and the team with more shared knowledge than it had before.
+I don't expect any checklist to tell me when I've understood a change. These prompts help me work out what to ask and
+where I still need context. If the code is clearer, the risks are better understood, and someone else can explain why
+we made the decision, the review has done useful work.
