@@ -149,20 +149,17 @@ a PR and the resulting `main` commit is intentional: the latter is the actual de
 
 ## Lessons to compare with Forge
 
-Forge's website workflow currently has source quality, compatibility, validation/build, browser, and
-Lighthouse jobs
-all depending directly on change classification. Its website compatibility and validation jobs both build on
-Node 26,
-and `website:lighthouse` calls a script that builds again. Its website source-quality and compatibility
-paths also
-both invoke type checking. Those are candidates for consolidation for the website, while
-package/generator/template
-compatibility checks can have distinct reasons to repeat work across supported environments.
+The generated Forge site and this site use independent source checks, one build reused by downstream
+validation, and direct deployment prerequisites. Neither needs an aggregate check. Forge's package and
+generator compatibility jobs belong to Forge, not to generated sites.
 
-A useful upstream proposal is to give the website independent source checks and one validated artifact, make browser and
-Lighthouse consumers depend on it, require each check for merging and deployment, and retain a small post-deployment
-check.
-Apply this selectively rather than copying this site's route list, resume policy, or performance thresholds.
+Keep this site's resume Markdown gate, financial-data single-build behavior, custom domain, and 14-day
+evidence policy. Runtime selection remains tracked in #72; coverage policy in #65; dependency advisory
+policy in #11 and #70. These choices should not be copied from template defaults without review.
+
+The GitLab mirror explicitly admits all validation jobs in merge-request and default-branch push pipelines.
+Its workflow suppresses duplicate branch pipelines for open merge requests; publishing remains disabled.
+See [GitLab CI](gitlab-ci.md) for provider boundaries and verification limits.
 
 ## Automation checks
 
