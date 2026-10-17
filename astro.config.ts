@@ -6,6 +6,8 @@ import { siteConfig } from './src/config/site';
 
 export default defineConfig({
   site: siteConfig.url,
+  // Preserve word boundaries around inline elements split across source lines.
+  compressHTML: true,
   integrations: [
     sitemap({
       filter: (page) => !siteConfig.nonIndexablePaths.some((path) => page.endsWith(path)),
