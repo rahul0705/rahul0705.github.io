@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { articleContentClasses } from '../styles/article-classes';
+
+const unixInstall = 'curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh | sh';
+const unixReview = `curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh -o install.sh
+less install.sh
+sh install.sh`;
+const windowsInstall = `powershell.exe -NoProfile -Command "& ([ScriptBlock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.ps1' -ErrorAction Stop)))"`;
+const windowsReview = `Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.ps1' -OutFile install.ps1
+Get-Content ./install.ps1
+powershell.exe -NoProfile -File ./install.ps1`;
+---
+
+<BaseLayout
+  title="Dotfiles"
+  description="Set up my dotfiles on macOS, Linux, or Windows using the installers directly from GitHub."
+  canonicalPath="/dotfiles/"
+>
+  <article class="mx-auto max-w-3xl px-6 py-20">
+    <h1 class="text-5xl font-bold tracking-tight">Dotfiles</h1>
+    <div class:list={[articleContentClasses, 'mt-8']}>
+      <p>
+        My terminal and development configuration lives in the
+        <a href="https://github.com/rahul0705/dotfiles">dotfiles repository</a>. These commands fetch its installers
+        directly from GitHub. Select and copy the command block for your operating system.
+      </p>
+      <h2>Before you start</h2>
+      <p>
+        Install Git first. Applying a module also requires Python 3.9 or newer: <code>python3</code> on macOS/Linux,
+        or <code>python</code> on Windows. Python is not required with <code>--no-module</code>. The installer does not
+        install these prerequisites or elevate privileges.
+      </p>
+      <p>
+        The quick commands execute code from the repository's current <code>main</code> branch. Only run code you
+        trust. To inspect it first, use the download-and-review alternative and run its final line only after reviewing
+        the downloaded file. Download into a directory where it will not overwrite an existing installer file.
+      </p>
+      <h2>macOS and Linux</h2>
+      <h3>Download and run</h3>
+      <pre tabindex="0"><code>{unixInstall}</code></pre>
+      <h3>Download and review first</h3>
+      <pre tabindex="0"><code>{unixReview}</code></pre>
+      <h2>Windows (PowerShell)</h2>
+      <p>
+        Use PowerShell 5.1 or newer. Applying modules that create symbolic links requires Windows Developer Mode or
+        appropriate symlink privileges. Your execution policy still applies; these commands do not bypass it or request
+        elevation. Both run the installer in a child PowerShell process so its exit cannot close your interactive session.
+      </p>
+      <h3>Download and run</h3>
+      <pre tabindex="0"><code>{windowsInstall}</code></pre>
+      <h3>Download and review first</h3>
+      <pre tabindex="0"><code>{windowsReview}</code></pre>
+      <h2>What gets installed?</h2>
+      <p>
+        A fresh install clones into <code>~/.dotfiles</code>, initializes the pinned Git submodules recursively, and
+        applies only the <code>etch</code> module by default. It does not apply the full developer profile.
+      </p>
+      <p>
+        After downloading the installer, use <code>--module NAME</code> to apply a different module, or
+        <code>--no-module</code> to clone and initialize submodules without applying any module.
+        <code>--no-module</code> takes precedence regardless of argument order.
+      </p>
+      <h3>macOS/Linux options</h3>
+      <pre tabindex="0"><code>{`sh install.sh --no-module
+DOTFILES_DIR="$HOME/my dotfiles" sh install.sh --module git`}</code></pre>
+      <h3>Windows options</h3>
+      <pre tabindex="0"><code>{`powershell.exe -NoProfile -File ./install.ps1 --no-module
+$env:DOTFILES_DIR = Join-Path $HOME 'my dotfiles'
+powershell.exe -NoProfile -File ./install.ps1 --module git`}</code></pre>
+      <p>
+        The option examples are alternatives, not a sequence: choose one for a fresh destination. Set
+        <code>DOTFILES_DIR</code> to override the checkout location. The PowerShell environment setting remains in effect
+        for the current session. Open a new terminal after setup to pick up any user PATH changes.
+      </p>
+      <h2>Existing checkouts and recovery</h2>
+      <p>
+        An existing checkout with a matching origin is a strict no-op: the installer does not pull changes, initialize
+        submodules, or apply modules, even if you pass different options. An unrelated occupied path is refused.
+        This bootstrap is not an updater.
+      </p>
+      <p>
+        A failed installation may leave a partial checkout. Do not rely on rerunning the bootstrap to repair it.
+        For recovery, updates, and applying the full developer profile, follow the
+        <a href="https://github.com/rahul0705/dotfiles#readme">dotfiles README</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  pre {
+    background: var(--color-base-200);
+  }
+
+  pre code {
+    color: var(--color-base-content);
+  }
+</style>
