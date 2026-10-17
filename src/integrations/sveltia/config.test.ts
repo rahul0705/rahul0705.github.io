@@ -48,13 +48,14 @@ describe('Sveltia CMS configuration', () => {
         expect.objectContaining({
           name: 'coverImage',
           widget: 'image',
+          required: false,
           media_folder: '/src/assets/{{year}}',
           public_folder: '../../assets/{{year}}',
         }),
         expect.objectContaining({ name: 'description', widget: 'text' }),
         expect.objectContaining({ name: 'draft', default: true }),
         expect.objectContaining({ name: 'title', required: true }),
-        expect.objectContaining({ name: 'coverImageAlt', required: true }),
+        expect.objectContaining({ name: 'coverImageAlt', required: false }),
       ]),
     );
   });

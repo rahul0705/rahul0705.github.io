@@ -61,13 +61,13 @@ export const blogContentModel = defineModel({
     coverImage: {
       kind: 'asset',
       assetType: 'image',
-      required: true,
+      requiredWhen: { field: 'draft', equals: false },
       label: 'Cover image',
       help: 'Store article covers in src/assets and record third-party attribution in the adjacent attribution file.',
     },
     coverImageAlt: {
       kind: 'string',
-      required: true,
+      requiredWhen: { field: 'draft', equals: false },
       label: 'Cover image alt text',
       help: 'Describe the meaningful visual content rather than repeating the title.',
     },
