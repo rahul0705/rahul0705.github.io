@@ -6,6 +6,7 @@ export default defineConfig({
   words: [
     'affordances',
     'Airbender',
+    'apng',
     'DEKA',
     'Drexel',
     'domcontentloaded',
@@ -42,6 +43,7 @@ export default defineConfig({
     'Mbps',
     'Mohandas',
     'NOAA',
+    'noopener',
     'noreferrer',
     'oxlint',
     'poam',
