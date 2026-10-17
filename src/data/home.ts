@@ -34,4 +34,10 @@ export const home = {
     description: 'Tools I use to build things and keep them running.',
     items: toolkitSkills,
   },
+  openSource: {
+    title: 'Dotfiles',
+    description: 'My dotfiles for macOS, Linux, and Windows.',
+    setupHref: '/dotfiles/',
+    repositoryHref: 'https://github.com/rahul0705/dotfiles',
+  },
 };

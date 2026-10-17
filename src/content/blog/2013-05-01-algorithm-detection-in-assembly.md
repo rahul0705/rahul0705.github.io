@@ -1,8 +1,8 @@
 ---
 title: 'Algorithm Detection in Assembly'
-description: Research into recognizing known algorithms within binaries using IDA Pro plugins and program analysis.
+description: Using IDA Pro plugins, instruction signatures, and small-prime products to recognize known algorithms in binaries.
 coverImage: ../../assets/covers/code.jpg
-coverImageAlt: Source code displayed in a software development environment
+coverImageAlt: Laptop displaying source code on a white desk beside a monitor
 section: Projects
 tags:
   - assembly

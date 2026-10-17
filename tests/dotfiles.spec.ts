@@ -4,6 +4,15 @@ for (const width of [390, 768, 1280]) {
   test(`navigation reaches dotfiles at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/');
+    const featured = page
+      .locator('section')
+      .filter({ has: page.getByRole('heading', { name: 'Dotfiles', exact: true }) });
+    await expect(featured.getByRole('link', { name: 'Setup guide' })).toHaveAttribute('href', '/dotfiles/');
+    await expect(featured.getByRole('link', { name: 'View repository' })).toHaveAttribute(
+      'href',
+      'https://github.com/rahul0705/dotfiles',
+    );
+    await expect(featured.getByRole('link', { name: 'View repository' })).toHaveAttribute('rel', 'noopener noreferrer');
     const menu = page.getByRole('button', { name: 'Open navigation menu' });
     if (await menu.isVisible()) await menu.click();
     const link = page.locator('header').getByRole('link', { name: 'Dotfiles', exact: true });

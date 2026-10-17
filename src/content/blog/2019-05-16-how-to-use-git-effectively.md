@@ -1,8 +1,8 @@
 ---
 title: How to use Git effectively
-description: A practical overview of GitFlow and the roles of master, develop, feature, and release branches.
+description: A 2019 overview of how GitFlow uses master, develop, feature, and release branches to move changes toward production.
 coverImage: ../../assets/covers/git.jpg
-coverImageAlt: Source code displayed on a laptop screen
+coverImageAlt: Close-up of syntax-highlighted Python code on a dark screen
 section: Process
 tags:
   - software

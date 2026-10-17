@@ -16,6 +16,8 @@ import SeoHead from '../../components/ui/SeoHead.astro';
 
       registerPreviewStyle(previewStyles, { raw: true });
       registerSveltiaPreviews();
+      // Sveltia owns the runtime favicon; SeoHead supplies it before the CMS loads.
+      document.querySelector('link[rel="icon"]')?.remove();
       init({ config: sveltiaConfig });
     </script>
   </head>

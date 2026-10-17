@@ -1,10 +1,10 @@
 ---
 title: Code Reviews
 tableOfContents: true
-description: A living guide to reviewing code with clarity, consistency, and constructive feedback.
+description: Practical guidance for preparing changes, reviewing correctness and risk, and giving constructive code-review feedback.
 updatedDate: 2026-08-12
 coverImage: ../../assets/covers/review.jpg
-coverImageAlt: Laptop and notebook arranged on a desk for collaborative review
+coverImageAlt: Two people reviewing a laptop screen, with one pointing at the display
 section: Process
 tags:
   - software

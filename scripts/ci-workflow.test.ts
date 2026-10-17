@@ -43,6 +43,27 @@ const preDeployCommands = Object.entries(jobs)
   .join('\n');
 
 describe('website CI dependency and artifact contract', () => {
+  it('admits every GitLab validation job in merge requests while keeping publishing disabled', () => {
+    const gitlab = parse(readFileSync(new URL('../.gitlab/ci/project.yml', import.meta.url), 'utf8'));
+    for (const name of [
+      ...sourceJobs,
+      'build',
+      'test-browser',
+      'lighthouse',
+      'lint-generated-markdown',
+      'validate-build',
+    ]) {
+      const job = gitlab[name];
+      expect(job.rules ?? gitlab[job.extends]?.rules, name).toEqual([
+        { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
+        { if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"' },
+      ]);
+    }
+    for (const name of ['deploy', 'smoke-deployed']) {
+      expect(gitlab[name].rules, name).toEqual([{ when: 'never' }]);
+    }
+  });
+
   it('runs each source check and build once, including through npm wrappers', () => {
     for (const command of [
       'oxfmt --check',

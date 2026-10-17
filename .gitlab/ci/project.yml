@@ -1,10 +1,16 @@
 # Configure Pages and the site URL before replacing deployment never rules.
+.validation:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
 format:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run format
 lint-code:
+  extends: .validation
   stage: validate
   needs: []
   script:
@@ -18,31 +24,37 @@ lint-code:
     reports:
       codequality: test-results/code-quality.json
 lint-styles:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run lint:styles
 lint-markdown:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run lint:markdown
 spellcheck:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run spellcheck
 audit-unused:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run audit:unused
 typecheck:
+  extends: .validation
   stage: validate
   needs: []
   script:
     - npm run typecheck
 test-unit:
+  extends: .validation
   stage: validate
   needs: []
   script:
@@ -55,6 +67,7 @@ test-unit:
     reports:
       junit: test-results/unit.xml
 build:
+  extends: .validation
   stage: build
   needs:
     - job: format
@@ -81,6 +94,7 @@ build:
     when: on_success
     expire_in: 14 days
 test-browser:
+  extends: .validation
   stage: verify
   needs:
     - job: build
@@ -97,6 +111,7 @@ test-browser:
     reports:
       junit: test-results/browser.xml
 validate-build:
+  extends: .validation
   stage: verify
   needs:
     - job: build
@@ -104,6 +119,7 @@ validate-build:
   script:
     - npm run validate:build
 lint-generated-markdown:
+  extends: .validation
   stage: verify
   needs:
     - job: build
@@ -111,6 +127,7 @@ lint-generated-markdown:
   script:
     - npm run lint:resume:markdown
 lighthouse:
+  extends: .validation
   stage: verify
   needs:
     - job: build

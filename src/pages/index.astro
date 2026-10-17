@@ -7,6 +7,7 @@ import FeaturedPosts from '../components/home/FeaturedPosts.astro';
 import Hero from '../components/home/Hero.astro';
 import Highlights from '../components/home/Highlights.astro';
 import ToolkitSection from '../components/home/ToolkitSection.astro';
+import Section from '../components/ui/Section.astro';
 import { home } from '../data/home';
 import { getSiteStats, site } from '../data/site';
 
@@ -28,5 +29,13 @@ const stats = await getSiteStats();
   <FeaturedPosts {...home.writing} />
   <AboutSection {...home.about} />
   <ToolkitSection {...home.toolkit} />
+  <Section title={home.openSource.title} description={home.openSource.description}>
+    <div class="flex flex-wrap gap-3">
+      <a href={home.openSource.setupHref} class="btn btn-outline">Setup guide</a>
+      <a href={home.openSource.repositoryHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+        View repository
+      </a>
+    </div>
+  </Section>
   <ContactCTA {...home.contact} />
 </BaseLayout>
