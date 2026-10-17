@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 
 import { siteConfig } from '../config/site';
+import { articles } from '../data/articles';
 import { getPublishedAt, getPublishedPosts } from '../lib/blog';
 
 export async function GET(context: { site?: URL }) {
@@ -8,7 +9,7 @@ export async function GET(context: { site?: URL }) {
 
   return rss({
     title: siteConfig.rss.title,
-    description: siteConfig.rss.description,
+    description: articles.description,
     site: context.site ?? siteConfig.url,
     items: posts.map((post) => ({
       title: post.data.title,

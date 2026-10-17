@@ -89,7 +89,7 @@ describe('Sveltia CMS configuration', () => {
       format: 'json',
       extension: 'json',
       slug: "{{startDate | date('YYYY-MM')}}-{{organization}}-{{project}}-{{title}}",
-      summary: "{{startDate | date('YYYY-MM')}} — {{organization}} — {{project}} — {{title}}",
+      summary: "{{startDate | date('YYYY-MM')}} | {{organization}} | {{project}} | {{title}}",
       sortable_fields: {
         fields: ['startDate'],
         default: { field: 'startDate', direction: 'descending' },

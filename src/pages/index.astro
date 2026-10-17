@@ -14,11 +14,11 @@ import { getSiteStats, site } from '../data/site';
 const stats = await getSiteStats();
 ---
 
-<BaseLayout>
+<BaseLayout description={home.description}>
   <Hero
     eyebrow={site.role}
     title={site.name}
-    description={site.description}
+    description={home.description}
     supportingText={home.hero.supportingText}
     primaryHref="/resume"
     primaryLabel="View Resume"
@@ -26,13 +26,13 @@ const stats = await getSiteStats();
     secondaryLabel="Read Articles"
   />
   <Highlights items={stats} />
-  <FeaturedPosts {...home.writing} />
+  <FeaturedPosts {...home.recentArticles} />
   <AboutSection {...home.about} />
   <ToolkitSection {...home.toolkit} />
-  <Section title={home.openSource.title} description={home.openSource.description}>
+  <Section title={home.dotfiles.title} description={home.dotfiles.description}>
     <div class="flex flex-wrap gap-3">
-      <a href={home.openSource.setupHref} class="btn btn-outline">Setup guide</a>
-      <a href={home.openSource.repositoryHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+      <a href={home.dotfiles.setupHref} class="btn btn-outline">Setup guide</a>
+      <a href={home.dotfiles.repositoryHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
         View repository
       </a>
     </div>

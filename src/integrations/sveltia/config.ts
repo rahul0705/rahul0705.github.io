@@ -21,7 +21,7 @@ const collectionOptions = (model: ContentCollectionModel): SveltiaCollectionOpti
     };
   if (model.name === 'skills' || model.name === 'financial-scopes') return { summary: '{{name}}' };
   if (model.name === 'experience')
-    return { summary: "{{startDate | date('YYYY-MM')}} — {{organization}} — {{project}} — {{title}}" };
+    return { summary: "{{startDate | date('YYYY-MM')}} | {{organization}} | {{project}} | {{title}}" };
   return undefined;
 };
 

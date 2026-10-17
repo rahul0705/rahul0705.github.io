@@ -15,13 +15,14 @@ tags:
 # cSpell:ignore dataclass dataclasses gofmt mypy Pylint Clippy timedelta
 ---
 
-A practical guide for reviewing code and having your code reviewed. This is a living document, so expect it to change
-and evolve over time.
+Code review asks you to do two fairly different things: understand someone else's decisions, and make your own
+decisions understandable to someone else. This is my guide to both. I expect to keep changing it as I find better
+questions to ask.
 
 The ideas below are prompts, not gates that every change must pass. Different systems, teams, and situations call for
 different tradeoffs. A small documentation fix does not need the same scrutiny as an authentication change, and a
 prototype should not be held to every standard of a safety-critical production service. The purpose of a review is to
-apply engineering judgment, share context, and make the change better—not to enforce personal preferences.
+apply engineering judgment, share context, and make the change better, rather than enforce personal preferences.
 
 This guide covers both sides of that conversation:
 
@@ -48,10 +49,9 @@ helpful than assuming the implementation is wrong.
 
 ## Reviewing code
 
-The order in which you review can matter. Start with behavior and architecture before spending time on naming or
-formatting. There is little value in polishing code that needs to be redesigned. Better yet, outsource formatting and
-other mechanical checks to tooling whenever possible so neither the author nor reviewer needs to spend time enforcing
-them manually.
+Start with behavior and architecture before spending time on naming or formatting. There is little value in polishing
+code that needs to be redesigned. Let tooling handle formatting and other mechanical checks where it can. Neither side
+of a review needs a second job counting spaces.
 
 ### Correctness and behavior
 
@@ -109,8 +109,9 @@ This is not a requirement to add layers; sometimes a direct implementation is th
 
 #### Is the code easy to follow?
 
-Try to read the change as someone who did not write it. Names should communicate intent, and the control flow should
-make the important behavior apparent. Comments are most valuable when they explain _why_ a decision was made, a
+Try to read the change as someone who did not write it. This gets harder when you're reviewing your own code; you
+already know what you meant. Names should communicate intent, and the control flow should make the important behavior
+apparent. Comments are most valuable when they explain _why_ a decision was made, a
 constraint exists, or an unusual approach is necessary. Comments that simply restate the code can become stale.
 
 For example, this comment adds no information beyond the next line:
@@ -128,7 +129,7 @@ misleading:
 time.sleep(exponential_backoff(attempt))
 ```
 
-A useful comment explains the reason for the delay—a constraint that is less likely to change with the implementation:
+A useful comment explains the reason for the delay (a constraint that is less likely to change with the implementation):
 
 ```python
 # Spread retries out so synchronized clients do not overwhelm a recovering dependency.
@@ -141,7 +142,8 @@ reason is already clear from the surrounding code and domain language, no commen
 #### Do names make the computation understandable?
 
 Names are part of the design. A function name should describe the operation or outcome at the caller's level, while a
-variable name should identify what a value represents—not merely its type or where it came from. Predicates often read
+variable name should identify what a value represents, rather than merely its type or where it came from. Predicates
+often read
 clearly as questions such as `is_expired`, `has_permission`, or `can_retry`.
 
 Intermediate variables can turn a dense expression into a sequence of named decisions. For example:
@@ -251,7 +253,8 @@ as the same value. It could also couple unrelated concepts: a shipping address m
 while a billing address may need tax jurisdiction or verification status.
 
 Repeating a small model, function, or block of code can be a deliberate way to preserve independence. Consider sharing
-code when the concepts follow the same business rule and should change together—not only because their current shapes
+code when the concepts follow the same business rule and should change together, rather than only because their
+current shapes
 match. Duplication is a cost, but coupling is also a cost.
 
 For a deeper discussion of this tradeoff, see
@@ -513,9 +516,9 @@ For example:
 Explain the reason behind a comment when it is not obvious. "Rename this" gives the author less information than "A
 name that describes the retry limit would help distinguish this value from the request timeout below."
 
-It can also help to separate blocking concerns from optional improvements. Not every good idea needs to delay the
-current change. If a comment is a preference, say so. If it identifies a correctness or security issue, explain the
-impact clearly.
+Separate blocking concerns from optional improvements. Not every good idea needs to delay the current change. If a
+comment is a preference, say so. "I'd write this differently" and "this can lose a customer's data" ask very different
+things of the author. If there's a correctness or security issue, explain the impact clearly.
 
 Avoid using a review to redesign unrelated code. It is reasonable to mention nearby improvements, but keeping the
 requested change focused makes it easier to review, test, and deliver.
@@ -523,7 +526,7 @@ requested change focused makes it easier to review, test, and deliver.
 Do not approve a consequential change merely because nothing obviously looks wrong. If an important behavior,
 security boundary, migration, or operational decision is outside your understanding, ask for context or involve a
 reviewer with the relevant domain expertise. Identifying where another perspective is needed is a useful review
-outcome—not a failure to review.
+outcome, not a failure to review.
 
 ### Completing the review cycle
 
@@ -582,8 +585,8 @@ A useful self-review can include:
 ### Determine what actually solved the problem
 
 Development is often exploratory. You try change A and the problem remains. You add B and it improves but still fails.
-You add C and everything works. At that point, it is tempting to perform minor cleanup and submit A + B + C because the
-current state produces the desired result.
+You add C and everything works. At that point, the temptation to tidy up and submit A + B + C is understandable.
+Something finally works, and touching it again feels like inviting trouble.
 
 Getting something to work is not yet evidence that every accumulated change belongs in the solution. Before preparing
 the review, go back and determine what actually caused the result:
@@ -607,7 +610,7 @@ Where practical, write a failing test or repeatable measurement before reducing 
 signal for comparing A, B, and C instead of relying on memory or a one-time observation.
 
 For a closer look at this reduction process, see
-[_Did You Fix the Bug—or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
+[_Did You Fix the Bug or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
 
 ### Run the automated checks
 
@@ -619,7 +622,7 @@ the decisions that require human context.
 
 Generated and AI-assisted code has the same standard of ownership as code written manually. Authors should understand
 what they submit, verify that it fits the repository and its constraints, and test its behavior. When provenance or
-licensing could be relevant—such as generated code that closely follows an external implementation—confirm that the
+licensing could be relevant (such as generated code that closely follows an external implementation), confirm that the
 material can be used and attributed appropriately. A tool producing plausible code is not evidence that the code is
 correct, secure, or maintainable.
 
@@ -736,6 +739,6 @@ silently marking it resolved.
 
 ## Closing thought
 
-There is no universal checklist that makes a code review complete. These prompts are ways to explore a change and find
-the questions that matter for its context. A successful review leaves the code clearer, the risks better understood,
-and the team with more shared knowledge than it had before.
+I don't expect any checklist to tell me when I've understood a change. These prompts help me work out what to ask and
+where I still need context. If the code is clearer, the risks are better understood, and someone else can explain why
+we made the decision, the review has done useful work.

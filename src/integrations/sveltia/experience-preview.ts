@@ -119,7 +119,7 @@ const renderSection = (h: CreateElement, title: string, content: PreviewElement)
 const renderHeader = (h: CreateElement, data: ExperiencePreviewData) => {
   const organizationAndProject = [data.organization, data.project].filter(Boolean).join(' · ');
   const dateRange = data.startDate
-    ? `${formatDate(data.startDate)} — ${data.endDate ? formatDate(data.endDate) : 'Present'}`
+    ? `${formatDate(data.startDate)} to ${data.endDate ? formatDate(data.endDate) : 'Present'}`
     : data.endDate
       ? formatDate(data.endDate)
       : '';

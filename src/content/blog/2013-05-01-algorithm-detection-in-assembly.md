@@ -12,27 +12,31 @@ tags:
 # cSpell:ignore Dullien Spafford
 ---
 
-During my senior year at [Purdue University](http://www.purdue.edu/) I had the opportunity to work on a research project
-in which we as a team had to detect algorithms in assembly using IDA Pro as a tool. We decided to work in a set of
-plugins that would help a user in identifying known algorithms within a binary. As we looked at this project we decided
-to come up with three different plugins. One plugin would be a proof of concept to detect Bubble Sort in a binary, the
-other two would be a generic approach.
+During my senior year at [Purdue University](http://www.purdue.edu/), I worked with a team on recognizing known
+algorithms in assembly using IDA Pro. Looking beneath an abstraction to figure out what a program was actually doing
+was very much my kind of problem.
 
-The first one was a signature approach in which each algorithm would be represented by a vector that would be unique to
-that algorithm, based of the assembly instructions, the count of back edges, and the amount of branches in a function.
-These would hopefully prove to be a unique identifier to an algorithm. There were some issues with false positives with
-this approach but with some more fine tuning this can prove to be quite accurate.
+We built three plugins. One was a proof of concept for detecting Bubble Sort in a binary. The other two took more
+generic approaches, with the idea that a user could teach them known functions and then look for similar ones.
 
-The second generic approach, which I was in charge of developing, was based on work by
-[Thomas Dullien](http://static.googleusercontent.com/external_content/untrusted_dlcp/www.zynamics.com/en/us/downloads/bindiffsstic05-1.pdf)
-and is called Small Primes Product. The basic idea is for each operation to have a unique small prime associated with it
-starting at 3. For each function you take the product of all the operations. This would give a unique values to each
-function and the prime factorization for that function will also be unique.
+The first generic approach represented each algorithm as a vector: assembly instructions, back-edge counts, and the
+number of branches in a function all contributed to its signature. We wanted those signatures to distinguish algorithms
+from one another. In practice, we still had false positives. A recognizable pattern isn't always the one you're
+looking for.
 
-The two generic approaches require that the user "learn" some functions before it can detect them. We implemented all of
-these techniques to aid a user in quickly identifying what a binary is trying to do. The
-[algorithm detection project report](https://github.com/rahul0705/assemblyAlgorithmDetection/raw/master/TheGrandFinale.pdf)
-explains each technique in more depth. The
+I developed the second generic approach, based on work by
+[Thomas Dullien](http://static.googleusercontent.com/external_content/untrusted_dlcp/www.zynamics.com/en/us/downloads/bindiffsstic05-1.pdf).
+It's called Small Primes Product. Each operation gets a small prime, starting at 3, and a function is represented by the
+product of the primes associated with its operations. That product gives us a fingerprint to compare against functions
+the plugin has already learned.
+
+Both generic approaches required that learning step before they could detect anything. The goal was to give someone
+examining a binary a useful starting point for understanding it, rather than making them work everything out from
+scratch.
+
+The [algorithm detection project report](https://github.com/rahul0705/assemblyAlgorithmDetection/raw/master/TheGrandFinale.pdf)
+goes into each technique in more detail. The
 [source code and sample binaries](https://github.com/rahul0705/assemblyAlgorithmDetection) are available on GitHub.
 
-This project had guidance from the National Security Agency and Professor Spafford from Purdue University.
+We had guidance from the National Security Agency and Professor Spafford at Purdue. It was a chance to take an interest
+in reverse engineering and do something concrete with it.
