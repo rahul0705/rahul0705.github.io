@@ -13,7 +13,7 @@ const { post, priority = false } = Astro.props;
 const publishedAt = getPublishedAt(post);
 ---
 
-<ArticleCardShell href={`/blog/${post.id}`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt} {priority}>
+<ArticleCardShell href={`/blog/${post.id}/`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt} {priority}>
   <article class="card-body justify-center gap-4 p-6 md:p-8">
     <div>
       <h2 class="card-title text-xl leading-snug">

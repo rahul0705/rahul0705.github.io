@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import FeaturedPostCard from './FeaturedPostCard.astro';
 import Section from '../ui/Section.astro';
 import { ArrowRight } from '@lucide/astro';
@@ -24,6 +25,6 @@ const posts = (providedPosts ?? fallbackPosts).slice(0, limit);
     {posts.map((post) => <FeaturedPostCard post={post} />)}
   </div>
   <div class="mt-8 flex justify-center">
-    <a class="btn btn-outline gap-2" href="/blog">View all articles <ArrowRight class="size-4" aria-hidden="true" /></a>
+    <a class="btn btn-outline gap-2" href={sitePath('/blog')}>View all articles <ArrowRight class="size-4" aria-hidden="true" /></a>
   </div>
 </Section>

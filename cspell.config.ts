@@ -55,6 +55,7 @@ export default defineConfig({
     'STIGs',
     'sveltia',
     'transpiles',
+    'unstub',
     'USAspending',
     'WCAG',
     'workstream',

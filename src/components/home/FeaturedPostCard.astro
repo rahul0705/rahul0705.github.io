@@ -11,7 +11,7 @@ const { post } = Astro.props;
 const publishedAt = getPublishedAt(post);
 ---
 
-<ArticleCardShell href={`/blog/${post.id}`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt}>
+<ArticleCardShell href={`/blog/${post.id}/`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt}>
   <div class="card-body gap-4 p-6">
     <h3 class="card-title text-xl leading-snug">{post.data.title}</h3>
     <ContentMeta date={publishedAt} emphasis />

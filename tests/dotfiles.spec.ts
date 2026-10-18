@@ -1,13 +1,15 @@
 import { expect, test } from '@playwright/test';
 
+import { sitePath } from './support/site';
+
 for (const width of [390, 768, 1280]) {
   test(`navigation reaches dotfiles at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
-    await page.goto('/');
+    await page.goto(sitePath('/'));
     const featured = page
       .locator('section')
       .filter({ has: page.getByRole('heading', { name: 'Dotfiles', exact: true }) });
-    await expect(featured.getByRole('link', { name: 'Setup guide' })).toHaveAttribute('href', '/dotfiles/');
+    await expect(featured.getByRole('link', { name: 'Setup guide' })).toHaveAttribute('href', sitePath('/dotfiles/'));
     await expect(featured.getByRole('link', { name: 'View repository' })).toHaveAttribute(
       'href',
       'https://github.com/rahul0705/dotfiles',
@@ -35,7 +37,7 @@ test('dotfiles guide offers direct installers and review alternatives without ex
       installerRequests.push(request.url());
     }
   });
-  expect((await page.goto('/dotfiles/'))?.status()).toBe(200);
+  expect((await page.goto(sitePath('/dotfiles/')))?.status()).toBe(200);
   await expect(page.getByRole('heading', { name: 'Dotfiles', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'macOS and Linux', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Windows (PowerShell)', exact: true })).toBeVisible();

@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 interface Props {
   href?: string;
   hover?: boolean;
@@ -29,7 +30,7 @@ const bodyClasses = ['card-body', paddingClasses[padding]].join(' ');
 
 {
   href ? (
-    <a href={href} class={cardClasses}>
+    <a href={sitePath(href)} class={cardClasses}>
       <div class={bodyClasses}><slot /></div>
     </a>
   ) : (

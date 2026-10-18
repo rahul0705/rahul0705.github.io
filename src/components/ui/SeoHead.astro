@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import { siteConfig } from '../../config/site';
 import { site } from '../../data/site';
 import { siteThemeColor } from '../../themes/site-theme';
@@ -20,7 +21,7 @@ interface Props {
 const {
   title,
   description = site.currentRoleSummary,
-  canonicalPath = '/',
+  canonicalPath,
   image = site.defaultSocialImage,
   imageAlt,
   type = 'website',
@@ -31,12 +32,15 @@ const {
   noindex = false,
 } = Astro.props;
 
+if (!Astro.site) throw new Error('Set site in astro.config.ts before generating page metadata.');
 const normalizedPath = (() => {
-  const path = `/${canonicalPath}`.replace(/\/{2,}/g, '/');
+  const path = `/${canonicalPath ?? Astro.url.pathname}`.replace(/\/{2,}/g, '/');
   return path === '/' ? path : `${path.replace(/\/$/, '')}/`;
 })();
-const canonicalUrl = new URL(normalizedPath, siteConfig.url).href;
-const imageUrl = new URL(image, siteConfig.url).href;
+const mountedPath = canonicalPath === undefined ? normalizedPath : sitePath(normalizedPath);
+const canonicalUrl = new URL(mountedPath, Astro.site).href;
+// Imported asset URLs already include Astro's configured base.
+const imageUrl = new URL(image, Astro.site).href;
 const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
 const socialImageAlt = imageAlt ?? pageTitle;
 ---
@@ -45,8 +49,8 @@ const socialImageAlt = imageAlt ?? pageTitle;
 <meta name="description" content={description} />
 <meta name="theme-color" content={siteThemeColor} />
 <link rel="canonical" href={canonicalUrl} />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="alternate" type="application/rss+xml" title={siteConfig.rss.title} href={siteConfig.rss.path} />
+<link rel="icon" href={sitePath('/favicon.svg')} type="image/svg+xml" />
+<link rel="alternate" type="application/rss+xml" title={siteConfig.rss.title} href={sitePath(siteConfig.rss.path)} />
 
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 

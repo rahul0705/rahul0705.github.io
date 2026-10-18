@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import type { ContentLink } from '../../lib/content-link';
 
 interface Props {
@@ -16,7 +17,7 @@ const { links, separator = ' · ', print = false } = Astro.props;
     {links.map((link, index) => (
       <>
         {index > 0 && <span aria-hidden="true">{separator}</span>}
-        <a href={link.url} class:list={{ 'link link-hover': !print }}>{link.label}</a>
+        <a href={sitePath(link.url)} class:list={{ 'link link-hover': !print }}>{link.label}</a>
       </>
     ))}
   </p>

@@ -66,12 +66,11 @@ Each remaining script has a separate purpose. In addition to the common commands
 | `npm run audit`                               | Inspect dependency security advisories under the existing high-severity policy |
 | `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
 | `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
-| `npm run preview:test`                        | Internal Playwright server with controlled host, port, and process lifetime    |
 
 `lint:all` groups source linters for local use; `quality` composes the full local validation sequence.
 CI calls individual checks so they report independently. `test:coverage` runs the unit suite with coverage
 instrumentation; use it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files.
-`preview` is the interactive server; `preview:test` is owned by Playwright. For other Astro CLI operations,
+Playwright manages its preview server through the existing `preview` command. For other Astro CLI operations,
 use `npx astro <command>`. `typecheck` is the sole script for Astro and TypeScript diagnostics.
 
 Unit tests protect observable behavior: expected outputs, meaningful branch decisions, boundary cases,
@@ -297,10 +296,22 @@ The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and u
 Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
 Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
-Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
+Shared identity, author, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
-Environment-specific and secret values must remain in environment variables or deployment settings. The custom domain
-is recorded in `CNAME`.
+Deployment settings live in `astro.config.ts`: `site` is the public origin and `base` is the mount path.
+The defaults are `https://www.rahulmohandas.com` and `/`. Application code uses Astro's built-in `SITE`
+and `BASE_URL` values; browser support asks Astro to resolve the same configuration through `getViteConfig()`.
+To check a subpath locally, temporarily set `base: '/preview/'` in Astro config, then run
+`npm run build && npm run test:e2e -- --project=chromium`. Restore the normal base afterward.
+CI continues to build and test the normal root deployment once, without a subpath matrix.
+`DEPLOYMENT_URL` only selects the server contacted by deployed smoke tests.
+Use `Astro.url`, `Astro.site`, and the standard `URL` API for page canonical URLs.
+Use `sitePath()` to prefix internal component links and `siteURL()` for absolute feed/export URLs in shared TypeScript.
+Keep article-to-article Markdown links relative to their article directory.
+Repository paths in CMS configuration stay relative to the repository; published media URLs include the mount path.
+On shared hosts, the host must serve robots policy at the origin root for crawlers to honor it.
+The custom domain remains recorded in `CNAME`; changing deployment configuration does not change DNS or Pages settings.
+Environment-specific and secret values must remain in environment variables or deployment settings.
 
 ## License
 
@@ -330,10 +341,11 @@ or `firefox`).
 Browser specs are grouped by behavior in `tests/`: accessibility, analytics, CMS, layout, navigation,
 resume, routes, SEO/feed/crawl policy, and theme, alongside the dotfiles and inline-spacing checks.
 Run a focused suite with `npm run test:e2e -- tests/navigation.spec.ts --project=chromium`.
-The preview URL resolver in `scripts/preview-url.ts` supplies the browser target and local server settings.
+Browser helpers and their unit tests live together in `tests/support/`. The preview URL resolver supplies the
+browser target and the host/port used by Playwright to start Astro preview.
 Use `PLAYWRIGHT_PORT=5432 npm run test:e2e` when the default port (4321) is occupied.
 Deployment smoke checks use an HTTPS `DEPLOYMENT_URL` and do not start a local server.
-The resolver preserves a deployment URL's path; full subpath deployment support remains tracked in #71.
+The local build and browser checks read the same Astro config for mount paths and canonical expectations.
 
 After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without
 starting a local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and

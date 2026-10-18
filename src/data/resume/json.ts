@@ -1,3 +1,4 @@
+import { siteURL } from '../../lib/site-url';
 import type { Recognition } from './awards';
 import type { ResumeBasics } from './basics';
 import type { EducationEntry } from './education';
@@ -62,7 +63,7 @@ export const toResumeJson = ({
     date: recognition.date,
     summary: recognition.description,
     highlights: recognition.highlights,
-    url: recognition.href,
+    url: recognition.href ? siteURL(recognition.href) : undefined,
   })),
   interests: interests.map((interest) => ({
     name: interest.name,

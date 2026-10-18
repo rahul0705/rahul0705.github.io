@@ -28,7 +28,7 @@ and you are done. A cache becomes part of the system. It needs an invalidation p
 failure handling, and every future change to the underlying data must preserve its correctness. That is an ongoing cost
 for a benefit you never established. It's also one more component a teammate has to understand without knowing why it exists.
 
-_(This started as a short section in a piece on [code review](/blog/2018-10-08-peer-reviews/). It turned out to be
+_(This started as a short section in a piece on [code review](../2018-10-08-peer-reviews/). It turned out to be
 less about review and more about how debugging itself ends, so it gets its own space here.)_
 
 ## Why "it works now" isn't proof

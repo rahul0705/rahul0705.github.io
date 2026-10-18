@@ -1,18 +1,19 @@
 import { expect, test } from '@playwright/test';
 
+import { sitePath } from './support/site';
 import { sitemapLocations } from './support/sitemap';
 
 for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
   test(`every public page fits the ${width}px viewport`, async ({ page, request }) => {
     await page.setViewportSize({ width, height: 844 });
 
-    const sitemapIndex = await request.get('/sitemap-index.xml');
+    const sitemapIndex = await request.get(sitePath('/sitemap-index.xml'));
     expect(sitemapIndex.ok()).toBe(true);
 
     const sitemapUrls = sitemapLocations(await sitemapIndex.text());
     expect(sitemapUrls.length).toBeGreaterThan(0);
 
-    const pagePaths: string[] = ['/this-page-does-not-exist/'];
+    const pagePaths: string[] = [sitePath('/this-page-does-not-exist/')];
     for (const sitemapUrl of sitemapUrls) {
       const sitemap = await request.get(new URL(sitemapUrl).pathname);
       expect(sitemap.ok()).toBe(true);
@@ -46,7 +47,7 @@ for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
 
 test('long inline code wraps within the article column on narrow phones', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
-  await page.goto('/blog/2018-10-08-peer-reviews/');
+  await page.goto(sitePath('/blog/2018-10-08-peer-reviews/'));
   await page.evaluate(() => document.fonts.ready);
   const code = page.locator('p > code').filter({ hasText: 'calculate_tax(taxable_amount, tax_rate)' });
   await expect(code).toHaveCount(1);
@@ -75,7 +76,7 @@ test('About mobile hero appears before the lede and reserves space while its ima
     await route.continue();
   });
   try {
-    await page.goto('/about/', { waitUntil: 'domcontentloaded' });
+    await page.goto(sitePath('/about/'), { waitUntil: 'domcontentloaded' });
     await page.evaluate(() =>
       Promise.all([
         document.fonts.load('400 18px "Fira Sans"'),

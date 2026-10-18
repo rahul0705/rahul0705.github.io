@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import type { ContentLink } from '../../lib/content-link';
 import type { SkillId } from '../../data/resume/skills';
 import type { FinancialScope } from '../../data/resume/financial-scopes';
@@ -28,16 +29,16 @@ const item = Astro.props;
   <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
     <div>
       <h3 class="text-xl font-semibold">
-        {item.href ? <a href={item.href} class="link link-hover">{item.title}</a> : item.title}
+        {item.href ? <a href={sitePath(item.href)} class="link link-hover">{item.title}</a> : item.title}
       </h3>
       {item.subtitle && (
         <p class="text-base-content/70">
-          {item.subtitleHref ? <a href={item.subtitleHref} class="link link-hover">{item.subtitle}</a> : item.subtitle}
+          {item.subtitleHref ? <a href={sitePath(item.subtitleHref)} class="link link-hover">{item.subtitle}</a> : item.subtitle}
           {item.subtitleDetail && (
             <>
               <span aria-hidden="true"> - </span>
               {item.subtitleDetailHref ? (
-                <a href={item.subtitleDetailHref} class="link link-hover">{item.subtitleDetail}</a>
+                <a href={sitePath(item.subtitleDetailHref)} class="link link-hover">{item.subtitleDetail}</a>
               ) : (
                 item.subtitleDetail
               )}

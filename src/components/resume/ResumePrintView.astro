@@ -1,6 +1,7 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import { resume } from '../../data/resume';
-import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
+import type { ExperienceOrganization, ExperienceProject, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
 import { getFinancialScopeCatalog } from '../../data/resume/financial-scopes';
 import AdditionalInformationLinks from './AdditionalInformationLinks.astro';
@@ -8,13 +9,13 @@ import FinancialScopeLinks from './FinancialScopeLinks.astro';
 
 interface PrintRole {
   company: ExperienceOrganization;
-  project: string;
+  project: ExperienceProject;
   role: ExperienceRole;
 }
 
 const roles: PrintRole[] = resume.experience
   .flatMap((company) =>
-    company.projects.flatMap((project) => project.roles.map((role) => ({ company, project: project.name, role }))),
+    company.projects.flatMap((project) => project.roles.map((role) => ({ company, project, role }))),
   )
   .sort((a, b) => (b.role.startDate ?? '').localeCompare(a.role.startDate ?? ''));
 const financialScopes = await getFinancialScopeCatalog();
@@ -59,10 +60,10 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
         <h3>{role.title}</h3>
         <p class="resume-print-meta">
           <strong>{company.name}</strong> - {
-            company.projects.find((candidate) => candidate.name === project)?.href ? (
-              <a href={company.projects.find((candidate) => candidate.name === project)!.href}>{project}</a>
+            project.href ? (
+              <a href={sitePath(project.href)}>{project.name}</a>
             ) : (
-              project
+              project.name
             )
           }{formatPeriod(role) && ` | ${formatPeriod(role)}`}
         </p>
@@ -76,14 +77,14 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
           <p class="resume-print-keywords"><strong>Skills:</strong> {role.skills.map((skill) => skillCatalog[skill].name).join(', ')}</p>
         )}
         <FinancialScopeLinks
-          scopes={(company.projects.find((candidate) => candidate.name === project)?.financialScopeIds ?? []).map(
+          scopes={project.financialScopeIds.map(
             (id) => financialScopes[id],
           )}
           separator=", "
           print
         />
         <AdditionalInformationLinks
-          links={company.projects.find((candidate) => candidate.name === project)?.additionalInformation ?? []}
+          links={project.additionalInformation}
           separator=", "
           print
         />

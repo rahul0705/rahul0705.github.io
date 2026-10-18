@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../lib/site-url';
 import { Picture } from 'astro:assets';
 import heroPhoto from '../assets/about/rahul-and-luna.jpeg';
 
@@ -98,7 +99,7 @@ import { articleContentClasses } from '../styles/article-classes';
 <p>Those leadership roles also gave younger me more confidence, and more ego, than was probably warranted. I knew a lot, people started to know me for knowing a lot, and for a while I let those two things reinforce each other too much.</p>
 <p>Learning that being knowledgeable doesn't mean you have nothing left to learn was an important correction.</p>
 <p>By senior year, my security interests had taken me into reverse engineering. I worked on a research project using IDA Pro to identify known algorithms inside compiled binaries, implementing a generic technique based on Small Primes Product. With guidance from the National Security Agency and Purdue professor Eugene Spafford, I was getting to work on exactly the kind of problem I enjoyed: looking beneath an abstraction and figuring out what a system was actually doing.</p>
-<p>I later <a href="/blog/2013-05-01-algorithm-detection-in-assembly/">wrote about the project</a> on this site.</p>
+<p>I later <a href={sitePath('/blog/2013-05-01-algorithm-detection-in-assembly/')}>wrote about the project</a> on this site.</p>
 </section>
 <section aria-labelledby="from-curiosity-to-a-career">
 <h2 id="from-curiosity-to-a-career">From curiosity to a career</h2>

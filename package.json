@@ -27,7 +27,6 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "astro check",
     "validate:build": "node --experimental-strip-types scripts/validate-build.ts",
-    "preview:test": "node --experimental-strip-types scripts/preview-test.ts",
     "test:smoke": "playwright test --config playwright.smoke.config.ts"
   },
   "dependencies": {

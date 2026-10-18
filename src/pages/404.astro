@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../lib/site-url';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -12,8 +13,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           Your bits could not be found. I was hoping they'd be here too.
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <a href="/" class="btn btn-primary">Go home</a>
-          <a href="/blog/" class="btn btn-outline">Browse articles</a>
+          <a href={sitePath('/')} class="btn btn-primary">Go home</a>
+          <a href={sitePath('/blog/')} class="btn btn-outline">Browse articles</a>
         </div>
       </div>
     </div>
