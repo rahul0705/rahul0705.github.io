@@ -141,8 +141,8 @@ traces, and HTML reports for 14 days. Uploaded artifacts use the existing pinned
 least-privilege
 job permissions. Only the deployment job has Pages write permission.
 
-CI still uses the repository's existing `lts/*` runtime policy; changing the supported Node/npm matrix
-belongs to #72.
+CI uses Node 26 and npm 11, matching the package engine ranges. GitHub selects Node 26 explicitly;
+GitLab uses `node:26`. Both install with `npm ci`, and `engine-strict` rejects unsupported runtime or npm majors.
 No new dependency, coverage target, Lighthouse threshold, or security exception is introduced here.
 Repeating tests on
 a PR and the resulting `main` commit is intentional: the latter is the actual deployment revision.
@@ -154,7 +154,7 @@ validation, and direct deployment prerequisites. Neither needs an aggregate chec
 generator compatibility jobs belong to Forge, not to generated sites.
 
 Keep this site's resume Markdown gate, financial-data single-build behavior, custom domain, and 14-day
-evidence policy. Runtime selection remains tracked in #72; coverage policy in #65; dependency advisory
+evidence policy. Runtime selection is Node 26/npm 11; coverage policy remains in #65; dependency advisory
 policy in #11 and #70. These choices should not be copied from template defaults without review.
 
 The GitLab mirror explicitly admits all validation jobs in merge-request and default-branch push pipelines.

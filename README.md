@@ -6,11 +6,19 @@ professional experience, and machine-readable resume exports.
 The site is statically generated with Astro and deployed to GitHub Pages. Tailwind CSS and DaisyUI provide the
 visual system, while Sveltia CMS supports browser-based editing of articles and experience entries.
 
+This is a single-maintainer personal site. The README and existing operational notes support my own maintenance;
+a separate contributor handbook is not planned.
+
 ## Requirements
 
-- Node.js 22.12 or newer
-- npm
+- Node.js 26.x
+- npm 11.x
 - Chromium, Firefox, and WebKit for the Playwright browser tests
+
+Node 26 and npm 11 are the supported runtime and package-manager majors. GitHub Actions selects Node 26,
+and GitLab uses `node:26`; both run `npm ci` with the npm supplied by that runtime. The checked-in
+`engine-strict` setting rejects unsupported Node or npm versions during installation. No multi-major runtime
+matrix is maintained.
 
 ## Local development
 
