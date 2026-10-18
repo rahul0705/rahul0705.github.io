@@ -1,11 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const port = process.env.PLAYWRIGHT_PORT ?? '4321';
+import { resolvePreviewURL } from './scripts/preview-url';
+
 const deploymentURL = process.env.DEPLOYMENT_URL;
-if (deploymentURL && new URL(deploymentURL).protocol !== 'https:') {
-  throw new Error('DEPLOYMENT_URL must use HTTPS.');
-}
-const baseURL = deploymentURL ?? `http://127.0.0.1:${port}`;
+const baseURL = resolvePreviewURL().href;
 
 export default defineConfig({
   testDir: './tests',
