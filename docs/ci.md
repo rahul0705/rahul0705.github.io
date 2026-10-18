@@ -154,7 +154,7 @@ validation, and direct deployment prerequisites. Neither needs an aggregate chec
 generator compatibility jobs belong to Forge, not to generated sites.
 
 Keep this site's resume Markdown gate, financial-data single-build behavior, custom domain, and 14-day
-evidence policy. Runtime selection is Node 26/npm 11; coverage policy remains in #65; dependency advisory
+evidence policy. Runtime selection is Node 26/npm 11; behavior-focused unit testing remains in #42; dependency advisory
 policy in #11 and #70. These choices should not be copied from template defaults without review.
 
 The GitLab mirror explicitly admits all validation jobs in merge-request and default-branch push pipelines.

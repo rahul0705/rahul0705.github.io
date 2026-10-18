@@ -74,6 +74,11 @@ instrumentation; use it instead of `test:unit` when coverage is needed. Fix comm
 `preview` is the interactive server; `preview:test` is owned by Playwright. For other Astro CLI operations,
 use `npx astro <command>`. `typecheck` is the sole script for Astro and TypeScript diagnostics.
 
+Unit tests protect observable behavior: expected outputs, meaningful branch decisions, boundary cases,
+and recovery from realistic failures. Use small controlled fixtures so tests exercise alternatives that
+current content may not contain. Coverage reports help locate untested behavior; there is no numeric
+coverage target. Avoid tests that merely repeat static data or assert internal implementation steps.
+
 Install the Playwright browser before running browser tests for the first time:
 
 ```sh
