@@ -93,9 +93,10 @@ test('About mobile hero appears before the lede and reserves space while its ima
     expect(image.y + image.height).toBeLessThan(844);
     expect(image.y + image.height).toBeLessThanOrEqual(before.y);
     releaseImage();
-    await page
-      .getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.')
-      .evaluate((image) => (image as HTMLImageElement).decode());
+    await page.getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.').evaluate((image) => {
+      if (!(image instanceof HTMLImageElement)) throw new Error('Expected the hero image element');
+      return image.decode();
+    });
     const after = await lede.boundingBox();
     assert(after, 'Expected the lede to remain visible after image loading');
     expect(after.y).toBeCloseTo(before.y, 1);

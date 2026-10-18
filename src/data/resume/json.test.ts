@@ -9,10 +9,10 @@ describe('JSON Resume serialization', () => {
   });
 
   it('conforms to the official JSON Resume schema', () => {
-    let validation: { errors: unknown[] | null; valid: boolean } | undefined;
+    let validation: { errors: unknown; valid: boolean } | undefined;
 
     resumeSchema.validate(resumeJson, (errors: unknown, valid: boolean) => {
-      validation = { errors: errors as unknown[] | null, valid };
+      validation = { errors, valid };
     });
 
     expect(validation).toEqual({ errors: null, valid: true });

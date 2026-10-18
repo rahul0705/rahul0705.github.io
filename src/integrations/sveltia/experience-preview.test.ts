@@ -1,4 +1,3 @@
-import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 import { describe, expect, it } from 'vitest';
 
 import { siteTheme } from '../../themes/site-theme';
@@ -30,7 +29,7 @@ const createEntry = (values: Record<string, unknown>) => ({
   },
 });
 
-const createProps = (values: Record<string, unknown>) => {
+const createProps = (values: Record<string, unknown>, metadataLoaded = true) => {
   const document = {
     documentElement: { dataset: {} },
     body: { classList: { add: () => undefined } },
@@ -50,20 +49,22 @@ const createProps = (values: Record<string, unknown>) => {
       entry: createEntry(values),
       fieldsMetaData: {
         get: (field: string) =>
-          field === 'skills'
-            ? [{ data: { name: 'C' } }, { data: { name: 'Flask' } }]
-            : field === 'financialScopeIds'
-              ? [{ data: { name: 'RFIMS Development' } }]
-              : undefined,
+          !metadataLoaded
+            ? undefined
+            : field === 'skills'
+              ? [{ data: { name: 'C' } }, { data: { name: 'Flask' } }]
+              : field === 'financialScopeIds'
+                ? [{ data: { name: 'RFIMS Development' } }]
+                : undefined,
       },
       window: { parent: cmsWindow },
-    } as unknown as CustomPreviewTemplateProps,
+    },
   };
 };
 
 describe('Sveltia experience preview', () => {
   it('normalizes scalar values and immutable lists', () => {
-    expect(getExperiencePreviewData(createEntry(data) as unknown as CustomPreviewTemplateProps['entry'])).toEqual(data);
+    expect(getExperiencePreviewData(createEntry(data))).toEqual(data);
   });
 
   it('renders a themed, resume-like card', () => {
@@ -88,12 +89,17 @@ describe('Sveltia experience preview', () => {
   });
 
   it('falls back to stable relation IDs when CMS metadata has not loaded', () => {
-    const { props } = createProps({ ...data, skills: ['newSkill'], financialScopeIds: ['new-contract'] });
-    (props as unknown as { fieldsMetaData: { get: () => undefined } }).fieldsMetaData = { get: () => undefined };
+    const { props } = createProps({ ...data, skills: ['newSkill'], financialScopeIds: ['new-contract'] }, false);
     const rendered = JSON.stringify(renderExperiencePreview(props));
 
     expect(rendered).toContain('newSkill');
     expect(rendered).toContain('new-contract');
+  });
+
+  it.each([undefined, null, 'not callable'])('rejects a missing or invalid CMS renderer: %s', (renderer) => {
+    const { props } = createProps(data);
+    Object.defineProperty(props.window.parent, 'createElement', { value: renderer });
+    expect(() => renderExperiencePreview(props)).toThrow('requires a callable createElement');
   });
 
   it('omits optional sections and separators when their data is empty', () => {

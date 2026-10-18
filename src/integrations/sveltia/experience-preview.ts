@@ -1,13 +1,19 @@
-import type { CustomPreviewTemplateProps } from '@sveltia/cms';
-
 import type { ContentLink } from '../../lib/content-link';
 import { sitePath } from '../../lib/site-url';
 import { siteTheme } from '../../themes/site-theme';
 
-type PreviewTemplate = (props: CustomPreviewTemplateProps) => unknown;
-type PreviewElement = ReturnType<PreviewTemplate>;
+type PreviewElement = unknown;
 type CreateElement = (type: string, props: Record<string, unknown> | null, ...children: unknown[]) => PreviewElement;
-type PreviewEntry = CustomPreviewTemplateProps['entry'];
+interface PreviewEntry {
+  getIn: (path: string[]) => unknown;
+}
+
+interface ExperiencePreviewProps {
+  document: { documentElement: Pick<HTMLElement, 'dataset'> };
+  window: { parent: object };
+  entry: PreviewEntry;
+  fieldsMetaData?: { get: (field: string) => unknown };
+}
 
 export interface ExperiencePreviewData {
   title: string;
@@ -24,8 +30,13 @@ export interface ExperiencePreviewData {
   organizationUrl: string;
 }
 
-const getCreateElement = (window: Window): CreateElement =>
-  (window as Window & { createElement: CreateElement }).createElement;
+const getCreateElement = (window: object): CreateElement => {
+  if (!('createElement' in window) || typeof window.createElement !== 'function') {
+    throw new Error('The CMS preview requires a callable createElement in its parent window');
+  }
+  // Sveltia supplies this rendering API; validate its presence before applying the callable contract.
+  return window.createElement as CreateElement;
+};
 
 const getString = (entry: PreviewEntry, field: string) => {
   const value = entry.getIn(['data', field]);
@@ -60,7 +71,7 @@ const isContentLink = (value: unknown): value is ContentLink => {
   );
 };
 
-const relationLabels = (fieldsMetaData: CustomPreviewTemplateProps['fieldsMetaData'], field: string, ids: string[]) => {
+const relationLabels = (fieldsMetaData: ExperiencePreviewProps['fieldsMetaData'], field: string, ids: string[]) => {
   const metadata = toPlainValue(fieldsMetaData?.get(field));
   const records = Array.isArray(metadata)
     ? metadata
@@ -185,7 +196,7 @@ const renderLinks = (h: CreateElement, title: string, links: ContentLink[]) =>
       )
     : null;
 
-export const renderExperiencePreview = ({ document, entry, fieldsMetaData, window }: CustomPreviewTemplateProps) => {
+export const renderExperiencePreview = ({ document, entry, fieldsMetaData, window }: ExperiencePreviewProps) => {
   document.documentElement.dataset.theme = siteTheme;
 
   const h = getCreateElement(window.parent);

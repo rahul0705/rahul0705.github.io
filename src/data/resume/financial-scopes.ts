@@ -1,5 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
+import { financialScopeContentModel } from '../../config/content-models/financial-scopes';
+
 type FinancialScopeCategory = 'contract' | 'program-budget' | 'investment' | 'revenue' | 'other';
 type FinancialScopeAmountBasis = 'ceiling' | 'base-and-options' | 'annual' | 'lifetime' | 'estimated';
 
@@ -23,10 +25,31 @@ export interface FinancialScope {
 export type FinancialScopeId = CollectionEntry<'financial-scopes'>['id'];
 export type FinancialScopeCatalog = Record<FinancialScopeId, FinancialScope>;
 
+const financialScopeFromEntry = ({ id, data }: CollectionEntry<'financial-scopes'>): FinancialScope => {
+  const { currency } = data;
+  const category = financialScopeContentModel.fields.category.options.find(
+    ({ value }) => value === data.category,
+  )?.value;
+  const amountBasis = financialScopeContentModel.fields.amountBasis.options.find(
+    ({ value }) => value === data.amountBasis,
+  )?.value;
+  if (currency !== 'USD' || !category || !amountBasis) throw new Error(`Invalid financial scope values in ${id}`);
+
+  let source: UsaSpendingSource | undefined;
+  if (data.source) {
+    const { provider, awardId, amountField } = data.source;
+    if (provider !== 'usaspending' || amountField !== 'base_and_all_options') {
+      throw new Error(`Invalid financial scope source in ${id}`);
+    }
+    source = { provider, awardId, amountField };
+  }
+  return { ...data, currency, category, amountBasis, source };
+};
+
 const financialScopeEntries = await getCollection('financial-scopes');
 
 export const financialScopeCatalog: FinancialScopeCatalog = Object.fromEntries(
-  financialScopeEntries.map((entry) => [entry.id, entry.data as FinancialScope]),
+  financialScopeEntries.map((entry) => [entry.id, financialScopeFromEntry(entry)]),
 );
 
 export const validateFinancialScopeIds = (ids: Iterable<string>, context: string): void => {
@@ -49,11 +72,6 @@ export const financialScopeSourceUrl = (scope: FinancialScope) =>
     ? `https://www.usaspending.gov/award/${encodeURIComponent(scope.source.awardId)}`
     : scope.sourceUrl;
 
-interface UsaSpendingAwardResponse {
-  base_and_all_options?: unknown;
-  period_of_performance?: { last_modified_date?: unknown };
-}
-
 const resolveFinancialScope = async (scope: FinancialScope, fetcher: typeof fetch): Promise<FinancialScope> => {
   if (scope.source?.provider !== 'usaspending') return scope;
 
@@ -61,13 +79,18 @@ const resolveFinancialScope = async (scope: FinancialScope, fetcher: typeof fetc
     const response = await fetcher(usaSpendingApiUrl(scope.source.awardId), { signal: AbortSignal.timeout(5_000) });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const data = (await response.json()) as UsaSpendingAwardResponse;
-    const amount = data[scope.source.amountField];
+    const data: unknown = await response.json();
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid USAspending response');
+    const amount = 'base_and_all_options' in data ? data.base_and_all_options : undefined;
     if (typeof amount !== 'number' || !Number.isFinite(amount) || amount <= 0) {
       throw new Error(`Invalid ${scope.source.amountField}`);
     }
 
-    const lastModified = data.period_of_performance?.last_modified_date;
+    const performance = 'period_of_performance' in data ? data.period_of_performance : undefined;
+    const lastModified =
+      performance && typeof performance === 'object' && 'last_modified_date' in performance
+        ? performance.last_modified_date
+        : undefined;
     return { ...scope, amount, asOf: typeof lastModified === 'string' ? lastModified.slice(0, 10) : scope.asOf };
   } catch (error) {
     console.warn(`Using fallback financial scope for ${scope.name}:`, error);
@@ -83,7 +106,7 @@ export const resolveFinancialScopeCatalog = async (fetcher: typeof fetch = fetch
         await resolveFinancialScope(scope, fetcher),
       ]),
     ),
-  ) as FinancialScopeCatalog;
+  );
 
 let resolvedCatalog: Promise<FinancialScopeCatalog> | undefined;
 export const getFinancialScopeCatalog = () => (resolvedCatalog ??= resolveFinancialScopeCatalog());

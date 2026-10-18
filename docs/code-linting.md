@@ -64,6 +64,31 @@ Prefer assertions that execute in tests and fail clearly over casts or optional
 chaining that lets a missing value escape a test. Browser evaluation callbacks run
 in the page, so they use their own guard rather than an imported Node assertion.
 
+## Type assertions and validation
+
+Treat external values as `unknown` and validate the fields being consumed before
+using them. Use existing schemas for parsed configuration and native guards for
+small API responses or DOM checks. Internal values should use inference or typed
+declarations rather than casts. `as const` and `satisfies` remain useful for literal
+types and compatibility checks; they do not replace runtime validation.
+
+The cast audit removed all test/support casts and six production casts. Two
+production assertions remain, each immediately following a runtime guard:
+
+- The social-link record checks that every supported network has a configured
+  entry before asserting its complete key set. Entry values are already inferred
+  from the typed site configuration.
+- The CMS renderer checks that the parent host exposes a callable `createElement`
+  before applying Sveltia's rendering signature. Its return type stays `unknown`;
+  the check establishes that it can be called, not the behavior of an arbitrary function.
+
+Catalog loading checks skill categories and financial scope choices against the
+configured options instead of asserting narrower string unions. USAspending JSON
+is checked for an object shape and a positive finite amount; malformed responses
+retain checked-in values, while invalid optional modification metadata retains the
+stored date. No new validation dependency or blanket ban on every assertion is
+introduced.
+
 ## Type-aware engine and file coverage
 
 `oxlint-tsgolint` is a development dependency using a caret version range. It provides checks based

@@ -40,11 +40,11 @@ test('resume actions remain usable within the mobile viewport', async ({ page })
 test('the resume has a compact print presentation', async ({ page }) => {
   await page.goto(sitePath('/resume/'));
   const resumeJson = await page.request.get(sitePath('/resume.json'));
-  const resume = (await resumeJson.json()) as {
-    work: unknown[];
-    education: unknown[];
-    awards: unknown[];
-  };
+  const resume: unknown = await resumeJson.json();
+  assert(resume && typeof resume === 'object', 'Expected a JSON Resume object');
+  assert('work' in resume && Array.isArray(resume.work), 'Expected resume work entries');
+  assert('education' in resume && Array.isArray(resume.education), 'Expected resume education entries');
+  assert('awards' in resume && Array.isArray(resume.awards), 'Expected resume award entries');
   const printEntryCount = resume.work.length + resume.education.length + resume.awards.length;
   await page.emulateMedia({ media: 'print' });
 

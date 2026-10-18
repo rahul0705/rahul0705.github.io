@@ -80,7 +80,7 @@ export const deriveSkillExperienceCoverage = (
       const months = uniqueMonths(intervals);
       return {
         name: skillCatalog[skillId].name,
-        category: skillCatalog[skillId].category as SkillCategory,
+        category: skillCatalog[skillId].category,
         months,
         percentage: Math.round((months / careerMonths) * 100),
       };
