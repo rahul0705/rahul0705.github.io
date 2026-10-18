@@ -1,6 +1,7 @@
 import defaultSocialImage from '../assets/covers/home-workspace.png';
 import { siteConfig, socialLinks } from '../config/site';
 import { getPublishedPosts } from '../lib/blog';
+import { siteURL } from '../lib/site-url';
 import { resume } from './resume';
 import { basics } from './resume/basics';
 import { experienceFinancialScopeIds } from './resume/experience';
@@ -30,7 +31,7 @@ export const getSiteStats = async () => {
 };
 
 export const site = {
-  url: siteConfig.url,
+  url: siteURL('/').replace(/\/$/, ''),
   title: siteConfig.title,
   currentRoleSummary: currentRoleDescription || basics.label,
   defaultSocialImage: defaultSocialImage.src,

@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+import { sitePath } from './support/site';
+
 test('resume actions remain usable within the mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/resume/');
+  await page.goto(sitePath('/resume/'));
   await page.getByRole('button', { name: 'Export Resume' }).click();
 
   const menu = page.locator('#resume-actions-menu');
@@ -34,8 +36,8 @@ test('resume actions remain usable within the mobile viewport', async ({ page })
 });
 
 test('the resume has a compact print presentation', async ({ page }) => {
-  await page.goto('/resume/');
-  const resumeJson = await page.request.get('/resume.json');
+  await page.goto(sitePath('/resume/'));
+  const resumeJson = await page.request.get(sitePath('/resume.json'));
   const resume = (await resumeJson.json()) as {
     work: unknown[];
     education: unknown[];
@@ -52,8 +54,8 @@ test('the resume has a compact print presentation', async ({ page }) => {
 });
 
 test('resume text endpoints provide plain text and Markdown', async ({ request }) => {
-  const plainText = await request.get('/resume.txt');
-  const markdown = await request.get('/resume.md');
+  const plainText = await request.get(sitePath('/resume.txt'));
+  const markdown = await request.get(sitePath('/resume.md'));
 
   expect(plainText.headers()['content-type']).toContain('text/plain');
   expect(await plainText.text()).toContain('EXPERIENCE');
@@ -62,7 +64,7 @@ test('resume text endpoints provide plain text and Markdown', async ({ request }
 });
 
 test('resume role skills retain their documentation links and descriptions', async ({ page }) => {
-  await page.goto('/resume/');
+  await page.goto(sitePath('/resume/'));
 
   const softwareDevelopmentSkills = page.getByRole('list', { name: 'Software Development Engineer skills' });
   const typeScriptSkill = softwareDevelopmentSkills.locator('a[aria-label="TypeScript: Programming Language"]');
@@ -83,7 +85,7 @@ for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
     // Opening every skill disclosure can take nearly 30 seconds in Linux WebKit.
     test.setTimeout(60_000);
     await page.setViewportSize({ width, height: 844 });
-    await page.goto('/resume/');
+    await page.goto(sitePath('/resume/'));
     await page.evaluate(() => document.fonts.ready);
     for (const toggle of await page.getByText(/Show \d+ more skills/).all()) await toggle.click();
     await page.getByRole('button', { name: 'Export Resume' }).click();

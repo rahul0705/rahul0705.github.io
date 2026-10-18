@@ -297,10 +297,21 @@ The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and u
 Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
 Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
-Shared identity, author, canonical URL, repository, navigation, social, RSS, analytics, and indexing metadata are defined
+Shared identity, author, repository, navigation, social, RSS, analytics, and indexing metadata are defined
 in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
-Environment-specific and secret values must remain in environment variables or deployment settings. The custom domain
-is recorded in `CNAME`.
+Deployment settings live in `astro.config.ts`: `site` is the public origin and `base` is the mount path.
+The defaults are `https://www.rahulmohandas.com` and `/`. Application code uses Astro's built-in `SITE`
+and `BASE_URL` values; Node-side preview and browser tooling loads the same Astro config.
+To check a subpath locally, temporarily set `base: '/preview/'` in Astro config, then run
+`npm run build && npm run test:e2e -- --project=chromium`. Restore the normal base afterward.
+CI continues to build and test the normal root deployment once, without a subpath matrix.
+`DEPLOYMENT_URL` only selects the server contacted by deployed smoke tests.
+Use `sitePath()` for internal component links and `siteURL()` for
+absolute canonical/feed/export URLs. Keep article-to-article Markdown links relative to their article directory.
+Repository paths in CMS configuration stay relative to the repository; published media URLs include the mount path.
+On shared hosts, the host must serve robots policy at the origin root for crawlers to honor it.
+The custom domain remains recorded in `CNAME`; changing deployment configuration does not change DNS or Pages settings.
+Environment-specific and secret values must remain in environment variables or deployment settings.
 
 ## License
 
@@ -333,7 +344,7 @@ Run a focused suite with `npm run test:e2e -- tests/navigation.spec.ts --project
 The preview URL resolver in `scripts/preview-url.ts` supplies the browser target and local server settings.
 Use `PLAYWRIGHT_PORT=5432 npm run test:e2e` when the default port (4321) is occupied.
 Deployment smoke checks use an HTTPS `DEPLOYMENT_URL` and do not start a local server.
-The resolver preserves a deployment URL's path; full subpath deployment support remains tracked in #71.
+The local build and browser checks read the same Astro config for mount paths and canonical expectations.
 
 After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without
 starting a local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and

@@ -258,7 +258,7 @@ current shapes
 match. Duplication is a cost, but coupling is also a cost.
 
 For a deeper discussion of this tradeoff, see
-[Duplication Is Cheaper Than the Wrong Abstraction](/blog/2026-08-17-duplication-vs-coupling/).
+[Duplication Is Cheaper Than the Wrong Abstraction](../2026-08-17-duplication-vs-coupling/).
 
 #### Does the code exit early?
 
@@ -610,7 +610,7 @@ Where practical, write a failing test or repeatable measurement before reducing 
 signal for comparing A, B, and C instead of relying on memory or a one-time observation.
 
 For a closer look at this reduction process, see
-[_Did You Fix the Bug or Just Move It?_](/blog/2026-08-20-did-you-fix-the-bug/).
+[_Did You Fix the Bug or Just Move It?_](../2026-08-20-did-you-fix-the-bug/).
 
 ### Run the automated checks
 

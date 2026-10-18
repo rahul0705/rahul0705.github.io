@@ -1,6 +1,7 @@
 import type { CustomPreviewTemplateProps } from '@sveltia/cms';
 
 import type { ContentLink } from '../../lib/content-link';
+import { sitePath } from '../../lib/site-url';
 import { siteTheme } from '../../themes/site-theme';
 
 type PreviewTemplate = (props: CustomPreviewTemplateProps) => unknown;
@@ -175,7 +176,7 @@ const renderLinks = (h: CreateElement, title: string, links: ContentLink[]) =>
               null,
               h(
                 'a',
-                { className: 'link link-primary break-all', href: url, rel: 'noreferrer', target: '_blank' },
+                { className: 'link link-primary break-all', href: sitePath(url), rel: 'noreferrer', target: '_blank' },
                 label,
               ),
             ),

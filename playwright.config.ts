@@ -1,9 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 
+import { configuredSite } from './scripts/astro-config';
 import { resolvePreviewURL } from './scripts/preview-url';
 
 const deploymentURL = process.env.DEPLOYMENT_URL;
-const baseURL = resolvePreviewURL().href;
+const baseURL = resolvePreviewURL(process.env, configuredSite.pathname).href;
 
 export default defineConfig({
   testDir: './tests',

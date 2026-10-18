@@ -2,10 +2,11 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
-import { siteConfig } from './src/config/site';
+import { siteConfig } from './src/config/site.ts';
 
 export default defineConfig({
-  site: siteConfig.url,
+  site: 'https://www.rahulmohandas.com',
+  base: '/',
   // Preserve word boundaries around inline elements split across source lines.
   compressHTML: true,
   integrations: [

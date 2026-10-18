@@ -11,7 +11,6 @@ interface SocialLink extends NavigationItem {
 }
 
 interface SiteConfig {
-  url: string;
   title: string;
   author: {
     name: string;
@@ -40,7 +39,6 @@ interface SiteConfig {
 }
 
 export const siteConfig = {
-  url: 'https://www.rahulmohandas.com',
   title: 'Rahul Mohandas',
   author: {
     name: 'Rahul Mohandas',

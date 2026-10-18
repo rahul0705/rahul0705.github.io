@@ -2,19 +2,22 @@ import { describe, expect, it } from 'vitest';
 
 import { basics } from '../data/resume/basics';
 import { site } from '../data/site';
+import { siteURL } from '../lib/site-url';
 import { siteConfig, socialLinks } from './site';
 
+const publicSiteURL = siteURL('/').replace(/\/$/, '');
+
 describe('site configuration', () => {
-  it('is the authority for canonical identity and author metadata', () => {
+  it('shares author metadata and the Astro public URL across site and resume data', () => {
     expect(site).toMatchObject({
-      url: siteConfig.url,
+      url: publicSiteURL,
       title: siteConfig.title,
       name: siteConfig.author.name,
       role: siteConfig.author.role,
       email: siteConfig.author.email,
     });
     expect(basics).toMatchObject({
-      url: siteConfig.url,
+      url: publicSiteURL,
       name: siteConfig.author.name,
       label: siteConfig.author.role,
       email: siteConfig.author.email,
@@ -29,8 +32,7 @@ describe('site configuration', () => {
     const navigation = [...siteConfig.navigation.primary, ...siteConfig.navigation.footer];
 
     expect(new Set(navigation.map(({ href }) => href)).size).toBe(navigation.length);
-    for (const item of navigation)
-      expect(new URL(item.href, siteConfig.url).origin).toBe(new URL(siteConfig.url).origin);
+    for (const item of navigation) expect(new URL(item.href, publicSiteURL).origin).toBe(new URL(publicSiteURL).origin);
     expect(new URL(siteConfig.repository.url).pathname).toBe(
       `/${siteConfig.repository.owner}/${siteConfig.repository.name}`,
     );

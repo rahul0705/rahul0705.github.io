@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 
+import { sitePath } from './support/site';
+
 test('primary navigation reaches core pages', async ({ page }) => {
-  await page.goto('/');
+  await page.goto(sitePath('/'));
   await page.locator('header').getByRole('link', { name: 'Articles', exact: true }).click();
   await expect(page).toHaveURL(/\/blog\/?$/);
   await page.locator('header').getByRole('link', { name: 'Resume', exact: true }).click();
@@ -13,7 +15,7 @@ test('primary navigation reaches core pages', async ({ page }) => {
 
 test('mobile navigation opens on tap and follows its links', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto(sitePath('/'));
   const toggle = page.getByRole('button', { name: 'Open navigation menu' });
   const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
 
@@ -26,7 +28,7 @@ test('mobile navigation opens on tap and follows its links', async ({ page }) =>
 
 test('mobile navigation supports keyboard toggling and dismissal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto(sitePath('/'));
   const toggle = page.getByRole('button', { name: 'Open navigation menu' });
 
   await toggle.focus();
@@ -40,7 +42,7 @@ test('mobile navigation supports keyboard toggling and dismissal', async ({ page
 
 test('mobile navigation closes when tapping outside it', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
+  await page.goto(sitePath('/'));
   await page.getByRole('button', { name: 'Open navigation menu' }).click();
   const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
   await expect(articles).toBeVisible();
@@ -52,7 +54,7 @@ test('mobile navigation closes when tapping outside it', async ({ page }) => {
 for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
   test(`navigation controls fit at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
-    await page.goto('/');
+    await page.goto(sitePath('/'));
     await page.evaluate(() => document.fonts.ready);
     const navigation = page.getByRole('button', { name: 'Open navigation menu' });
     if (await navigation.isVisible()) {

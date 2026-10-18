@@ -1,3 +1,4 @@
+import { siteURL } from '../../lib/site-url';
 import type { Recognition } from './awards';
 import type { ResumeBasics } from './basics';
 import type { EducationEntry } from './education';
@@ -91,7 +92,7 @@ const roleText = (organization: ExperienceOrganization, project: string, role: E
       ? `Skills: ${role.skills.map((skill) => skillCatalog[skill].name).join(', ')}`
       : undefined,
     projectData?.additionalInformation.length
-      ? `Additional information: ${projectData.additionalInformation.map((output) => `${output.label} (${output.url})`).join(', ')}`
+      ? `Additional information: ${projectData.additionalInformation.map((output) => `${output.label} (${siteURL(output.url)})`).join(', ')}`
       : undefined,
   ]
     .filter(Boolean)
@@ -103,7 +104,7 @@ const roleMarkdown = (organization: ExperienceOrganization, project: string, rol
 
   return [
     `### ${role.title}: ${
-      projectData?.href ? `[${project}](${projectData.href})` : project
+      projectData?.href ? `[${project}](${siteURL(projectData.href)})` : project
     }${formatYearPeriod(role) ? ` (${formatYearPeriod(role)})` : ''}`,
     `Organization: **${organization.name}**`,
     role.description ? wrapMarkdown(role.description) : undefined,
@@ -114,7 +115,7 @@ const roleMarkdown = (organization: ExperienceOrganization, project: string, rol
     projectData?.additionalInformation.length
       ? wrapMarkdown(
           `**Additional information:** ${projectData.additionalInformation
-            .map((output) => `[${output.label}](${output.url})`)
+            .map((output) => `[${output.label}](${siteURL(output.url)})`)
             .join(', ')}`,
         )
       : undefined,
@@ -206,7 +207,7 @@ export const toResumeMarkdown = ({
   );
   const awardContent = recognitions.map((recognition) =>
     [
-      `### ${recognition.href ? `[${recognition.title}](${recognition.href})` : recognition.title}`,
+      `### ${recognition.href ? `[${recognition.title}](${siteURL(recognition.href)})` : recognition.title}`,
       recognition.date,
       wrapMarkdown(recognition.description),
       recognition.highlights?.map((highlight) => wrapMarkdown(highlight, '- ', '  ')).join('\n'),
@@ -215,7 +216,10 @@ export const toResumeMarkdown = ({
       .join('\n\n'),
   );
   const interestContent = interests.map((interest) =>
-    [`- ${interest.href ? `[${interest.name}](${interest.href})` : interest.name}`, interest.keywords?.join(', ')]
+    [
+      `- ${interest.href ? `[${interest.name}](${siteURL(interest.href)})` : interest.name}`,
+      interest.keywords?.join(', '),
+    ]
       .filter(Boolean)
       .join(': '),
   );

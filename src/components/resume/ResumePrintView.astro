@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../../lib/site-url';
 import { resume } from '../../data/resume';
 import type { ExperienceOrganization, ExperienceRole } from '../../data/resume/experience';
 import { skillCatalog } from '../../data/resume/skills';
@@ -60,7 +61,7 @@ const contacts: Array<{ label: string; value: string; href: string }> = [
         <p class="resume-print-meta">
           <strong>{company.name}</strong> - {
             company.projects.find((candidate) => candidate.name === project)?.href ? (
-              <a href={company.projects.find((candidate) => candidate.name === project)!.href}>{project}</a>
+              <a href={sitePath(company.projects.find((candidate) => candidate.name === project)!.href!)}>{project}</a>
             ) : (
               project
             )

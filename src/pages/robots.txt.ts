@@ -1,15 +1,16 @@
 import type { APIRoute } from 'astro';
 
 import { siteConfig } from '../config/site';
+import { sitePath, siteURL } from '../lib/site-url';
 
 export const GET: APIRoute = () =>
   new Response(
     [
       'User-agent: *',
       'Allow: /',
-      ...siteConfig.robotsDisallowPaths.map((path) => `Disallow: ${path}`),
+      ...siteConfig.robotsDisallowPaths.map((path) => `Disallow: ${sitePath(path)}`),
       '',
-      `Sitemap: ${new URL('/sitemap-index.xml', siteConfig.url).href}`,
+      `Sitemap: ${siteURL('/sitemap-index.xml')}`,
       '',
     ].join('\n'),
     { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },

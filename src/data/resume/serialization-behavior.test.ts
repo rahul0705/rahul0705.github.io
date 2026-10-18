@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { siteURL } from '../../lib/site-url';
 import { toResumeJson } from './json';
 import { toResumeMarkdown, toResumeText } from './text';
 
@@ -98,5 +99,30 @@ describe('resume serialization behavior', () => {
       { name: 'Reading' },
       { name: 'Making', keywords: ['Electronics'] },
     ]);
+  });
+
+  it('makes internal links portable when resume documents are opened away from the site', () => {
+    const linked = {
+      ...input,
+      recognitions: [{ title: 'Example recognition', description: 'An outcome', href: '/blog/example/' }],
+      experience: [
+        {
+          ...input.experience[0],
+          projects: [
+            {
+              ...input.experience[0].projects[0],
+              href: '/blog/project/',
+              additionalInformation: [{ label: 'Poster', url: '/assets/poster.pdf' }],
+            },
+          ],
+        },
+      ],
+    };
+    expect(toResumeMarkdown(linked)).toContain(`[Example Project](${siteURL('/').replace(/\/$/, '')}/blog/project/)`);
+    expect(toResumeMarkdown(linked)).toContain(`[Poster](${siteURL('/').replace(/\/$/, '')}/assets/poster.pdf)`);
+    expect(toResumeText(linked)).toContain(`Poster (${siteURL('/').replace(/\/$/, '')}/assets/poster.pdf)`);
+    expect(toResumeJson({ ...linked, experienceSkillCoverage: [] }).awards[0].url).toBe(
+      `${siteURL('/').replace(/\/$/, '')}/blog/example/`,
+    );
   });
 });

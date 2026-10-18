@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { siteConfig } from '../src/config/site';
+import { publicSiteURL, sitePath } from './support/site';
 
 for (const path of ['/', '/resume/', '/dotfiles/', '/blog/2018-10-08-peer-reviews/']) {
   test(`deployed ${path} serves content and fits a phone viewport`, async ({ page }) => {
@@ -11,10 +12,10 @@ for (const path of ['/', '/resume/', '/dotfiles/', '/blog/2018-10-08-peer-review
         failedAssets.push(`${response.status()} ${response.url()}`);
       }
     });
-    expect((await page.goto(path))?.status()).toBe(200);
+    expect((await page.goto(sitePath(path)))?.status()).toBe(200);
     await expect(page.locator('main')).toBeVisible();
     await expect(page.locator('h1').first()).not.toBeEmpty();
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${siteConfig.url}${path}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${publicSiteURL}${path}`);
     await expect(page.locator('meta[name="viewport"]')).toHaveAttribute(
       'content',
       'width=device-width, initial-scale=1',
@@ -29,13 +30,13 @@ for (const path of ['/', '/resume/', '/dotfiles/', '/blog/2018-10-08-peer-review
 
 test('deployed machine-readable routes and not-found response are intact', async ({ request }) => {
   for (const path of ['/robots.txt', '/rss.xml', '/sitemap-index.xml', '/resume.json', '/resume.md', '/resume.txt']) {
-    const response = await request.get(path);
+    const response = await request.get(sitePath(path));
     expect(response.status(), path).toBe(200);
     expect((await response.text()).trim(), path).not.toBe('');
   }
-  const resume = await (await request.get('/resume.json')).json();
+  const resume = await (await request.get(sitePath('/resume.json'))).json();
   expect(resume.basics.name).toBe(siteConfig.author.name);
-  const missing = await request.get('/deployment-smoke-does-not-exist/');
+  const missing = await request.get(sitePath('/deployment-smoke-does-not-exist/'));
   expect(missing.status()).toBe(404);
   expect(await missing.text()).toContain('Page not found');
 });

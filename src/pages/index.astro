@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../lib/site-url';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import AboutSection from '../components/home/AboutSection.astro';
@@ -31,7 +32,7 @@ const stats = await getSiteStats();
   <ToolkitSection {...home.toolkit} />
   <Section title={home.dotfiles.title} description={home.dotfiles.description}>
     <div class="flex flex-wrap gap-3">
-      <a href={home.dotfiles.setupHref} class="btn btn-outline">Setup guide</a>
+      <a href={sitePath(home.dotfiles.setupHref)} class="btn btn-outline">Setup guide</a>
       <a href={home.dotfiles.repositoryHref} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
         View repository
       </a>

@@ -34,4 +34,8 @@ describe('browser preview URL', () => {
   it('rejects an unusable local port before launching the preview server', () => {
     expect(() => resolvePreviewURL({ PLAYWRIGHT_PORT: '70000' })).toThrow();
   });
+
+  it('serves the configured mount path on the local preview port', () => {
+    expect(resolvePreviewURL({ PLAYWRIGHT_PORT: '5432' }, '/preview/').href).toBe('http://127.0.0.1:5432/preview/');
+  });
 });

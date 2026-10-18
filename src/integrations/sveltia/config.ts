@@ -4,6 +4,7 @@ import type { CmsConfig } from '@sveltia/cms';
 
 import { contentModels } from '../../config/content-models/registry';
 import { siteConfig } from '../../config/site';
+import { sitePath } from '../../lib/site-url';
 
 const collectionOptions = (model: ContentCollectionModel): SveltiaCollectionOptions | undefined => {
   if (model.name === 'blog')
@@ -29,7 +30,7 @@ export const sveltiaConfig = {
   load_config_file: false,
   app_title: `${siteConfig.title} Content Manager`,
   logo: {
-    src: '/favicon.svg',
+    src: sitePath('/favicon.svg'),
   },
   backend: {
     name: 'github',
@@ -44,7 +45,7 @@ export const sveltiaConfig = {
     },
   },
   media_folder: 'public/assets/{{year}}',
-  public_folder: '/assets/{{year}}',
+  public_folder: sitePath('/assets/{{year}}'),
   output: {
     omit_empty_optional_fields: true,
   },
