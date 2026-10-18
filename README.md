@@ -327,6 +327,14 @@ The browser suite runs in Chromium, Firefox, and WebKit before deployment. CI re
 and the HTML report for 14 days. To run one engine locally, use `npm run test:e2e -- --project=webkit` (or `chromium`
 or `firefox`).
 
+Browser specs are grouped by behavior in `tests/`: accessibility, analytics, CMS, layout, navigation,
+resume, routes, SEO/feed/crawl policy, and theme, alongside the dotfiles and inline-spacing checks.
+Run a focused suite with `npm run test:e2e -- tests/navigation.spec.ts --project=chromium`.
+The preview URL resolver in `scripts/preview-url.ts` supplies the browser target and local server settings.
+Use `PLAYWRIGHT_PORT=5432 npm run test:e2e` when the default port (4321) is occupied.
+Deployment smoke checks use an HTTPS `DEPLOYMENT_URL` and do not start a local server.
+The resolver preserves a deployment URL's path; full subpath deployment support remains tracked in #71.
+
 After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without
 starting a local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and
 390px mobile overflow, plus feed/export reachability and the custom 404 response. Failed checks retry twice and
