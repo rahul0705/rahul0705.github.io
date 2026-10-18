@@ -1,26 +1,28 @@
 import { readFileSync } from 'node:fs';
 
+import { z } from 'astro/zod';
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 
-interface Step {
-  name?: string;
-  run?: string;
-  uses?: string;
-  with?: Record<string, unknown>;
-  env?: Record<string, string>;
-}
-interface Job {
-  needs?: string | string[];
-  if?: string;
-  steps: Step[];
-}
-const { jobs } = parse(readFileSync(new URL('../.github/workflows/project.yml', import.meta.url), 'utf8')) as {
-  jobs: Record<string, Job>;
-};
-const { scripts } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as {
-  scripts: Record<string, string>;
-};
+const stepSchema = z.object({
+  name: z.string().optional(),
+  run: z.string().optional(),
+  uses: z.string().optional(),
+  with: z.record(z.string(), z.unknown()).optional(),
+  env: z.record(z.string(), z.string()).optional(),
+});
+const jobSchema = z.object({
+  needs: z.union([z.string(), z.array(z.string())]).optional(),
+  if: z.string().optional(),
+  steps: z.array(stepSchema),
+});
+type Job = z.infer<typeof jobSchema>;
+const { jobs } = z
+  .object({ jobs: z.record(z.string(), jobSchema) })
+  .parse(parse(readFileSync(new URL('../.github/workflows/project.yml', import.meta.url), 'utf8')));
+const { scripts } = z
+  .object({ scripts: z.record(z.string(), z.string()) })
+  .parse(JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')));
 const sourceJobs = [
   'format',
   'lint-code',
@@ -44,7 +46,15 @@ const preDeployCommands = Object.entries(jobs)
 
 describe('website CI dependency and artifact contract', () => {
   it('admits every GitLab validation job in merge requests while keeping publishing disabled', () => {
-    const gitlab = parse(readFileSync(new URL('../.gitlab/ci/project.yml', import.meta.url), 'utf8'));
+    const gitlab = z
+      .record(
+        z.string(),
+        z.object({
+          rules: z.array(z.record(z.string(), z.string())).optional(),
+          extends: z.string().optional(),
+        }),
+      )
+      .parse(parse(readFileSync(new URL('../.gitlab/ci/project.yml', import.meta.url), 'utf8')));
     for (const name of [
       ...sourceJobs,
       'build',
@@ -54,7 +64,7 @@ describe('website CI dependency and artifact contract', () => {
       'validate-build',
     ]) {
       const job = gitlab[name];
-      expect(job.rules ?? gitlab[job.extends]?.rules, name).toEqual([
+      expect(job.rules ?? (job.extends ? gitlab[job.extends]?.rules : undefined), name).toEqual([
         { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
         { if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"' },
       ]);

@@ -9,8 +9,13 @@ test('analytics uses denied consent and sanitized page data on public HTML pages
   await page.goto(sitePath('/?private=value#fragment'));
 
   const analyticsState = await page.evaluate(() => {
-    const commands = (window as typeof window & { dataLayer: IArguments[] }).dataLayer;
-    return commands.map((command) => Array.from(command));
+    if (!('dataLayer' in window) || !Array.isArray(window.dataLayer)) throw new Error('Expected analytics dataLayer');
+    return window.dataLayer.map((command: unknown) => {
+      if (!command || typeof command !== 'object' || !('length' in command) || typeof command.length !== 'number') {
+        throw new Error('Expected array-like analytics commands');
+      }
+      return Object.values(command);
+    });
   });
 
   expect(analyticsState).toContainEqual([

@@ -1,17 +1,20 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import ArticleCardShell from '../blog/ArticleCardShell.astro';
 import ContentMeta from '../ui/ContentMeta.astro';
 import { getPublishedAt } from '../../lib/blog';
 
 interface Props {
-  post: any;
+  post: CollectionEntry<'blog'>;
 }
 
 const { post } = Astro.props;
 const publishedAt = getPublishedAt(post);
+const coverImageAlt = post.data.coverImageAlt;
+if (!coverImageAlt) throw new Error(`Missing cover image alt text for ${post.id}`);
 ---
 
-<ArticleCardShell href={`/blog/${post.id}/`} image={post.data.coverImage} imageAlt={post.data.coverImageAlt}>
+<ArticleCardShell href={`/blog/${post.id}/`} image={post.data.coverImage} imageAlt={coverImageAlt}>
   <div class="card-body gap-4 p-6">
     <h3 class="card-title text-xl leading-snug">{post.data.title}</h3>
     <ContentMeta date={publishedAt} emphasis />

@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { sitePath } from './support/site';
@@ -30,19 +32,19 @@ test('resume actions remain usable within the mobile viewport', async ({ page })
     await expect(page.getByRole('link', { name: `Download ${format}` })).toHaveAttribute('rel', 'nofollow');
   }
   const box = await menu.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.x).toBeGreaterThanOrEqual(0);
-  expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+  assert(box, 'Expected a visible element with layout bounds');
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(390);
 });
 
 test('the resume has a compact print presentation', async ({ page }) => {
   await page.goto(sitePath('/resume/'));
   const resumeJson = await page.request.get(sitePath('/resume.json'));
-  const resume = (await resumeJson.json()) as {
-    work: unknown[];
-    education: unknown[];
-    awards: unknown[];
-  };
+  const resume: unknown = await resumeJson.json();
+  assert(resume && typeof resume === 'object', 'Expected a JSON Resume object');
+  assert('work' in resume && Array.isArray(resume.work), 'Expected resume work entries');
+  assert('education' in resume && Array.isArray(resume.education), 'Expected resume education entries');
+  assert('awards' in resume && Array.isArray(resume.awards), 'Expected resume award entries');
   const printEntryCount = resume.work.length + resume.education.length + resume.awards.length;
   await page.emulateMedia({ media: 'print' });
 
@@ -91,9 +93,9 @@ for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
     await page.getByRole('button', { name: 'Export Resume' }).click();
     const menu = page.locator('#resume-actions-menu');
     const box = await menu.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.x).toBeGreaterThanOrEqual(0);
-    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    assert(box, 'Expected a visible element with layout bounds');
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(width);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   });
 }

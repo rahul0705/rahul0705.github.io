@@ -1,14 +1,18 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { skillCategories } from '../../config/skill-categories';
+import { skillCategories, type SkillCategory } from '../../config/skill-categories';
 
-export type SkillCatalogEntry = CollectionEntry<'skills'>['data'];
+export type SkillCatalogEntry = Omit<CollectionEntry<'skills'>['data'], 'category'> & { category: SkillCategory };
 export type SkillId = CollectionEntry<'skills'>['id'];
 
 const skillEntries = await getCollection('skills');
 
 export const skillCatalog: Record<SkillId, SkillCatalogEntry> = Object.fromEntries(
-  skillEntries.map((entry) => [entry.id, entry.data]),
+  skillEntries.map(({ id, data }) => {
+    const category = skillCategories.find(({ value }) => value === data.category)?.value;
+    if (!category) throw new Error(`Unknown skill category in ${id}: ${data.category}`);
+    return [id, { ...data, category }];
+  }),
 );
 
 export const categorizedSkills = skillCategories.map((category) => ({

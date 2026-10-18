@@ -10,6 +10,9 @@ interface TestCollectionEntry {
   body: string;
 }
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === 'object' && !Array.isArray(value);
+
 const readCollection = async (name: string): Promise<TestCollectionEntry[]> => {
   const folder = name === 'financialScopes' ? 'financial-scopes' : name;
   const collectionUrl = new URL(`${folder}/`, new URL('../src/content/', import.meta.url));
@@ -19,16 +22,23 @@ const readCollection = async (name: string): Promise<TestCollectionEntry[]> => {
     files.map(async (file) => {
       const source = await readFile(new URL(file, collectionUrl), 'utf8');
       const match = source.match(/^---\r?\n(?<frontmatter>[\s\S]*?)\r?\n---\r?\n?(?<body>[\s\S]*)$/);
-      const data = (
-        extname(file) === '.json' ? JSON.parse(source) : match?.groups ? parse(match.groups.frontmatter) : undefined
-      ) as Record<string, unknown> | undefined;
-      if (!data) throw new Error(`Could not parse content in ${name}/${file}`);
+      const data: unknown =
+        extname(file) === '.json' ? JSON.parse(source) : match?.groups ? parse(match.groups.frontmatter) : undefined;
+      if (!isRecord(data)) throw new Error(`Could not parse content in ${name}/${file}`);
       if (name === 'experience') {
         data.highlights ??= [];
         data.skills ??= [];
         data.financialScopeIds ??= [];
-        data.startDate = new Date(data.startDate as string);
-        if (data.endDate) data.endDate = new Date(data.endDate as string);
+        if (typeof data.startDate !== 'string' || Number.isNaN(Date.parse(data.startDate))) {
+          throw new Error(`Invalid start date in ${name}/${file}`);
+        }
+        data.startDate = new Date(data.startDate);
+        if (data.endDate) {
+          if (typeof data.endDate !== 'string' || Number.isNaN(Date.parse(data.endDate))) {
+            throw new Error(`Invalid end date in ${name}/${file}`);
+          }
+          data.endDate = new Date(data.endDate);
+        }
       }
 
       return {

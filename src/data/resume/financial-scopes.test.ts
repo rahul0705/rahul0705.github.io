@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -46,7 +48,7 @@ describe('financial scope', () => {
   it('resolves USAspending amounts and modification dates', async () => {
     const fetcher = vi.fn(async () =>
       Response.json({ base_and_all_options: 600_000_000, period_of_performance: { last_modified_date: '2026-07-02' } }),
-    ) as unknown as typeof fetch;
+    );
 
     const catalog = await resolveFinancialScopeCatalog(fetcher);
 
@@ -57,7 +59,7 @@ describe('financial scope', () => {
 
   it('uses checked-in amounts when USAspending is unavailable', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const fetcher = vi.fn(async () => new Response(null, { status: 503 })) as unknown as typeof fetch;
+    const fetcher = vi.fn(async () => new Response(null, { status: 503 }));
 
     const catalog = await resolveFinancialScopeCatalog(fetcher);
 
@@ -78,6 +80,33 @@ describe('financial scope', () => {
     },
   );
 
+  it.each([null, [], 'unexpected response', 42, { unexpected: true }])(
+    'retains checked-in scopes when the API response shape is %j',
+    async (response) => {
+      vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      const fetcher = vi.fn(async () => Response.json(response));
+      expect(await resolveFinancialScopeCatalog(fetcher)).toEqual(financialScopeCatalog);
+      expect(console.warn).toHaveBeenCalledTimes(usaSpendingScopeCount);
+    },
+  );
+
+  it.each([null, 'unexpected metadata', [], { last_modified_date: 123 }])(
+    'refreshes amounts without replacing the stored date for malformed metadata %j',
+    async (metadata) => {
+      const original = financialScopeCatalog.ggss;
+      const catalog = await resolveFinancialScopeCatalog(
+        vi.fn(async () =>
+          Response.json({
+            base_and_all_options: 700_000_000,
+            period_of_performance: metadata,
+          }),
+        ),
+      );
+      expect(catalog.ggss.amount).toBe(700_000_000);
+      expect(catalog.ggss.asOf).toBe(original.asOf);
+    },
+  );
+
   it.each(['network', 'timeout', 'invalid JSON'])('retains checked-in scopes after a %s failure', async (failure) => {
     vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const fetcher = vi.fn(async () => {
@@ -91,9 +120,11 @@ describe('financial scope', () => {
 
   it('isolates a failed award while refreshing others and preserving source metadata', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const failedAward = financialScopeCatalog.ggss.source!.awardId;
+    const source = financialScopeCatalog.ggss.source;
+    assert(source, 'Expected GGSS award source metadata');
+    const failedAward = source.awardId;
     const fetcher = vi.fn(async (input: Parameters<typeof fetch>[0]) =>
-      String(input).includes(encodeURIComponent(failedAward))
+      (input instanceof Request ? input.url : String(input)).includes(encodeURIComponent(failedAward))
         ? new Response(null, { status: 503 })
         : Response.json({ base_and_all_options: 700_000_000 }),
     );

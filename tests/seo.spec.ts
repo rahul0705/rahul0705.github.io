@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { siteConfig } from '../src/config/site';
@@ -111,12 +113,13 @@ test('production pages have complete metadata and working internal references', 
       const title = await page.title();
       expect(title.trim()).not.toBe('');
       const description = await page.locator('meta[name="description"]').getAttribute('content');
-      expect(description?.trim()).toBeTruthy();
+      assert(description, 'Expected a page description');
+      expect(description.trim()).not.toBe('');
       for (const [key, value] of Object.entries({
         'og:title': title,
         'twitter:title': title,
-        'og:description': description!,
-        'twitter:description': description!,
+        'og:description': description,
+        'twitter:description': description,
         'og:url': canonical,
         'twitter:card': 'summary_large_image',
       })) {
@@ -125,8 +128,9 @@ test('production pages have complete metadata and working internal references', 
       await expect(page.locator('link[rel="manifest"]')).toHaveCount(0);
       for (const key of ['og:image', 'twitter:image']) {
         const image = await page.locator(`meta[name="${key}"], meta[property="${key}"]`).getAttribute('content');
-        expect(new URL(image!).origin).toBe(new URL(publicSiteURL).origin);
-        expect((await request.get(new URL(image!).pathname)).ok()).toBe(true);
+        assert(image, `Expected ${key} metadata`);
+        expect(new URL(image).origin).toBe(new URL(publicSiteURL).origin);
+        expect((await request.get(new URL(image).pathname)).ok()).toBe(true);
       }
       const references = await page.evaluate(() =>
         [...document.querySelectorAll('[href], [src]')].flatMap((element) =>

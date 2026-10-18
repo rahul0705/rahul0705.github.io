@@ -1,4 +1,4 @@
-import type { SocialNetwork } from '../lib/social-networks';
+import { socialNetworks, type SocialNetwork } from '../lib/social-networks';
 
 interface NavigationItem {
   label: string;
@@ -78,7 +78,9 @@ export const siteConfig = {
   robotsDisallowPaths: ['/resume.json', '/resume.md', '/resume.txt'],
 } as const satisfies SiteConfig;
 
-export const socialLinks = Object.fromEntries(siteConfig.socialLinks.map((link) => [link.label, link])) as Record<
-  SocialNetwork,
-  SocialLink
->;
+const linksByNetwork = Object.fromEntries(siteConfig.socialLinks.map((link) => [link.label, link]));
+for (const network of Object.keys(socialNetworks)) {
+  if (!linksByNetwork[network]) throw new Error(`Missing social link for ${network}`);
+}
+// Every supported network was checked above; Object.fromEntries cannot retain those keys.
+export const socialLinks = linksByNetwork as Record<SocialNetwork, SocialLink>;

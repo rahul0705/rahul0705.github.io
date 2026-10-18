@@ -22,10 +22,12 @@ export const monthIndex = (date: string) => {
 export const flattenExperienceRoles = (experience: ExperienceOrganization[]): ExperienceRole[] =>
   experience.flatMap((organization) => organization.projects.flatMap((project) => project.roles));
 
+const hasStartDate = (role: ExperienceRole): role is ExperienceRole & { startDate: string } => Boolean(role.startDate);
+
 export const yearsOfExperience = (experience: ExperienceOrganization[], currentDate = new Date()) => {
-  const roles = flattenExperienceRoles(experience).filter((role) => role.startDate);
+  const roles = flattenExperienceRoles(experience).filter(hasStartDate);
   if (roles.length === 0) return 0;
-  const firstMonth = Math.min(...roles.map((role) => monthIndex(role.startDate!)));
+  const firstMonth = Math.min(...roles.map((role) => monthIndex(role.startDate)));
   const currentMonth = currentDate.getUTCFullYear() * 12 + currentDate.getUTCMonth();
   return Math.floor((currentMonth - firstMonth + 1) / 12);
 };
@@ -35,9 +37,9 @@ export const orderRolesNewestFirst = (roles: ExperienceRole[]) =>
 
 export const uniqueMonths = (intervals: SkillInterval[]) => {
   const sorted = intervals.map((interval) => ({ ...interval })).sort((a, b) => a.start - b.start);
-  if (sorted.length === 0) return 0;
+  let active = sorted[0];
+  if (!active) return 0;
   let total = 0;
-  let active = sorted[0]!;
   for (const interval of sorted.slice(1)) {
     if (interval.start <= active.end + 1) active.end = Math.max(active.end, interval.end);
     else {
@@ -56,15 +58,15 @@ export const deriveSkillExperienceCoverage = (
   currentDate = new Date(),
 ): SkillExperienceCoverage[] => {
   const currentMonth = currentDate.getUTCFullYear() * 12 + currentDate.getUTCMonth();
-  const roles = flattenExperienceRoles(experience).filter((role) => role.startDate);
+  const roles = flattenExperienceRoles(experience).filter(hasStartDate);
   if (roles.length === 0) return [];
-  const careerStart = Math.min(...roles.map((role) => monthIndex(role.startDate!)));
+  const careerStart = Math.min(...roles.map((role) => monthIndex(role.startDate)));
   const careerEnd = Math.max(...roles.map((role) => (role.endDate ? monthIndex(role.endDate) : currentMonth)));
   const careerMonths = careerEnd - careerStart + 1;
   const intervalsBySkill = new Map<SkillId, SkillInterval[]>();
   roles.forEach((role) => {
     const interval = {
-      start: monthIndex(role.startDate!),
+      start: monthIndex(role.startDate),
       end: role.endDate ? monthIndex(role.endDate) : currentMonth,
     };
     role.skills
@@ -78,7 +80,7 @@ export const deriveSkillExperienceCoverage = (
       const months = uniqueMonths(intervals);
       return {
         name: skillCatalog[skillId].name,
-        category: skillCatalog[skillId].category as SkillCategory,
+        category: skillCatalog[skillId].category,
         months,
         percentage: Math.round((months / careerMonths) * 100),
       };

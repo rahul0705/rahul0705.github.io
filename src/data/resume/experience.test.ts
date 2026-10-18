@@ -32,11 +32,11 @@ describe('experience content', () => {
 
   it('only catalogs skills evidenced by experience or education', () => {
     const evidencedSkills = new Set<SkillId>([
-      ...experienceEntries.flatMap((entry) => entry.data.skills as SkillId[]),
+      ...experienceEntries.flatMap((entry) => entry.data.skills),
       ...education.flatMap((entry) => entry.skills ?? []),
     ]);
 
-    expect(Object.keys(skillCatalog).filter((skill) => !evidencedSkills.has(skill as SkillId))).toEqual([]);
+    expect(Object.keys(skillCatalog).filter((skill) => !evidencedSkills.has(skill))).toEqual([]);
   });
 
   it('resolves every education skill through the catalog', () => {
@@ -70,7 +70,7 @@ describe('experience content', () => {
     const collator = new Intl.Collator('en', { sensitivity: 'base' });
 
     experienceEntries.forEach((entry) => {
-      const skillNames = entry.data.skills.map((skill) => skillCatalog[skill as SkillId].name);
+      const skillNames = entry.data.skills.map((skill) => skillCatalog[skill].name);
       expect(skillNames, entry.id).toEqual([...skillNames].sort(collator.compare));
     });
   });

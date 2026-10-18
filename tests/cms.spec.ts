@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { sitePath } from './support/site';
@@ -11,7 +13,8 @@ test('the content manager is not indexed, uses its bundled configuration, and su
   });
 
   const response = await page.goto(sitePath(`/admin/?branding-check=${Date.now()}`));
-  const html = await response!.text();
+  assert(response, 'Expected the CMS navigation to return a response');
+  const html = await response.text();
   expect(html.match(/rel="icon"/g)).toHaveLength(1);
   expect(html).not.toContain('favicon.ico');
   await expect(page.locator('meta[name="robots"]').first()).toHaveAttribute('content', 'noindex, nofollow');
