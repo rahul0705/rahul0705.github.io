@@ -1,7 +1,18 @@
+import { fileURLToPath } from 'node:url';
+
 import { validateConfig } from 'astro/config';
+import { loadConfigFromFile } from 'vite';
 
-import config from '../astro.config.ts';
+// Bundle explicitly so config imports keep Vite resolution even if its default loader changes.
+const loaded = await loadConfigFromFile(
+  { command: 'serve', mode: 'production' },
+  fileURLToPath(new URL('../astro.config.ts', import.meta.url)),
+  undefined,
+  undefined,
+  undefined,
+  'bundle',
+);
+if (!loaded) throw new Error('Unable to load astro.config.ts for browser testing.');
 
-// Node-side browser tooling uses the same normalized site and base as Astro.
-const { site, base } = await validateConfig(config, process.cwd(), 'dev');
+const { site, base } = await validateConfig(loaded.config, process.cwd(), 'dev');
 export const configuredSite = new URL(`${base.replace(/\/$/, '')}/`, site);

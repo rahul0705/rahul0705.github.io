@@ -2,7 +2,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
-import { siteConfig } from './src/config/site.ts';
+import { siteConfig } from './src/config/site';
 
 export default defineConfig({
   site: 'https://www.rahulmohandas.com',
