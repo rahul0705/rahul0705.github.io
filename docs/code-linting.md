@@ -66,7 +66,7 @@ in the page, so they use their own guard rather than an imported Node assertion.
 
 ## Type-aware engine and file coverage
 
-`oxlint-tsgolint` is pinned as a development dependency. It provides checks based
+`oxlint-tsgolint` is a development dependency using a caret version range. It provides checks based
 on TypeScript program information; merely naming a type-dependent rule does not
 run it. This adds a native development-tool binary, not a shipped site dependency.
 On this checkout, three warmed command runs took about 0.35 seconds with type-aware
