@@ -1,9 +1,10 @@
 ---
 import { BookOpen } from '@lucide/astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
-  image?: any;
+  image?: ImageMetadata;
   alt: string;
   priority?: boolean;
   class?: string;

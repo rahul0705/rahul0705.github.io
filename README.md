@@ -67,6 +67,9 @@ Each remaining script has a separate purpose. In addition to the common commands
 | `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
 | `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
 
+The [code linting policy](docs/code-linting.md) records the enabled safety checks,
+type-aware engine, non-null assertion guards, and Astro coverage limits.
+
 `lint:all` groups source linters for local use; `quality` composes the full local validation sequence.
 CI calls individual checks so they report independently. `test:coverage` runs the unit suite with coverage
 instrumentation; use it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files.

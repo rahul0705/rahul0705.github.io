@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { describe, expect, it } from 'vitest';
 
 import { blogContentModel } from '../../config/content-models/blog';
@@ -17,7 +19,8 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('derives the Blog Posts collection from the shared model', () => {
-    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name)!;
+    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name);
+    assert(blog, 'Expected the configured content collection');
 
     expect(blog).toMatchObject({
       name: blogContentModel.name,
@@ -32,7 +35,8 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('keeps CMS transport settings separate from the shared content fields', () => {
-    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name)!;
+    const blog = sveltiaConfig.collections.find((collection) => collection.name === blogContentModel.name);
+    assert(blog, 'Expected the configured content collection');
 
     expect(sveltiaConfig).toMatchObject({
       load_config_file: false,
@@ -81,7 +85,8 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('exposes experience entries as individual JSON files', () => {
-    const experience = sveltiaConfig.collections.find((collection) => collection.name === experienceContentModel.name)!;
+    const experience = sveltiaConfig.collections.find((collection) => collection.name === experienceContentModel.name);
+    assert(experience, 'Expected the configured content collection');
 
     expect(experience).toMatchObject({
       name: 'experience',
@@ -140,10 +145,12 @@ describe('Sveltia CMS configuration', () => {
   });
 
   it('exposes skills and financial scopes as stable-ID JSON collections', () => {
-    const skills = sveltiaConfig.collections.find((collection) => collection.name === skillContentModel.name)!;
+    const skills = sveltiaConfig.collections.find((collection) => collection.name === skillContentModel.name);
+    assert(skills, 'Expected the configured content collection');
     const financialScopes = sveltiaConfig.collections.find(
       (collection) => collection.name === financialScopeContentModel.name,
-    )!;
+    );
+    assert(financialScopes, 'Expected the financial scopes collection');
 
     for (const collection of [skills, financialScopes]) {
       expect(collection).toMatchObject({

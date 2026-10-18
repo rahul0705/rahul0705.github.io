@@ -46,6 +46,7 @@ export default defineConfig({
     'noopener',
     'noreferrer',
     'oxlint',
+    'tsgolint',
     'poam',
     'prefersdark',
     'pytest',

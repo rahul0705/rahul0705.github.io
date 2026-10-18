@@ -67,6 +67,30 @@ describe('experience coverage', () => {
       { name: 'Python', category: 'languages-frameworks', months: 24, percentage: 80 },
     ]);
   });
+  it('ignores undated roles when deriving years and skill coverage', () => {
+    const undated: ExperienceOrganization[] = [
+      {
+        name: 'Undated company',
+        projects: [
+          {
+            name: 'Undated project',
+            additionalInformation: [],
+            financialScopeIds: [],
+            roles: [{ title: 'Undated role', skills: ['python'] }],
+          },
+        ],
+      },
+    ];
+    const today = new Date('2024-06-15T00:00:00Z');
+    const skills = new Set<SkillId>(['typescript', 'python']);
+    expect(yearsOfExperience(undated, today)).toBe(0);
+    expect(deriveSkillExperienceCoverage(undated, skills, today)).toEqual([]);
+    expect(yearsOfExperience([...experience, ...undated], today)).toBe(yearsOfExperience(experience, today));
+    expect(deriveSkillExperienceCoverage([...experience, ...undated], skills, today)).toEqual(
+      deriveSkillExperienceCoverage(experience, skills, today),
+    );
+    expect(uniqueMonths([])).toBe(0);
+  });
   it('maps coverage to five levels', () => {
     expect([1, 20, 21, 40, 41, 60, 61, 80, 81, 100].map(skillLevel)).toEqual([1, 1, 2, 2, 3, 3, 4, 4, 5, 5]);
   });

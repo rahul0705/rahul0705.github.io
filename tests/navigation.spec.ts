@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { sitePath } from './support/site';
@@ -62,8 +64,9 @@ for (const width of [320, 375, 390, 640, 768, 820, 1024]) {
       const articles = page.locator('header').getByRole('link', { name: 'Articles', exact: true });
       await expect(articles).toBeVisible();
       const linkBox = await articles.boundingBox();
-      expect(linkBox!.x).toBeGreaterThanOrEqual(0);
-      expect(linkBox!.x + linkBox!.width).toBeLessThanOrEqual(width);
+      assert(linkBox, 'Expected a visible element with layout bounds');
+      expect(linkBox.x).toBeGreaterThanOrEqual(0);
+      expect(linkBox.x + linkBox.width).toBeLessThanOrEqual(width);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       await articles.click();
       await expect(page).toHaveURL(/\/blog\/?$/);

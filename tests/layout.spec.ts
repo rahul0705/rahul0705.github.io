@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { sitePath } from './support/site';
@@ -52,7 +54,8 @@ test('long inline code wraps within the article column on narrow phones', async 
   const code = page.locator('p > code').filter({ hasText: 'calculate_tax(taxable_amount, tax_rate)' });
   await expect(code).toHaveCount(1);
   const bounds = await code.evaluate((element) => {
-    const parent = element.parentElement!.getBoundingClientRect();
+    if (!element.parentElement) throw new Error('Expected inline code to have a parent');
+    const parent = element.parentElement.getBoundingClientRect();
     return {
       left: parent.left,
       right: parent.right,
@@ -67,10 +70,7 @@ test('long inline code wraps within the article column on narrow phones', async 
 
 test('About mobile hero appears before the lede and reserves space while its image loads', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  let releaseImage!: () => void;
-  const imageReady = new Promise<void>((resolve) => {
-    releaseImage = resolve;
-  });
+  const { promise: imageReady, resolve: releaseImage } = Promise.withResolvers<void>();
   await page.route('**/_astro/rahul-and-luna*', async (route) => {
     await imageReady;
     await route.continue();
@@ -88,14 +88,17 @@ test('About mobile hero appears before the lede and reserves space while its ima
     const image = await page.getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.').boundingBox();
     const lede = page.locator('.hero-lede');
     const before = await lede.boundingBox();
-    expect(heading!.y + heading!.height).toBeLessThan(image!.y);
-    expect(image!.y + image!.height).toBeLessThan(844);
-    expect(image!.y + image!.height).toBeLessThanOrEqual(before!.y);
+    assert(heading && image && before, 'Expected hero heading, image, and lede layout bounds');
+    expect(heading.y + heading.height).toBeLessThan(image.y);
+    expect(image.y + image.height).toBeLessThan(844);
+    expect(image.y + image.height).toBeLessThanOrEqual(before.y);
     releaseImage();
     await page
       .getByAltText('Rahul relaxing on the couch with Luna, his Border Collie.')
       .evaluate((image) => (image as HTMLImageElement).decode());
-    expect((await lede.boundingBox())!.y).toBeCloseTo(before!.y, 1);
+    const after = await lede.boundingBox();
+    assert(after, 'Expected the lede to remain visible after image loading');
+    expect(after.y).toBeCloseTo(before.y, 1);
   } finally {
     releaseImage();
   }

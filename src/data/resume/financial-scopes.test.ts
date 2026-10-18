@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -91,9 +93,11 @@ describe('financial scope', () => {
 
   it('isolates a failed award while refreshing others and preserving source metadata', async () => {
     vi.spyOn(console, 'warn').mockImplementation(() => undefined);
-    const failedAward = financialScopeCatalog.ggss.source!.awardId;
+    const source = financialScopeCatalog.ggss.source;
+    assert(source, 'Expected GGSS award source metadata');
+    const failedAward = source.awardId;
     const fetcher = vi.fn(async (input: Parameters<typeof fetch>[0]) =>
-      String(input).includes(encodeURIComponent(failedAward))
+      (input instanceof Request ? input.url : String(input)).includes(encodeURIComponent(failedAward))
         ? new Response(null, { status: 503 })
         : Response.json({ base_and_all_options: 700_000_000 }),
     );

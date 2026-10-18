@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import { expect, test } from '@playwright/test';
 
 import { sitePath } from './support/site';
@@ -21,8 +23,9 @@ for (const width of [390, 768, 1280]) {
     await expect(link).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     const box = await link.boundingBox();
-    expect(box!.x).toBeGreaterThanOrEqual(0);
-    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    assert(box, 'Expected a visible element with layout bounds');
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(width);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await link.click();
     await expect(page).toHaveURL(/\/dotfiles\/$/);

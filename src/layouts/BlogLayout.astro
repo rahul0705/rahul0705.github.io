@@ -14,8 +14,8 @@ interface Props {
 }
 
 const { entry, headings = [] } = Astro.props;
-// Only published posts reach this layout; the shared schema requires their cover metadata.
-const coverImageAlt = entry.data.coverImageAlt!;
+const coverImageAlt = entry.data.coverImageAlt;
+if (!coverImageAlt) throw new Error(`Missing cover image alt text for ${entry.id}`);
 const publishedAt = getPublishedAt(entry);
 const hasTableOfContents = entry.data.tableOfContents;
 ---
