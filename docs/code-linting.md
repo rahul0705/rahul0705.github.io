@@ -1,6 +1,9 @@
 # Code linting policy
 
 `npm run lint:code` and `npm run lint:code:fix` read `.oxlintrc.json`.
+Both commands run `astro sync` first so type-aware rules have the generated
+Astro collection declarations even in a fresh checkout. Sync output goes to stderr
+so machine-readable Oxlint reports on stdout remain valid JSON.
 The GitHub and GitLab source checks use the same npm command. Editors that use
 Oxlint also read this configuration. Formatting remains Oxfmt's responsibility;
 `npm run typecheck` remains the Astro and TypeScript diagnostic check.
@@ -94,9 +97,11 @@ introduced.
 `oxlint-tsgolint` is a development dependency using a caret version range. It provides checks based
 on TypeScript program information; merely naming a type-dependent rule does not
 run it. This adds a native development-tool binary, not a shipped site dependency.
-On this checkout, three warmed command runs took about 0.35 seconds with type-aware
-checks versus 0.12 seconds without them (including process startup). These are
-local measurements, not CI budgets. No separate build or lint job is needed.
+Before adding the required type-generation step, three warmed Oxlint runs took
+about 0.35 seconds with type-aware checks versus 0.12 seconds without them
+(including process startup). The lint command now also runs `astro sync`; these
+Oxlint-only measurements are not total lint-command timings or CI budgets.
+No separate build or lint job is needed.
 
 Oxlint 1.85.0 selects TypeScript files across source, configuration, scripts,
 unit tests, browser tests, and test support. It respects the existing ignored
