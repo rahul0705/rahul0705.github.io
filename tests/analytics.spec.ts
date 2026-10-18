@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-import { resolvePreviewURL } from '../scripts/preview-url';
 import { siteConfig } from '../src/config/site';
+import { resolvePreviewURL } from './support/preview-url';
 import { sitePath } from './support/site';
 
 test('analytics uses denied consent and sanitized page data on public HTML pages', async ({ page }) => {

@@ -1,14 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
 
-import { configuredSite } from './scripts/astro-config';
-import { resolvePreviewURL } from './scripts/preview-url';
+import { resolvePreviewURL } from './tests/support/preview-url';
+import { configuredSite } from './tests/support/site';
 
 const deploymentURL = process.env.DEPLOYMENT_URL;
-const baseURL = resolvePreviewURL(process.env, configuredSite.pathname).href;
+const previewURL = resolvePreviewURL(process.env, configuredSite.pathname);
+const baseURL = previewURL.href;
 
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
+  testMatch: '**/*.spec.ts',
   testIgnore: ['**/deployment.spec.ts'],
   ...(deploymentURL ? { testMatch: '**/deployment.spec.ts', retries: 2, workers: 1 } : {}),
   reporter: process.env.GITLAB_CI
@@ -33,7 +35,8 @@ export default defineConfig({
   webServer: deploymentURL
     ? undefined
     : {
-        command: 'npm run preview:test',
+        // Keep this preview in Playwright's process tree without reusing or replacing a developer session.
+        command: `npm run preview -- --ignore-lock --host 127.0.0.1 --port ${previewURL.port || 80}`,
         reuseExistingServer: false,
         url: baseURL,
       },

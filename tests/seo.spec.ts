@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-import { resolvePreviewURL } from '../scripts/preview-url';
 import { siteConfig } from '../src/config/site';
+import { resolvePreviewURL } from './support/preview-url';
 import { publicSiteURL, sitePath } from './support/site';
 import { sitemapLocations } from './support/sitemap';
 
