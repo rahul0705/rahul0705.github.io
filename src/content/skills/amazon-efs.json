@@ -2,6 +2,5 @@
   "name": "Amazon EFS",
   "category": "cloud-infrastructure",
   "description": "AWS managed elastic file system.",
-  "href": "https://aws.amazon.com/efs/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/efs/"
 }

@@ -2,6 +2,5 @@
   "name": "netCDF",
   "category": "data-messaging",
   "description": "Data Format",
-  "href": "https://www.unidata.ucar.edu/software/netcdf/",
-  "trackExperienceCoverage": true
+  "href": "https://www.unidata.ucar.edu/software/netcdf/"
 }

@@ -2,6 +2,5 @@
   "name": "RabbitMQ",
   "category": "data-messaging",
   "description": "Messaging Queue",
-  "href": "https://www.rabbitmq.com/",
-  "trackExperienceCoverage": true
+  "href": "https://www.rabbitmq.com/"
 }

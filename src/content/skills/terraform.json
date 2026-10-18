@@ -2,6 +2,5 @@
   "name": "Terraform",
   "category": "cloud-infrastructure",
   "description": "Infrastructure as code tool.",
-  "href": "https://developer.hashicorp.com/terraform",
-  "trackExperienceCoverage": true
+  "href": "https://developer.hashicorp.com/terraform"
 }

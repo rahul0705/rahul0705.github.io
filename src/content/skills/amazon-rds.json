@@ -2,6 +2,5 @@
   "name": "Amazon RDS",
   "category": "data-messaging",
   "description": "AWS managed relational database service.",
-  "href": "https://aws.amazon.com/rds/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/rds/"
 }

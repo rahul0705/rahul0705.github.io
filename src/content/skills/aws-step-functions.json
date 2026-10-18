@@ -2,6 +2,5 @@
   "name": "AWS Step Functions",
   "category": "cloud-infrastructure",
   "description": "AWS serverless workflow orchestration service.",
-  "href": "https://aws.amazon.com/step-functions/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/step-functions/"
 }

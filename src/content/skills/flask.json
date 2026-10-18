@@ -2,6 +2,5 @@
   "name": "Flask",
   "category": "languages-frameworks",
   "description": "Python Framework",
-  "href": "https://flask.palletsprojects.com/",
-  "trackExperienceCoverage": true
+  "href": "https://flask.palletsprojects.com/"
 }

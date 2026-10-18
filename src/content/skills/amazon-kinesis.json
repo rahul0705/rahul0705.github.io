@@ -2,6 +2,5 @@
   "name": "Amazon Kinesis",
   "category": "data-messaging",
   "description": "AWS service for collecting and processing streaming data.",
-  "href": "https://aws.amazon.com/kinesis/",
-  "trackExperienceCoverage": true
+  "href": "https://aws.amazon.com/kinesis/"
 }

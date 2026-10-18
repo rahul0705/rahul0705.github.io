@@ -2,6 +2,5 @@
   "name": "NGINX",
   "category": "cloud-infrastructure",
   "description": "Web server, reverse proxy, and load balancer.",
-  "href": "https://nginx.org/",
-  "trackExperienceCoverage": true
+  "href": "https://nginx.org/"
 }
