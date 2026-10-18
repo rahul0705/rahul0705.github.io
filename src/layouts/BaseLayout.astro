@@ -1,5 +1,4 @@
 ---
-import { siteRoute } from '../lib/site-url';
 import '../styles/global.css';
 
 import Footer from '../components/navigation/Footer.astro';
@@ -25,7 +24,7 @@ interface Props {
 const {
   title,
   description,
-  canonicalPath = siteRoute(Astro.url.pathname),
+  canonicalPath,
   image,
   imageAlt,
   type,

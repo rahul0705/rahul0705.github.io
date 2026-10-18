@@ -1,5 +1,5 @@
 ---
-import { sitePath, siteURL } from '../../lib/site-url';
+import { sitePath } from '../../lib/site-url';
 import { siteConfig } from '../../config/site';
 import { site } from '../../data/site';
 import { siteThemeColor } from '../../themes/site-theme';
@@ -21,7 +21,7 @@ interface Props {
 const {
   title,
   description = site.currentRoleSummary,
-  canonicalPath = '/',
+  canonicalPath,
   image = site.defaultSocialImage,
   imageAlt,
   type = 'website',
@@ -32,13 +32,15 @@ const {
   noindex = false,
 } = Astro.props;
 
+if (!Astro.site) throw new Error('Set site in astro.config.ts before generating page metadata.');
 const normalizedPath = (() => {
-  const path = `/${canonicalPath}`.replace(/\/{2,}/g, '/');
+  const path = `/${canonicalPath ?? Astro.url.pathname}`.replace(/\/{2,}/g, '/');
   return path === '/' ? path : `${path.replace(/\/$/, '')}/`;
 })();
-const canonicalUrl = siteURL(normalizedPath);
+const mountedPath = canonicalPath === undefined ? normalizedPath : sitePath(normalizedPath);
+const canonicalUrl = new URL(mountedPath, Astro.site).href;
 // Imported asset URLs already include Astro's configured base.
-const imageUrl = new URL(image, import.meta.env.SITE).href;
+const imageUrl = new URL(image, Astro.site).href;
 const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title;
 const socialImageAlt = imageAlt ?? pageTitle;
 ---

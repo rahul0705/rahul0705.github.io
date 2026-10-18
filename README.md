@@ -305,8 +305,9 @@ To check a subpath locally, temporarily set `base: '/preview/'` in Astro config,
 `npm run build && npm run test:e2e -- --project=chromium`. Restore the normal base afterward.
 CI continues to build and test the normal root deployment once, without a subpath matrix.
 `DEPLOYMENT_URL` only selects the server contacted by deployed smoke tests.
-Use `sitePath()` for internal component links and `siteURL()` for
-absolute canonical/feed/export URLs. Keep article-to-article Markdown links relative to their article directory.
+Use `Astro.url`, `Astro.site`, and the standard `URL` API for page canonical URLs.
+Use `sitePath()` to prefix internal component links and `siteURL()` for absolute feed/export URLs in shared TypeScript.
+Keep article-to-article Markdown links relative to their article directory.
 Repository paths in CMS configuration stay relative to the repository; published media URLs include the mount path.
 On shared hosts, the host must serve robots policy at the origin root for crawlers to honor it.
 The custom domain remains recorded in `CNAME`; changing deployment configuration does not change DNS or Pages settings.

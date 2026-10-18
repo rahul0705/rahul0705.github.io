@@ -5,12 +5,8 @@ export const sitePath = (path: string, base = import.meta.env.BASE_URL): string 
 
 export const siteURL = (
   path: string,
-  target = { site: import.meta.env.SITE!, base: import.meta.env.BASE_URL },
-): string => new URL(sitePath(path, target.base), target.site).href;
-
-// Convert an Astro request path back to a logical route before generating canonical URLs.
-export const siteRoute = (pathname: string, base = import.meta.env.BASE_URL): string => {
-  const prefix = base.replace(/\/$/, '');
-  if (pathname === prefix) return '/';
-  return pathname.startsWith(`${prefix}/`) ? pathname.slice(prefix.length) : pathname;
+  target = { site: import.meta.env.SITE, base: import.meta.env.BASE_URL },
+): string => {
+  if (!target.site) throw new Error('Set site in astro.config.ts before generating absolute URLs.');
+  return new URL(sitePath(path, target.base), target.site).href;
 };

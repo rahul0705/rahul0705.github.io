@@ -1,6 +1,8 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { sitePath, siteRoute, siteURL } from './site-url';
+import { sitePath, siteURL } from './site-url';
+
+afterEach(() => vi.unstubAllEnvs());
 
 describe('site URLs', () => {
   it('mounts internal paths while retaining queries, fragments, and root behavior', () => {
@@ -21,12 +23,9 @@ describe('site URLs', () => {
 
   it('keeps logical routes distinct from mounted paths when the base matches a route name', () => {
     expect(sitePath('/blog/article/', '/blog/')).toBe('/blog/blog/article/');
-    expect(siteRoute('/blog/blog/article/', '/blog/')).toBe('/blog/article/');
-    expect(siteRoute('/blog/', '/blog/')).toBe('/');
-    expect(siteRoute('/about/', '/')).toBe('/about/');
-    expect(
-      siteURL(siteRoute('/preview/about/', '/preview/'), { site: 'https://example.test', base: '/preview/' }),
-    ).toBe('https://example.test/preview/about/');
+    expect(siteURL('/about/', { site: 'https://example.test', base: '/preview/' })).toBe(
+      'https://example.test/preview/about/',
+    );
   });
 
   it('uses the configured public origin for canonical, feed, and asset URLs', () => {
@@ -36,5 +35,10 @@ describe('site URLs', () => {
     expect(siteURL('/favicon.svg', { site: 'https://example.test', base: '/' })).toBe(
       'https://example.test/favicon.svg',
     );
+  });
+
+  it.each([undefined, ''])('reports a missing Astro site setting (%s) instead of asserting it exists', (site) => {
+    vi.stubEnv('SITE', site);
+    expect(() => siteURL('/resume/')).toThrow('Set site in astro.config.ts');
   });
 });
