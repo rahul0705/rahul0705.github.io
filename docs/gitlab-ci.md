@@ -1,7 +1,7 @@
 # GitLab CI
 
 GitHub remains the primary CI and deployment provider. GitLab's native project
-pipeline mirrors the existing GitHub project checks, using Node LTS.
+pipeline mirrors the existing GitHub project checks, using Node 26 and npm 11.
 Independent checks start immediately through `needs: []`; downstream checks
 reuse one successful production build through DAG dependencies.
 
