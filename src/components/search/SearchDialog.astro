@@ -1,0 +1,22 @@
+---
+import { X } from '@lucide/astro';
+
+import ArticleSearch from './ArticleSearch.astro';
+---
+
+<dialog id="article-search-dialog" class="modal" aria-labelledby="article-search-title">
+  <div class="modal-box w-11/12 max-w-3xl">
+    <div class="mb-6 flex items-center justify-between gap-4">
+      <h2 id="article-search-title" class="text-2xl font-bold">Search articles</h2>
+      <form method="dialog">
+        <button type="submit" class="btn btn-sm btn-circle btn-ghost" aria-label="Close search">
+          <X aria-hidden="true" />
+        </button>
+      </form>
+    </div>
+    <ArticleSearch />
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button type="submit" aria-label="Close search backdrop">Close</button>
+  </form>
+</dialog>

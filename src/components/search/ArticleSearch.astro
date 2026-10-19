@@ -1,0 +1,51 @@
+---
+import { getPublishedPosts } from '../../lib/blog';
+import { sitePath } from '../../lib/site-url';
+
+const posts = await getPublishedPosts();
+const sections = [...new Set(posts.map(({ data }) => data.section))].sort();
+const tags = [...new Set(posts.flatMap(({ data }) => data.tags))].sort();
+---
+
+<section
+  data-article-search
+  data-module={sitePath('/pagefind/pagefind.js')}
+  data-base={import.meta.env.BASE_URL}
+  aria-label="Article search"
+>
+  <form role="search" aria-label="Search articles" class="grid gap-4">
+    <label class="grid gap-2" for="article-query">Search articles
+      <input id="article-query" type="search" class="input w-full" placeholder="A title, topic, or phrase" autocomplete="off" />
+    </label>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="grid gap-2">
+        <label for="article-section">Section</label>
+        <select id="article-section" class="select w-full">
+          <option value="">All sections</option>
+          {sections.map((section) => <option>{section}</option>)}
+        </select>
+      </div>
+      <div class="grid gap-2">
+        <label for="article-tag">Tag</label>
+        <select id="article-tag" class="select w-full">
+          <option value="">All tags</option>
+          {tags.map((tag) => <option>{tag}</option>)}
+        </select>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="reset" class="btn btn-ghost">Clear</button>
+    </div>
+  </form>
+  <p data-search-status role="status" aria-label="Search status" class="my-6">Start with a title, topic, or phrase.</p>
+  <p data-search-error hidden class="mb-6">
+    <a class="link link-primary" href={sitePath('/blog/')}>Browse all articles</a>
+    <button data-search-retry type="button" class="btn btn-ghost btn-sm ml-2">Try again</button>
+  </p>
+  <ol data-search-results class="list gap-6"></ol>
+</section>
+
+<script>
+  import './article-search';
+</script>

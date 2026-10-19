@@ -41,7 +41,7 @@ npm run preview
 | Command                  | Purpose                                            |
 | ------------------------ | -------------------------------------------------- |
 | `npm run dev`            | Start the Astro development server                 |
-| `npm run build`          | Generate the static site in `dist/`                |
+| `npm run build`          | Build the static site and article search index     |
 | `npm run validate:build` | Smoke-check required production artifacts          |
 | `npm run preview`        | Serve the generated production build               |
 | `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
@@ -66,6 +66,9 @@ Each remaining script has a separate purpose. In addition to the common commands
 | `npm run audit`                               | Inspect dependency security advisories under the existing high-severity policy |
 | `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
 | `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
+
+Article search is available in the built preview. See [search development and indexing](docs/search.md)
+for local commands, index scope, and measured payload sizes.
 
 The [code linting policy](docs/code-linting.md) records the enabled safety checks,
 type-aware engine, non-null assertion guards, and Astro coverage limits.
