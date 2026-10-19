@@ -32,13 +32,20 @@ const hasTableOfContents = entry.data.tableOfContents;
   articleSection={entry.data.section}
   articleTags={entry.data.tags}
 >
-  <article class="mx-auto max-w-7xl px-6 py-20">
+  <article class="mx-auto max-w-7xl px-6 py-20" data-pagefind-body>
+    <div hidden>
+      <span data-pagefind-filter="Section" data-pagefind-meta="section">{entry.data.section}</span>
+      <span data-pagefind-meta="tags">{entry.data.tags.join(', ')}</span>
+      {entry.data.tags.map((tag) => <span data-pagefind-filter="Tags">{tag}</span>)}
+      {publishedAt && <time datetime={publishedAt.toISOString()} data-pagefind-meta="published[datetime]" />}
+      {entry.data.updatedDate && <time datetime={entry.data.updatedDate.toISOString()} data-pagefind-meta="updated[datetime]" />}
+    </div>
     <header class="mx-auto mb-12 max-w-3xl">
       <ContentMeta date={publishedAt} updatedDate={entry.data.updatedDate} label={entry.data.section} />
       <div class="mt-6">
         <BlogCover image={entry.data.coverImage} alt={coverImageAlt} class="aspect-2/1 rounded-box" />
       </div>
-      <h1 class="mt-8 text-5xl font-bold tracking-tight">
+      <h1 class="mt-8 text-5xl font-bold tracking-tight" data-pagefind-meta="title">
         {entry.data.title}
       </h1>
 
@@ -62,6 +69,7 @@ const hasTableOfContents = entry.data.tableOfContents;
           <aside
             class="order-first mb-10 xl:sticky xl:top-20 xl:order-last xl:mb-0 xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto"
             aria-label="Article navigation"
+            data-pagefind-ignore
           >
             <TableOfContents headings={headings} />
           </aside>

@@ -36,7 +36,7 @@ flowchart TD
 | `audit-unused`            | Audit unused code and dependencies                                 | Source checkout; independent job                                 |
 | `typecheck`               | Check TypeScript and Astro diagnostics                             | Source checkout; independent job                                 |
 | `test-unit`               | Unit tests, including CI dependency and failure-policy tests       | Source checkout; parallel with static checks                     |
-| `build`                   | One Astro build and artifact upload                                | Requires all source checks and unit tests                        |
+| `build`                   | One Astro build, Pagefind index, and artifact upload               | Requires all source checks and unit tests                        |
 | `validate-build`          | Validate required production artifacts                             | Downloads `site-build`; parallel with other artifact checks      |
 | `test-browser`            | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
 | `lint-generated-markdown` | Lint generated resume Markdown                                     | Downloads `site-build`; parallel with browsers and Lighthouse    |
@@ -51,7 +51,8 @@ and Lighthouse run in separate jobs after the build; their independence avoids b
 affecting
 Lighthouse measurements.
 
-The build job uploads `site-build`. Artifact validation, generated Markdown lint, browser tests, and
+The build job runs Astro and then Pagefind through `npm run build`, and uploads the
+complete result as `site-build`. Artifact validation, generated Markdown lint, browser tests, and
 Lighthouse each download that output and run independently in parallel. On `main`, it
 also packages
 those same files for GitHub Pages. Packaging does not publish them. The test jobs download `site-build` from

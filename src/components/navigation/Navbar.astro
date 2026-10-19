@@ -1,6 +1,6 @@
 ---
 import { sitePath } from '../../lib/site-url';
-import { Menu } from '@lucide/astro';
+import { Menu, Search } from '@lucide/astro';
 import { siteConfig } from '../../config/site';
 
 const currentPath = Astro.url.pathname;
@@ -27,8 +27,20 @@ const currentPath = Astro.url.pathname;
 
       </nav>
 
+      <button
+        type="button"
+        class="btn btn-ghost btn-square ml-1"
+        aria-label="Search articles"
+        aria-haspopup="dialog"
+        aria-controls="article-search-dialog"
+        data-search-open
+        hidden
+      >
+        <Search aria-hidden="true" />
+      </button>
+
       <!-- Mobile Menu -->
-      <div class="navbar-end md:hidden">
+      <div class="flex-none md:hidden">
         <button
           type="button"
           class="btn btn-ghost btn-square"

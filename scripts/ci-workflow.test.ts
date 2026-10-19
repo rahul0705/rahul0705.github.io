@@ -84,6 +84,7 @@ describe('website CI dependency and artifact contract', () => {
       'astro check',
       'vitest run',
       'astro build',
+      'pagefind --site dist',
       'knip',
     ]) {
       expect(preDeployCommands.split(command).length - 1, command).toBe(1);
