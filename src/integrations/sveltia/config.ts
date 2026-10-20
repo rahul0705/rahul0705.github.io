@@ -28,6 +28,7 @@ const collectionOptions = (model: ContentCollectionModel): SveltiaCollectionOpti
 
 export const sveltiaConfig = {
   load_config_file: false,
+  publish_mode: 'editorial_workflow',
   app_title: `${siteConfig.title} Content Manager`,
   logo: {
     src: sitePath('/favicon.svg'),
