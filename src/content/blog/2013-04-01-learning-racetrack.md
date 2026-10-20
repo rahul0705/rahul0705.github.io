@@ -1,5 +1,6 @@
 ---
 title: Learning Racetrack
+draft: false
 description: Rebuilding a classroom racetrack with Raspberry Pi and Android devices so students advance cars by answering questions.
 tableOfContents: true
 section: Projects

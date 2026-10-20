@@ -1,5 +1,6 @@
 ---
 title: TCP Keep-Alive
+draft: false
 description: Testing how TCP keep-alive handles disconnected cables and silent failures across operating systems.
 section: Projects
 tags:

@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 
 import { describe, expect, it } from 'vitest';
-import { parse } from 'yaml';
+import { parse, parseDocument } from 'yaml';
 
 import { normalizeArticleFrontmatter } from './article-format';
 
@@ -44,4 +44,14 @@ it('keeps checked-in articles in canonical frontmatter order', async () => {
     }
   }
   expect(failures, failures.join('\n')).toEqual([]);
+});
+
+it('stores an explicit draft boolean on every article', async () => {
+  const folder = new URL('./blog/', import.meta.url);
+  const files = (await readdir(folder)).filter((file) => /\.mdx?$/.test(file));
+  for (const file of files) {
+    const source = await readFile(new URL(file, folder), 'utf8');
+    const [, frontmatter] = source.split(/^---\r?$/m);
+    expect(typeof parseDocument(frontmatter).get('draft'), file).toBe('boolean');
+  }
 });

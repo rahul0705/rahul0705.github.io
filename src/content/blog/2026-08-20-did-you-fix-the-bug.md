@@ -1,5 +1,6 @@
 ---
 title: Did You Fix the Bug or Just Move It?
+draft: false
 description: A passing test proves the symptom is gone, not that the work is done. Isolate the change that mattered before adding it to the system.
 tableOfContents: false
 section: Process

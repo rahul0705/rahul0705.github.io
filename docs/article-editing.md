@@ -2,7 +2,7 @@
 
 The shared blog model defines the canonical frontmatter key order. Sveltia uses
 that model to generate its form and save fields in the same order. Unknown keys
-follow the modeled fields, preserving their relative order. Optional keys can
+follow the modeled fields, preserving their relative order. Other optional keys can
 remain absent; ordering never inserts defaults or changes draft status.
 
 The article-order test checks every checked-in article, including drafts. Run:
@@ -71,5 +71,22 @@ after saving, rather than inside the CMS. A draft with incomplete required field
 can fail the build until it is filled in; nothing reaches production until merge.
 Editorial Workflow status is separate from the article's `draft` frontmatter.
 
-This work does not change draft defaults or introduce the draft-removal hook tracked
-in issue #171.
+## Article visibility
+
+Every article explicitly stores `draft: true` or `draft: false`. Existing published
+articles have been backfilled with `draft: false`; their visibility is unchanged.
+Keep this field when editing by hand. The article tests reject a missing or
+non-boolean value so the CMS cannot interpret a published entry using its creation
+default instead.
+
+New CMS articles still start with `draft: true`. Turn Draft off when an article
+should appear on the public site, and retain the saved `draft: false` value. No
+save hook removes it. Editorial Workflow status controls the branch/PR review
+process; the frontmatter boolean controls site visibility after merge and deployment.
+
+Sveltia intentionally applies defaults to missing fields on existing entries, as
+confirmed in [upstream #1097](https://github.com/sveltia/sveltia-cms/issues/1097).
+[Issue #171](https://github.com/rahul0705/rahul0705.github.io/issues/171) tracks the
+remaining save/reopen verification for explicit values. Other optional fields
+can remain absent; this policy does not add empty strings or nulls throughout the
+content model.

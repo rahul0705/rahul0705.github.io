@@ -1,5 +1,6 @@
 ---
 title: Make the Wrong Thing Hard to Do
+draft: false
 description: Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to break in the first place.
 tableOfContents: false
 section: Process

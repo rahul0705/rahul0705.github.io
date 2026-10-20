@@ -1,5 +1,6 @@
 ---
 title: The Best Code Is Sometimes the Code You Don't Write
+draft: false
 description: Code has a cost long after it's written. Good engineering includes knowing how to build a solution and when not to build one.
 tableOfContents: false
 section: Process

@@ -1,5 +1,6 @@
 ---
 title: How to use Git effectively
+draft: false
 description: A 2019 overview of how GitFlow uses master, develop, feature, and release branches to move changes toward production.
 section: Process
 tags:
