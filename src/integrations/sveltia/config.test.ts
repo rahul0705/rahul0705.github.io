@@ -40,8 +40,8 @@ describe('Sveltia CMS configuration', () => {
 
     expect(sveltiaConfig).toMatchObject({
       load_config_file: false,
-      media_folder: 'public/assets/{{year}}',
-      public_folder: '/assets/{{year}}',
+      media_folder: 'public/assets',
+      public_folder: '/assets',
       output: {
         omit_empty_optional_fields: true,
       },
