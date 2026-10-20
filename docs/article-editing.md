@@ -69,7 +69,8 @@ npm run lint:staged
 ```
 
 The hook copies the Git index to a temporary directory and checks relevant staged
-files with the existing formatter and Markdown linter. Staged article or model
+files with the existing formatter and Markdown linter. Formatting-policy changes
+check all files in the snapshot. Staged article or model
 changes also run the article-order tests against that snapshot. It never formats,
 stages, or overwrites working files. If a partially staged file fails, fix it and
 stage the intended correction before retrying. The temporary directory is removed

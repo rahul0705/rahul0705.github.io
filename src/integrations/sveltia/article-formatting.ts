@@ -46,6 +46,7 @@ export function registerArticleFormatting(options: ArticleFormatOptions): void {
       if (entry.get('collection') !== 'blog') return;
       const data = entry.get('data');
       const body: unknown = data.get('body');
+      if (body === undefined) return;
       if (typeof body !== 'string') throw new Error('Expected article body text');
       const { formatArticleBody } = await import('./article-save-format');
       return data.set('body', await formatArticleBody(body, options));

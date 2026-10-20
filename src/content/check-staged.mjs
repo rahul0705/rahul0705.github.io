@@ -26,9 +26,11 @@ if (formatFiles.length || policyChanged) {
       if (result.status !== 0)
         throw new Error(`Staged ${tool} check failed. Fix the reported files and stage them again.`);
     };
-    if (formatFiles.length) run('oxfmt', ['--check', '--', ...formatFiles]);
+    if (policyChanged) run('oxfmt', ['--check']);
+    else if (formatFiles.length) run('oxfmt', ['--check', '--', ...formatFiles]);
     const markdown = files.filter((file) => file.endsWith('.md'));
-    if (markdown.length) run('markdownlint', ['--', ...markdown]);
+    if (policyChanged) run('markdownlint', ['**/*.md', '--ignore-path', '.gitignore']);
+    else if (markdown.length) run('markdownlint', ['--', ...markdown]);
     if (files.some((file) => file.startsWith('src/content/blog/') || file.startsWith('src/config/content-models/'))) {
       run('vitest', ['run', 'src/content/article-format.test.ts']);
     }

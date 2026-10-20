@@ -43,11 +43,19 @@ it('preserves code, tables, and intentional hard breaks and agrees with Oxfmt', 
   expect(await formatArticleBody(result, { ...options })).toBe(result);
   const editor = await format('article.md', result, { ...options });
   expect(editor.errors).toEqual([]);
-  expect(editor.code).toBe(result);
+  expect(editor.code).toBe(`${result}\n`);
 });
 
 it('rejects remaining lint errors with an actionable save error', async () => {
   await expect(formatArticleBody('## Repeated\n\n## Repeated\n', await getArticleFormatOptions())).rejects.toThrow(
     'MD024',
   );
+});
+
+it('converges after Sveltia adds the article body separator and final newline', async () => {
+  const options = await getArticleFormatOptions();
+  const body = await formatArticleBody('A short paragraph.', options);
+  // Sveltia formatFrontMatter preserves the body and appends the file's final newline.
+  const article = `---\ntitle: Article\n---\n\n${body}\n`;
+  expect((await format('article.md', article, { ...options })).code).toBe(article);
 });

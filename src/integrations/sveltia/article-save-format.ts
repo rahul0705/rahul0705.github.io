@@ -18,5 +18,6 @@ export async function formatArticleBody(body: string, options: ArticleFormatOpti
       `Article formatting: ${errors.map((error) => `body line ${Math.max(1, error.lineNumber - 3)} ${error.ruleNames[0]}: ${error.ruleDescription}${error.errorDetail ? ` (${error.errorDetail})` : ''}`).join('; ')}`,
     );
   }
-  return result;
+  // Sveltia appends the file's final newline after serializing the body.
+  return result.replace(/\n$/, '');
 }

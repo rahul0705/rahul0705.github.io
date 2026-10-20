@@ -20,11 +20,11 @@ it('checks staged Markdown without overwriting a partially staged correction', (
   try {
     git('init', '--quiet');
     symlinkSync(resolve('node_modules'), join(fixture, 'node_modules'), 'dir');
-    for (const file of ['oxfmt.config.ts', '.markdownlint.json', '.editorconfig'])
+    for (const file of ['oxfmt.config.ts', '.markdownlint.json', '.editorconfig', '.gitignore'])
       copyFileSync(file, join(fixture, file));
     writeFileSync(join(fixture, 'package.json'), '{\n  "type": "module"\n}\n');
     writeFileSync(join(fixture, filename), invalid);
-    git('add', filename, 'oxfmt.config.ts', '.markdownlint.json', '.editorconfig', 'package.json');
+    git('add', filename, 'oxfmt.config.ts', '.markdownlint.json', '.editorconfig', '.gitignore', 'package.json');
     writeFileSync(join(fixture, filename), corrected);
     const failed = run();
     expect(failed.status, failed.stdout + failed.stderr).toBe(1);
@@ -36,6 +36,28 @@ it('checks staged Markdown without overwriting a partially staged correction', (
     expect(passed.status, passed.stdout + passed.stderr).toBe(0);
     expect(git('show', `:${filename}`)).toBe(corrected);
     expect(readFileSync(join(fixture, filename), 'utf8')).toBe(corrected);
+    // A policy-only change must also check articles already in the repository.
+    writeFileSync(join(fixture, filename), invalid);
+    git('add', filename);
+    git(
+      '-c',
+      'user.name=Test',
+      '-c',
+      'user.email=test@example.com',
+      'commit',
+      '--no-verify',
+      '--quiet',
+      '-m',
+      'Fixture',
+    );
+    writeFileSync(
+      join(fixture, '.editorconfig'),
+      `${readFileSync(join(fixture, '.editorconfig'), 'utf8')}\n# Policy change\n`,
+    );
+    git('add', '.editorconfig');
+    const policyFailure = run();
+    expect(policyFailure.status, policyFailure.stdout + policyFailure.stderr).toBe(1);
+    expect(policyFailure.stdout + policyFailure.stderr).toContain('MD013');
   } finally {
     rmSync(fixture, { recursive: true, force: true });
   }
