@@ -27,9 +27,7 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "astro check",
     "validate:build": "node --experimental-strip-types scripts/validate-build.ts",
-    "test:smoke": "playwright test --config playwright.smoke.config.ts",
-    "hooks:install": "git config --local core.hooksPath .githooks",
-    "lint:staged": "node src/content/check-staged.mjs"
+    "test:smoke": "playwright test --config playwright.smoke.config.ts"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.3.0",

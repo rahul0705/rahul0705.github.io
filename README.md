@@ -47,8 +47,6 @@ npm run preview
 | `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
 | `npm run format`         | Check formatting                                   |
 | `npm run format:fix`     | Apply formatting                                   |
-| `npm run hooks:install`  | Install optional staged-file commit checks         |
-| `npm run lint:staged`    | Check staged files without modifying working files |
 | `npm run lint:all`       | Lint code, CSS, and Markdown                       |
 | `npm run test:unit`      | Run Vitest unit tests                              |
 | `npm run test:e2e`       | Run Playwright interaction and accessibility tests |

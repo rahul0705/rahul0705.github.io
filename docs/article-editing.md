@@ -50,37 +50,11 @@ constructs that its rich-text editor does not preserve, use its raw editing mode
 The hook normalizes the Markdown produced by that editor; it cannot reconstruct
 syntax already changed by the editor.
 
-## Local commits and remote saves
+## CI checks
 
-Install the repository's check-only pre-commit hook explicitly:
-
-```sh
-npm run hooks:install
-```
-
-This sets the checkout's local `core.hooksPath` to `.githooks`. If you already use
-another hooks directory, integrate its existing checks before replacing that
-setting. Hooks are not installed automatically by dependency installation.
-
-Run the same check manually with:
-
-```sh
-npm run lint:staged
-```
-
-The hook copies the Git index to a temporary directory and checks relevant staged
-files with the existing formatter and Markdown linter. Formatting-policy changes
-check all files in the snapshot. Staged article or model
-changes also run the article-order tests against that snapshot. It never formats,
-stages, or overwrites working files. If a partially staged file fails, fix it and
-stage the intended correction before retrying. The temporary directory is removed
-on completion.
-
-GitHub-backed CMS commits bypass local Git hooks. Their article body is checked
-by the CMS save hook, and the existing CI format, Markdown lint, and unit-test jobs
-remain authoritative for the complete saved files. Local hooks can also be bypassed;
-CI does not rely on them. A CMS commit that violates a check stops deployment through
-the existing build gates; it is not silently rewritten by a bot.
+The existing CI format, Markdown lint, and unit-test jobs remain authoritative for
+complete saved files, including CMS commits. A commit that violates a check stops
+deployment through the existing build gates; it is not silently rewritten by a bot.
 
 This work does not change draft defaults or introduce the draft-removal hook tracked
 in issue #171.
