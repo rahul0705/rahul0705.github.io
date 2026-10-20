@@ -1,5 +1,6 @@
 ---
 title: Code Reviews
+draft: false
 tableOfContents: true
 description: Practical guidance for preparing changes, reviewing correctness and risk, and giving constructive code-review feedback.
 updatedDate: 2026-08-12
