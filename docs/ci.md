@@ -78,9 +78,9 @@ verification when another commit arrives.
 
 Sveltia's Editorial Workflow saves entries on `cms/...` branches and opens pull
 requests. The [content-formatting action](article-editing.md#formatting-cms-commits-in-github-actions)
-runs Oxfmt on those branches. If it adds a formatting commit, it explicitly
-dispatches this pipeline for the new revision, because `GITHUB_TOKEN` pushes do
-not start another push workflow. Already formatted saves use the ordinary PR run.
+runs Oxfmt on those branches. It explicitly dispatches this pipeline for the resulting revision because
+`GITHUB_TOKEN` pushes do not start another push workflow. Clean reruns also dispatch,
+so a failed API request can be retried without making another formatting commit.
 
 PR and dispatched runs for the same source branch share a concurrency group, so
 new validation cancels obsolete runs. CMS branches never deploy; merging into

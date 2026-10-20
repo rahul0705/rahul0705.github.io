@@ -47,10 +47,11 @@ This uses Sveltia's existing workflow, with no custom publishing UI or service.
 that branch, runs the existing Oxfmt command on `src/content`, and commits only
 formatting changes there. It uses GitHub's built-in token; no additional secret
 or formatter dependency is required. Already formatted saves create no extra
-commit and use their normal PR checks.
+commit.
 
-When formatting changes a file, the action explicitly dispatches `project.yml`
-on the CMS branch after pushing the formatting commit. This is necessary because
+The action explicitly dispatches `project.yml` on the CMS branch after formatting
+and any formatting commit. It also dispatches on clean reruns, allowing recovery
+if an earlier push succeeded but starting CI failed. This is necessary because
 pushes made with `GITHUB_TOKEN` do not trigger another push workflow. The initial
 PR run may start before formatting; validation of the new revision replaces that
 older run. CMS branches run the normal checks and build tests without deployment.

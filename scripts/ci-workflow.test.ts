@@ -172,7 +172,7 @@ it('formats only CMS branches and accepts follow-up CI without bypassing PR chec
   });
 });
 
-it('formats CMS Markdown with Oxfmt and only dispatches CI after a safe formatting push', () => {
+it('formats CMS branches, skips empty commits, and retries CI after publication failures', () => {
   const workflow = z
     .object({ jobs: z.record(z.string(), jobSchema) })
     .parse(parse(readFileSync(new URL('../.github/workflows/format-cms.yml', import.meta.url), 'utf8')));
@@ -204,7 +204,7 @@ it('formats CMS Markdown with Oxfmt and only dispatches CI after a safe formatti
     mkdirSync(join(fixture, 'bin'));
     writeFileSync(
       join(fixture, 'bin/gh'),
-      '#!/bin/sh\nif [ "$1" = workflow ]; then printf "%s\\n" "$*" >> "$DISPATCH_LOG"; fi\n',
+      '#!/bin/sh\nif [ "$1" = workflow ]; then printf "%s\\n" "$*" >> "$DISPATCH_LOG"; test "${FAIL_DISPATCH:-0}" != 1; fi\n',
       { mode: 0o755 },
     );
     const env = {
@@ -255,17 +255,31 @@ it('formats CMS Markdown with Oxfmt and only dispatches CI after a safe formatti
     expect(readFileSync(article, 'utf8')).toBe(body);
     expect(run(publishStep.run).status).toBe(0);
     expect(git('rev-parse', 'HEAD').trim()).toBe(formattedCommit);
-    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(1);
+    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(2);
+    // A transient dispatch failure after pushing must recover when rerun on the now-clean branch.
+    writeFileSync(article, `${body}\nA new paragraph.\n`);
+    expect(run(formatStep.run).status).toBe(0);
+    const failedDispatch = spawnSync('bash', ['-c', publishStep.run], {
+      cwd: repo,
+      env: { ...env, FAIL_DISPATCH: '1' },
+      encoding: 'utf8',
+    });
+    expect(failedDispatch.status).not.toBe(0);
+    const retryCommit = git('rev-parse', 'HEAD').trim();
+    expect(git('ls-remote', 'origin', 'refs/heads/cms/blog/example')).toContain(retryCommit);
+    expect(run(publishStep.run).status).toBe(0);
+    expect(git('rev-parse', 'HEAD').trim()).toBe(retryCommit);
+    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(4);
     // A concurrent save must reject the push, keep the remote commit, and avoid dispatching stale content.
     git('commit', '--allow-empty', '--quiet', '-m', 'content(blog): concurrent save');
     const concurrent = git('rev-parse', 'HEAD').trim();
     git('push', '--quiet', 'origin', 'HEAD:refs/heads/cms/blog/example');
-    git('checkout', '--quiet', formattedCommit);
+    git('checkout', '--quiet', retryCommit);
     writeFileSync(article, `${body}\nAnother paragraph.\n`);
     const rejected = run(publishStep.run);
     expect(rejected.status, rejected.stdout + rejected.stderr).not.toBe(0);
     expect(git('ls-remote', 'origin', 'refs/heads/cms/blog/example')).toContain(concurrent);
-    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(1);
+    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(4);
   } finally {
     rmSync(fixture, { recursive: true, force: true });
   }

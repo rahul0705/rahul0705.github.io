@@ -47,6 +47,6 @@ jobs:
             git commit -m 'style(content): format CMS changes'
             gh auth setup-git
             git push origin "HEAD:refs/heads/$CMS_BRANCH"
-            # GITHUB_TOKEN pushes do not trigger push workflows; validate the new branch head explicitly.
-            gh workflow run project.yml --ref "$CMS_BRANCH"
           fi
+          # Also dispatch on clean reruns to recover if a previous push succeeded but dispatch failed.
+          gh workflow run project.yml --ref "$CMS_BRANCH"
