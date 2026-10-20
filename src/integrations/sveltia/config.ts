@@ -44,8 +44,8 @@ export const sveltiaConfig = {
       deleteMedia: 'content(assets): delete {{path}}',
     },
   },
-  media_folder: 'public/assets/{{year}}',
-  public_folder: sitePath('/assets/{{year}}'),
+  media_folder: 'public/assets',
+  public_folder: sitePath('/assets'),
   output: {
     omit_empty_optional_fields: true,
   },
