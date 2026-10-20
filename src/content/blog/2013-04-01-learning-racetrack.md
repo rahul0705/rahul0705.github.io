@@ -12,8 +12,8 @@ coverImageAlt: Close-up of a circuit board and its electronic components
 # cSpell:ignore lwiring usbmount
 ---
 
-Engineering Projects in Community Service, better known as EPICS, brings university students together to build
-solutions for nonprofit organizations. Each team works on a particular kind of project.
+Engineering Projects in Community Service, better known as EPICS, brings university students together to build solutions
+for nonprofit organizations. Each team works on a particular kind of project.
 
 Our team, Greater Lafayette Elementary Education (GLEE), builds hands-on classroom projects at Happy Hollow Elementary
 School. The idea is to give students something they can interact with while exploring math, science, technology, and
@@ -64,18 +64,18 @@ As a team we decided to scrap the project and start from scratch.
 
 #### Reflections
 
-Starting over looked cheaper and easier than untangling the old wiring, and it would let us add more functionality.
-The case and controller also limited how students could interact with the track. Even powering it on was awkward. We
-wanted students to be able to play with the racetrack, rather than have the enclosure get in their way.
+Starting over looked cheaper and easier than untangling the old wiring, and it would let us add more functionality. The
+case and controller also limited how students could interact with the track. Even powering it on was awkward. We wanted
+students to be able to play with the racetrack, rather than have the enclosure get in their way.
 
 ### Week 2
 
 #### Problems/Tasks
 
 We tackled two questions this week: how would students interact with the track, and how would we move the cars after a
-correct answer? The existing keypads only accepted numbers. Moving the cars involved a jungle of wires and a logic
-board running undocumented assembly. Whatever we built needed to be easier to develop and better documented. Leaving
-the next team another mystery box wasn't much of an improvement.
+correct answer? The existing keypads only accepted numbers. Moving the cars involved a jungle of wires and a logic board
+running undocumented assembly. Whatever we built needed to be easier to develop and better documented. Leaving the next
+team another mystery box wasn't much of an improvement.
 
 #### Accomplishments
 
@@ -89,19 +89,19 @@ keypads allowed, and Android had plenty of documentation to work from.
 
 #### Reflections
 
-We considered an Arduino board and the newer Raspberry Pi for controlling the cars. Both had advantages, but the Pi
-was cheap and expandable, and nobody on our team had worked with Arduino.
+We considered an Arduino board and the newer Raspberry Pi for controlling the cars. Both had advantages, but the Pi was
+cheap and expandable, and nobody on our team had worked with Arduino.
 
-For the student interface, we narrowed the choice to mobile devices or touch screens. Touch screens would cost less,
-but we thought Android would make it easier to build a usable interface. We wanted to reuse existing solutions wherever
-we could, spend less time developing and debugging, and leave documentation the next group of students could use.
+For the student interface, we narrowed the choice to mobile devices or touch screens. Touch screens would cost less, but
+we thought Android would make it easier to build a usable interface. We wanted to reuse existing solutions wherever we
+could, spend less time developing and debugging, and leave documentation the next group of students could use.
 
 ### Week 3
 
 #### Problems/Tasks
 
-This week we worked out how teachers would add questions. The old logic board generated them, but our broader range
-of question types meant teachers needed a way to choose what students would see.
+This week we worked out how teachers would add questions. The old logic board generated them, but our broader range of
+question types meant teachers needed a way to choose what students would see.
 
 #### Accomplishments
 
@@ -119,9 +119,9 @@ handle.
 #### Reflections
 
 Adding questions needed to be straightforward for teachers, too. Typing long questions on an Android device sounded
-tedious. Connecting a monitor and keyboard directly to the Pi meant finding spare equipment in a school. A Python
-script and a USB drive seemed like a simpler way for teachers to enter questions and answers on a computer they already
-had access to.
+tedious. Connecting a monitor and keyboard directly to the Pi meant finding spare equipment in a school. A Python script
+and a USB drive seemed like a simpler way for teachers to enter questions and answers on a computer they already had
+access to.
 
 ### Week 4
 
@@ -163,9 +163,9 @@ used gave us better specifications for the money.
 
 #### Reflections
 
-We were wary of saving money on an unfamiliar Android device only to spend it back in development time. Screen space
-was another concern. Samsung's large Android user base made us more confident that we'd be able to find help with
-software or hardware issues. That was our reasoning for buying a used Samsung device rather than a cheaper unknown one.
+We were wary of saving money on an unfamiliar Android device only to spend it back in development time. Screen space was
+another concern. Samsung's large Android user base made us more confident that we'd be able to find help with software
+or hardware issues. That was our reasoning for buying a used Samsung device rather than a cheaper unknown one.
 
 ### Week 6
 
@@ -181,8 +181,8 @@ Created an Android application that tests users on their ability to convert bina
 
 We started with a simple Android application that asks the user to convert a binary number to decimal. It uses the
 default Android keyboard for input. When the user presses Done, the application evaluates the answer and displays a
-Toast pop-up saying "You are right" or "You are wrong." We chose a Toast rather than a dialog so students could move
-on to the next question without dismissing another prompt.
+Toast pop-up saying "You are right" or "You are wrong." We chose a Toast rather than a dialog so students could move on
+to the next question without dismissing another prompt.
 
 #### Reflections
 
@@ -260,9 +260,9 @@ Pi's low-level peripherals.
 
 #### Reflections
 
-There were some important quirks with the Raspberry Pi that must be noted. The GPIO ports can only send 3.3V with
-2 mA to 16 mA. The GPIO ports are also not 5V tolerant and there is no over-voltage protection. The picture below shows
-the ports and their functions.
+There were some important quirks with the Raspberry Pi that must be noted. The GPIO ports can only send 3.3V with 2 mA
+to 16 mA. The GPIO ports are also not 5V tolerant and there is no over-voltage protection. The picture below shows the
+ports and their functions.
 
 ![Raspberry Pi GPIO](../../assets/2013/gpio.png)
 

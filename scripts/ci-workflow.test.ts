@@ -1,4 +1,7 @@
-import { readFileSync } from 'node:fs';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import { z } from 'astro/zod';
 import { describe, expect, it } from 'vitest';
@@ -149,4 +152,121 @@ describe('website CI dependency and artifact contract', () => {
       ].sort(),
     );
   });
+});
+
+it('formats only CMS branches and accepts follow-up CI without bypassing PR checks', () => {
+  const workflowSchema = z.object({ on: z.record(z.string(), z.unknown()) });
+  const ci = workflowSchema.parse(
+    parse(readFileSync(new URL('../.github/workflows/project.yml', import.meta.url), 'utf8')),
+  );
+  const formatting = workflowSchema
+    .extend({ jobs: z.record(z.string(), jobSchema.extend({ permissions: z.record(z.string(), z.string()) })) })
+    .parse(parse(readFileSync(new URL('../.github/workflows/format-cms.yml', import.meta.url), 'utf8')));
+  expect(ci.on).toHaveProperty('workflow_dispatch');
+  expect(formatting.on).toEqual({ push: { branches: ['cms/**'] } });
+  expect(jobs).not.toHaveProperty('source-ready');
+  expect(formatting.jobs['format-content'].permissions).toEqual({ contents: 'write', actions: 'write' });
+  expect(formatting.jobs['format-content'].steps[0].with).toMatchObject({
+    ref: '${{ github.ref_name }}',
+    'persist-credentials': false,
+  });
+});
+
+it('formats CMS Markdown with Oxfmt and only dispatches CI after a safe formatting push', () => {
+  const workflow = z
+    .object({ jobs: z.record(z.string(), jobSchema) })
+    .parse(parse(readFileSync(new URL('../.github/workflows/format-cms.yml', import.meta.url), 'utf8')));
+  const formatStep = workflow.jobs['format-content'].steps.find(
+    (step) => step.name === 'Format content using repository policy',
+  );
+  const publishStep = workflow.jobs['format-content'].steps.find(
+    (step) => step.name === 'Commit formatting and start validation',
+  );
+  expect(formatStep?.run).toBeDefined();
+  expect(publishStep?.run).toBeDefined();
+  if (!formatStep?.run || !publishStep?.run) throw new Error('Expected executable CMS formatting steps');
+  const fixture = mkdtempSync(join(tmpdir(), 'cms-format-action-'));
+  const repo = join(fixture, 'repo');
+  const remote = join(fixture, 'remote.git');
+  const git = (...args: string[]) => execFileSync('git', args, { cwd: repo, encoding: 'utf8' });
+  const dispatchLog = join(fixture, 'dispatch.log');
+  try {
+    mkdirSync(repo);
+    execFileSync('git', ['init', '--bare', '--quiet', remote]);
+    git('init', '--quiet', '-b', 'cms/blog/example');
+    git('config', 'user.name', 'Test');
+    git('config', 'user.email', 'test@example.com');
+    git('remote', 'add', 'origin', remote);
+    symlinkSync(resolve('node_modules'), join(repo, 'node_modules'), 'dir');
+    for (const file of ['oxfmt.config.ts', '.editorconfig', '.gitignore', 'package.json', '.markdownlint.json'])
+      copyFileSync(file, join(repo, file));
+    mkdirSync(join(repo, 'src/content/blog'), { recursive: true });
+    mkdirSync(join(fixture, 'bin'));
+    writeFileSync(
+      join(fixture, 'bin/gh'),
+      '#!/bin/sh\nif [ "$1" = workflow ]; then printf "%s\\n" "$*" >> "$DISPATCH_LOG"; fi\n',
+      { mode: 0o755 },
+    );
+    const env = {
+      ...process.env,
+      PATH: `${join(fixture, 'bin')}:${process.env.PATH}`,
+      DISPATCH_LOG: dispatchLog,
+      CMS_BRANCH: 'cms/blog/example',
+    };
+    const run = (command: string) => spawnSync('bash', ['-c', command], { cwd: repo, env, encoding: 'utf8' });
+    const article = join(repo, 'src/content/blog/example.md');
+    const prose = 'A useful sentence about writing articles. '.repeat(12).trim();
+    const code = 'x'.repeat(150);
+    const cell = 'table text '.repeat(20).trim();
+    writeFileSync(
+      article,
+      `---\ntitle: Example\n---\n\n${prose}\n\nFirst line  \nsecond line.\n\n\`\`\`text\n${code}\n\`\`\`\n\n| Column |\n| --- |\n| ${cell} |\n`,
+    );
+    git('add', '.');
+    git('commit', '--quiet', '-m', 'content(blog): create example');
+    git('push', '--quiet', 'origin', 'HEAD:refs/heads/cms/blog/example');
+    const formatted = run(formatStep.run);
+    expect(formatted.status, formatted.stdout + formatted.stderr).toBe(0);
+    const body = readFileSync(article, 'utf8');
+    const { MD013 } = z
+      .object({ MD013: z.object({ line_length: z.number() }) })
+      .parse(JSON.parse(readFileSync('.markdownlint.json', 'utf8')));
+    expect(
+      body
+        .split('\n\n')[1]
+        .split('\n')
+        .every((line) => line.length <= MD013.line_length),
+    ).toBe(true);
+    expect(body).toContain(code);
+    expect(body).toContain(cell);
+    expect(body).toMatch(/First line(?: {2}|\\)\nsecond line\./);
+    expect(body.replace(/\s+/g, ' ')).toContain(prose);
+    const linted = run('npm run lint:markdown -- --ignore node_modules');
+    expect(linted.status, linted.stdout + linted.stderr).toBe(0);
+    writeFileSync(join(repo, 'unrelated.txt'), 'Do not stage me');
+    const published = run(publishStep.run);
+    expect(published.status, published.stdout + published.stderr).toBe(0);
+    const formattedCommit = git('rev-parse', 'HEAD').trim();
+    expect(git('show', '--format=', '--name-only', 'HEAD').trim()).toBe('src/content/blog/example.md');
+    expect(git('ls-remote', 'origin', 'refs/heads/cms/blog/example')).toContain(formattedCommit);
+    expect(git('ls-remote', 'origin', 'refs/heads/main')).toBe('');
+    expect(readFileSync(dispatchLog, 'utf8')).toBe('workflow run project.yml --ref cms/blog/example\n');
+    expect(run(formatStep.run).status).toBe(0);
+    expect(readFileSync(article, 'utf8')).toBe(body);
+    expect(run(publishStep.run).status).toBe(0);
+    expect(git('rev-parse', 'HEAD').trim()).toBe(formattedCommit);
+    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(1);
+    // A concurrent save must reject the push, keep the remote commit, and avoid dispatching stale content.
+    git('commit', '--allow-empty', '--quiet', '-m', 'content(blog): concurrent save');
+    const concurrent = git('rev-parse', 'HEAD').trim();
+    git('push', '--quiet', 'origin', 'HEAD:refs/heads/cms/blog/example');
+    git('checkout', '--quiet', formattedCommit);
+    writeFileSync(article, `${body}\nAnother paragraph.\n`);
+    const rejected = run(publishStep.run);
+    expect(rejected.status, rejected.stdout + rejected.stderr).not.toBe(0);
+    expect(git('ls-remote', 'origin', 'refs/heads/cms/blog/example')).toContain(concurrent);
+    expect(readFileSync(dispatchLog, 'utf8').split('\n').filter(Boolean)).toHaveLength(1);
+  } finally {
+    rmSync(fixture, { recursive: true, force: true });
+  }
 });

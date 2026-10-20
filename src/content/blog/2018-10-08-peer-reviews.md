@@ -15,9 +15,9 @@ coverImageAlt: Two people reviewing a laptop screen, with one pointing at the di
 # cSpell:ignore dataclass dataclasses gofmt mypy Pylint Clippy timedelta
 ---
 
-Code review asks you to do two fairly different things: understand someone else's decisions, and make your own
-decisions understandable to someone else. This is my guide to both. I expect to keep changing it as I find better
-questions to ask.
+Code review asks you to do two fairly different things: understand someone else's decisions, and make your own decisions
+understandable to someone else. This is my guide to both. I expect to keep changing it as I find better questions to
+ask.
 
 The ideas below are prompts, not gates that every change must pass. Different systems, teams, and situations call for
 different tradeoffs. A small documentation fix does not need the same scrutiny as an authentication change, and a
@@ -93,26 +93,26 @@ Look at how errors are detected, represented, logged, and returned. Swallowing a
 diagnose, while catching and wrapping every error can hide useful details or create noise. Consider whether the code
 leaves the system in a valid state after a partial failure.
 
-For user-facing or operational systems, it can also be useful to ask whether an operator will have enough information
-to understand what failed without exposing secrets or sensitive data.
+For user-facing or operational systems, it can also be useful to ask whether an operator will have enough information to
+understand what failed without exposing secrets or sensitive data.
 
 ### Design and maintainability
 
 #### Is the change at the right level of abstraction?
 
-Consider whether the new behavior belongs in the component being modified. A function can work correctly and still
-make the system harder to maintain if it introduces a dependency in the wrong direction or gives one component too many
+Consider whether the new behavior belongs in the component being modified. A function can work correctly and still make
+the system harder to maintain if it introduces a dependency in the wrong direction or gives one component too many
 responsibilities.
 
-Look for opportunities to keep domain logic separate from transport, storage, framework, and presentation concerns.
-This is not a requirement to add layers; sometimes a direct implementation is the clearest choice.
+Look for opportunities to keep domain logic separate from transport, storage, framework, and presentation concerns. This
+is not a requirement to add layers; sometimes a direct implementation is the clearest choice.
 
 #### Is the code easy to follow?
 
 Try to read the change as someone who did not write it. This gets harder when you're reviewing your own code; you
 already know what you meant. Names should communicate intent, and the control flow should make the important behavior
-apparent. Comments are most valuable when they explain _why_ a decision was made, a
-constraint exists, or an unusual approach is necessary. Comments that simply restate the code can become stale.
+apparent. Comments are most valuable when they explain _why_ a decision was made, a constraint exists, or an unusual
+approach is necessary. Comments that simply restate the code can become stale.
 
 For example, this comment adds no information beyond the next line:
 
@@ -143,8 +143,7 @@ reason is already clear from the surrounding code and domain language, no commen
 
 Names are part of the design. A function name should describe the operation or outcome at the caller's level, while a
 variable name should identify what a value represents, rather than merely its type or where it came from. Predicates
-often read
-clearly as questions such as `is_expired`, `has_permission`, or `can_retry`.
+often read clearly as questions such as `is_expired`, `has_permission`, or `can_retry`.
 
 Intermediate variables can turn a dense expression into a sequence of named decisions. For example:
 
@@ -187,8 +186,7 @@ the number of places where bugs can appear and the number of locations that need
 
 DRY is a prompt, not an instruction to remove every repeated line. Two pieces of code that look similar today may
 represent different concepts and change for different reasons. An abstraction that combines them too early can create
-more coupling than the duplication it removes. Ask whether the repeated code represents the same rule before sharing
-it.
+more coupling than the duplication it removes. Ask whether the repeated code represents the same rule before sharing it.
 
 When the duplication does represent one rule, extracting it can give that rule a name and a single place to evolve:
 
@@ -248,14 +246,13 @@ class BillingAddress:
     postal_code: str
 ```
 
-It may be tempting to replace both with a single `Address` model. That could be appropriate if the domain treats them
-as the same value. It could also couple unrelated concepts: a shipping address may later need delivery instructions,
-while a billing address may need tax jurisdiction or verification status.
+It may be tempting to replace both with a single `Address` model. That could be appropriate if the domain treats them as
+the same value. It could also couple unrelated concepts: a shipping address may later need delivery instructions, while
+a billing address may need tax jurisdiction or verification status.
 
 Repeating a small model, function, or block of code can be a deliberate way to preserve independence. Consider sharing
-code when the concepts follow the same business rule and should change together, rather than only because their
-current shapes
-match. Duplication is a cost, but coupling is also a cost.
+code when the concepts follow the same business rule and should change together, rather than only because their current
+shapes match. Duplication is a cost, but coupling is also a cost.
 
 For a deeper discussion of this tradeoff, see
 [Duplication Is Cheaper Than the Wrong Abstraction](../2026-08-17-duplication-vs-coupling/).
@@ -283,8 +280,8 @@ def func(items):
         print(item)
 ```
 
-Early exits are not automatically better. A function with many return points can make cleanup or state changes harder
-to reason about. The useful question is which structure makes the behavior clearest.
+Early exits are not automatically better. A function with many return points can make cleanup or state changes harder to
+reason about. The useful question is which structure makes the behavior clearest.
 
 #### Are the returns simple?
 
@@ -325,8 +322,8 @@ project or as part of an interface, but its purpose should be clear.
 #### Does the code depend on more than it needs?
 
 This is sometimes described as _shy code_: code that does not know about or interact with more of the system than
-necessary. Variables, functions, modules, and permissions can start with the smallest useful scope and expand when
-there is a concrete need. This can make behavior easier to test and reduce unintended coupling.
+necessary. Variables, functions, modules, and permissions can start with the smallest useful scope and expand when there
+is a concrete need. This can make behavior easier to test and reduce unintended coupling.
 
 #### Are there hard-coded values?
 
@@ -355,8 +352,8 @@ Consistent conventions reduce the effort required to read unfamiliar code. If th
 whether the change follows it. If it does not, determine whether the difference is intentional or whether the convention
 itself should evolve.
 
-Formatting and other mechanical conventions should be automated whenever practical. A reviewer can then focus on
-design and behavior instead of acting as a linter. Common examples include:
+Formatting and other mechanical conventions should be automated whenever practical. A reviewer can then focus on design
+and behavior instead of acting as a linter. Common examples include:
 
 - **Formatters:** Prettier for JavaScript, TypeScript, JSON, CSS, and Markdown; Black or Ruff's formatter for Python;
   `gofmt` for Go; and `rustfmt` for Rust.
@@ -379,8 +376,8 @@ remember.
 
 #### Has the relevant documentation changed with the code?
 
-Documentation is part of the interface a change presents to users, operators, and other developers. Consider whether
-the change also requires updates to:
+Documentation is part of the interface a change presents to users, operators, and other developers. Consider whether the
+change also requires updates to:
 
 - Public API or library documentation
 - Configuration references and example files
@@ -388,9 +385,9 @@ the change also requires updates to:
 - Tutorials, commands, screenshots, or sample requests and responses
 - Upgrade, migration, deprecation, or rollback instructions
 
-Documentation should explain the behavior and decisions a reader needs to use or support the change. It does not need
-to narrate the implementation. When code and documentation must change together, reviewing both in the same change can
-make inconsistencies easier to catch.
+Documentation should explain the behavior and decisions a reader needs to use or support the change. It does not need to
+narrate the implementation. When code and documentation must change together, reviewing both in the same change can make
+inconsistencies easier to catch.
 
 ### Operational and security considerations
 
@@ -399,8 +396,8 @@ external input, concurrency, or shared infrastructure.
 
 #### Are inputs and permissions appropriately constrained?
 
-Consider where input comes from and whether it is validated at an appropriate boundary. Look for injection risks,
-unsafe deserialization, path manipulation, or assumptions about trusted callers. Check that the change grants only the
+Consider where input comes from and whether it is validated at an appropriate boundary. Look for injection risks, unsafe
+deserialization, path manipulation, or assumptions about trusted callers. Check that the change grants only the
 permissions it needs and does not expose credentials, personal information, or internal details through responses and
 logs.
 
@@ -463,8 +460,8 @@ def test_negative_order_total_is_rejected():
 ```
 
 These tests do not need to know whether `discount_for` uses conditionals, a lookup table, or a policy object. They hold
-the externally meaningful boundaries steady. If the business later decides the threshold should be $75, the failing
-test makes that behavior change visible and requires the team to update the expectation deliberately.
+the externally meaningful boundaries steady. If the business later decides the threshold should be $75, the failing test
+makes that behavior change visible and requires the team to update the expectation deliberately.
 
 Not every implementation detail is a constraint. Avoid freezing private call order, temporary data structures, or the
 exact number of helper calls unless those details are themselves part of a required contract. The objective is to
@@ -513,8 +510,8 @@ For example:
 - **Concern:** "This value comes from the request and is used in a file path. Could we validate it before use?"
 - **Context:** "This service is also called by the nightly import, which can send an empty collection."
 
-Explain the reason behind a comment when it is not obvious. "Rename this" gives the author less information than "A
-name that describes the retry limit would help distinguish this value from the request timeout below."
+Explain the reason behind a comment when it is not obvious. "Rename this" gives the author less information than "A name
+that describes the retry limit would help distinguish this value from the request timeout below."
 
 Separate blocking concerns from optional improvements. Not every good idea needs to delay the current change. If a
 comment is a preference, say so. "I'd write this differently" and "this can lose a customer's data" ask very different
@@ -523,10 +520,10 @@ things of the author. If there's a correctness or security issue, explain the im
 Avoid using a review to redesign unrelated code. It is reasonable to mention nearby improvements, but keeping the
 requested change focused makes it easier to review, test, and deliver.
 
-Do not approve a consequential change merely because nothing obviously looks wrong. If an important behavior,
-security boundary, migration, or operational decision is outside your understanding, ask for context or involve a
-reviewer with the relevant domain expertise. Identifying where another perspective is needed is a useful review
-outcome, not a failure to review.
+Do not approve a consequential change merely because nothing obviously looks wrong. If an important behavior, security
+boundary, migration, or operational decision is outside your understanding, ask for context or involve a reviewer with
+the relevant domain expertise. Identifying where another perspective is needed is a useful review outcome, not a failure
+to review.
 
 ### Completing the review cycle
 
@@ -543,9 +540,9 @@ Confirm that:
 - Conversations are resolved with enough context to explain the outcome, not merely dismissed because the code moved.
 - Required automated checks apply to the final commit and have completed successfully.
 
-Approval should mean that the reviewer understands the consequential parts of the final change, believes the evidence
-is proportionate to its risk, and has no unresolved blocking concerns. It does not mean the reviewer guarantees the
-code is perfect or would have implemented it in exactly the same way.
+Approval should mean that the reviewer understands the consequential parts of the final change, believes the evidence is
+proportionate to its risk, and has no unresolved blocking concerns. It does not mean the reviewer guarantees the code is
+perfect or would have implemented it in exactly the same way.
 
 ## Having your code reviewed
 
@@ -617,8 +614,8 @@ For a closer look at this reduction process, see
 Run the same formatter, linter, type checker, tests, and build that continuous integration will run. When a check cannot
 be run locally, state that clearly instead of leaving the reviewer to infer whether it was forgotten.
 
-Automation should catch mechanical problems before review. The author is then asking reviewers to spend attention on
-the decisions that require human context.
+Automation should catch mechanical problems before review. The author is then asking reviewers to spend attention on the
+decisions that require human context.
 
 Generated and AI-assisted code has the same standard of ownership as code written manually. Authors should understand
 what they submit, verify that it fits the repository and its constraints, and test its behavior. When provenance or
@@ -696,8 +693,8 @@ not need to be elaborate, but it should connect to the risk or outcome being dis
 
 ### Guide the reviewer's attention
 
-Call out the areas where feedback will be most valuable: a concurrency decision, an unfamiliar API, a security
-boundary, or a tradeoff between two designs. Mention files that are generated or changes that are purely mechanical.
+Call out the areas where feedback will be most valuable: a concurrency decision, an unfamiliar API, a security boundary,
+or a tradeoff between two designs. Mention files that are generated or changes that are purely mechanical.
 
 Do not use guidance to steer reviewers away from problems. The goal is to help them build the right mental model and
 spend limited attention where judgment matters most.
@@ -725,8 +722,8 @@ Treat questions as signals that the code or description may need more context, e
 Respond to comments so the reviewer knows whether the code changed, the concern was addressed elsewhere, or the team
 made a deliberate tradeoff.
 
-Authors should also feel comfortable explaining why a suggestion does not fit the constraints of the change. A review
-is a technical conversation, not a contest between the author and reviewer. Disagreement can uncover assumptions that
+Authors should also feel comfortable explaining why a suggestion does not fit the constraints of the change. A review is
+a technical conversation, not a contest between the author and reviewer. Disagreement can uncover assumptions that
 neither person had written down.
 
 When feedback leads to a non-obvious decision, consider capturing the reason in code, a test, documentation, or the
@@ -740,5 +737,5 @@ silently marking it resolved.
 ## Closing thought
 
 I don't expect any checklist to tell me when I've understood a change. These prompts help me work out what to ask and
-where I still need context. If the code is clearer, the risks are better understood, and someone else can explain why
-we made the decision, the review has done useful work.
+where I still need context. If the code is clearer, the risks are better understood, and someone else can explain why we
+made the decision, the review has done useful work.

@@ -40,6 +40,7 @@ describe('Sveltia CMS configuration', () => {
 
     expect(sveltiaConfig).toMatchObject({
       load_config_file: false,
+      publish_mode: 'editorial_workflow',
       media_folder: 'public/assets',
       public_folder: '/assets',
       output: {

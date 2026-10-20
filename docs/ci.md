@@ -74,6 +74,19 @@ a skipped downstream job from hiding a source failure. Browser checks alone do n
 New PR commits cancel obsolete PR runs. Runs on `main` are serialized instead of cancelling a deployment or its
 verification when another commit arrives.
 
+## CMS content branches
+
+Sveltia's Editorial Workflow saves entries on `cms/...` branches and opens pull
+requests. The [content-formatting action](article-editing.md#formatting-cms-commits-in-github-actions)
+runs Oxfmt on those branches. If it adds a formatting commit, it explicitly
+dispatches this pipeline for the new revision, because `GITHUB_TOKEN` pushes do
+not start another push workflow. Already formatted saves use the ordinary PR run.
+
+PR and dispatched runs for the same source branch share a concurrency group, so
+new validation cancels obsolete runs. CMS branches never deploy; merging into
+`main` starts the usual deployment pipeline. Main's existing required checks and
+branch protections stay in place.
+
 ## Each check has one owner
 
 - Formatting and spelling run once over source. CSS/code/Markdown linters check distinct syntax and style

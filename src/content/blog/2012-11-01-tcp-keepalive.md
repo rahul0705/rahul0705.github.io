@@ -10,8 +10,8 @@ coverImage: ../../assets/covers/network.jpg
 coverImageAlt: Server racks with bundled yellow network cables and illuminated status lights
 ---
 
-I worked on a research project looking at TCP keep-alive across operating systems. The question was fairly simple:
-what happens to a connection when the machine on the other end stops responding?
+I worked on a research project looking at TCP keep-alive across operating systems. The question was fairly simple: what
+happens to a connection when the machine on the other end stops responding?
 
 TCP keep-alive lets one end of a connection check whether the other end still responds. If those checks go unanswered,
 the connection may need to be closed. Knowing how that is supposed to work and seeing what happens when you pull a

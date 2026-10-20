@@ -9,11 +9,13 @@ on: # yamllint disable-line rule:truthy
     branches:
       - main
 
+  workflow_dispatch:
+
 permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 defaults:
   run:

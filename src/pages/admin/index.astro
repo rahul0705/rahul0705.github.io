@@ -1,9 +1,6 @@
 ---
 import { site } from '../../data/site';
 import SeoHead from '../../components/ui/SeoHead.astro';
-import { getArticleFormatOptions } from '../../integrations/sveltia/article-format-options';
-
-const articleFormatOptions = await getArticleFormatOptions();
 ---
 
 <html lang="en">
@@ -11,23 +8,17 @@ const articleFormatOptions = await getArticleFormatOptions();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SeoHead title="Content Manager" description={`Content management for ${site.title}.`} canonicalPath="/admin/" noindex />
-    <script is:inline id="article-format-options" type="application/json" set:html={JSON.stringify(articleFormatOptions)} />
     <script>
       import { init, registerPreviewStyle } from '@sveltia/cms';
-      import { readArticleFormatOptions, registerArticleFormatting } from '../../integrations/sveltia/article-formatting';
       import { sveltiaConfig } from '../../integrations/sveltia/config';
       import { registerSveltiaPreviews } from '../../integrations/sveltia/previews';
       import previewStyles from '../../styles/cms-preview.css?inline';
 
-      const optionsElement = document.getElementById('article-format-options');
-      if (!optionsElement?.textContent) throw new Error('Missing article formatting policy');
-      const options = readArticleFormatOptions(JSON.parse(optionsElement.textContent));
-      registerArticleFormatting(options);
       registerPreviewStyle(previewStyles, { raw: true });
       registerSveltiaPreviews();
       // Sveltia owns the runtime favicon; SeoHead supplies it before the CMS loads.
       document.querySelector('link[rel="icon"]')?.remove();
-      init({ config: { ...sveltiaConfig, output: { ...sveltiaConfig.output, yaml: { indent_size: options.tabWidth } } } });
+      init({ config: sveltiaConfig });
     </script>
   </head>
   <body></body>
