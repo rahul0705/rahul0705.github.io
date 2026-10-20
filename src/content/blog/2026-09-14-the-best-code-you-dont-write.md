@@ -1,8 +1,6 @@
 ---
 title: The Best Code Is Sometimes the Code You Don't Write
 description: Code has a cost long after it's written. Good engineering includes knowing how to build a solution and when not to build one.
-coverImage: ../../assets/covers/the-best-code-you-dont-write.jpg
-coverImageAlt: Tattooed hands pruning a bonsai tree with small scissors
 tableOfContents: false
 section: Process
 tags:
@@ -10,6 +8,8 @@ tags:
   - development
   - design
   - simplicity
+coverImage: ../../assets/covers/the-best-code-you-dont-write.jpg
+coverImageAlt: Tattooed hands pruning a bonsai tree with small scissors
 
 # cSpell:ignore dataclass dataclasses dont
 ---

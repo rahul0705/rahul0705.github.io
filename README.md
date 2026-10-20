@@ -47,6 +47,8 @@ npm run preview
 | `npm run typecheck`      | Check TypeScript and Astro diagnostics             |
 | `npm run format`         | Check formatting                                   |
 | `npm run format:fix`     | Apply formatting                                   |
+| `npm run hooks:install`  | Install optional staged-file commit checks         |
+| `npm run lint:staged`    | Check staged files without modifying working files |
 | `npm run lint:all`       | Lint code, CSS, and Markdown                       |
 | `npm run test:unit`      | Run Vitest unit tests                              |
 | `npm run test:e2e`       | Run Playwright interaction and accessibility tests |
@@ -361,3 +363,6 @@ retain evidence for 14 days. A failure marks the workflow failed after publishin
 Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or
 `npm run test:smoke` to check the local production preview. The smoke suite has a separate Playwright configuration;
 the regular browser suite exercises the full behavior without repeating these smaller deployment checks.
+
+See [article editing and formatting](docs/article-editing.md) for canonical frontmatter
+order, CMS save validation, and optional staged-file commit hooks.

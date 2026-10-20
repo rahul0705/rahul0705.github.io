@@ -4,6 +4,7 @@ export default defineConfig({
   ignorePaths: ['node_modules', 'dist', 'coverage', 'playwright-report', 'test-results', '.lighthouseci'],
   ignoreRegExpList: [/CONT_(?:AWD|IDV)_[A-Z0-9_-]+/g],
   words: [
+    'frontmatter',
     'affordances',
     'Airbender',
     'apng',

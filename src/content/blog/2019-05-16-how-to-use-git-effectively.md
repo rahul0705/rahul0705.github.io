@@ -1,13 +1,13 @@
 ---
 title: How to use Git effectively
 description: A 2019 overview of how GitFlow uses master, develop, feature, and release branches to move changes toward production.
-coverImage: ../../assets/covers/git.jpg
-coverImageAlt: Close-up of syntax-highlighted Python code on a dark screen
 section: Process
 tags:
   - software
   - development
   - git
+coverImage: ../../assets/covers/git.jpg
+coverImageAlt: Close-up of syntax-highlighted Python code on a dark screen
 
 # cSpell:ignore Driessen
 ---

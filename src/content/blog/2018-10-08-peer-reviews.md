@@ -1,16 +1,16 @@
 ---
 title: Code Reviews
-tableOfContents: true
 description: Practical guidance for preparing changes, reviewing correctness and risk, and giving constructive code-review feedback.
 updatedDate: 2026-08-12
-coverImage: ../../assets/covers/review.jpg
-coverImageAlt: Two people reviewing a laptop screen, with one pointing at the display
+tableOfContents: true
 section: Process
 tags:
   - software
   - development
   - code
   - review
+coverImage: ../../assets/covers/review.jpg
+coverImageAlt: Two people reviewing a laptop screen, with one pointing at the display
 
 # cSpell:ignore dataclass dataclasses gofmt mypy Pylint Clippy timedelta
 ---

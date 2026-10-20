@@ -1,13 +1,13 @@
 ---
 title: TCP Keep-Alive
 description: Testing how TCP keep-alive handles disconnected cables and silent failures across operating systems.
-coverImage: ../../assets/covers/network.jpg
-coverImageAlt: Server racks with bundled yellow network cables and illuminated status lights
 section: Projects
 tags:
   - networking
   - tcp
   - research
+coverImage: ../../assets/covers/network.jpg
+coverImageAlt: Server racks with bundled yellow network cables and illuminated status lights
 ---
 
 I worked on a research project looking at TCP keep-alive across operating systems. The question was fairly simple:
