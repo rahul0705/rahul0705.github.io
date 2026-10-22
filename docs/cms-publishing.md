@@ -21,6 +21,11 @@ articles that currently omit the boolean.
 This workflow handles entry changes and their attached assets. Standalone Asset Library operations remain subject to the
 configured branch's permissions and rules. It does not make direct writes to a protected branch permissible.
 
-Formatting automation and repository-specific prose wrapping are separate work. This configuration uses Sveltia's native
-serialization and the existing PR checks. Authenticated GitHub save/publish has not been exercised as part of this
-change.
+Articles use Markdown (`.md`); MDX authoring is deferred until rendering, editing, and formatting support are verified.
+Content-model 1.1.9 and Sveltia 0.250.1 provide the native serialization API needed for later browser formatting. This
+stage keeps native CMS saves and the existing PR checks; no browser formatter is registered yet. Local
+`npm run format:fix` applies the repository's prose-wrapping policy. The remaining adoption work is tracked in
+[#177](https://github.com/rahul0705/rahul0705.github.io/issues/177).
+
+Authenticated GitHub save/publish still requires a maintainer check against the repository's real branch rules. Local
+save/reopen checks cover content persistence and draft defaults, not GitHub authorization or merge behavior.
