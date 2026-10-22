@@ -31,6 +31,7 @@ for (const scenario of [
   { name: 'retains explicit false', initial: false, expected: false },
   { name: 'retains explicit true', initial: true, expected: true },
   { name: 'persists turning Draft off', initial: true, expected: false },
+  { name: 'recovers from a WASM load failure', initial: false, expected: false },
   { name: 'defaults new articles to true', initial: undefined, expected: true },
 ]) {
   test(`CMS ${scenario.name} through formatted saves, recovery, and reopening`, async ({ page }) => {
@@ -95,7 +96,7 @@ for (const scenario of [
       await editor
         .getByRole('textbox', { name: 'Body', exact: true })
         .fill(
-          `${'Long article prose with meaningful words for wrapping. '.repeat(1000)}\n\n\`\`\`js\nconst value={hello:"world"};\n\`\`\`\n`,
+          `${'Long article prose with meaningful words for wrapping. '.repeat(1000)}\n\n\`\`\`js\nconst value={hello:"world"};\n\`\`\`\n\n\`\`\`js\nconst = ;\n\`\`\`\n\n\`\`\`yaml\nitems: [\n\`\`\`\n`,
         );
     } else if (scenario.name === 'persists turning Draft off') {
       await editor.getByRole('textbox', { name: 'Body', exact: true }).fill('Rich text editing retains this body.');
@@ -106,7 +107,9 @@ for (const scenario of [
           ? 'policy.json'
           : scenario.name === 'retains explicit true'
             ? 'index.js*'
-            : 'worker.js';
+            : scenario.name === 'recovers from a WASM load failure'
+              ? 'generated/engine_bg.wasm'
+              : 'worker.js';
       const failurePath = `**/admin/formatter/${asset}`;
       await page.route(failurePath, (route) =>
         asset === 'policy.json' ? route.fulfill({ json: { upstreamVersion: 'invalid', options: {} } }) : route.abort(),
@@ -138,6 +141,8 @@ for (const scenario of [
     if (scenario.name === 'retains explicit true') {
       expect(saved.match(/Long\s+article\s+prose/g)).toHaveLength(1000);
       expect(saved).toContain("const value = { hello: 'world' };");
+      expect(saved).toContain('```js\nconst = ;\n```');
+      expect(saved).toContain('```yaml\nitems: [\n```');
     } else if (scenario.name === 'persists turning Draft off') {
       expect(saved).toContain('Rich text editing retains this body.');
     }
