@@ -54,3 +54,27 @@ CMS commits; it does not run as a CMS save hook or Git hook.
 
 `npm run lint:resume:markdown` reads the generated resume through CLI2's standard input, so it still checks the build
 output even though source lint ignores `dist` through `.gitignore`. Its diagnostics identify standard input.
+
+## Browser formatter assets
+
+The Astro integration in `src/integrations/sveltia/formatter-assets.ts` resolves browser options from `oxfmt.config.ts`
+and `.editorconfig` during configuration. Its uniform-policy check covers future Markdown paths while preserving the
+experience JSON width override. Unsupported options, potentially applicable Markdown overrides, nested configuration,
+and an installed Oxfmt version that differs from the browser engine stop the build. Upgrade Oxfmt and browser-oxfmt
+together, using a browser package release that supports the intended engine version.
+
+Development and production serve the complete published module, worker, bindings, and WASM tree under
+`/admin/formatter/`, relative to Astro's configured base. `policy.json` contains only the verified serializable options.
+Loading the entry does not start a worker; the package starts one on its first formatting request and reuses it. CMS
+saves still use native serialization until the activation change in #182.
+
+`tests/cms-formatting.spec.ts` checks current articles and deliberately unformatted prose, YAML, and JavaScript against
+the installed CLI, including idempotence. It also verifies JavaScript/WASM content types and formatting under a scoped
+CSP allowing `script-src 'self' 'wasm-unsafe-eval'` and `worker-src 'self'`, without JavaScript `unsafe-eval`.
+Deployment headers must preserve those capabilities if a CSP is introduced; the integration does not replace the CMS's
+existing network or style policy.
+
+Browser formatting preserves Tailwind class order. The build reports this approved limitation and the browser test shows
+the difference in a fenced HTML example. CLI formatting may still reorder those classes; Forge #365 tracks future
+support. This exception does not disable native CSS formatting or block adoption. MDX and manual iPhone/Safari checks
+remain outside this stage.
