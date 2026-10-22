@@ -4,8 +4,6 @@ draft: false
 description:
   Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to
   break in the first place.
-coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
-coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
 tableOfContents: false
 section: Process
 tags:
@@ -13,6 +11,8 @@ tags:
   - development
   - design
   - architecture
+coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
+coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
 
 # cSpell:ignore dataclass mypy
 ---

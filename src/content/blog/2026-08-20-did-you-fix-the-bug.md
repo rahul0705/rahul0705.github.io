@@ -4,14 +4,14 @@ draft: false
 description:
   A passing test proves the symptom is gone, not that the work is done. Isolate the change that mattered before adding
   it to the system.
-coverImage: ../../assets/covers/did-you-fix-the-bug.jpg
-coverImageAlt: Colorful source code shown in a shallow-focus close-up
 tableOfContents: false
 section: Process
 tags:
   - software
   - development
   - debugging
+coverImage: ../../assets/covers/did-you-fix-the-bug.jpg
+coverImageAlt: Colorful source code shown in a shallow-focus close-up
 ---
 
 The bug is gone. That's a relief. You're not entirely sure why, though.

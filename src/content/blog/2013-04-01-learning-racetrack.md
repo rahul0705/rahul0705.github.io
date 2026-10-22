@@ -1,16 +1,16 @@
 ---
 title: Learning Racetrack
 draft: false
-tableOfContents: true
 description:
   Rebuilding a classroom racetrack with Raspberry Pi and Android devices so students advance cars by answering
   questions.
-coverImage: ../../assets/covers/circuit.jpg
-coverImageAlt: Close-up of a circuit board and its electronic components
+tableOfContents: true
 section: Projects
 tags:
   - community service
   - raspberry pi
+coverImage: ../../assets/covers/circuit.jpg
+coverImageAlt: Close-up of a circuit board and its electronic components
 
 # cSpell:ignore lwiring usbmount
 ---

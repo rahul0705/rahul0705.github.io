@@ -25,6 +25,7 @@ export default defineConfig({
     'EVMS',
     'Fira',
     'fontsource',
+    'frontmatter',
     'GCCS',
     'GGSS',
     'googletagmanager',
