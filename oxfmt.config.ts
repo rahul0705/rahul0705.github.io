@@ -3,6 +3,7 @@ import { defineConfig } from 'oxfmt';
 export default defineConfig({
   trailingComma: 'all',
   singleQuote: true,
+  proseWrap: 'always',
   sortImports: true,
   sortTailwindcss: true,
   sortPackageJson: true,
