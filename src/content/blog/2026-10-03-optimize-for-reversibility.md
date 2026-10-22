@@ -4,8 +4,6 @@ draft: true
 description:
   We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and
   recover without rebuilding everything around us.
-coverImage: ../../assets/covers/optimize-for-reversibility.jpg
-coverImageAlt: Traffic moving along a one-way city street with ONLY painted on the pavement
 tableOfContents: false
 section: Process
 tags:
@@ -13,6 +11,8 @@ tags:
   - development
   - design
   - architecture
+coverImage: ../../assets/covers/optimize-for-reversibility.jpg
+coverImageAlt: Traffic moving along a one-way city street with ONLY painted on the pavement
 ---
 
 During my time at AWS, I heard decisions described as _one-way doors_ and _two-way doors_. It's an idea closely tied to
