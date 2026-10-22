@@ -79,7 +79,7 @@ describe('website CI dependency and artifact contract', () => {
       'oxfmt --check',
       'oxlint',
       'stylelint ',
-      'markdownlint "',
+      'markdownlint-cli2 "',
       'cspell ',
       'astro check',
       'vitest run',

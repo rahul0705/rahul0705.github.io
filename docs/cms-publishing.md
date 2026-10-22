@@ -29,3 +29,22 @@ stage keeps native CMS saves and the existing PR checks; no browser formatter is
 
 Authenticated GitHub save/publish still requires a maintainer check against the repository's real branch rules. Local
 save/reopen checks cover content persistence and draft defaults, not GitHub authorization or merge behavior.
+
+## Frontmatter ordering
+
+`npm run lint:markdown` uses Markdownlint CLI2 and the Forge frontmatter plugin for article files. Its configuration in
+`.markdownlint-cli2.mjs` derives the expected field order from the shared blog model, matching Sveltia's field order.
+Documentation outside the article collection keeps the existing Markdown quality checks without an ordering rule.
+
+Run `npm run lint:markdown:fix` to correct safe ordering problems, then `npm run format:fix` and `npm run lint:markdown`
+to verify the result. Present model fields follow model order; unknown keys remain afterward in their original relative
+order, optional fields remain absent, and nested mappings are unchanged. The fix preserves field values, attached
+comments, and the article body. It does not add defaults or change draft state.
+
+Ambiguous comments, duplicate keys, anchors, aliases, or malformed YAML receive diagnostics without an ordering fix.
+Review those documents manually rather than deleting metadata or forcing a rewrite. Formatting, schema validation, and
+Markdown quality remain separate checks. The ordering plugin runs through the same npm commands in CI for hand edits and
+CMS commits; it does not run as a CMS save hook or Git hook.
+
+`npm run lint:resume:markdown` reads the generated resume through CLI2's standard input, so it still checks the build
+output even though source lint ignores `dist` through `.gitignore`. Its diagnostics identify standard input.
