@@ -64,6 +64,42 @@ describe('Markdown npm commands', () => {
     expect(result.output).toContain('max_line_length must be a positive integer');
   });
 
+  it('requires a shared width even when README has its own width', async () => {
+    await write('.editorconfig', '[README.md]\nmax_line_length = 80\n');
+    await write('README.md', '# Fixture\n');
+    const result = run('lint:markdown');
+    expect(result.status).toBe(2);
+    expect(result.output).toContain('max_line_length must be a positive integer');
+  });
+
+  it.each(['README.md', '*.md', '*.json'])('rejects a conflicting section-specific width: %s', async (section) => {
+    await write('.editorconfig', `[*]\nmax_line_length = 80\n\n[${section}]\nmax_line_length = 40\n`);
+    await write('README.md', '# Fixture\n');
+    const result = run('lint:markdown');
+    expect(result.status).toBe(2);
+    expect(result.output).toContain('Conflicting EditorConfig max_line_length');
+  });
+
+  it('allows same-width sections and unrelated properties, using the last shared setting', async () => {
+    await write(
+      '.editorconfig',
+      '[*]\nmax_line_length = 40\n\n[*]\nMAX_LINE_LENGTH = 80\n\n[README.md]\nmax_line_length = 80\n\n[*.ts]\nindent_size = 4\n',
+    );
+    await write('README.md', `# Fixture\n\n${'word '.repeat(15).trim()}\n`);
+    const result = run('lint:markdown');
+    expect(result.status, result.output).toBe(0);
+  });
+
+  it.each(['*', 'README.md'])('uses the final mixed-case width declaration in [%s]', async (section) => {
+    await write(
+      '.editorconfig',
+      `[*]\nmax_line_length = 120\n\n[${section}]\nmax_line_length = 40\nMAX_LINE_LENGTH = 80\nmax_line_length = 120\n`,
+    );
+    await write('README.md', `# Fixture\n\n${'word '.repeat(20).trim()}\n`);
+    const result = run('lint:markdown');
+    expect(result.status, result.output).toBe(0);
+  });
+
   it('scopes ordering to articles, allows omitted and unknown fields, and retains Git ignores', async () => {
     const source = '---\ntitle: Fixture\ndescription: Description\nextra: preserved\n---\n\n## Fixture\n';
     await write(article, source);

@@ -1,15 +1,27 @@
-import { fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
 
 import frontmatterOrder, { frontmatterOrderFromModel } from '@rm-industries/markdownlint-frontmatter';
-import { parseSync } from 'editorconfig';
+import { parseBuffer } from 'editorconfig';
 
 import { blogContentModel } from './src/config/content-models/blog.ts';
 
-const { max_line_length: lineLength } = parseSync(fileURLToPath(new URL('README.md', import.meta.url)), {
-  root: fileURLToPath(new URL('.', import.meta.url)),
-});
-if (typeof lineLength !== 'number' || !Number.isSafeInteger(lineLength) || lineLength <= 0) {
-  throw new Error('EditorConfig max_line_length must be a positive integer for Markdown');
+// Only numeric widths are consumed; folding case before parsing preserves duplicate-property precedence.
+const source = readFileSync(new URL('.editorconfig', import.meta.url), 'utf8').toLowerCase();
+const widths = parseBuffer(Buffer.from(source)).map(([section, properties]) => ({
+  section,
+  value: properties.max_line_length,
+}));
+const lineLength = Number(widths.findLast(({ section, value }) => section === '*' && value !== undefined)?.value);
+if (!Number.isSafeInteger(lineLength) || lineLength <= 0) {
+  throw new Error('EditorConfig max_line_length must be a positive integer in [*]');
+}
+const conflict = widths.find(
+  ({ section, value }) => section !== null && section !== '*' && value !== undefined && Number(value) !== lineLength,
+);
+if (conflict) {
+  throw new Error(
+    `Conflicting EditorConfig max_line_length in [${conflict.section}]; Markdownlint uses the shared [*] width`,
+  );
 }
 
 export default {
