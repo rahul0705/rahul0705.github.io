@@ -5,7 +5,7 @@ export const blogContentModel = defineModel({
   label: 'Blog Posts',
   labelSingular: 'Blog Post',
   folder: 'src/content/blog',
-  extensions: ['md', 'mdx'],
+  extensions: ['md'],
   slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
   sort: {
     fields: ['slug', 'title'],
