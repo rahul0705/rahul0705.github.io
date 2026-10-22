@@ -60,7 +60,7 @@ test('search excludes drafts, other pages, and navigation boilerplate', async ({
   const input = page.getByRole('searchbox');
   await input.fill('Optimize for Reversibility');
   await expect(page.locator('[data-search-status]')).toContainText(/results? for Optimize/);
-  await expect(page.locator('[data-search-results] a[href*="2026-10-03-optimize-for-reversibility"]')).toHaveCount(0);
+  await expect(page.locator('[data-search-results] a[href*="2026-10-22-optimize-for-reversibility"]')).toHaveCount(0);
   for (const query of ['Luna', 'Privacy']) {
     await input.fill(query);
     await expect(page.locator('[data-search-status]')).toContainText(`No results for ${query}`);
