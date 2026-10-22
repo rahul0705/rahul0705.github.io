@@ -12,7 +12,7 @@ tags:
   - design
   - architecture
 coverImage: ../../assets/covers/optimize-for-reversibility.jpg
-coverImageAlt: Traffic moving along a one-way city street with ONLY painted on the pavement
+coverImageAlt: Close-up of a glass revolving door showing its central spindle, angled panels, and circular floor track
 ---
 
 During my time at AWS, I heard decisions described as _one-way doors_ and _two-way doors_. It's an idea closely tied to
@@ -81,6 +81,10 @@ Choosing DynamoDB was an easy decision to make.
 
 Structuring the whole application around it is a much harder one to undo.
 
+That interface only contains part of the cost. Moving the data still means dealing with access patterns, consistency,
+backfills, and a safe transition. A boundary can keep storage details out of callers; it can't make two databases behave
+identically.
+
 ## Reversibility Is About the Cost of Being Wrong
 
 It's tempting to think of reversible design as predicting what might change. Maybe we'll switch databases. Maybe we'll
@@ -120,9 +124,10 @@ def fetch_customer(customer_id: str) -> Customer:
     return Customer.from_dict(response.json())
 ```
 
-The caller doesn't need to know whether this uses REST, GraphQL, a database, a cache, or something else entirely. Swap
-`requests` for another client and the caller doesn't need to change. Even a larger change, like REST to GraphQL, stays
-contained behind the same boundary.
+The caller gets a `Customer` rather than an HTTP response. Swapping `requests` for another client can stay inside this
+function, as long as we preserve the behavior callers rely on, including failures. A move from REST to GraphQL may fit
+behind the same boundary too, but only if it can still honor that contract. A function name doesn't hide differences in
+freshness, permissions, or which customers can be found.
 
 That's also why the `UserRepository` above doesn't have to be a heavyweight pattern. The interface isn't the point.
 Keeping the DynamoDB-specific knowledge in one place is.
@@ -142,17 +147,16 @@ This is something I've had to get more comfortable with over time. Making a deci
 when there's pressure to settle on an architecture. But deciding earlier isn't automatically better if all we're doing
 is committing ourselves while we still know very little.
 
-Imagine we're building a feature and know we'll need to process some work asynchronously. We could immediately choose a
-queue, define a message schema, create infrastructure, build retry handling, and design around the semantics of that
-particular system.
+Imagine we're building a reporting feature and expect that it may eventually need background processing. We could
+immediately choose a queue, define a message schema, create infrastructure, build retry handling, and design around the
+semantics of that particular system.
 
-Or, if the volume doesn't require it yet, we could start much simpler while keeping the decision in one place:
+If users can reasonably wait for the report and the work fits within the request's time limit, we might generate it
+inline first. Keep report generation separate from how work reaches it, and delay choosing a queue until we need one.
 
-```python
-def submit_report(request: ReportRequest) -> None:
-    # Runs inline for now. If volume demands it, this is the one place that becomes a queue.
-    generate_report(request)
-```
+That doesn't make asynchronous processing a drop-in replacement. Returning before the report is ready changes the
+contract: callers need a way to track completion, failures need somewhere to go, and retries mustn't create duplicate
+results. If the feature already needs durable background work, those requirements are a reason to choose a queue now.
 
 The point isn't that simple is always better. It's that every decision introduces constraints. Choosing later, when we
 know more about throughput, failure modes, ordering requirements, and operational behavior, can be better than making a
@@ -168,10 +172,19 @@ thinking about the commitment.
 - Can we try the new dependency in one service before making it the standard everywhere?
 - Can we put the new implementation behind a feature flag?
 - Can we migrate a small percentage of traffic first?
-- Can we write the new data format alongside the old one before depending on it exclusively?
+- Can the previous implementation still read data written during the experiment?
 - Can we measure the result before removing the previous path?
 
-None of these techniques guarantee the experiment will work. That's the point. They reduce the cost when it doesn't.
+None of these techniques guarantee the experiment will work. They help when we've checked that the exit actually works.
+A feature flag can switch code paths; it can't undo a charge, retract an email, or restore data we've overwritten.
+
+For a data migration, I'd want to know which version can read each format, how we'll detect missing or inconsistent
+records, and what happens to writes made after the rollout starts. Keeping the old code available isn't enough if it can
+no longer use the data.
+
+Before starting, agree on what success looks like, what would make us stop, and who can make that call. Test the way
+back on a small slice before widening the rollout. Once we're confident in the new path, remove the flag and the old
+implementation; an exit we keep forever becomes another system to maintain.
 
 I like experiments where failure leaves us with information instead of cleanup. If an idea doesn't work, we should be
 able to say, "Well, we learned something," rather than, "Now we have six months of migration work."
