@@ -1,7 +1,9 @@
 ---
 title: Did You Fix the Bug or Just Move It?
 draft: false
-description: A passing test proves the symptom is gone, not that the work is done. Isolate the change that mattered before adding it to the system.
+description:
+  A passing test proves the symptom is gone, not that the work is done. Isolate the change that mattered before adding
+  it to the system.
 coverImage: ../../assets/covers/did-you-fix-the-bug.jpg
 coverImageAlt: Colorful source code shown in a shallow-focus close-up
 tableOfContents: false
@@ -16,21 +18,22 @@ The bug is gone. That's a relief. You're not entirely sure why, though.
 
 You changed three things while chasing it (a timeout, a cache, maybe a suspicious query), and somewhere in that sequence
 the failure stopped happening. The instinct is to clean up the diff and open it for review because the system now does
-what you wanted. It's an understandable place to want to stop. But there is still a gap between a system that works
-and one whose behavior you understand, and that gap can leave unnecessary risk in the codebase.
+what you wanted. It's an understandable place to want to stop. But there is still a gap between a system that works and
+one whose behavior you understand, and that gap can leave unnecessary risk in the codebase.
 
 Say you have a headache. You take an aspirin, drink a glass of water, and step out of a bright room. Ten minutes later,
-it is gone. You do not know which action helped (or whether the headache was already fading). That uncertainty is harmless
-enough in daily life. Next time, you may repeat the whole ritual. A codebase does not get the same courtesy.
+it is gone. You do not know which action helped (or whether the headache was already fading). That uncertainty is
+harmless enough in daily life. Next time, you may repeat the whole ritual. A codebase does not get the same courtesy.
 
 The software equivalent of “drink more water next time” might be a cache left in production, adding a failure mode to a
 problem it never actually solved. The headache remedy leaves almost no lasting complexity: rinse the glass, put it away,
 and you are done. A cache becomes part of the system. It needs an invalidation policy, capacity limits, monitoring, and
 failure handling, and every future change to the underlying data must preserve its correctness. That is an ongoing cost
-for a benefit you never established. It's also one more component a teammate has to understand without knowing why it exists.
+for a benefit you never established. It's also one more component a teammate has to understand without knowing why it
+exists.
 
-_(This started as a short section in a piece on [code review](../2018-10-08-peer-reviews/). It turned out to be
-less about review and more about how debugging itself ends, so it gets its own space here.)_
+_(This started as a short section in a piece on [code review](../2018-10-08-peer-reviews/). It turned out to be less
+about review and more about how debugging itself ends, so it gets its own space here.)_
 
 ## Why "it works now" isn't proof
 
@@ -46,9 +49,9 @@ The trouble is that "the symptom is gone" can be true for reasons that have noth
   a delay shifted a window, not because the underlying conflict was resolved.
 - **The failure was flaky to begin with.** If something only reproduces some fraction of the time, a run that happens to
   pass after your change is not strong evidence on its own. It may have passed anyway.
-- **You fixed a different problem than the one you started with.** It is common to notice and correct something real
-  (an unrelated null check, a genuinely redundant call) while the original root cause is still sitting there, simply
-  less likely to trigger today.
+- **You fixed a different problem than the one you started with.** It is common to notice and correct something real (an
+  unrelated null check, a genuinely redundant call) while the original root cause is still sitting there, simply less
+  likely to trigger today.
 
 None of these are hypothetical edge cases. They are the normal output of exploratory debugging, and they are exactly why
 "it passes now" deserves a second look before it becomes a change description.
@@ -66,9 +69,8 @@ still needs invalidating correctly. A longer timeout you didn't need still chang
 system reports a problem. Those changes still carry risk, even if they weren't responsible for fixing anything.
 
 The third cost is to you. Knowing that a set of changes makes the symptom go away is not the same as knowing why. The
-next time something in that area misbehaves (maybe with a slightly different trigger), a vague memory of "we changed
-the timeout, the cache, and a query" is much less useful than knowing precisely which one mattered and which two were
-noise.
+next time something in that area misbehaves (maybe with a slightly different trigger), a vague memory of "we changed the
+timeout, the cache, and a query" is much less useful than knowing precisely which one mattered and which two were noise.
 
 ## Get a stable signal before changing anything else
 
@@ -79,11 +81,10 @@ by piece, to learn which edits are load-bearing.
 Doing that safely requires a repeatable signal: a failing test, a script, or a measurement you can rerun and trust. “It
 feels fine now” is not enough. Each step backward needs a result you can compare with the one before it.
 
-If the failure is deterministic, a test that reproduces it usually gives you that signal. If it
-is intermittent, get a baseline reproduction rate instead ("fails roughly six times in ten under this load pattern"),
-so a change that shifts the rate to one in ten is visibly different from a change that eliminates it. Not every race
-condition can be made to fail on command, but almost every one can be characterized well enough to compare before and
-after.
+If the failure is deterministic, a test that reproduces it usually gives you that signal. If it is intermittent, get a
+baseline reproduction rate instead ("fails roughly six times in ten under this load pattern"), so a change that shifts
+the rate to one in ten is visibly different from a change that eliminates it. Not every race condition can be made to
+fail on command, but almost every one can be characterized well enough to compare before and after.
 
 This is close to what `git bisect` does, but inverted. `git bisect` starts from a commit you know is bad and a commit
 you know is good, and searches the history between them by testing points in between until it finds the exact commit
