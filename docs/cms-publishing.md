@@ -36,6 +36,11 @@ save/reopen checks cover content persistence and draft defaults, not GitHub auth
 `.markdownlint-cli2.mjs` derives the expected field order from the shared blog model, matching Sveltia's field order.
 Documentation outside the article collection keeps the existing Markdown quality checks without an ordering rule.
 
+EditorConfig is the source of the prose width for both Oxfmt and Markdownlint. CLI2 resolves the root Markdown settings
+against `README.md` and requires a positive integer `max_line_length`; there is no separate lint width or fallback. The
+code-block and table exceptions remain lint settings. Supporting different widths for individual Markdown paths would
+require extending this configuration rather than changing only a filename-specific EditorConfig section.
+
 Run `npm run lint:markdown:fix` to correct safe ordering problems, then `npm run format:fix` and `npm run lint:markdown`
 to verify the result. Present model fields follow model order; unknown keys remain afterward in their original relative
 order, optional fields remain absent, and nested mappings are unchanged. The fix preserves field values, attached

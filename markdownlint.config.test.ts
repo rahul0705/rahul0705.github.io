@@ -32,6 +32,7 @@ beforeEach(async () => {
   await symlink(join(root, 'node_modules'), join(project, 'node_modules'), 'dir');
   await cp(join(root, '.markdownlint-cli2.mjs'), join(project, '.markdownlint-cli2.mjs'));
   await cp(join(root, '.gitignore'), join(project, '.gitignore'));
+  await cp(join(root, '.editorconfig'), join(project, '.editorconfig'));
   await write(
     'src/config/content-models/blog.ts',
     await readFile(join(root, 'src/config/content-models/blog.ts'), 'utf8'),
@@ -45,6 +46,24 @@ afterEach(async () => {
 });
 
 describe('Markdown npm commands', () => {
+  it('derives prose width from EditorConfig instead of a second lint setting', async () => {
+    await write('.editorconfig', 'root = true\n\n[*]\nmax_line_length = 40\n');
+    await write('README.md', `# Fixture\n\n${'word '.repeat(15).trim()}\n`);
+    expect(run('lint:markdown')).toMatchObject({ status: 1, output: expect.stringContaining('Expected: 40') });
+
+    await write('.editorconfig', 'root = true\n\n[*]\nmax_line_length = 80\n');
+    const result = run('lint:markdown');
+    expect(result.status, result.output).toBe(0);
+  });
+
+  it.each(['', 'off', 'true', '0', '40.5'])('rejects a missing or invalid prose width: %s', async (width) => {
+    await write('.editorconfig', `root = true\n\n[*]\n${width ? `max_line_length = ${width}\n` : ''}`);
+    await write('README.md', '# Fixture\n');
+    const result = run('lint:markdown');
+    expect(result.status).toBe(2);
+    expect(result.output).toContain('max_line_length must be a positive integer');
+  });
+
   it('scopes ordering to articles, allows omitted and unknown fields, and retains Git ignores', async () => {
     const source = '---\ntitle: Fixture\ndescription: Description\nextra: preserved\n---\n\n## Fixture\n';
     await write(article, source);

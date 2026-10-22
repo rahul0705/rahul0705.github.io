@@ -53,6 +53,7 @@
     "astro": "^7.3.8",
     "cspell": "^10.3.6",
     "daisyui": "^5.7.50",
+    "editorconfig": "^3.0.2",
     "knip": "^6.41.0",
     "markdownlint-cli2": "^0.24.0",
     "oxfmt": "^0.72.0",
