@@ -10,7 +10,7 @@ is attempted while checks are running, retry after they pass. Main's normal push
 merge.
 
 The CMS sign-in token needs Pull requests read/write permission as well as Contents read/write. This change adds no
-application token, formatter hook, GitHub Action, service, auto-merge policy, or repository-rule bypass.
+application token, GitHub Action, service, auto-merge policy, or repository-rule bypass.
 
 Editorial status describes the edit's review progress. The article's `draft` boolean separately controls whether the
 site includes it after merge. New CMS articles still default to `draft: true`; turn Draft off for an article that should
@@ -22,10 +22,9 @@ This workflow handles entry changes and their attached assets. Standalone Asset 
 configured branch's permissions and rules. It does not make direct writes to a protected branch permissible.
 
 Articles use Markdown (`.md`); MDX authoring is deferred until rendering, editing, and formatting support are verified.
-Content-model 1.1.9 and Sveltia 0.250.1 provide the native serialization API needed for later browser formatting. This
-stage keeps native CMS saves and the existing PR checks; no browser formatter is registered yet. Local
-`npm run format:fix` applies the repository's prose-wrapping policy. The remaining adoption work is tracked in
-[#177](https://github.com/rahul0705/rahul0705.github.io/issues/177).
+Content-model 1.1.9 and Sveltia 0.250.1 provide native serialization. Each article save serializes through Sveltia
+first, then formats the complete Markdown document with the self-hosted browser formatter and verified build policy. The
+first save starts a worker; subsequent saves reuse it. Local `npm run format:fix` applies the same repository policy.
 
 Authenticated GitHub save/publish still requires a maintainer check against the repository's real branch rules. Local
 save/reopen checks cover content persistence and draft defaults, not GitHub authorization or merge behavior.
@@ -66,7 +65,7 @@ together, using a browser package release that supports the intended engine vers
 Development and production serve the complete published module, worker, bindings, and WASM tree under
 `/admin/formatter/`, relative to Astro's configured base. `policy.json` contains only the verified serializable options.
 Loading the entry does not start a worker; the package starts one on its first formatting request and reuses it. CMS
-saves still use native serialization until the activation change in #182.
+saves invoke the formatter after native serialization.
 
 `tests/cms-formatting.spec.ts` checks current articles and deliberately unformatted prose, YAML, and JavaScript against
 the installed CLI, including idempotence. It also verifies JavaScript/WASM content types and formatting under a scoped
@@ -78,3 +77,18 @@ Browser formatting preserves Tailwind class order. The build reports this approv
 the difference in a fenced HTML example. CLI formatting may still reorder those classes; Forge #365 tracks future
 support. This exception does not disable native CSS formatting or block adoption. MDX and manual iPhone/Safari checks
 remain outside this stage.
+
+## Save failures and rollback
+
+If formatting fails, Sveltia blocks the save and shows an error with the reason. Dismiss the dialog, check the
+connection, and retry Save. Unsaved edits stay in the editor and the existing file is untouched. If retry keeps failing,
+copy unsaved content before reloading and report the displayed error. Module-load failures retry with a fresh URL;
+worker-load failures are reset by the formatter package. There is no unformatted save fallback.
+
+Formatting handles layout, wrapping, and supported code fences. Frontmatter ordering remains the model-derived
+Markdownlint check; Markdown quality rules and Astro schema validation remain independent checks in CI. Run
+`npm run format`, `npm run lint:markdown`, and `npm run typecheck` for hand-edited files as well as CMS changes.
+
+To roll back activation, remove the custom frontmatter format registration in `src/pages/admin/index.astro` and rebuild.
+This restores native Sveltia saves without changing existing content. Before deploying or reloading a different build,
+finish the pending save or copy unsaved edits; rollout does not migrate an open editor's in-memory draft.
