@@ -1,7 +1,8 @@
 ---
 title: Duplication Is Cheaper Than the Wrong Abstraction
 draft: false
-description: DRY reduces repetition, but the wrong abstraction couples concepts that should be free to change independently.
+description:
+  DRY reduces repetition, but the wrong abstraction couples concepts that should be free to change independently.
 coverImage: ../../assets/covers/duplication-vs-coupling.jpg
 coverImageAlt: Railway tracks converging and separating across a rural junction
 section: Process
@@ -15,12 +16,12 @@ tags:
 ---
 
 It's satisfying to find two pieces of code that look alike and turn them into one. Fewer lines, one place to make a
-change. "Don't repeat yourself" (DRY) seems like straightforward advice. The part worth slowing down for is whether those
-two pieces actually represent the same knowledge.
+change. "Don't repeat yourself" (DRY) seems like straightforward advice. The part worth slowing down for is whether
+those two pieces actually represent the same knowledge.
 
-Two pieces of code can look alike without representing the same idea. Combining them removes visible duplication, but
-it also creates a relationship: both callers must now depend on the same names, inputs, behavior, and release cycle.
-If that relationship is not real, the abstraction becomes a negotiation between unrelated requirements.
+Two pieces of code can look alike without representing the same idea. Combining them removes visible duplication, but it
+also creates a relationship: both callers must now depend on the same names, inputs, behavior, and release cycle. If
+that relationship is not real, the abstraction becomes a negotiation between unrelated requirements.
 
 That is the tradeoff behind the phrase:
 
@@ -36,8 +37,8 @@ Code presents the same trap. A matching set of fields, steps, or function signat
 concept, but it can also be a temporary resemblance between things with different responsibilities.
 
 Duplication has an obvious cost. A change may need to be made in more than one place. The cost of the wrong abstraction
-is quieter: conditionals accumulate, parameters lose meaning, callers work around behavior they do not need, and a
-small change for one use case risks breaking another.
+is quieter: conditionals accumulate, parameters lose meaning, callers work around behavior they do not need, and a small
+change for one use case risks breaking another.
 
 I find it more useful to ask which code should change together and which code needs room to change independently.
 Combining the lines is the easy part. Deciding whether the relationship belongs there takes more thought.
@@ -76,8 +77,8 @@ def invoice_total(subtotal, tax_rate):
     return subtotal + calculate_tax(subtotal, tax_rate)
 ```
 
-This abstraction is valuable because the dependency already exists in the domain. Both workflows are meant to follow
-the same tax policy. The shared function makes that relationship explicit.
+This abstraction is valuable because the dependency already exists in the domain. Both workflows are meant to follow the
+same tax policy. The shared function makes that relationship explicit.
 
 But that relationship is a domain decision, not a permanent consequence of the original code looking alike. Suppose
 checkout calculates tax once on the order subtotal, while invoices must calculate and round tax for each line item to
@@ -100,8 +101,8 @@ the combined subtotal. If those differences express intentional policies, forcin
 `calculate_tax(subtotal, tax_rate)` would be the wrong abstraction. Keeping separate functions lets each policy grow
 without adding modes or exceptions to a supposedly shared rule.
 
-By contrast, identical code that implements separate policies is only coincidentally duplicated. Removing the text
-does not remove duplicated knowledge; it declares that the knowledge is shared.
+By contrast, identical code that implements separate policies is only coincidentally duplicated. Removing the text does
+not remove duplicated knowledge; it declares that the knowledge is shared.
 
 ## How the wrong abstraction grows
 
@@ -179,8 +180,8 @@ class BillingAddress:
 ```
 
 Replacing both with `Address` looks like an easy cleanup, but it also says the concepts have one definition. Shipping
-may later need delivery instructions, while billing may need tax jurisdiction or verification status. Keeping both
-types costs a few repeated lines and preserves their ability to change separately.
+may later need delivery instructions, while billing may need tax jurisdiction or verification status. Keeping both types
+costs a few repeated lines and preserves their ability to change separately.
 
 Every abstraction creates a contract. These are the questions I'd want answered before introducing one:
 
@@ -205,8 +206,8 @@ An abstraction deserves another look when:
 - Tests mostly cover permutations of configuration rather than a coherent behavior.
 - Developers copy code out of the abstraction because extending it is harder than working around it.
 
-None of these signs proves that an abstraction is wrong. They are prompts to check whether the code still represents
-one concept.
+None of these signs proves that an abstraction is wrong. They are prompts to check whether the code still represents one
+concept.
 
 ## When duplication is the problem
 
@@ -233,12 +234,12 @@ Next, imagine a likely change. Would the same requirement apply to every copy? I
 without the others, preserve that boundary. If all copies must change for the same reason, sharing the rule may reduce
 risk.
 
-If the evidence is still incomplete, wait for another example. A third use case often reveals which parts are stable
-and which were accidental similarities between the first two. Waiting is not a refusal to design; it is using observed
+If the evidence is still incomplete, wait for another example. A third use case often reveals which parts are stable and
+which were accidental similarities between the first two. Waiting is not a refusal to design; it is using observed
 requirements instead of guessing at a general solution.
 
-When a wrong abstraction already exists, it can be tempting to keep adding options rather than undo the reuse.
-I'd rather work back toward the boundaries we actually need:
+When a wrong abstraction already exists, it can be tempting to keep adding options rather than undo the reuse. I'd
+rather work back toward the boundaries we actually need:
 
 1. Copy the behavior back into the callers.
 2. Simplify each copy around its own responsibility.
@@ -250,13 +251,13 @@ visible, while the old abstraction hid them.
 
 ## Optimize for change, not line count
 
-DRY is valuable because a system should have one authoritative expression of each rule. It becomes harmful when
-similar syntax is mistaken for shared knowledge.
+DRY is valuable because a system should have one authoritative expression of each rule. It becomes harmful when similar
+syntax is mistaken for shared knowledge.
 
 The right question is not “Can these lines be combined?” It is “Should these concepts change together?” A good
-abstraction makes the answer explicit and gives a stable idea a clear name. A wrong abstraction forces independent
-ideas through the same interface.
+abstraction makes the answer explicit and gives a stable idea a clear name. A wrong abstraction forces independent ideas
+through the same interface.
 
 A few duplicated lines are easy to see, compare, and remove later. Coupling built on a false assumption spreads into
-callers, tests, data models, and team habits. Until the relationship is understood, preserving independence is often
-the cheaper choice.
+callers, tests, data models, and team habits. Until the relationship is understood, preserving independence is often the
+cheaper choice.

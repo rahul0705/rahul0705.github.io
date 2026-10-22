@@ -1,7 +1,9 @@
 ---
 title: Make the Wrong Thing Hard to Do
 draft: false
-description: Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to break in the first place.
+description:
+  Tribal knowledge asks engineers to remember the rules. Good system design can make many of those rules difficult to
+  break in the first place.
 coverImage: ../../assets/covers/make-the-wrong-thing-hard-to-do.jpg
 coverImageAlt: A winding mountain road bordered by a metal guardrail and speed limit sign
 tableOfContents: false
@@ -138,8 +140,8 @@ class JobConfig:
 ```
 
 We've written a little more code, but we've removed several possible mistakes. There's no longer a `username` without a
-`password`. No configuration can contain both authentication methods. Nobody has to memorize the valid combinations,
-and a type checker like mypy or pyright can catch the wrong shape before the code ever runs.
+`password`. No configuration can contain both authentication methods. Nobody has to memorize the valid combinations, and
+a type checker like mypy or pyright can catch the wrong shape before the code ever runs.
 
 The structure carries the rule.
 
@@ -201,8 +203,8 @@ The unusual case is still supported:
 client = Client(retry_policy=custom_retry_policy)
 ```
 
-That default saves a little typing, but the part I care about is that it removes a decision people otherwise have to
-get right every time.
+That default saves a little typing, but the part I care about is that it removes a decision people otherwise have to get
+right every time.
 
 I've found that some of the easiest systems to work with aren't necessarily the ones with the most options. They're the
 ones where I rarely have to think about an option until I actually need to change it.
@@ -234,8 +236,9 @@ Not every mistake needs to become impossible.
 Some should simply be easy to notice and easy to fix.
 
 There's a second risk: once you encode a rule into the system, you've made an architectural decision. Sometimes that's
-exactly what you want. If a resource can never exist without an owner, making `owner` required is useful. If an operation
-must always be authorized, putting authorization inside the boundary is safer than expecting every caller to remember it.
+exactly what you want. If a resource can never exist without an owner, making `owner` required is useful. If an
+operation must always be authorized, putting authorization inside the boundary is safer than expecting every caller to
+remember it.
 
 But sometimes what looks like an invariant is really just how the system happens to work today.
 
@@ -245,8 +248,8 @@ difficult.
 So the goal isn't to make everything rigid. It's to tell the difference between things that are genuinely invalid and
 things that are merely uncommon.
 
-I find that distinction harder than writing the validation. The code can enforce the rule once we've worked out
-what the rule should be.
+I find that distinction harder than writing the validation. The code can enforce the rule once we've worked out what the
+rule should be.
 
 ## Look for Repeated Reminders
 

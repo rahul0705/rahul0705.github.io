@@ -1,13 +1,13 @@
 # rahulmohandas.com
 
-Source for [rahulmohandas.com](https://www.rahulmohandas.com), a personal site containing selected writing,
-professional experience, and machine-readable resume exports.
+Source for [rahulmohandas.com](https://www.rahulmohandas.com), a personal site containing selected writing, professional
+experience, and machine-readable resume exports.
 
-The site is statically generated with Astro and deployed to GitHub Pages. Tailwind CSS and DaisyUI provide the
-visual system, while Sveltia CMS supports browser-based editing of articles and experience entries.
+The site is statically generated with Astro and deployed to GitHub Pages. Tailwind CSS and DaisyUI provide the visual
+system, while Sveltia CMS supports browser-based editing of articles and experience entries.
 
-This is a single-maintainer personal site. The README and existing operational notes support my own maintenance;
-a separate contributor handbook is not planned.
+This is a single-maintainer personal site. The README and existing operational notes support my own maintenance; a
+separate contributor handbook is not planned.
 
 ## Requirements
 
@@ -15,10 +15,9 @@ a separate contributor handbook is not planned.
 - npm 11.x
 - Chromium, Firefox, and WebKit for the Playwright browser tests
 
-Node 26 and npm 11 are the supported runtime and package-manager majors. GitHub Actions selects Node 26,
-and GitLab uses `node:26`; both run `npm ci` with the npm supplied by that runtime. The checked-in
-`engine-strict` setting rejects unsupported Node or npm versions during installation. No multi-major runtime
-matrix is maintained.
+Node 26 and npm 11 are the supported runtime and package-manager majors. GitHub Actions selects Node 26, and GitLab uses
+`node:26`; both run `npm ci` with the npm supplied by that runtime. The checked-in `engine-strict` setting rejects
+unsupported Node or npm versions during installation. No multi-major runtime matrix is maintained.
 
 ## Local development
 
@@ -54,6 +53,10 @@ npm run preview
 | `npm run quality`        | Run the complete local quality pipeline            |
 | `npm run audit:unused`   | Report unused files, exports, and dependencies     |
 
+Oxfmt wraps Markdown prose toward the 120-column width in EditorConfig. Run `npm run format:fix` after editing; long
+URLs, code blocks, tables, and other indivisible constructs can still exceed that width. Markdownlint retains its
+existing code-block and table exceptions.
+
 Each remaining script has a separate purpose. In addition to the common commands above:
 
 | Command                                       | Purpose                                                                        |
@@ -67,22 +70,22 @@ Each remaining script has a separate purpose. In addition to the common commands
 | `npm run lighthouse:ci`                       | Measure the existing build against Lighthouse budgets; does not rebuild        |
 | `npm run test:smoke`                          | Run the small Chromium deployment suite locally or against `DEPLOYMENT_URL`    |
 
-Article search is available in the built preview. See [search development and indexing](docs/search.md)
-for local commands, index scope, and measured payload sizes.
+Article search is available in the built preview. See [search development and indexing](docs/search.md) for local
+commands, index scope, and measured payload sizes.
 
-The [code linting policy](docs/code-linting.md) records the enabled safety checks,
-type-aware engine, non-null assertion guards, and Astro coverage limits.
+The [code linting policy](docs/code-linting.md) records the enabled safety checks, type-aware engine, non-null assertion
+guards, and Astro coverage limits.
 
-`lint:all` groups source linters for local use; `quality` composes the full local validation sequence.
-CI calls individual checks so they report independently. `test:coverage` runs the unit suite with coverage
-instrumentation; use it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files.
-Playwright manages its preview server through the existing `preview` command. For other Astro CLI operations,
-use `npx astro <command>`. `typecheck` is the sole script for Astro and TypeScript diagnostics.
+`lint:all` groups source linters for local use; `quality` composes the full local validation sequence. CI calls
+individual checks so they report independently. `test:coverage` runs the unit suite with coverage instrumentation; use
+it instead of `test:unit` when coverage is needed. Fix commands intentionally modify files. Playwright manages its
+preview server through the existing `preview` command. For other Astro CLI operations, use `npx astro <command>`.
+`typecheck` is the sole script for Astro and TypeScript diagnostics.
 
-Unit tests protect observable behavior: expected outputs, meaningful branch decisions, boundary cases,
-and recovery from realistic failures. Use small controlled fixtures so tests exercise alternatives that
-current content may not contain. Coverage reports help locate untested behavior; there is no numeric
-coverage target. Avoid tests that merely repeat static data or assert internal implementation steps.
+Unit tests protect observable behavior: expected outputs, meaningful branch decisions, boundary cases, and recovery from
+realistic failures. Use small controlled fixtures so tests exercise alternatives that current content may not contain.
+Coverage reports help locate untested behavior; there is no numeric coverage target. Avoid tests that merely repeat
+static data or assert internal implementation steps.
 
 Install the Playwright browser before running browser tests for the first time:
 
@@ -124,8 +127,8 @@ under `src/assets/`. The date prefix in the article filename is the authoritativ
 position in newest-first article lists. The homepage Recent Articles section automatically uses the three newest
 published articles; there is no separate editorial featured state.
 
-Drafts may omit the cover image and alt text. Sveltia permits saving these incomplete drafts; Astro requires
-both cover fields when `draft` is false or omitted. Add a cover and descriptive alt text before publishing.
+Drafts may omit the cover image and alt text. Sveltia permits saving these incomplete drafts; Astro requires both cover
+fields when `draft` is false or omitted. Add a cover and descriptive alt text before publishing.
 
 Before publishing an article:
 
@@ -136,12 +139,13 @@ Before publishing an article:
    third-party source in the `ATTRIBUTION.md` file beside the image.
 4. Build or preview the site and review the generated article title, publication date, canonical URL, Open Graph and
    Twitter copy, cover image, and social-image alt text.
-5. Keep the article as a draft until those checks are complete; then remove `draft: true` or switch Draft off in the CMS.
+5. Keep the article as a draft until those checks are complete; then remove `draft: true` or switch Draft off in the
+   CMS.
 
 ### Experience and resume
 
-Individual experience records live in `src/content/experience/` as JSON. Reusable skill and financial-scope records
-live in `src/content/skills/` and `src/content/financial-scopes/`. The site validates their stable filename IDs, combines
+Individual experience records live in `src/content/experience/` as JSON. Reusable skill and financial-scope records live
+in `src/content/skills/` and `src/content/financial-scopes/`. The site validates their stable filename IDs, combines
 them with the structured data in `src/data/resume/`, and renders the resume and its alternate formats.
 
 The public resume routes are:
@@ -159,20 +163,20 @@ npm run build && npm run lint:resume:markdown
 
 ## Buttons and color
 
-Use DaisyUI semantic colors from the Catppuccin theme. Filled primary buttons identify the main action in a
-context: View Resume in the hero, Email in Contact, Export Resume on the resume, and Go home on the error page.
-Use outlined buttons for secondary actions, including article browsing and Contact profile links. Ghost buttons
-serve navigation and lightweight profile shortcuts. Choose variants by purpose, never by array position; Contact
-actions without an explicit variant default to outline.
+Use DaisyUI semantic colors from the Catppuccin theme. Filled primary buttons identify the main action in a context:
+View Resume in the hero, Email in Contact, Export Resume on the resume, and Go home on the error page. Use outlined
+buttons for secondary actions, including article browsing and Contact profile links. Ghost buttons serve navigation and
+lightweight profile shortcuts. Choose variants by purpose, never by array position; Contact actions without an explicit
+variant default to outline.
 
-Primary-colored text also serves as the site accent for labels and links; it does not always indicate a button.
-Use base-content for body text and the matching content token on filled colored surfaces. Catppuccin's secondary
-token is a dark surface in Mocha, so it is not suitable as text on the page background.
+Primary-colored text also serves as the site accent for labels and links; it does not always indicate a button. Use
+base-content for body text and the matching content token on filled colored surfaces. Catppuccin's secondary token is a
+dark surface in Mocha, so it is not suitable as text on the page background.
 
 ## Content manager
 
-Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScript rather than loaded from a
-`config.yml` file:
+Sveltia CMS is available at `/admin/`. Its configuration is created in TypeScript rather than loaded from a `config.yml`
+file:
 
 - The shared content model defines the fields available to both Astro and the CMS.
 - The published content-model package adapts the shared models into Astro collection schemas and base Sveltia CMS
@@ -236,9 +240,10 @@ decisions:
   `noindex` directive can be read, while raw resume exports remain disallowed.
 - Omit a web app manifest for now. This portfolio has no installation or app-specific experience that warrants one.
 - Retain the existing fallback social image, `src/assets/covers/home-workspace.png`, used by `SeoHead` when a page
-  supplies no image. Article covers continue to override it; a second fallback asset would duplicate an existing capability.
-- Keep the article index unpaginated while the archive remains easy to browse together. Revisit pagination when
-  the collection becomes cumbersome to scan or materially affects page performance.
+  supplies no image. Article covers continue to override it; a second fallback asset would duplicate an existing
+  capability.
+- Keep the article index unpaginated while the archive remains easy to browse together. Revisit pagination when the
+  collection becomes cumbersome to scan or materially affects page performance.
 - Keep About content on the homepage, with the resume providing career detail. Add a separate About route only when
   there is distinct content that benefits from its own page.
 
@@ -247,23 +252,23 @@ existing public pages.
 
 ### Retired content
 
-Legacy Projects, Process, category and tag pages, analytics integrations, and inactive social profiles remain
-retired. Before restoring a route, asset, integration, or profile, document its current value to visitors,
-provide current content, identify a maintenance owner, and obtain Rahul Mohandas's approval. Historical
-presence alone is not a reason to restore it. Approval applies to the specific proposal: the approved
-Dotfiles addition does not authorize restoring other legacy material.
+Legacy Projects, Process, category and tag pages, analytics integrations, and inactive social profiles remain retired.
+Before restoring a route, asset, integration, or profile, document its current value to visitors, provide current
+content, identify a maintenance owner, and obtain Rahul Mohandas's approval. Historical presence alone is not a reason
+to restore it. Approval applies to the specific proposal: the approved Dotfiles addition does not authorize restoring
+other legacy material.
 
 ## Deployment
 
 ### Dependency updates
 
 `.github/dependabot.yml` follows the
-[Forge template policy](https://github.com/rm-industries/forge/blob/main/templates/default/.github/dependabot.yml),
-with a dedicated compatibility group for this site's shared content model, Astro, and Sveltia CMS:
+[Forge template policy](https://github.com/rm-industries/forge/blob/main/templates/default/.github/dependabot.yml), with
+a dedicated compatibility group for this site's shared content model, Astro, and Sveltia CMS:
 
 - npm checks run Mondays at 05:30 UTC. Minor and patch updates form separate production and development PRs, based on
-  `dependencies` and `devDependencies` in `package.json`. Astro integrations and other build tooling currently belong
-  to the development group even though they affect the generated site.
+  `dependencies` and `devDependencies` in `package.json`. Astro integrations and other build tooling currently belong to
+  the development group even though they affect the generated site.
 - Major releases wait 21 days, minor releases 7 days, and patches 3 days; releases without a matching version category
   use 7 days. These are minimum release ages, followed by the next scheduled check, not promises of a PR on that day.
 - Sveltia CMS, `@rm-industries/content-model`, and Astro minor/patch updates share the `content-platform` group across
@@ -282,41 +287,39 @@ with a dedicated compatibility group for this site's shared content model, Astro
 For example, eligible font updates share a production PR, eligible linting tools share a development PR, and eligible
 Sveltia, content-model, and Astro patches share a content-platform PR. A TypeScript major gets its own PR. Dependabot
 may include required dependency changes to resolve compatibility. GitHub Actions PRs retain `dependencies` and
-`github-actions` labels. Group labeling starts after the workflow is merged into the default branch.
-See the [GitHub options reference](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
+`github-actions` labels. Group labeling starts after the workflow is merged into the default branch. See the
+[GitHub options reference](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
 for grouping and cooldown semantics.
 
 ### Publishing
 
-Repository Automation Validation runs on `.github/**` changes, every Monday at 05:43 UTC, and on manual dispatch.
-Zizmor scans all supported automation inputs and uploads advisory findings to the Security tab. Findings do not gate
-the site build. Workflow security and syntax report as independent checks, with no aggregate or summary job.
+Repository Automation Validation runs on `.github/**` changes, every Monday at 05:43 UTC, and on manual dispatch. Zizmor
+scans all supported automation inputs and uploads advisory findings to the Security tab. Findings do not gate the site
+build. Workflow security and syntax report as independent checks, with no aggregate or summary job.
 
 For scheduled failures, inspect the failed run, review the finding, and submit a focused correction or documented
 exception. Use GitHub Actions notification preferences to receive failed-run notifications. Successful runs do not
 create issues or comments. This weekly automated scan complements the
-[quarterly security review](docs/security-review.md). The site build has no dependency on these automation jobs.
-Keep security findings advisory when configuring branch protection.
+[quarterly security review](docs/security-review.md). The site build has no dependency on these automation jobs. Keep
+security findings advisory when configuring branch protection.
 
 The [CI pipeline](docs/ci.md) runs source checks (including required Knip) and unit tests before one production build.
 Artifact validation, browser tests, Lighthouse, and generated Markdown lint consume the same build in parallel.
 Deployment directly requires every check to succeed before a push to `main` can deploy the same output to GitHub Pages.
 
-Shared identity, author, repository, navigation, social, RSS, analytics, and indexing metadata are defined
-in `src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
-Deployment settings live in `astro.config.ts`: `site` is the public origin and `base` is the mount path.
-The defaults are `https://www.rahulmohandas.com` and `/`. Application code uses Astro's built-in `SITE`
-and `BASE_URL` values; browser support asks Astro to resolve the same configuration through `getViteConfig()`.
-To check a subpath locally, temporarily set `base: '/preview/'` in Astro config, then run
-`npm run build && npm run test:e2e -- --project=chromium`. Restore the normal base afterward.
-CI continues to build and test the normal root deployment once, without a subpath matrix.
-`DEPLOYMENT_URL` only selects the server contacted by deployed smoke tests.
-Use `Astro.url`, `Astro.site`, and the standard `URL` API for page canonical URLs.
-Use `sitePath()` to prefix internal component links and `siteURL()` for absolute feed/export URLs in shared TypeScript.
-Keep article-to-article Markdown links relative to their article directory.
-Repository paths in CMS configuration stay relative to the repository; published media URLs include the mount path.
-On shared hosts, the host must serve robots policy at the origin root for crawlers to honor it.
-The custom domain remains recorded in `CNAME`; changing deployment configuration does not change DNS or Pages settings.
+Shared identity, author, repository, navigation, social, RSS, analytics, and indexing metadata are defined in
+`src/config/site.ts`. Astro, page metadata, navigation, feeds, analytics, and resume basics consume that typed source.
+Deployment settings live in `astro.config.ts`: `site` is the public origin and `base` is the mount path. The defaults
+are `https://www.rahulmohandas.com` and `/`. Application code uses Astro's built-in `SITE` and `BASE_URL` values;
+browser support asks Astro to resolve the same configuration through `getViteConfig()`. To check a subpath locally,
+temporarily set `base: '/preview/'` in Astro config, then run `npm run build && npm run test:e2e -- --project=chromium`.
+Restore the normal base afterward. CI continues to build and test the normal root deployment once, without a subpath
+matrix. `DEPLOYMENT_URL` only selects the server contacted by deployed smoke tests. Use `Astro.url`, `Astro.site`, and
+the standard `URL` API for page canonical URLs. Use `sitePath()` to prefix internal component links and `siteURL()` for
+absolute feed/export URLs in shared TypeScript. Keep article-to-article Markdown links relative to their article
+directory. Repository paths in CMS configuration stay relative to the repository; published media URLs include the mount
+path. On shared hosts, the host must serve robots policy at the origin root for crawlers to honor it. The custom domain
+remains recorded in `CNAME`; changing deployment configuration does not change DNS or Pages settings.
 Environment-specific and secret values must remain in environment variables or deployment settings.
 
 ## License
@@ -325,39 +328,37 @@ This project is licensed under the [MIT License](LICENSE).
 
 ### Production validation and mobile release checks
 
-Run `npm run build && npm run validate:build && npm run test:e2e` before deployment.
-The artifact smoke check follows
+Run `npm run build && npm run validate:build && npm run test:e2e` before deployment. The artifact smoke check follows
 [Forge's build validator](https://github.com/rm-industries/forge/blob/main/templates/default/scripts/validate-build.ts).
 It uses Node filesystem APIs and the existing YAML dependency to check required outputs, published and draft article
-routes, and unresolved template tokens. It also enforces the intentional absence of a web app manifest.
-The TypeScript scripts run with Node’s built-in type stripping; no additional packages are required.
-Playwright checks metadata, internal references, feeds, crawl policy, analytics,
-CMS behavior, and resume exports against the generated site. Failures identify the artifact or page involved.
+routes, and unresolved template tokens. It also enforces the intentional absence of a web app manifest. The TypeScript
+scripts run with Node’s built-in type stripping; no additional packages are required. Playwright checks metadata,
+internal references, feeds, crawl policy, analytics, CMS behavior, and resume exports against the generated site.
+Failures identify the artifact or page involved.
 
-CI validates the uploaded build before deployment. Deployment also depends on the browser suite,
-which checks every sitemap page and the 404 page for horizontal overflow at 320, 375, 390, 640, 768, 820, and 1024 CSS pixels.
-Open navigation and resume export menus and expanded resume skills are checked at those widths as well.
-These automated checks catch layout regressions; visual review on real mobile devices remains useful for issues
-that geometry and accessibility checks cannot detect.
+CI validates the uploaded build before deployment. Deployment also depends on the browser suite, which checks every
+sitemap page and the 404 page for horizontal overflow at 320, 375, 390, 640, 768, 820, and 1024 CSS pixels. Open
+navigation and resume export menus and expanded resume skills are checked at those widths as well. These automated
+checks catch layout regressions; visual review on real mobile devices remains useful for issues that geometry and
+accessibility checks cannot detect.
 
-The browser suite runs in Chromium, Firefox, and WebKit before deployment. CI retains failure screenshots, traces,
-and the HTML report for 14 days. To run one engine locally, use `npm run test:e2e -- --project=webkit` (or `chromium`
-or `firefox`).
+The browser suite runs in Chromium, Firefox, and WebKit before deployment. CI retains failure screenshots, traces, and
+the HTML report for 14 days. To run one engine locally, use `npm run test:e2e -- --project=webkit` (or `chromium` or
+`firefox`).
 
-Browser specs are grouped by behavior in `tests/`: accessibility, analytics, CMS, layout, navigation,
-resume, routes, SEO/feed/crawl policy, and theme, alongside the dotfiles and inline-spacing checks.
-Run a focused suite with `npm run test:e2e -- tests/navigation.spec.ts --project=chromium`.
-Browser helpers and their unit tests live together in `tests/support/`. The preview URL resolver supplies the
-browser target and the host/port used by Playwright to start Astro preview.
-Use `PLAYWRIGHT_PORT=5432 npm run test:e2e` when the default port (4321) is occupied.
-Deployment smoke checks use an HTTPS `DEPLOYMENT_URL` and do not start a local server.
-The local build and browser checks read the same Astro config for mount paths and canonical expectations.
+Browser specs are grouped by behavior in `tests/`: accessibility, analytics, CMS, layout, navigation, resume, routes,
+SEO/feed/crawl policy, and theme, alongside the dotfiles and inline-spacing checks. Run a focused suite with
+`npm run test:e2e -- tests/navigation.spec.ts --project=chromium`. Browser helpers and their unit tests live together in
+`tests/support/`. The preview URL resolver supplies the browser target and the host/port used by Playwright to start
+Astro preview. Use `PLAYWRIGHT_PORT=5432 npm run test:e2e` when the default port (4321) is occupied. Deployment smoke
+checks use an HTTPS `DEPLOYMENT_URL` and do not start a local server. The local build and browser checks read the same
+Astro config for mount paths and canonical expectations.
 
-After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without
-starting a local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and
-390px mobile overflow, plus feed/export reachability and the custom 404 response. Failed checks retry twice and
-retain evidence for 14 days. A failure marks the workflow failed after publishing; it does not roll back the deployment.
+After a successful deployment from `main`, a small Chromium smoke suite checks the deployed Pages URL without starting a
+local server. It checks homepage, resume, and article content, canonical metadata, loaded assets, and 390px mobile
+overflow, plus feed/export reachability and the custom 404 response. Failed checks retry twice and retain evidence for
+14 days. A failure marks the workflow failed after publishing; it does not roll back the deployment.
 
-Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or
-`npm run test:smoke` to check the local production preview. The smoke suite has a separate Playwright configuration;
-the regular browser suite exercises the full behavior without repeating these smaller deployment checks.
+Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or `npm run test:smoke` to
+check the local production preview. The smoke suite has a separate Playwright configuration; the regular browser suite
+exercises the full behavior without repeating these smaller deployment checks.

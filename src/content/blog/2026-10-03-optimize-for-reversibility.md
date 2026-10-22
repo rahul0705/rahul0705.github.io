@@ -1,7 +1,9 @@
 ---
 title: Optimize for Reversibility
 draft: true
-description: We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and recover without rebuilding everything around us.
+description:
+  We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and
+  recover without rebuilding everything around us.
 coverImage: ../../assets/covers/optimize-for-reversibility.jpg
 coverImageAlt: Traffic moving along a one-way city street with ONLY painted on the pavement
 tableOfContents: false
@@ -86,8 +88,8 @@ replace this API. Maybe we'll need another implementation someday. Follow that t
 building abstractions for futures that never arrive.
 
 I've fallen into that trap too. It's easy to justify another abstraction by imagining all the ways the system _could_
-change. My imagination is quite capable of creating more work for me. Given enough of it, almost anything can look
-like it needs an escape hatch.
+change. My imagination is quite capable of creating more work for me. Given enough of it, almost anything can look like
+it needs an escape hatch.
 
 What helps is narrowing the question to the decisions where being wrong would be unusually expensive.
 
