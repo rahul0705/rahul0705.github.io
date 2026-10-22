@@ -1,6 +1,6 @@
 ---
 title: Optimize for Reversibility
-draft: true
+draft: false
 description:
   We don't always know the right decision when we make it. Good engineering leaves room to learn, change direction, and
   recover without rebuilding everything around us.
