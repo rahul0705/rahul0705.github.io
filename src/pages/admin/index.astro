@@ -9,10 +9,39 @@ import SeoHead from '../../components/ui/SeoHead.astro';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SeoHead title="Content Manager" description={`Content management for ${site.title}.`} canonicalPath="/admin/" noindex />
     <script>
-      import { init, registerPreviewStyle } from '@sveltia/cms';
+      import type { ResolvedOptions } from '@rm-industries/browser-oxfmt';
+      import { init, registerCustomFormat, registerPreviewStyle } from '@sveltia/cms';
       import { sveltiaConfig } from '../../integrations/sveltia/config';
       import { registerSveltiaPreviews } from '../../integrations/sveltia/previews';
       import previewStyles from '../../styles/cms-preview.css?inline';
+
+      let moduleAttempt = 0;
+      registerCustomFormat('frontmatter', 'md', {
+        async toFile(data, { serialize }) {
+          try {
+            const source = await serialize(data);
+            const root = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/admin/formatter`;
+            const formatter: typeof import('@rm-industries/browser-oxfmt') = await import(
+              /* @vite-ignore */ `${root}/index.js?attempt=${moduleAttempt}`
+            ).catch((error: unknown) => {
+              moduleAttempt += 1;
+              throw error;
+            });
+            const response = await fetch(`${root}/policy.json`);
+            if (!response.ok) throw new Error(`Formatting policy could not load (${response.status}).`);
+            const policy: unknown = await response.json();
+            // The published formatter validates every policy field before starting or messaging a worker.
+            return await formatter.format(source, 'article.md', policy as ResolvedOptions);
+          } catch (error) {
+            throw new Error(
+              `Article formatting failed. Your edits are still in the editor. Check your connection and retry Save. ` +
+                `If it keeps failing, copy your edits before reloading and report this error: ` +
+                (error instanceof Error ? error.message : String(error)),
+              { cause: error },
+            );
+          }
+        },
+      });
 
       registerPreviewStyle(previewStyles, { raw: true });
       registerSveltiaPreviews();
