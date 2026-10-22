@@ -55,12 +55,14 @@ test('search matches titles and descriptions, filters by metadata, and handles n
   await expect(results.getByRole('link', { name: 'Code Reviews', exact: true })).toHaveCount(0);
 });
 
-test('search excludes drafts, other pages, and navigation boilerplate', async ({ page }) => {
+test('search includes the published article and excludes other pages and navigation boilerplate', async ({ page }) => {
   await openSearch(page);
   const input = page.getByRole('searchbox');
   await input.fill('Optimize for Reversibility');
   await expect(page.locator('[data-search-status]')).toContainText(/results? for Optimize/);
-  await expect(page.locator('[data-search-results] a[href*="2026-10-03-optimize-for-reversibility"]')).toHaveCount(0);
+  await expect(
+    page.locator('[data-search-results] a[href*="2026-10-22-optimize-for-reversibility"]:not([href*="#"])'),
+  ).toHaveCount(1);
   for (const query of ['Luna', 'Privacy']) {
     await input.fill(query);
     await expect(page.locator('[data-search-status]')).toContainText(`No results for ${query}`);
