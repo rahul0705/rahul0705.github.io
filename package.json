@@ -35,7 +35,7 @@
     "@lucide/astro": "^1.55.0",
     "@rm-industries/browser-oxfmt": "^0.1.1",
     "@rm-industries/content-model": "1.1.9",
-    "@sveltia/cms": "0.250.1"
+    "@sveltia/cms": "0.250.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -51,7 +51,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.1",
     "@vitest/coverage-v8": "^5.0.0",
-    "astro": "^7.3.8",
+    "astro": "^7.4.0",
     "cspell": "^10.3.6",
     "daisyui": "^5.7.50",
     "editorconfig": "^3.0.2",
