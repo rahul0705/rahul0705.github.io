@@ -93,12 +93,12 @@ test('the deployed worker uses scoped WebAssembly CSP, correct MIME types, and r
         errors.push(error instanceof Error ? error.message : String(error));
       }
     }
-    return { formatted, errors, tailwind: engine.capabilities.tailwindClassSorting };
+    return { formatted, errors, tailwind: engine.capabilities.tailwindClassSorting, version: engine.upstreamVersion };
   }, root);
   expect(result.formatted).toContain('class="p-4 flex bg-red-500"');
   expect(cli(result.formatted)).toContain('class="flex bg-red-500 p-4"');
   expect(result.tailwind).toBe(false);
   expect(result.errors).toHaveLength(2);
-  expect(result.errors[0]).toContain('Oxfmt 0.72.0 resolved options are required');
+  expect(result.errors[0]).toContain(`Oxfmt ${result.version} resolved options are required`);
   expect(result.errors[1]).toMatch(/unsupported|unknown/i);
 });

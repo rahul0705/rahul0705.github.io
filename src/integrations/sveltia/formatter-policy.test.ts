@@ -2,6 +2,7 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
+import { engine } from '@rm-industries/browser-oxfmt';
 import { resolveBrowserOptions } from '@rm-industries/browser-oxfmt/build';
 import { afterEach, expect, test } from 'vitest';
 
@@ -10,7 +11,7 @@ afterEach(async () => {
   await Promise.all(fixtures.splice(0).map((directory) => rm(directory, { recursive: true, force: true })));
 });
 
-async function fixture(config: object, version = '0.72.0') {
+async function fixture(config: object, version = engine.upstreamVersion) {
   const cwd = await mkdtemp(join(tmpdir(), 'cms-formatter-policy-'));
   fixtures.push(cwd);
   await mkdir(join(cwd, 'node_modules/oxfmt'), { recursive: true });
