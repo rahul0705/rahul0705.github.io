@@ -34,8 +34,8 @@
     "@fontsource/fira-sans": "^5.3.0",
     "@lucide/astro": "^1.61.0",
     "@rm-industries/browser-oxfmt": "^0.1.2",
-    "@rm-industries/content-model": "1.1.10",
-    "@sveltia/cms": "0.252.0"
+    "@rm-industries/content-model": "^1.1.11",
+    "@sveltia/cms": "^0.255.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -45,11 +45,11 @@
     "@catppuccin/daisyui": "^2.1.1",
     "@catppuccin/palette": "^1.8.0",
     "@jsonresume/schema": "^1.7.0",
-    "@lhci/cli": "^0.15.1",
+    "@lhci/cli": "^0.16.0",
     "@playwright/test": "^1.64.1",
     "@rm-industries/markdownlint-frontmatter": "^0.1.0",
     "@tailwindcss/typography": "^0.5.20",
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.3",
     "@vitest/coverage-v8": "^5.0.0",
     "astro": "^7.4.4",
     "cspell": "^10.4.0",
