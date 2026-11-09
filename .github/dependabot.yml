@@ -80,12 +80,18 @@ updates:
         update-types:
           - minor
           - patch
+      browser-formatter:
+        applies-to: version-updates
+        patterns:
+          - '@rm-industries/browser-oxfmt'
+          - oxfmt
       production-dependencies:
         applies-to: version-updates
         dependency-type: production
         exclude-patterns:
           - '@sveltia/cms'
           - '@rm-industries/content-model'
+          - '@rm-industries/browser-oxfmt'
         update-types:
           - minor
           - patch
@@ -94,6 +100,7 @@ updates:
         dependency-type: development
         exclude-patterns:
           - astro
+          - oxfmt
         update-types:
           - minor
           - patch
