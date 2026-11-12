@@ -6,6 +6,7 @@ import { parse } from 'yaml';
 
 const stepSchema = z.object({
   name: z.string().optional(),
+  if: z.string().optional(),
   run: z.string().optional(),
   uses: z.string().optional(),
   with: z.record(z.string(), z.unknown()).optional(),
@@ -17,8 +18,11 @@ const jobSchema = z.object({
   steps: z.array(stepSchema),
 });
 type Job = z.infer<typeof jobSchema>;
-const { jobs } = z
-  .object({ jobs: z.record(z.string(), jobSchema) })
+const { jobs, on: events } = z
+  .object({
+    jobs: z.record(z.string(), jobSchema),
+    on: z.object({ schedule: z.array(z.object({ cron: z.string() })).optional() }),
+  })
   .parse(parse(readFileSync(new URL('../.github/workflows/project.yml', import.meta.url), 'utf8')));
 const { scripts } = z
   .object({ scripts: z.record(z.string(), z.string()) })
@@ -102,7 +106,7 @@ describe('website CI dependency and artifact contract', () => {
   it('builds only after source checks and unit tests pass', () => {
     expect(ancestors('build')).toEqual(expect.arrayContaining(sourceJobs));
     const commands = steps('build').map((step) => step.run);
-    expect(commands.filter(Boolean)).toEqual(['npm run build']);
+    expect(commands.filter((command) => command?.includes('npm run build'))).toEqual(['npm run build']);
     expect(
       steps('validate-build')
         .filter((step) => step.run)
@@ -130,12 +134,30 @@ describe('website CI dependency and artifact contract', () => {
     for (const upload of uploads) expect(upload.with?.path).toBe('./dist');
   });
 
+  it('retains security.txt in the Pages artifact and deploys main on pushes and monthly schedules', () => {
+    const production =
+      "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')";
+    const pages = steps('build').find((step) => step.uses?.startsWith('actions/upload-pages-artifact@'));
+    expect(events.schedule).toEqual([{ cron: '23 9 1 * *' }]);
+    const build = steps('build').find((step) => step.uses?.startsWith('actions/upload-artifact@'));
+    expect(build?.with).toMatchObject({ 'include-hidden-files': true });
+    expect(pages?.with).toMatchObject({ 'include-hidden-files': true });
+    expect(pages?.if).toBe(production);
+    const verify = steps('build').find((step) => step.name === 'Verify security.txt in the Pages archive');
+    expect(verify?.if).toBe(production);
+    expect(verify?.run).toContain('artifact.tar" ./.well-known/security.txt');
+    expect(steps('smoke-deployed').find((step) => step.env?.DEPLOYMENT_URL)?.env?.SECURITY_TXT_EXPIRES).toBe(
+      '${{ needs.build.outputs.security-txt-expires }}',
+    );
+    expect(jobs.deploy.if).toBe(production);
+    expect(jobs['smoke-deployed'].if).toBe(production);
+  });
+
   it('requires every check directly before deployment and verifies the live result afterward', () => {
     expect(dependencies(jobs.deploy).sort()).toEqual(
       [...sourceJobs, 'build', 'test-browser', 'lighthouse', 'lint-generated-markdown', 'validate-build'].sort(),
     );
-    expect(jobs.deploy.if).toBe("github.event_name == 'push' && github.ref == 'refs/heads/main'");
-    expect(dependencies(jobs['smoke-deployed'])).toEqual(['deploy']);
+    expect(dependencies(jobs['smoke-deployed'])).toEqual(['build', 'deploy']);
     expect(Object.keys(jobs).sort()).toEqual(
       [
         ...sourceJobs,

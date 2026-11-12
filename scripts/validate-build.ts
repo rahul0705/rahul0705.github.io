@@ -21,6 +21,7 @@ export const requiredOutputPaths = [
   'resume.txt',
   'favicon.svg',
   'robots.txt',
+  '.well-known/security.txt',
   'rss.xml',
   'sitemap-index.xml',
   'sitemap-0.xml',

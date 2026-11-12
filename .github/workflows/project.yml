@@ -8,6 +8,8 @@ on: # yamllint disable-line rule:truthy
   push:
     branches:
       - main
+  schedule:
+    - cron: '23 9 1 * *'
 
 permissions: {}
 
@@ -179,6 +181,9 @@ jobs:
     permissions:
       contents: read
 
+    outputs:
+      security-txt-expires: ${{ steps.verify-pages.outputs.security-txt-expires }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -196,14 +201,23 @@ jobs:
         with:
           name: site-build
           path: ./dist
+          include-hidden-files: true
           retention-days: 14
           if-no-files-found: error
 
       - name: Package the same build for GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: ./dist
+          include-hidden-files: true
+
+      - name: Verify security.txt in the Pages archive
+        id: verify-pages
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')
+        run: |
+          expires="$(tar -xOf "$RUNNER_TEMP/artifact.tar" ./.well-known/security.txt | grep '^Expires: ')"
+          printf 'security-txt-expires=%s\n' "$expires" >> "$GITHUB_OUTPUT"
 
   test-browser:
     needs:
@@ -349,7 +363,7 @@ jobs:
       - lint-generated-markdown
       - validate-build
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')
 
     runs-on: ubuntu-latest
 
@@ -372,8 +386,9 @@ jobs:
   smoke-deployed:
     name: Verify deployed website
     needs:
+      - build
       - deploy
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -395,8 +410,9 @@ jobs:
       - name: Check deployed routes and mobile layouts
         env:
           DEPLOYMENT_URL: ${{ needs.deploy.outputs.page-url }}
+          SECURITY_TXT_EXPIRES: ${{ needs.build.outputs.security-txt-expires }}
         run: |
-          test -n "$DEPLOYMENT_URL"
+          test -n "$DEPLOYMENT_URL" && test -n "$SECURITY_TXT_EXPIRES"
           npm run test:smoke
 
       - name: Upload deployed smoke failure evidence

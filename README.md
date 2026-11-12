@@ -362,3 +362,8 @@ overflow, plus feed/export reachability and the custom 404 response. Failed chec
 Run `DEPLOYMENT_URL=https://www.rahulmohandas.com npm run test:smoke` to check production, or `npm run test:smoke` to
 check the local production preview. The smoke suite has a separate Playwright configuration; the regular browser suite
 exercises the full behavior without repeating these smaller deployment checks.
+
+The GitHub Pages workflow rebuilds and deploys on the first of each month at 09:23 UTC. The static build sets the
+expiration in [security.txt](https://www.rahulmohandas.com/.well-known/security.txt) to six calendar months after build
+time. To verify the first scheduled refresh, record the live `Expires` value and deployed commit after the initial
+deployment. After a successful scheduled run for that same commit, check that the live value has advanced.
