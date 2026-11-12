@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { security } from '../src/config/security';
 import { siteConfig } from '../src/config/site';
-import { securityTxtPath } from '../src/lib/security-txt';
+import { securityTxtPath } from '../src/integrations/security-txt/render';
 import { publicSiteURL, sitePath } from './support/site';
 
 for (const path of ['/', '/resume/', '/dotfiles/', '/blog/2018-10-08-peer-reviews/']) {

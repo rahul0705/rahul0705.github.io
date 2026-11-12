@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 
 import type { AstroConfig, AstroIntegration } from 'astro';
 
-import { renderSecurityTxt, securityTxtPath, type SecurityConfig } from '../lib/security-txt';
+import { renderSecurityTxt, securityTxtPath, type SecurityConfig } from './render';
 
 export default function securityTxt(security: SecurityConfig | undefined): AstroIntegration {
   let deployment: Pick<AstroConfig, 'site' | 'base'>;

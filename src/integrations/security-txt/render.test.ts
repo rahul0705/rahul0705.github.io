@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { renderSecurityTxt } from './security-txt';
+import { renderSecurityTxt } from './render';
 
 const config = {
   contacts: ['mailto:security@example.com', 'https://example.com/report'],
