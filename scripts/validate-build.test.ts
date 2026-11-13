@@ -25,13 +25,17 @@ describe('production build smoke check', () => {
     rmSync(join(root, 'dist'), { recursive: true });
     expect(validate).toThrow('Build output directory does not exist');
   });
-  it.each(['rss.xml', 'resume.json', 'admin/index.html', 'blog/published/index.html', 'pagefind/pagefind.js'])(
-    'reports missing %s',
-    (file) => {
-      rmSync(join(root, 'dist', file));
-      expect(validate).toThrow(file);
-    },
-  );
+  it.each([
+    'rss.xml',
+    'resume.json',
+    'admin/index.html',
+    'blog/published/index.html',
+    'pagefind/pagefind.js',
+    '.well-known/security.txt',
+  ])('reports missing %s', (file) => {
+    rmSync(join(root, 'dist', file));
+    expect(validate).toThrow(file);
+  });
   it('rejects empty output', () => {
     write('dist/resume.txt', '');
     expect(validate).toThrow('resume.txt');

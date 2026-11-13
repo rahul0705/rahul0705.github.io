@@ -39,8 +39,8 @@ flowchart TD
 | `test-browser`            | Full behavior, accessibility, and mobile coverage in three engines | Downloads `site-build`; never builds                             |
 | `lint-generated-markdown` | Lint generated resume Markdown                                     | Downloads `site-build`; parallel with browsers and Lighthouse    |
 | `lighthouse`              | Performance, accessibility, best-practice, and SEO budgets         | Downloads `site-build`; never builds                             |
-| `deploy`                  | Publish the packaged output                                        | Requires every pre-deployment job; only runs on pushes to `main` |
-| `smoke-deployed`          | Live route/content/asset/mobile checks                             | Uses the URL returned by successful deployment                   |
+| `deploy`                  | Publish the packaged output                                        | Requires all checks; runs on `main` pushes and monthly schedules |
+| `smoke-deployed`          | Live route/content/asset/mobile and security.txt checks            | Uses the URL returned by successful deployment                   |
 
 Source checks and unit tests run in independent jobs so they execute concurrently and report all failures. Each job owns
 one check and installs its dependencies separately. Any failed check prevents the build. Browser tests and Lighthouse
@@ -50,9 +50,11 @@ measurements.
 The build job runs Astro and then Pagefind through `npm run build`, and uploads the complete result as `site-build`.
 Artifact validation, generated Markdown lint, browser tests, and Lighthouse each download that output and run
 independently in parallel. On `main`, it also packages those same files for GitHub Pages. Packaging does not publish
-them. The test jobs download `site-build` from this run, and only successful prerequisites allow deployment. There are
-no downstream rebuilds or artifact mutations. This matters because financial-scope values can refresh during a build:
-separately rebuilding for tests and deployment could validate different content even at the same source revision.
+them. The workflow checks the Pages archive for `.well-known/security.txt` and passes its expiration to the live smoke
+suite for comparison. The test jobs download `site-build` from this run, and only successful prerequisites allow
+deployment. There are no downstream rebuilds or artifact mutations. This matters because financial-scope values can
+refresh during a build: separately rebuilding for tests and deployment could validate different content even at the same
+source revision.
 
 Deployment directly depends on every source check, unit tests, artifact validation, browser tests, and Lighthouse.
 GitHub's default success condition prevents deployment if any prerequisite fails or is skipped; there is no aggregate
