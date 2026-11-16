@@ -34,7 +34,10 @@ for (const scenario of [
   { name: 'recovers from a WASM load failure', initial: false, expected: false },
   { name: 'defaults new articles to true', initial: undefined, expected: true },
 ]) {
-  test(`CMS ${scenario.name} through formatted saves, recovery, and reopening`, async ({ page }) => {
+  test(`CMS ${scenario.name} through formatted saves, recovery, and reopening`, async ({ page, browserName }) => {
+    // WebKit on CI can exceed 30 seconds across the saves and reload.
+    if (browserName === 'webkit') test.setTimeout(60_000);
+
     // Match Sveltia's local-backend tests: only replace the native folder dialog with a real browser file handle.
     await page.addInitScript(() => {
       Object.defineProperty(window, 'showDirectoryPicker', {
